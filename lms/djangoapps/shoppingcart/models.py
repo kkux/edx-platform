@@ -124,6 +124,9 @@ class Order(models.Model):
     bill_to_street2 = models.CharField(max_length=128, blank=True)
     bill_to_city = models.CharField(max_length=64, blank=True)
     bill_to_state = models.CharField(max_length=8, blank=True)
+    bill_to_country_code = models.CharField(max_length=8, blank=True)
+    bill_to_phone_number = models.CharField(max_length=16, blank=True)
+    ip_customer = models.CharField(max_length=240, blank=True)
     bill_to_postalcode = models.CharField(max_length=16, blank=True)
     bill_to_country = models.CharField(max_length=64, blank=True)
     bill_to_ccnum = models.CharField(max_length=8, blank=True)  # last 4 digits
@@ -386,7 +389,7 @@ class Order(models.Model):
                         'order_items': orderitems,
                         'course_names': ", ".join(course_names),
                         'dashboard_url': dashboard_url,
-                        'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[1],
+                        'currency': settings.PAID_COURSE_REGISTRATION_CURRENCY[0].upper(),
                         'order_placed_by': '{username} ({email})'.format(
                             username=self.user.username, email=self.user.email
                         ),
@@ -446,17 +449,7 @@ class Order(models.Model):
             return
         self.status = 'purchased'
         self.purchase_time = datetime.now(pytz.utc)
-        self.bill_to_first = first
-        self.bill_to_last = last
-        self.bill_to_city = city
-        self.bill_to_state = state
-        self.bill_to_country = country
-        self.bill_to_postalcode = postalcode
         if settings.FEATURES['STORE_BILLING_INFO']:
-            self.bill_to_street1 = street1
-            self.bill_to_street2 = street2
-            self.bill_to_ccnum = ccnum
-            self.bill_to_cardtype = cardtype
             self.processor_reply_dump = processor_reply_dump
 
         # save these changes on the order, then we can tell when we are in an
@@ -542,7 +535,8 @@ class Order(models.Model):
             )
 
     def add_billing_details(self, company_name='', company_contact_name='', company_contact_email='', recipient_name='',
-                            recipient_email='', customer_reference_number=''):
+                            recipient_email='', customer_reference_number='', cc_first_name='', cc_last_name='',
+                            country_code='', phone_number='', billing_address='', city='', postal_code='', ip_customer=''):
         """
         This function is called after the user selects a purchase type of "Business" and
         is asked to enter the optional billing details. The billing details are updated
@@ -562,6 +556,14 @@ class Order(models.Model):
         self.recipient_name = recipient_name
         self.recipient_email = recipient_email
         self.customer_reference_number = customer_reference_number
+        self.bill_to_first = cc_first_name
+        self.bill_to_last = cc_last_name
+        self.bill_to_country_code = country_code
+        self.bill_to_phone_number = phone_number
+        self.bill_to_street1 = billing_address
+        self.bill_to_city = city
+        self.bill_to_postalcode = postal_code
+        self.ip_customer = ip_customer if ip_customer else '-'
 
         self.save()
 

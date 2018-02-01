@@ -714,7 +714,7 @@ def postpay_callback(request):
         return render_to_response('shoppingcart/error.html', {'order': result['order'],
                                                               'error_html': result['error_html']})
 
-
+@csrf_exempt
 @require_http_methods(["GET", "POST"])
 @login_required
 @enforce_shopping_cart_enabled
@@ -723,19 +723,49 @@ def billing_details(request):
     This is the view for capturing additional billing details
     in case of the business purchase workflow.
     """
-
-    cart = Order.get_cart_for_user(request.user)
+    user = request.user
+    cart = Order.get_cart_for_user(user)
     cart_items = cart.orderitem_set.all().select_subclasses()
-    if cart.order_type != OrderTypes.BUSINESS:
-        raise Http404('Page not found!')
+    # if cart.order_type != OrderTypes.BUSINESS:
+    #     raise Http404('Page not found!')
 
     if request.method == "GET":
+        if hasattr(cart.user, 'profile'):
+            full_name = cart.user.profile.name
+            full_name = full_name.split(' ')
+            first_name = cart.user.first_name if cart.user.first_name else full_name[0]
+            last_name = cart.user.last_name
+            mailing_address = cart.user.profile.mailing_address
+            city = cart.user.profile.city
+            country_code = cart.user.profile.country_code
+            phone_number = cart.user.profile.phone_number
+            postal_code = cart.user.profile.postalcode
+        else:
+            first_name = cart.user.first_name
+            last_name = cart.user.last_name
+            mailing_address = ''
+            city = ''
+            country_code = ''
+            phone_number = ''
+            postal_code = ''
+        parmas = {
+            'cc_first_name': first_name,
+            'cc_last_name': last_name,
+            'cc_phone_number': country_code,
+            'phone_number': phone_number,
+            'billing_address': mailing_address,
+            'city': city,
+            'postal_code': postal_code,
+            'email': cart.user.email,
+        }
         callback_url = request.build_absolute_uri(
             reverse("shoppingcart.views.postpay_callback")
         )
         form_html = render_purchase_form_html(cart, callback_url=callback_url)
         total_cost = cart.total_cost
         context = {
+            'parmas': parmas,
+            'cart': cart,
             'shoppingcart_items': cart_items,
             'amount': total_cost,
             'form_html': form_html,
@@ -752,10 +782,38 @@ def billing_details(request):
         recipient_email = request.POST.get("recipient_email", "")
         customer_reference_number = request.POST.get("customer_reference_number", "")
 
-        cart.add_billing_details(company_name, company_contact_name, company_contact_email, recipient_name,
-                                 recipient_email, customer_reference_number)
+        cc_first_name = request.POST.get("cc_first_name", "")
+        cc_last_name = request.POST.get("cc_last_name", "")
+        country_code = request.POST.get("country_code", "")
+        phone_number = request.POST.get("phone_number", "")
+        billing_address = request.POST.get("billing_address", "")
+        city = request.POST.get("city", "")
+        postal_code = request.POST.get("postal_code", "")
+        ip_customer = get_ip(request)
 
-        is_any_course_expired, __, __, __ = verify_for_closed_enrollment(request.user)
+        user.first_name = cc_first_name
+        user.last_name = cc_last_name
+        if hasattr(user, 'profile'):
+            user.profile.country_code = country_code
+            user.profile.phone_number = phone_number
+            user.profile.postalcode = postal_code
+            if not user.profile.mailing_address:
+                user.profile.mailing_address = billing_address
+            if not user.profile.city:
+                user.profile.city = city
+            user.profile.save()
+        user.save()
+        cart.add_billing_details(
+            company_name, company_contact_name,
+            company_contact_email, recipient_name,
+            recipient_email, customer_reference_number,
+            cc_first_name, cc_last_name,
+            country_code, phone_number,
+            billing_address, city, postal_code,
+            ip_customer
+        )
+
+        is_any_course_expired, __, __, __ = verify_for_closed_enrollment(user)
 
         return JsonResponse({
             'response': _('success'),

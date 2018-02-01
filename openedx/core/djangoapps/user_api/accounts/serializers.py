@@ -122,7 +122,8 @@ class UserReadOnlySerializer(serializers.Serializer):
                     ),
                     "mailing_address": user_profile.mailing_address,
                     "requires_parental_consent": user_profile.requires_parental_consent(),
-                    "account_privacy": get_profile_visibility(user_profile, user, self.configuration)
+                    "account_privacy": get_profile_visibility(user_profile, user, self.configuration),
+                    "name_in_arabic": user_profile.name_in_arabic
                 }
             )
 
@@ -172,7 +173,7 @@ class AccountLegacyProfileSerializer(serializers.HyperlinkedModelSerializer, Rea
     class Meta(object):
         model = UserProfile
         fields = (
-            "name", "gender", "goals", "year_of_birth", "level_of_education", "country",
+            "name", "name_in_arabic", "gender", "goals", "year_of_birth", "level_of_education", "country",
             "mailing_address", "bio", "profile_image", "requires_parental_consent", "language_proficiencies"
         )
         # Currently no read-only field, but keep this so view code doesn't need to know.

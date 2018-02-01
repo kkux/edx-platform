@@ -1739,7 +1739,7 @@ def _do_create_account(form, custom_form=None):
     registration.register(user)
 
     profile_fields = [
-        "name", "level_of_education", "gender", "mailing_address", "city", "country", "goals",
+        "name", "name_in_arabic", "level_of_education", "gender", "mailing_address", "city", "country", "goals",
         "year_of_birth"
     ]
     profile = UserProfile(
@@ -1936,6 +1936,7 @@ def create_account_with_params(request, params):
                 'email': user.email,
                 'username': user.username,
                 'name': profile.name,
+                'name_in_arabic': profile.name_in_arabic,
                 # Mailchimp requires the age & yearOfBirth to be integers, we send a sane integer default if falsey.
                 'age': profile.age or -1,
                 'yearOfBirth': profile.year_of_birth or datetime.datetime.now(UTC).year,

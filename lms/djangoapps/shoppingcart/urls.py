@@ -27,3 +27,10 @@ if settings.FEATURES.get('ENABLE_PAYMENT_FAKE'):
         'shoppingcart.tests.payment_fake',
         url(r'^payment_fake', PaymentFakeView.as_view()),
     )
+
+if settings.CC_PROCESSOR_NAME == 'PayTabs':
+    urlpatterns += patterns(
+        'shoppingcart.processors.' + settings.CC_PROCESSOR_NAME,
+        url(r'^create_invoice/$', 'create_invoice', name='create_invoice'),
+    )
+

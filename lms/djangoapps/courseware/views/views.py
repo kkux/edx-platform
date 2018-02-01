@@ -607,7 +607,7 @@ def get_course_prices(course, verified_only=False):
             settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
         )
 
-    currency_symbol = settings.PAID_COURSE_REGISTRATION_CURRENCY[1]
+    currency = settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
 
     if registration_price > 0:
         price = registration_price
@@ -620,7 +620,7 @@ def get_course_prices(course, verified_only=False):
     if price:
         # Translators: This will look like '$50', where {currency_symbol} is a symbol such as '$' and {price} is a
         # numerical amount in that currency. Adjust this display as needed for your language.
-        cosmetic_display_price = _("{currency_symbol}{price}").format(currency_symbol=currency_symbol, price=price)
+        cosmetic_display_price = _("{price} {currency}").format(price=price, currency=currency)
     else:
         # Translators: This refers to the cost of the course. In this case, the course costs nothing so it is free.
         cosmetic_display_price = _('Free')

@@ -264,6 +264,11 @@ class CourseFields(object):
         display_name=_("Course Display Name"),
         scope=Scope.settings
     )
+    display_name_in_arabic = String(
+        help=_("Enter the name of the course as it should appear in course certificate."),
+        display_name=_("Course Display Name in Arabic"),
+        scope=Scope.settings
+    )
     course_edit_method = String(
         display_name=_("Course Editor"),
         help=_('Enter the method by which this course is edited ("XML" or "Studio").'),

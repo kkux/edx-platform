@@ -162,6 +162,7 @@ class RegistrationView(APIView):
     DEFAULT_FIELDS = ["email", "name", "username", "password"]
 
     EXTRA_FIELDS = [
+        "name_in_arabic",
         "confirm_email",
         "first_name",
         "last_name",
@@ -463,6 +464,39 @@ class RegistrationView(APIView):
 
         form_desc.add_field(
             "name",
+            label=name_label,
+            placeholder=name_placeholder,
+            instructions=name_instructions,
+            restrictions={
+                "max_length": NAME_MAX_LENGTH,
+            },
+            required=required
+        )
+
+    def _add_name_in_arabic_field(self, form_desc, required=True):
+        """Add a arabic name field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to True
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # meant to hold the user's full name.
+        name_label = _(u"Full Name in Arabic")
+
+        # Translators: This example name is used as a placeholder in
+        # a field on the registration form meant to hold the user's name.
+        name_placeholder = _(u"Full Name in Arabic")
+
+        # Translators: These instructions appear on the registration form, immediately
+        # below a field meant to hold the user's full name.
+        name_instructions = _(u"This name will be used on any certificates that you earn.")
+
+        form_desc.add_field(
+            "name_in_arabic",
             label=name_label,
             placeholder=name_placeholder,
             instructions=name_instructions,

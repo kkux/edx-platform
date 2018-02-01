@@ -90,6 +90,7 @@ def _update_certificate_context(context, user_certificate, platform_name):
 
     # Override the defaults with any mode-specific static values
     context['certificate_id_number'] = user_certificate.verify_uuid
+    context['candidate_serial_no'] = user_certificate.candidate_serial_no
     context['certificate_verify_url'] = "{prefix}{uuid}{suffix}".format(
         prefix=context.get('certificate_verify_url_prefix'),
         uuid=user_certificate.verify_uuid,
@@ -224,6 +225,7 @@ def _update_course_context(request, context, course, platform_name):
     """
     Updates context dictionary with course info.
     """
+    context['course_display_name_in_arabic'] = course.display_name_in_arabic
     context['full_course_image_url'] = request.build_absolute_uri(course_image_url(course))
     course_title_from_cert = context['certificate_data'].get('course_title', '')
     accomplishment_copy_course_name = course_title_from_cert if course_title_from_cert else course.display_name
@@ -298,6 +300,8 @@ def _update_context_with_user_info(context, user, user_certificate):
     """
     user_fullname = user.profile.name
     context['username'] = user.username
+    context['name_in_arabic'] = user.profile.name_in_arabic
+    context['gender'] = user.profile.gender
     context['course_mode'] = user_certificate.mode
     context['accomplishment_user_id'] = user.id
     context['accomplishment_copy_name'] = user_fullname

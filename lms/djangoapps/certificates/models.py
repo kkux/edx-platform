@@ -72,6 +72,26 @@ from util.milestones_helpers import fulfill_course_milestone, is_prerequisite_co
 LOGGER = logging.getLogger(__name__)
 
 
+def increment_serial_number():
+    last_data = GeneratedCertificate.objects.all().order_by('id').last()
+    if not last_data:
+        return "AA0001"
+    last_serial_number = last_data.candidate_serial_no
+    characters = last_serial_number[:2]
+    digits = int(last_serial_number[2:]) + 1
+    if digits > 9999:
+        second_char = characters[1]
+        if second_char == "Z" and digits > 9999:
+            first_char = chr(ord(characters[0]) + 1)
+            characters = first_char + "A"
+        else:
+            second_char = chr(ord(characters[1]) + 1)
+            characters = characters[:1] + second_char + characters[1 + 1:]
+        digits = 1
+
+    return characters + '{0:04}'.format(digits)
+
+
 class CertificateStatuses(object):
     """
     Enum for certificate statuses
@@ -241,6 +261,7 @@ class GeneratedCertificate(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     error_reason = models.CharField(max_length=512, blank=True, default='')
+    candidate_serial_no = models.CharField(max_length=8, default=increment_serial_number, db_index=True)
 
     class Meta(object):
         unique_together = (('user', 'course_id'),)
