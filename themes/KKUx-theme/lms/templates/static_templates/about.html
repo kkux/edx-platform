@@ -1,0 +1,25 @@
+<%page expression_filter="h"/>
+<%! from django.utils.translation import ugettext as _ %>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("About")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about">
+        <h1>${_("About US")}</h1>
+        <p>${_("Studies predict that more than 65% of today's students will be working in a new and innovative futuristic jobs and is not present in the current time.")}</p>
+	<p>${_("By 2020, the Fourth Industrial Revolution will bring to our world advanced technologies such as robots, artificial intelligence and biotechnology. ")}</p>
+        <p>${_("This development will require changing the way that we live and work. In the future, some jobs may disappear .. others may grow ... while other new jobs may appear. The only fact is that job seekers in future will need to strengthen their skills and gain new ones to keep pace with the demands of the future.")}</p>
+        <p><a href="http://vision2030.gov.sa/" target="_blank">${_("Kingdom Vision 2030")}</a>, ${_("focused on this value, since one of its goals is Learning for Working. In order to boost the economy by focusing on the development of basic skills and personal talents. According to the World Economic Forum 2016, The Future of Jobs")} <a href="http://www3.weforum.org/docs/WEF_Future_of_Jobs.pdf" target="_blank">${_("the top 10 most important skills needed by an employee in 2020")}</a> are:</p>
+        <p>- ${_("Complex problem saving")}</p>
+        <p>- ${_("Critical thinking")}</p>
+        <p>- ${_("Creativity")}</p>
+        <p>- ${_("People management")}</p>
+        <p>- ${_("Coordinating with others")}</p>
+        <p>- ${_("Emotional intelligence")}</p>
+        <p>- ${_("Judgment and decision-making")}</p>
+        <p>- ${_("Service orientation")}</p>
+        <p>- ${_("Negotiation")}</p>
+        <p>- ${_("Cognitive flexibility")}</p>
+    </section>
+</main>
