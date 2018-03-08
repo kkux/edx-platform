@@ -1,0 +1,15 @@
+<%page expression_filter="h"/>
+<%! from django.utils.translation import ugettext as _ %>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Contact")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about">
+        <h1>${_("Contact")}</h1>
+        <p>${_("Thank you for your interest, You can contact us anytime by:")}</p>
+	<p>${_("e-mail: kkux@kku.edu.sa")}</p>
+        <p>${_("Twitter account: @kkuxedu")}</p>
+	<p>${_("Calling or WhatsApp 0531603182")}</p>
+    </section>
+</main>

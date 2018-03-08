@@ -30,17 +30,10 @@ To enable this implementation, add the following Django settings:
     }
 """
 
-import hmac
-import binascii
 import re
 import json
-import uuid
 import logging
-from textwrap import dedent
-from datetime import datetime
-from collections import OrderedDict, defaultdict
-from decimal import Decimal, InvalidOperation
-from hashlib import sha256
+from decimal import Decimal
 
 from django.conf import settings
 from django.utils.translation import ugettext as _, ugettext_noop
@@ -167,14 +160,14 @@ def create_invoice(request):
     )
     try:
         if not int(response.response_code) == 4012:
-            error_html = _get_processor_exception_html(response)
+            error_html = _get_processor_exception_html()
             return render_to_response('shoppingcart/error.html', {'order': None,
                                                                   'error_html': error_html})
         else:
-            request.session['p_id'] = str(response.p_id)
+            # request.session['p_id'] = str(response.p_id)
             return HttpResponseRedirect(str(response.payment_url))
     except:
-        error_html = _get_processor_exception_html(response)
+        error_html = _get_processor_exception_html()
         return render_to_response('shoppingcart/error.html', {'order': None,
                                                               'error_html': error_html})
 
@@ -204,8 +197,8 @@ def process_postpay_callback(params):
 
     try:
         result = _payment_accepted(params)
+        params = result.get('processor_reply')
         if result['accepted']:
-            params = result.get('processor_reply')
             _record_purchase(params, result['order'])
             return {
                 'success': True,
@@ -217,7 +210,7 @@ def process_postpay_callback(params):
             return {
                 'success': False,
                 'order': result['order'],
-                'error_html': _get_processor_exception_html(params)
+                'error_html': result.get('error_html')
             }
     except:
         log.exception('error processing Paytabs postpay callback')
@@ -226,7 +219,7 @@ def process_postpay_callback(params):
         return {
             'success': False,
             'order': None,  # due to exception we may not have the order
-            'error_html': _get_processor_exception_html(params)
+            'error_html': _get_processor_exception_html()
         }
 
 
@@ -238,10 +231,10 @@ def render_purchase_form_html(cart, callback_url=None, extra_data=None):
         cart (Order): The order model representing items in the user's cart.
 
     Keyword Args:
-        callback_url (unicode): The URL that CyberSource should POST to when the user
-            completes a purchase.  If not provided, then CyberSource will use
+        callback_url (unicode): The URL that PayTabs should POST to when the user
+            completes a purchase.  If not provided, then PayTabs will use
             the URL provided by the administrator of the account
-            (CyberSource config, not LMS config).
+            (PayTabs config, not LMS config).
 
         extra_data (list): Additional data to include as merchant-defined data fields.
 
@@ -278,7 +271,6 @@ def _payment_accepted(params):
         Wrong amount or currency: The user did not pay the correct amount.
 
     """
-    payment_support_email = configuration_helpers.get_value('payment_support_email', settings.PAYMENT_SUPPORT_EMAIL)
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
     secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
@@ -302,7 +294,6 @@ def _payment_accepted(params):
         currency = str(response.currency)
         auth_amount = Decimal(response.amount)
         pt_invoice_id = str(response.pt_invoice_id)
-        transaction_id = str(response.transaction_id)
         result = str(response.result)
         processor_reply.update({
             'reference_no': str(order_id),
@@ -310,65 +301,83 @@ def _payment_accepted(params):
             'currency': currency,
             'amount': str(auth_amount),
             'pt_invoice_id': pt_invoice_id,
-            'transaction_id': transaction_id,
             'result': result,
         })
         try:
             order = Order.objects.get(id=order_id)
             if response_code == 100:
                 if auth_amount == order.total_cost and currency.lower() == order.currency.lower():
+                    transaction_id = str(response.transaction_id)
+                    processor_reply['transaction_id'] = transaction_id
                     return {
                         'accepted': True,
                         'amt_charged': auth_amount,
                         'currency': currency,
                         'order': order,
-                        'processor_reply': processor_reply
+                        'processor_reply': processor_reply,
+                        'error_html': ''
                     }
                 else:
                     # The user did not pay the correct amount.
-                    # error_html = _format_error_html(
-                    #     _(
-                    #         u"Sorry! Our payment processor sent us back a corrupted message regarding your charge, so we are "
-                    #         u"unable to validate that the message actually came from the payment processor. "
-                    #         u"We apologize that we cannot verify whether the charge went through and take further action on your order. "
-                    #         u"Your credit card may possibly have been charged. Contact us with payment-specific questions at {email}."
-                    #     ).format(
-                    #         email=payment_support_email
-                    #     )
-                    # )
+                    message_type = {
+                        'wrong_amount_exception': True
+                    }
                     return {
                         'accepted': False,
-                        'amt_charged': 0,
-                        'currency': '',
-                        'order': None,
-                        'processor_reply': processor_reply
+                        'amt_charged': auth_amount,
+                        'currency': currency,
+                        'order': order,
+                        'processor_reply': processor_reply,
+                        'error_html': _get_processor_exception_html(message_type)
                     }
-        except Order.DoesNotExist:
-            # Order not found
-            # error_html = _format_error_html(
-            #     _(
-            #         u"Sorry! Our payment processor sent us back a payment confirmation that had inconsistent data! "
-            #         u"We apologize that we cannot verify whether the charge went through and take further action on your order. "
-            #         u"Your credit card may possibly have been charged.  Contact us with payment-specific questions at {email}."
-            #     ).format(
-            #         email=payment_support_email
-            #     )
-            # )
+            elif response_code == 0:
+                message_type = {
+                    'user_cancelled_exception': True
+                }
+                return {
+                    'accepted': False,
+                    'amt_charged': auth_amount,
+                    'currency': currency,
+                    'order': order,
+                    'processor_reply': processor_reply,
+                    'error_html': _get_processor_exception_html(message_type)
+                }
+            else:
+                message_type = {
+                    'processor_exception': result
+                }
+                return {
+                    'accepted': False,
+                    'amt_charged': auth_amount,
+                    'currency': currency,
+                    'order': order,
+                    'processor_reply': processor_reply,
+                    'error_html': _get_processor_exception_html(message_type)
+                }
+        except:
+            message_type = {
+                'data_exception': 'The payment processor accepted an order whose number is not in our system.'
+            }
             return {
                 'accepted': False,
                 'amt_charged': 0,
                 'currency': '',
                 'order': None,
-                'processor_reply': processor_reply
+                'processor_reply': processor_reply,
+                'error_html': _get_processor_exception_html(message_type)
             }
     except:
         # No response from KKUx's SOAP
+        message_type = {
+            'data_exception': 'The payment processor did not return a required parameter.'
+        }
         return {
             'accepted': False,
             'amt_charged': 0,
             'currency': '',
             'order': None,
-            'processor_reply': processor_reply
+            'processor_reply': processor_reply,
+            'error_html': _get_processor_exception_html(message_type)
         }
 
 
@@ -456,24 +465,73 @@ def _get_processor_decline_html(params):
     )
 
 
-def _get_processor_exception_html(response):
+def _get_processor_exception_html(message_type=None):
     """
     Return HTML indicating that an error occurred.
 
     Args:
-        response (PayTabs): PayTabs response using KKUx soap
+        message (PayTabs): PayTabs response using KKUx soap
 
     Returns:
         unicode: The rendered HTML.
 
     """
     payment_support_email = configuration_helpers.get_value('payment_support_email', settings.PAYMENT_SUPPORT_EMAIL)
-    return _format_error_html(
-        _(
-            u"Sorry! Your payment could not be processed because an unexpected exception occurred. "
-            u"Please contact us at {email} for assistance."
-        ).format(email=payment_support_email)
-    )
+    if message_type:
+        if message_type.get('wrong_amount_exception'):
+            return _format_error_html(
+                _(
+                    u"Sorry! Due to an error your purchase was charged for a different amount than the order total! "
+                    u"Your credit card has probably been charged. Contact us with payment-specific questions at {email}."
+                ).format(
+                    email=payment_support_email
+                )
+            )
+        elif message_type.get('data_exception'):
+            return _format_error_html(
+                _(
+                    u"Sorry! Our payment processor sent us back a payment confirmation that had inconsistent data! "
+                    u"We apologize that we cannot verify whether the charge went through and take further action on your order. "
+                    u"The specific error message is: {msg} "
+                    u"Your credit card may possibly have been charged.  Contact us with payment-specific questions at {email}."
+                ).format(
+                    msg=u'<span class="exception_msg">{msg}</span>'.format(msg=message_type.get('data_exception')),
+                    email=payment_support_email
+                )
+            )
+        elif message_type.get('user_cancelled_exception'):
+            return _format_error_html(
+                _(
+                    u"Sorry! Our payment processor sent us back a message saying that you have cancelled or expired this transaction. "
+                    u"The items in your shopping cart will exist for future purchase. "
+                    u"If you feel that this is in error, please contact us with payment-specific questions at {email}."
+                ).format(
+                    email=payment_support_email
+                )
+            )
+        elif message_type.get('processor_exception'):
+            return _format_error_html(
+                _(
+                    u"We're sorry, " + message_type.get('processor_exception') + " "
+                    u"If you have any questions about this transaction, please contact us at {email}."
+                ).format(
+                    email=payment_support_email
+                )
+            )
+        else:
+            return _format_error_html(
+                _(
+                    u"Sorry! Your payment could not be processed because an unexpected exception occurred. "
+                    u"Please contact us at {email} for assistance."
+                ).format(email=payment_support_email)
+            )
+    else:
+        return _format_error_html(
+            _(
+                u"Sorry! Your payment could not be processed because an unexpected exception occurred. "
+                u"Please contact us at {email} for assistance."
+            ).format(email=payment_support_email)
+        )
 
 
 def _format_error_html(msg):

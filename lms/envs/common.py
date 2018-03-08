@@ -58,7 +58,7 @@ DISCUSSION_SETTINGS = {
 }
 
 LMS_ROOT_URL = "http://localhost:8000"
-
+ENABLE_CERTIFICATES_SHARE = True
 # Features
 FEATURES = {
     'DISPLAY_DEBUG_INFO_TO_STAFF': True,
@@ -2238,6 +2238,9 @@ INSTALLED_APPS = (
     'openedx.features.enterprise_support',
 
     'experiments',
+
+    # For assign course category
+    'category',
 )
 
 ######################### CSRF #########################################

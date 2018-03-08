@@ -864,6 +864,13 @@ class CourseFields(object):
         ),
         scope=Scope.settings, default=False
     )
+    # Added by Mahendra Chaudhari
+    course_category = String(
+        display_name=_("Course Category"),
+        help=_("Select one of the category for the course."),
+        default='',
+        scope=Scope.settings
+    )
 
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method

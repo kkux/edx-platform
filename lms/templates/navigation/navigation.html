@@ -48,7 +48,11 @@ site_status_msg = get_site_status_msg(course_id)
 </div>
 % endif
 </%block>
-
+<style type="text/css">
+  body.view-in-course .language_dropdown{margin-top: -25px}
+  body.discussion .language_dropdown{list-style: none;float: right; padding-top: 10px;}
+  body.discussion .header-global .user .settings-language-form .language-selector {width: 120px;}
+</style>
 % if uses_bootstrap:
   <header class="navigation-container header-global ${"slim" if course else ""}">
     <nav class="navbar navbar-toggleable-md navbar-light">
@@ -75,7 +79,7 @@ site_status_msg = get_site_status_msg(course_id)
       % if header_language_selector_is_enabled():
         <% languages = released_languages() %>
         % if len(languages) > 1:
-          <ol class="user">
+          <ol class="user language_dropdown">
             <li class="primary">
               <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
                 <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">

@@ -257,6 +257,8 @@ SOCIAL_SHARING_SETTINGS = {
     'CUSTOM_COURSE_URLS': False
 }
 
+PAID_COURSE_REGISTRATION_CURRENCY = ['sar', '&#65020;']
+
 ############################# SET PATH INFORMATION #############################
 PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/cms
 REPO_ROOT = PROJECT_ROOT.dirname()
@@ -1037,6 +1039,10 @@ INSTALLED_APPS = (
 
     # Waffle related utilities
     'openedx.core.djangoapps.waffle_utils',
+
+    # For assign course category 
+    'category',
+
 )
 
 

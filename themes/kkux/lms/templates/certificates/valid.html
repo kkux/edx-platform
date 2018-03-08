@@ -1,0 +1,95 @@
+<%namespace name='static' file='/static_content.html'/>
+<%!
+from django.utils.translation import ugettext as _
+from django.conf import settings
+%>
+
+<%
+# set doc language direction
+from django.utils.translation import get_language_bidi
+dir_rtl = 'rtl' if get_language_bidi() else 'ltr'
+course_mode_class = course_mode if course_mode else ''
+%>
+
+<!doctype html>
+<html class="no-js" lang="en" oncontextmenu="return false" onkeydown="return false;">
+<head>
+<meta charset="utf-8">
+<title>kkux</title>
+<link href="${static.url('certificates/css/certificates-style.css')}" rel="stylesheet">
+<link href="${static.url('certificates/css/font-awesome.min.css')}" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <div class="center">
+            <div class="certificate">
+                <div class="left-logo">
+                    <img src="${static.url('certificates/images/left-logo.png')}" alt="">
+                </div>
+                <div class="logo">
+                    <img src="${static.url('certificates/images/logo.png')}" alt="">
+                </div>
+                <% 
+                  if gender == 'f':
+                    akmala = 'أكملت'
+                  else:
+                    akmala = 'أكمل'
+                %>
+                <div class="text1">تشهد منصة جامعة الملك خالد <span>KKUx</span> بأن</div>
+                <div class="text2">${name_in_arabic}</div>
+                <div class="text3">${accomplishment_copy_name | h}</div>
+                <div class="text4">قد ${akmala} بنجاح جميع متطلبات المقرر المهاري في</div>
+                <div class="text5">${course_display_name_in_arabic}</div>
+                <div class="text6">${accomplishment_copy_course_name} Course</div>
+                <div class="text7">${certificate_date_issued} </div>
+                <div class="bottom-text">
+                    <div class="left-text">
+                        <div class="bottom-logo">
+                            <img src="${static.url('certificates/images/bottom-logo.png')}" alt="">
+                        </div>
+                        <div class="text">
+                            <p>KKUx is part of King Khalid University where anyone can find a professional online courses for the most important skills needed for future jobs. This certificate has granted after the participant has successfully completed the course requirements.  </p>
+                            <span>Candidate Serial Number: <label>KKUX-${candidate_serial_no}</label></span>
+                        </div>
+                    </div>
+                    <div class="stemp-img"><img src="${static.url('certificates/images/stem-img.png')}" alt=""></div>
+                    <div class="signature">
+                        % if certificate_data:
+                            % for signatory in certificate_data.get('signatories', []):
+                                <img src="${static.url(signatory['signature_image_path'])}" alt="${signatory['name']}">
+                                <span>${signatory['name']}</span>
+                                <span class="color"> ${signatory['title']}</span>
+                            % endfor
+                        % endif
+                    </div>
+                </div>
+            </div>
+            % if user.is_authenticated() and user.id == int(accomplishment_user_id) and settings.ENABLE_CERTIFICATES_SHARE:
+                <div class="wrapper-share">
+                    <%include file="_print_share.html" />
+                </div>
+            % endif
+        </div>
+    </div>
+<script type="text/javascript">
+
+    if (document.getElementById("action-print-view")){
+        document.getElementById("action-print-view").addEventListener("click", printView);
+    }
+    $(document).keydown(function(e){
+        if(e.which === 123){
+             return false;
+        }
+    });
+
+
+    function printView(event) {
+       event.preventDefault();
+       window.open('${download_certificate}');
+    }
+</script>
+
+</body>
+</html>
+
+

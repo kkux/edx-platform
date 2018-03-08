@@ -162,7 +162,10 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
     # add_cert returns None and raises AttributeError while accesing cert attributes.
     if cert is None:
         return
-
+    # Added by Mahendra Chaudhari for add name in arabic
+    cert.name = student.profile.name
+    cert.name_in_arabic = student.profile.name_in_arabic
+    cert.save()
     if CertificateStatuses.is_passing_status(cert.status):
         emit_certificate_event('created', student, course_key, course, {
             'user_id': student.id,

@@ -31,6 +31,7 @@ ABOUT_ATTRIBUTES = [
     'entrance_exam_enabled',
     'entrance_exam_id',
     'entrance_exam_minimum_score_pct',
+    'course_category',
 ]
 
 
@@ -47,6 +48,7 @@ class CourseDetails(object):
         self.language = None
         self.start_date = None  # 'start'
         self.end_date = None  # 'end'
+        self.course_category = None  # Added by Mahendra Chaudhari
         self.enrollment_start = None
         self.enrollment_end = None
         self.syllabus = None  # a pdf file asset
@@ -121,6 +123,9 @@ class CourseDetails(object):
         course_details.self_paced = course_descriptor.self_paced
         course_details.learning_info = course_descriptor.learning_info
         course_details.instructor_info = course_descriptor.instructor_info
+
+        # Added by Mahendra Chaudhari
+        course_details.course_category = course_descriptor.course_category
 
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
@@ -267,6 +272,11 @@ class CourseDetails(object):
 
         if 'language' in jsondict and jsondict['language'] != descriptor.language:
             descriptor.language = jsondict['language']
+            dirty = True
+
+        # Added by Mahendra Chaudhari
+        if 'course_category' in jsondict and jsondict['course_category'] != descriptor.course_category:
+            descriptor.course_category = jsondict['course_category']
             dirty = True
 
         if (SelfPacedConfiguration.current().enabled

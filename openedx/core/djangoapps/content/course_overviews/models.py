@@ -103,6 +103,9 @@ class CourseOverview(TimeStampedModel):
 
     language = TextField(null=True)
 
+    # Added by Mahendra Chaudhari
+    course_category = TextField(null=True)
+
     @classmethod
     def _create_or_update(cls, course):
         """
@@ -193,6 +196,7 @@ class CourseOverview(TimeStampedModel):
         course_overview.self_paced = course.self_paced
 
         course_overview.language = course.language
+        course_overview.course_category = course.course_category
 
         return course_overview
 

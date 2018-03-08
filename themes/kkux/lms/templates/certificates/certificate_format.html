@@ -1,0 +1,109 @@
+<%namespace name='static' file='../static_content.html'/>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="pdfkit-page-size" content="Legal"/>
+<meta name="pdfkit-orientation" content="Landscape"/>
+
+<title>kkux</title>
+<style type="text/css">
+
+html, 
+body {
+    height: 100%;
+}
+
+*::before, *::after , *  {box-sizing: border-box; padding: 0px; margin: 0px; }
+
+@font-face {
+    font-family: 'ge_ss_twobold';
+    src: url('${static.url('certificates/font/ge-ss-med.ttf')}');
+}
+@font-face {
+    font-family: 'ge_ss_twomedium';
+    src: url('${static.url('certificates/font/GESSTwoLight-Light.ttf')}');
+}
+@font-face {
+    font-family: 'lvnm';
+    src: url('${static.url('certificates/font/lvnm.eot')}');
+    src: url('${static.url('certificates/font/lvnm.eot')}') format('embedded-opentype'),
+         url('${static.url('certificates/font/lvnm.woff2')}') format('woff2'),
+         url('${static.url('certificates/font/lvnm.woff')}') format('woff'),
+         url('${static.url('certificates/font/lvnm.ttf')}') format('truetype'),
+         url('${static.url('certificates/font/lvnm.svg#lvnm')}') format('svg');
+}
+
+body {background: url('${static.url('certificates/images/main-bg.png')}') no-repeat 50% 50%; background-size: cover; font-family: 'lvnm';}
+
+.center {margin: 0 auto; width: 842px; }
+.certificate {position: relative; padding-top: 70px;}
+.certificate .left-logo {position: absolute; top: 125px; left: 39px; }
+.certificate .logo {display: block; text-align: center; padding: 57px 0 58px 0;}
+.certificate .text1 {display: block; text-align: center; line-height: 28px; font-size: 16px; color: #8a8a8a; font-family: 'ge_ss_twobold'; direction: rtl;}
+.certificate .text1 span{font-family: 'lvnm'; font-weight: 600;}
+.certificate .text2 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 28px; font-family: 'ge_ss_twomedium'; padding-bottom: 5px; direction: rtl;}
+.certificate .text3 {display: block; text-align: center; line-height: 28px; color: #6dabb6; font-size: 19px; padding-bottom: 8px; }
+.certificate .text4 {display: block; text-align: center; line-height: 30px; color: #8a8a8a; font-size: 16px; direction: rtl; font-family: 'ge_ss_twobold'; }
+.certificate .text5 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 29px; font-family: 'ge_ss_twomedium'; padding-bottom: 4px; direction: rtl; }
+.certificate .text6 {display: block; text-align: center; line-height: 28px; padding-bottom: 8px; font-size: 19px; color: #6dabb6; }
+.certificate .text7 {display: block; text-align: center; line-height: 28px; font-size: 16px; color: #8a8a8a;  direction: rtl;}
+
+.certificate .bottom-text .left-text {display: inline-block; width: 350px; padding: 28px 0 0 0 ;}
+.certificate .bottom-text .left-text .bottom-logo {display: inline-block; padding: 0 10px 0 0;}
+.certificate .bottom-text .left-text .text {display: inline-block; width: 250px; }
+.certificate .bottom-text .left-text .text p {font-size: 10px; color: #8a8a8a; line-height: 12px; margin: 0px; padding-bottom: 10px; }
+.certificate .bottom-text .left-text .text span {display: block; line-height: 12px; font-size: 12px; color: #8a8a8a; }
+.certificate .bottom-text .left-text .text span label {font-weight: normal; margin: 0px; color: #ff0000; }
+.certificate .bottom-text .stemp-img {display: inline-block; vertical-align: top; padding: 30px 70px 0 45px;}
+.certificate .bottom-text .signature {display: inline-block; text-align: center; vertical-align: top; width: 150px;}
+.certificate .bottom-text .signature img {width: 100%;}
+.certificate .bottom-text .signature span {display: block; text-align: center; line-height: 18px; color: #96a900; font-size: 14px; font-family: 'ge_ss_twomedium';  direction: rtl;}
+.certificate .bottom-text .signature span.color {color: #8a8a8a; }
+.text2,.text3,.text4,.text5,.text6,.text7{padding-top: 10px;}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="center">
+      <div class="certificate">
+        <div class="left-logo"><a href="#"><img src="${static.url('certificates/images/left-logo.png')}" alt=""></a></div>
+        <div class="logo"><a href="#"><img src="${static.url('certificates/images/logo.png')}" alt=""></a></div>
+        <div class="text1">تشهد منصة جامعة الملك خالد <span>KKUx</span> بأن</div>
+        <div class="text2">${name_in_arabic}</div>
+        <div class="text3">${accomplishment_copy_name | h}</div>
+        <% 
+          if gender == 'f':
+             akmala = 'أكملت'
+          else:
+             akmala = 'أكمل'
+        %>
+        <div class="text4">قد ${akmala} بنجاح جميع متطلبات المقرر المهاري في</div>
+        <div class="text5">${course_display_name_in_arabic}</div>
+        <div class="text6">${accomplishment_copy_course_name} Course</div>
+        <div class="text7">${certificate_date_issued} </div>
+        <div class="bottom-text">
+          <div class="left-text">
+            <div class="bottom-logo"><a href="#"><img src="${static.url('certificates/images/bottom-logo.png')}" alt=""></a></div>
+            <div class="text">
+              <p>KKUx is part of King Khalid University where anyone can find a professional online courses for the most important skills needed for future jobs. This certificate has granted after the participant has successfully completed the course requirements.  </p>
+              <span>Candidate Serial Number: <label>KKUX-${candidate_serial_no}</label></span>
+            </div>
+          </div>
+          <div class="stemp-img"><img src="${static.url('certificates/images/stem-img.png')}" alt=""></div>
+          <div class="signature">
+          % if certificate_data:
+              % for signatory in certificate_data.get('signatories', []):
+                  <img src="${static.url(signatory['signature_image_path'])}" alt="${signatory['name']}">
+                  <span>${signatory['name']}</span>
+                  <span class="color"> ${signatory['title']}</span>
+               % endfor
+           % endif
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

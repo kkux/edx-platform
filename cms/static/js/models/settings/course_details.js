@@ -8,6 +8,7 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 language: '',
                 start_date: null,	// maps to 'start'
                 end_date: null,		// maps to 'end'
+                course_category: '',   // Added by Mahendra Chaudhari
                 enrollment_start: null,
                 enrollment_end: null,
                 syllabus: null,

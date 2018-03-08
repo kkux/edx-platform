@@ -1,5 +1,8 @@
 <%namespace name='static' file='/static_content.html'/>
-<%! from django.utils.translation import ugettext as _ %>
+<%!
+from django.utils.translation import ugettext as _
+from django.conf import settings
+%>
 
 <%
 # set doc language direction
@@ -14,6 +17,7 @@ course_mode_class = course_mode if course_mode else ''
 <meta charset="utf-8">
 <title>kkux</title>
 <link href="${static.url('certificates/css/certificates-style.css')}" rel="stylesheet">
+<link href="${static.url('certificates/css/font-awesome.min.css')}" rel="stylesheet">
 </head>
 <body>
     <div class="page">
@@ -60,8 +64,25 @@ course_mode_class = course_mode if course_mode else ''
                     </div>
                 </div>
             </div>
+            % if user.is_authenticated() and user.id == int(accomplishment_user_id) and settings.ENABLE_CERTIFICATES_SHARE:
+                <div class="wrapper-share">
+                    <%include file="_print_share.html" />
+                </div>
+            % endif
         </div>
     </div>
+<script type="text/javascript">
+
+    if (document.getElementById("action-print-view")){
+        document.getElementById("action-print-view").addEventListener("click", printView);
+    }
+
+    function printView(event) {
+       event.preventDefault();
+       window.print();
+    }
+</script>
+
 </body>
 </html>
 

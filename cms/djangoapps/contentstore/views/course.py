@@ -85,6 +85,8 @@ from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import DuplicateCourseError, ItemNotFoundError
 from xmodule.tabs import CourseTab, CourseTabList, InvalidTabsException
+# Added by Mahendra Chaudhari
+from category.models import Category
 
 from .component import ADVANCED_COMPONENT_TYPES
 from .item import create_xblock_info
@@ -1059,7 +1061,9 @@ def settings_handler(request, course_key_string):
                             'show_min_grade_warning': show_min_grade_warning,
                         }
                     )
-
+            # Added by Mahendra Chaudhari
+            categories = Category.objects.all()
+            settings_context['categories'] = categories
             return render_to_response('settings.html', settings_context)
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
             if request.method == 'GET':

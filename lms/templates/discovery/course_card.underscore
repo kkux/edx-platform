@@ -17,6 +17,11 @@
                       gettext("Starts: %(start_date)s"),
                       { start_date: start }, true
                     ) %>
+                <% if(price > 0) {%>
+                    <span style="float:right"><%- price %> SAR</span>
+                <% } else {%>
+                    <span style="float:right">Free</span>
+                <% } %>
             </div>
         </section>
         <div class="sr">

@@ -2,6 +2,8 @@
 """
 Certificate HTML webview.
 """
+import pdfkit
+import os
 import logging
 import urllib
 from datetime import datetime
@@ -300,11 +302,11 @@ def _update_context_with_user_info(context, user, user_certificate):
     """
     user_fullname = user.profile.name
     context['username'] = user.username
-    context['name_in_arabic'] = user.profile.name_in_arabic
+    context['name_in_arabic'] = user_certificate.name_in_arabic
     context['gender'] = user.profile.gender
     context['course_mode'] = user_certificate.mode
     context['accomplishment_user_id'] = user.id
-    context['accomplishment_copy_name'] = user_fullname
+    context['accomplishment_copy_name'] = user_certificate.name
     context['accomplishment_copy_username'] = user.username
 
     context['accomplishment_more_title'] = _("More Information About {user_name}'s Certificate:").format(
@@ -408,6 +410,28 @@ def _render_certificate_template(request, context, course, user_certificate):
     """
     Picks appropriate certificate templates and renders it.
     """
+    #return render_to_response("certificates/certificate_format.html", context)
+    path = settings.MEDIA_ROOT + '/Certificates/'
+    if not os.path.exists(path):
+        os.makedirs(path)
+    file_name = user_certificate.user.username + '_' + user_certificate.candidate_serial_no + '.pdf'
+    file = path + file_name
+    options = {
+        'orientation': 'Landscape',
+        'page-size': 'A4',
+        'margin-top': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'margin-right': '0in',
+        'encoding': "UTF-8",
+
+    }
+    html_content = render_to_response("certificates/certificate_format.html", context)
+    content = html_content.content.replace('/static', str(settings.LMS_ROOT_URL) + '/static')
+    content = content.replace('/asset', str(settings.LMS_ROOT_URL) + '/asset')
+    pdfkit.from_string(content.decode('utf-8'), file, options=options)
+    file_path = settings.MEDIA_URL + 'Certificates/' + file_name
+
     if settings.FEATURES.get('CUSTOM_CERTIFICATE_TEMPLATES_ENABLED', False):
         custom_template = get_certificate_template(course.id, user_certificate.mode)
         if custom_template:
@@ -420,7 +444,7 @@ def _render_certificate_template(request, context, course, user_certificate):
             )
             context = RequestContext(request, context)
             return HttpResponse(template.render(context))
-
+    context['download_certificate'] = file_path
     return render_to_response("certificates/valid.html", context)
 
 

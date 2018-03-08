@@ -29,6 +29,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    options = options || {};
         // fill in fields
                    this.$el.find('#course-language').val(this.model.get('language'));
+                    // Added by Mahendra Chaudhari
+                   this.$el.find("#course_category").val(this.model.get('course_category'));
                    this.$el.find('#course-organization').val(this.model.get('org'));
                    this.$el.find('#course-number').val(this.model.get('course_id'));
                    this.$el.find('#course-name').val(this.model.get('run'));
@@ -151,10 +153,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.learning_info_view.render();
                    this.instructor_info_view.render();
 
+                   //Added by Mahendra Chaudhari
+                   this.$el.find('#' + this.fieldToSelectorMap['course_category']).val(this.model.get('course_category'));
+
                    return this;
                },
                fieldToSelectorMap: {
                    'language': 'course-language',
+                   'course_category': 'course_category',      //Added by Mahendra Chaudhari
                    'start_date': 'course-start',
                    'end_date': 'course-end',
                    'enrollment_start': 'enrollment-start',
@@ -303,6 +309,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-subtitle':
                    case 'course-duration':
                    case 'course-description':
+                   // Added by Mahendra Chaudhari
+                   case 'course_category':
                    case 'course-short-description':
                        this.setField(event);
                        break;

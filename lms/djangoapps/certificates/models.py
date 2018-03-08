@@ -262,6 +262,7 @@ class GeneratedCertificate(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
     error_reason = models.CharField(max_length=512, blank=True, default='')
     candidate_serial_no = models.CharField(max_length=8, default=increment_serial_number, db_index=True)
+    name_in_arabic = models.CharField(max_length=512, blank=True)
 
     class Meta(object):
         unique_together = (('user', 'course_id'),)

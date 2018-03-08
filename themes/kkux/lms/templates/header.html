@@ -1,0 +1,55 @@
+## mako
+<%page expression_filter="h" args="online_help_token"/>
+<%namespace name='static' file='static_content.html'/>
+<%namespace file='main.html' import="login_query"/>
+<% 
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+%>
+<%page expression_filter="h" args="online_help_token"/>
+
+<header id="header">
+	<nav class="navbar navbar-default">
+    	<div class="custom-container">
+         	<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				  <span class="sr-only">Toggle navigation</span>
+				  <span class="icon-bar"></span>
+				  <span class="icon-bar"></span>
+				  <span class="icon-bar"></span>
+				</button>
+            	<a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
+            	% if request.user.is_authenticated():
+            		<ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
+            			<%include file="user_dropdown.html"/>
+            		</ul>
+            	% else:
+					<ul class="right-top hidden-md  hidden-sm  hidden-lg">
+						<li><a href="#">ع</a></li>
+						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
+						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
+					</ul>
+				% endif
+        	</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
+				% if request.user.is_authenticated():
+					<ul class="right-top header-rightbar clearfix">
+            			<%include file="user_dropdown.html"/>
+            		</ul>
+            	% else:
+					<ul class="right-top">
+						<li><a href="#">ع</a></li>
+						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
+						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
+					</ul>
+				% endif
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="${reverse('courses')}">Skills</a></li>
+				  	<li><a href="#">Why KKUx?</a></li>
+				  	<li><a href="#">Contact</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+	</nav>
+</header>

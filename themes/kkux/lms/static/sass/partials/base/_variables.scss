@@ -1,0 +1,87 @@
+@import 'lms/static/sass/partials/base/variables';
+
+// Theming overrides for sample theme
+$blue: #93b045;
+$blue-l1: tint($blue,20%);
+$blue-l2: tint($blue,40%);
+$blue-l3: tint($blue,60%);
+$blue-l4: tint($blue,80%);
+$blue-l5: tint($blue,90%);
+$blue-d1: shade($blue,20%);
+$blue-d2: shade($blue,40%);
+$blue-d3: shade($blue,60%);
+$blue-d4: shade($blue,80%);
+$blue-s1: saturate($blue,15%);
+$blue-s2: saturate($blue,30%);
+$blue-s3: saturate($blue,45%);
+$blue-u1: desaturate($blue,15%);
+$blue-u2: desaturate($blue,30%);
+$blue-u3: desaturate($blue,45%);
+$blue-t0: rgba($blue, 0.125);
+$blue-t1: rgba($blue, 0.25);
+$blue-t2: rgba($blue, 0.50);
+$blue-t3: rgba($blue, 0.75);
+
+$uxpl-blue-base: #93b045; // wcag2a compliant
+$uxpl-blue-hover-active: #93d3de; // wcag2a compliant
+
+$m-blue: $uxpl-blue-base;  // uxpl blue base
+$m-blue-l1: #93b045;
+$m-blue-l2: #93b045;
+$m-blue-l3: #93b045;
+$m-blue-l4: #93b045;
+$m-blue-l5: #93b045;
+$m-blue-l6: #93b045;
+$m-blue-d1: #93b045;
+$m-blue-d2: #93b045;
+$m-blue-d3: #93b045;
+$m-blue-d4: #93b045;
+$m-blue-d5: #93b045;
+$m-blue-d6: #93b045;
+$m-blue-t0: #93b045;
+$m-blue-t1: #93b045;
+$m-blue-t2: #93b045;
+$m-blue-t3: #93b045;
+
+
+$blue1: #93b045;
+$blue2: #93b045;
+
+
+$link-color: #93b045;
+
+$link-color-d1: #93b045;
+
+$link-hover: #93d3de;
+$button-color: #93b045;
+
+// action - primary
+$action-primary-bg: #93b045;
+$action-primary-shadow: #93d3de;
+$action-primary-focused-bg: #93d3de;
+$action-primary-active-bg: #93d3de;
+$action-primary-active-fg: #93d3de;
+$action-primary-active-shadow: #93d3de;
+$action-primary-active-focused-fg: #93d3de;
+$action-primary-active-focused-shadow: #93d3de;
+
+
+$courseware-border-bottom-color: #93b045;
+
+
+//---------------------------------------
+// # FONTS
+//---------------------------------------
+@font-face {
+    font-family: 'Levenim MT';
+    src: url('#{$static-path}/custom_css/LevenimMT.eot');
+    src: url('#{$static-path}/custom_css/LevenimMT.eot?#iefix') format('embedded-opentype'),
+        url('#{$static-path}/custom_css/LevenimMT.woff2') format('woff2'),
+        url('#{$static-path}/custom_css/LevenimMT.woff') format('woff'),
+        url('#{$static-path}/custom_css/LevenimMT.ttf') format('truetype'),
+        url('#{$static-path}/custom_css/LevenimMT.svg#LevenimMT') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+$sans-serif: 'Levenim MT';
+$f-sans-serif: 'Levenim MT';

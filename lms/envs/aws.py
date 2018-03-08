@@ -184,6 +184,9 @@ EDXMKTG_USER_INFO_COOKIE_NAME = ENV_TOKENS.get('EDXMKTG_USER_INFO_COOKIE_NAME', 
 
 LMS_ROOT_URL = ENV_TOKENS.get('LMS_ROOT_URL')
 
+ENABLE_CERTIFICATES_SHARE = ENV_TOKENS.get('ENABLE_CERTIFICATES_SHARE',True)
+HOMEPAGE_COURSE_MAX = ENV_TOKENS.get('HOMEPAGE_COURSE_MAX',8)
+
 ENV_FEATURES = ENV_TOKENS.get('FEATURES', {})
 for feature, value in ENV_FEATURES.items():
     FEATURES[feature] = value
@@ -357,6 +360,18 @@ ZENDESK_CUSTOM_FIELDS = ENV_TOKENS.get('ZENDESK_CUSTOM_FIELDS', ZENDESK_CUSTOM_F
 
 FEEDBACK_SUBMISSION_EMAIL = ENV_TOKENS.get("FEEDBACK_SUBMISSION_EMAIL")
 MKTG_URLS = ENV_TOKENS.get('MKTG_URLS', MKTG_URLS)
+
+######################### Added by Mahendra Chaudhari #############
+########################## Course Discovery #######################
+LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
+
+COURSE_DISCOVERY_MEANINGS = {
+    'category': {
+        'name': 'Category'
+    },
+    'language': LANGUAGE_MAP,
+}
+COURSE_DISCOVERY_FILTERS = ["category", "language"]
 
 # Badgr API
 BADGR_API_TOKEN = ENV_TOKENS.get('BADGR_API_TOKEN', BADGR_API_TOKEN)

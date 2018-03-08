@@ -1,0 +1,53 @@
+	## mako
+<%page expression_filter="h"/>
+<%!
+	from datetime import datetime
+	from django.core.urlresolvers import reverse
+	from django.utils.translation import ugettext as _
+	from branding.api import get_footer
+%>
+<% footer = get_footer(is_secure=is_secure) %>
+<% year = datetime.now().year %>
+<%namespace name='static' file='static_content.html'/>
+
+<footer class="footer" id="footer">
+	<div class="custom-container">
+		<div class="fot-col">
+			<h4>About</h4>
+			<ul>
+				<li><a href="#">Mission</a></li>
+				<li><a href="#">Vision</a></li>
+				<li><a href="#">ELD Website</a></li>
+			</ul>
+		</div>
+		<div class="fot-col">
+			<h4>Terms</h4>
+			<ul>
+				<li><a href="#">Copyright</a></li>
+				<li><a href="#">Publishing Rules</a></li>
+				<li><a href="#">Data Use Policy</a></li>
+			</ul>
+		</div>
+		<div class="fot-col big">
+			<h4>ELD Open Learning</h4>
+			<ul>
+				<li><a href="#">Open CourseWare </a></li>
+				<li><a href="#">Olomna</a></li>
+				<li><a href="#">Tamkeen</a></li>
+			</ul>
+		</div>
+		<div class="fot-col">
+			<h4>Contact</h4>
+			<ul>
+				<li><a href="#">Contact us</a></li>
+			</ul>
+		</div>
+		<div class="fot-col last">
+			<div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
+			<div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div>
+		</div>
+		<div class="copyright">
+			<p>©KKUx All Right Reserved ${year}</p>
+		</div>
+	</div>
+</footer>

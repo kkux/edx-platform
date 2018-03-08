@@ -588,10 +588,16 @@ class CourseAboutSearchIndexer(object):
             return
 
         course_id = unicode(course.id)
+        price = CourseMode.min_course_price_for_currency(
+            course.id,
+            settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
+        )
         course_info = {
             'id': course_id,
             'course': course_id,
             'content': {},
+            'price': price,
+            'category': course.course_category if course.course_category else "Default",
             'image_url': course_image_url(course),
         }
 

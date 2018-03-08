@@ -1,39 +1,39 @@
 # #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 # edX translation file.
-# Copyright (C) 2017 EdX
+# Copyright (C) 2018 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2017.
+# EdX Team <info@edx.org>, 2018.
 # 
 # #-#-#-#-#  django-studio.po (0.1a)  #-#-#-#-#
 # edX translation file.
-# Copyright (C) 2017 EdX
+# Copyright (C) 2018 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2017.
+# EdX Team <info@edx.org>, 2018.
 # 
 # #-#-#-#-#  mako.po (0.1a)  #-#-#-#-#
 # edX translation file
-# Copyright (C) 2017 edX
+# Copyright (C) 2018 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2017.
+# EdX Team <info@edx.org>, 2018.
 # 
 # #-#-#-#-#  mako-studio.po (0.1a)  #-#-#-#-#
 # edX translation file
-# Copyright (C) 2017 edX
+# Copyright (C) 2018 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2017.
+# EdX Team <info@edx.org>, 2018.
 # 
 # #-#-#-#-#  wiki.po (0.1a)  #-#-#-#-#
 # edX translation file
-# Copyright (C) 2017 edX
+# Copyright (C) 2018 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2017.
+# EdX Team <info@edx.org>, 2018.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2017-06-21 14:30+0000\n"
-"PO-Revision-Date: 2017-06-21 14:30:50.143623\n"
+"POT-Creation-Date: 2018-02-14 06:19+0000\n"
+"PO-Revision-Date: 2018-02-14 06:19:29.074629\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -93,6 +93,8 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Name"
 msgstr ""
 
@@ -104,6 +106,7 @@ msgstr ""
 #: cms/djangoapps/contentstore/views/videos.py
 #: lms/djangoapps/shoppingcart/reports.py
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Status"
 msgstr ""
 
@@ -166,8 +169,6 @@ msgstr ""
 #: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
 #: openedx/core/djangoapps/user_api/views.py
 #: lms/templates/static_templates/honor.html
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/tos.html
 msgid "Honor Code"
 msgstr ""
 
@@ -206,6 +207,7 @@ msgstr ""
 
 #: common/djangoapps/course_modes/models.py
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Price"
 msgstr ""
 
@@ -304,6 +306,31 @@ msgid "User profile"
 msgstr ""
 
 #: common/djangoapps/student/forms.py
+msgid "Username must be minimum of two characters long"
+msgstr ""
+
+#: common/djangoapps/student/forms.py
+#, python-format
+msgid "Username cannot be more than %(limit_value)s characters long"
+msgstr ""
+
+#. Translators: This message is shown when the Unicode usernames are NOT
+#. allowed
+#: common/djangoapps/student/forms.py
+msgid ""
+"Usernames can only contain Roman letters, western numerals (0-9), "
+"underscores (_), and hyphens (-)."
+msgstr ""
+
+#. Translators: This message is shown only when the Unicode usernames are
+#. allowed
+#: common/djangoapps/student/forms.py
+msgid ""
+"Usernames can only contain letters, numerals, underscore (_), numbers and "
+"@/./+/-/_ characters."
+msgstr ""
+
+#: common/djangoapps/student/forms.py
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
@@ -316,10 +343,6 @@ msgid ""
 msgstr ""
 
 #: common/djangoapps/student/forms.py
-msgid "Username must be minimum of two characters long"
-msgstr ""
-
-#: common/djangoapps/student/forms.py
 msgid "A properly formatted e-mail is required"
 msgstr ""
 
@@ -329,17 +352,6 @@ msgstr ""
 
 #: common/djangoapps/student/forms.py
 msgid "Your legal name must be a minimum of two characters long"
-msgstr ""
-
-#: common/djangoapps/student/forms.py
-msgid ""
-"Usernames can only contain Roman letters, western numerals (0-9), "
-"underscores (_), and hyphens (-)."
-msgstr ""
-
-#: common/djangoapps/student/forms.py
-#, python-format
-msgid "Username cannot be more than %(limit_value)s characters long"
 msgstr ""
 
 #: common/djangoapps/student/forms.py
@@ -950,6 +962,13 @@ msgid ""
 "have their session length limited to no longer than this value. If set to 0 "
 "(zero), the session will expire upon the user closing their browser. If left"
 " blank, the Django platform session default length will be used."
+msgstr ""
+
+#: common/djangoapps/third_party_auth/models.py
+msgid ""
+"If this option is selected, users will be directed to the registration page "
+"immediately after authenticating with the third party instead of the login "
+"page."
 msgstr ""
 
 #: common/djangoapps/third_party_auth/models.py
@@ -1716,8 +1735,6 @@ msgstr ""
 #. to the site.
 #: common/lib/capa/capa/responsetypes.py lms/templates/login.html
 #: lms/templates/register-form.html lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "or"
 msgstr ""
 
@@ -2084,7 +2101,7 @@ msgstr ""
 #: lms/templates/register-shib.html
 #: lms/templates/peer_grading/peer_grading_problem.html
 #: lms/templates/survey/survey.html
-#: themes/stanford-style/lms/templates/register-shib.html
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
 msgid "Submit"
 msgstr ""
 
@@ -2354,6 +2371,10 @@ msgid "Date that this class ends"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
+msgid "Date that certificates become available to learners"
+msgstr ""
+
+#: common/lib/xmodule/xmodule/course_module.py
 msgid "Cosmetic Course Display Price"
 msgstr ""
 
@@ -2404,6 +2425,15 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Course Display Name"
+msgstr ""
+
+#: common/lib/xmodule/xmodule/course_module.py
+msgid ""
+"Enter the name of the course as it should appear in course certificate."
+msgstr ""
+
+#: common/lib/xmodule/xmodule/course_module.py
+msgid "Course Display Name in Arabic"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -2637,6 +2667,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 #: lms/templates/courseware/info.html
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
 msgid "Course Handouts"
 msgstr ""
 
@@ -2762,7 +2793,7 @@ msgstr ""
 msgid "If true, certificate Web/HTML views are enabled for the course."
 msgstr ""
 
-#. Translators: This field is the container for course-specific certifcate
+#. Translators: This field is the container for course-specific certificate
 #. configuration values
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Certificate Web/HTML View Overrides"
@@ -2776,7 +2807,7 @@ msgid ""
 "(JSON format)"
 msgstr ""
 
-#. Translators: This field is the container for course-specific certifcate
+#. Translators: This field is the container for course-specific certificate
 #. configuration values
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Certificate Configuration"
@@ -2903,9 +2934,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py lms/djangoapps/branding/api.py
 #: lms/templates/footer.html lms/templates/static_templates/about.html
-#: themes/red-theme/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/about.html
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
 msgid "About"
 msgstr ""
 
@@ -4384,18 +4413,13 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "© {org_name}.  All rights reserved except where noted.  EdX, Open edX and "
-"the edX and Open EdX logos are registered trademarks or trademarks of edX "
-"Inc."
+"their respective logos are trademarks or registered trademarks of edX Inc."
 msgstr ""
 
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: 'Open edX' is a brand, please keep this untranslated.
 #. See http://openedx.org for more information.
-#. #-#-#-#-#  mako.po (0.1a)  #-#-#-#-#
-#. Translators: 'Open edX' is a brand, please keep this untranslated. See
-#. http://openedx.org for more information.
 #: lms/djangoapps/branding/api.py cms/templates/widgets/footer.html
-#: themes/red-theme/lms/templates/footer.html
 msgid "Powered by Open edX"
 msgstr ""
 
@@ -4405,10 +4429,11 @@ msgid "{platform_name} for Business"
 msgstr ""
 
 #: lms/djangoapps/branding/api.py lms/templates/static_templates/blog.html
+#: themes/KKUx-theme/lms/templates/static_templates/blog.html
 msgid "Blog"
 msgstr ""
 
-#: lms/djangoapps/branding/api.py themes/red-theme/lms/templates/footer.html
+#: lms/djangoapps/branding/api.py
 msgid "News"
 msgstr ""
 
@@ -4417,19 +4442,16 @@ msgid "Help Center"
 msgstr ""
 
 #: lms/djangoapps/branding/api.py lms/templates/static_templates/contact.html
-#: themes/red-theme/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/about.html
+#: themes/KKUx-theme/lms/templates/static_templates/contact.html
 msgid "Contact"
 msgstr ""
 
 #: lms/djangoapps/branding/api.py
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/about.html
 msgid "Careers"
 msgstr ""
 
 #: lms/djangoapps/branding/api.py lms/templates/static_templates/donate.html
+#: themes/KKUx-theme/lms/templates/static_templates/donate.html
 msgid "Donate"
 msgstr ""
 
@@ -4443,9 +4465,7 @@ msgstr ""
 #: lms/djangoapps/branding/api.py lms/djangoapps/certificates/views/webview.py
 #: cms/templates/widgets/footer.html
 #: lms/templates/static_templates/privacy.html
-#: themes/red-theme/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/tos.html
+#: themes/KKUx-theme/lms/templates/static_templates/privacy.html
 msgid "Privacy Policy"
 msgstr ""
 
@@ -4459,6 +4479,7 @@ msgstr ""
 
 #: lms/djangoapps/branding/api.py
 #: lms/templates/static_templates/media-kit.html
+#: themes/KKUx-theme/lms/templates/static_templates/media-kit.html
 msgid "Media Kit"
 msgstr ""
 
@@ -4467,9 +4488,8 @@ msgstr ""
 #. in order to register a new account.
 #: lms/djangoapps/branding/api.py openedx/core/djangoapps/user_api/views.py
 #: cms/templates/widgets/footer.html lms/templates/static_templates/tos.html
-#: themes/red-theme/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/tos.html
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid "Terms of Service"
 msgstr ""
 
@@ -5209,9 +5229,9 @@ msgstr ""
 #. This string would look like this when all variables are in:
 #. "$500.00"
 #: lms/djangoapps/courseware/views/views.py
-#: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 #, python-brace-format
-msgid "{currency_symbol}{price}"
+msgid "{price} {currency}"
 msgstr ""
 
 #. Translators: This refers to the cost of the course. In this case, the
@@ -5534,6 +5554,7 @@ msgstr ""
 
 #: lms/djangoapps/dashboard/sysadmin.py cms/templates/course-create-rerun.html
 #: cms/templates/index.html lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Course Name"
 msgstr ""
 
@@ -5912,7 +5933,6 @@ msgstr ""
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: openedx/core/djangoapps/user_api/views.py lms/templates/register-form.html
 #: lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Gender"
 msgstr ""
 
@@ -5924,7 +5944,6 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Mailing Address"
 msgstr ""
 
@@ -5957,7 +5976,8 @@ msgstr ""
 #: openedx/core/djangoapps/user_api/views.py lms/templates/register-form.html
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
 #: lms/templates/shoppingcart/receipt.html
-#: themes/stanford-style/lms/templates/register-form.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "City"
 msgstr ""
 
@@ -5969,7 +5989,7 @@ msgstr ""
 #: openedx/core/djangoapps/user_api/views.py lms/templates/register-form.html
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
 #: lms/templates/shoppingcart/receipt.html
-#: themes/stanford-style/lms/templates/register-form.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Country"
 msgstr ""
 
@@ -6548,8 +6568,6 @@ msgstr ""
 #: openedx/core/djangoapps/user_api/views.py cms/templates/register.html
 #: lms/templates/register-form.html lms/templates/register-shib.html
 #: lms/templates/signup_modal.html lms/templates/sysadmin_dashboard.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Full Name"
 msgstr ""
 
@@ -6633,23 +6651,28 @@ msgstr ""
 msgid "cohorted"
 msgstr ""
 
+#. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This label appears above a field on the registration form
 #. which allows the user to input the First Name
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: openedx/core/djangoapps/user_api/views.py
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "First Name"
 msgstr ""
 
+#. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This label appears above a field on the registration form
 #. which allows the user to input the First Name
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: openedx/core/djangoapps/user_api/views.py
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Last Name"
 msgstr ""
 
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: openedx/core/djangoapps/api_admin/forms.py
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Company Name"
 msgstr ""
 
@@ -6663,7 +6686,6 @@ msgstr ""
 
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Year of Birth"
 msgstr ""
 
@@ -7072,6 +7094,7 @@ msgid "Page {page_number} of {page_count}"
 msgstr ""
 
 #: lms/djangoapps/shoppingcart/pdf.py lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Invoice"
 msgstr ""
 
@@ -7114,6 +7137,8 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Total"
 msgstr ""
 
@@ -7126,6 +7151,7 @@ msgid "Balance"
 msgstr ""
 
 #: lms/djangoapps/shoppingcart/pdf.py
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Billing Address"
 msgstr ""
 
@@ -7405,6 +7431,8 @@ msgstr ""
 #. payment,
 #. for which we don't know a user-friendly message to display in advance.
 #: lms/djangoapps/shoppingcart/processors/CyberSource2.py
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+#: lms/djangoapps/shoppingcart/processors/old-PayTabs.py
 msgid "UNKNOWN REASON"
 msgstr ""
 
@@ -7429,6 +7457,8 @@ msgid ""
 msgstr ""
 
 #: lms/djangoapps/shoppingcart/processors/CyberSource2.py
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+#: lms/djangoapps/shoppingcart/processors/old-PayTabs.py
 #, python-brace-format
 msgid ""
 "Sorry! Our payment processor did not accept your payment.  The decision they"
@@ -7438,6 +7468,7 @@ msgid ""
 msgstr ""
 
 #: lms/djangoapps/shoppingcart/processors/CyberSource2.py
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
 #, python-brace-format
 msgid ""
 "Sorry! Our payment processor sent us back a payment confirmation that had "
@@ -7485,6 +7516,8 @@ msgid ""
 msgstr ""
 
 #: lms/djangoapps/shoppingcart/processors/CyberSource2.py
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+#: lms/djangoapps/shoppingcart/processors/old-PayTabs.py
 #, python-brace-format
 msgid ""
 "Sorry! Your payment could not be processed because an unexpected exception "
@@ -7708,6 +7741,27 @@ msgid ""
 "            "
 msgstr ""
 
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+#, python-brace-format
+msgid ""
+"Sorry! Due to an error your purchase was charged for a different amount than"
+" the order total! Your credit card has probably been charged. Contact us "
+"with payment-specific questions at {email}."
+msgstr ""
+
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+#, python-brace-format
+msgid ""
+"Sorry! Our payment processor sent us back a message saying that you have "
+"cancelled or expired this transaction. The items in your shopping cart will "
+"exist for future purchase. If you feel that this is in error, please contact"
+" us with payment-specific questions at {email}."
+msgstr ""
+
+#: lms/djangoapps/shoppingcart/processors/PayTabs.py
+msgid "We're sorry, "
+msgstr ""
+
 #: lms/djangoapps/shoppingcart/reports.py
 msgid "Order Number"
 msgstr ""
@@ -7920,6 +7974,7 @@ msgstr ""
 
 #: lms/djangoapps/support/views/refund.py
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Email Address"
 msgstr ""
 
@@ -8406,7 +8461,6 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/set_course_mode_price_modal.html
 #: lms/templates/modal/_modal-settings-language.html
 #: lms/templates/modal/accessible_confirm.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "Close"
 msgstr ""
 
@@ -8420,7 +8474,6 @@ msgstr ""
 #: lms/templates/wiki/edit.html lms/templates/wiki/history.html
 #: lms/templates/wiki/includes/cheatsheet.html lms/templates/dashboard.html
 #: lms/templates/modal/_modal-settings-language.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "window open"
 msgstr ""
 
@@ -8655,8 +8708,8 @@ msgstr ""
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/courseware.html
 #: lms/templates/edxnotes/edxnotes.html
-#: themes/edx.org/lms/templates/dashboard.html
-#: themes/stanford-style/lms/templates/index.html
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+#: openedx/features/course_search/templates/course_search/course-search-fragment.html
 msgid "Search"
 msgstr ""
 
@@ -8887,13 +8940,6 @@ msgstr ""
 
 #: openedx/core/djangoapps/course_groups/views.py
 msgid "A cohort with the same name already exists."
-msgstr ""
-
-#: openedx/core/djangoapps/coursetalk/models.py
-msgid ""
-"The platform key associates CourseTalk widgets with your platform. "
-"Generally, it is the domain name for your platform. For example, if your "
-"platform is http://edx.org, the platform key is \"edx\"."
 msgstr ""
 
 #: openedx/core/djangoapps/credentials/models.py
@@ -9243,8 +9289,6 @@ msgstr ""
 #: cms/templates/register.html lms/templates/login.html
 #: lms/templates/provider_login.html lms/templates/register-form.html
 #: lms/templates/signup_modal.html lms/templates/sysadmin_dashboard.html
-#: themes/red-theme/cms/templates/login.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Password"
 msgstr ""
 
@@ -9300,14 +9344,20 @@ msgstr ""
 msgid "This name will be used on any certificates that you earn."
 msgstr ""
 
+#. Translators: This label appears above a field on the registration form
+#. meant to hold the user's full name.
+#. Translators: This example name is used as a placeholder in
+#. a field on the registration form meant to hold the user's name.
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Full Name in Arabic"
+msgstr ""
+
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This label appears above a field on the registration form
 #. meant to hold the user's public username.
 #: openedx/core/djangoapps/user_api/views.py cms/templates/register.html
 #: lms/templates/register-form.html lms/templates/register-shib.html
 #: lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Public Username"
 msgstr ""
 
@@ -10043,10 +10093,12 @@ msgstr ""
 
 #: cms/templates/404.html cms/templates/error.html
 #: lms/templates/static_templates/404.html
+#: themes/KKUx-theme/lms/templates/static_templates/404.html
 msgid "Page Not Found"
 msgstr ""
 
 #: cms/templates/404.html lms/templates/static_templates/404.html
+#: themes/KKUx-theme/lms/templates/static_templates/404.html
 msgid "Page not found"
 msgstr ""
 
@@ -10079,7 +10131,23 @@ msgstr ""
 
 #: cms/templates/course-create-rerun.html cms/templates/index.html
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Course Number"
+msgstr ""
+
+#: cms/templates/course_info.html
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html
+msgid "Course Updates"
+msgstr ""
+
+#: cms/templates/course_outline.html
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+msgid "Course Outline"
+msgstr ""
+
+#: cms/templates/course_outline.html cms/templates/index.html
+#: openedx/features/course_experience/templates/course_experience/welcome-message-fragment.html
+msgid "Dismiss"
 msgstr ""
 
 #: cms/templates/course_outline.html
@@ -10101,39 +10169,20 @@ msgstr ""
 msgid "Course Number:"
 msgstr ""
 
-#: cms/templates/index.html lms/templates/navigation.html
-#: lms/templates/sysadmin_dashboard.html
+#: cms/templates/index.html lms/templates/sysadmin_dashboard.html
 #: lms/templates/sysadmin_dashboard_gitlogs.html
 #: lms/templates/courseware/courses.html
-#: themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/navbar-not-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
 msgid "Courses"
-msgstr ""
-
-#: cms/templates/login.html cms/templates/widgets/header.html
-#: themes/red-theme/cms/templates/login.html
-msgid "Sign In"
-msgstr ""
-
-#: cms/templates/login.html themes/red-theme/cms/templates/login.html
-msgid "Sign In to {studio_name}"
-msgstr ""
-
-#: cms/templates/login.html themes/red-theme/cms/templates/login.html
-msgid "Don't have a {studio_name} Account? Sign up!"
-msgstr ""
-
-#: cms/templates/login.html themes/red-theme/cms/templates/login.html
-msgid "Required Information to Sign In to {studio_name}"
 msgstr ""
 
 #: cms/templates/login.html cms/templates/register.html
 #: lms/templates/help_modal.html lms/templates/login.html
 #: lms/templates/provider_login.html lms/templates/register-form.html
 #: lms/templates/register-shib.html lms/templates/signup_modal.html
-#: themes/red-theme/cms/templates/login.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "E-mail"
 msgstr ""
 
@@ -10143,21 +10192,17 @@ msgstr ""
 #: cms/templates/login.html cms/templates/manage_users.html
 #: cms/templates/manage_users_lib.html cms/templates/register.html
 #: lms/templates/login.html lms/templates/register-form.html
-#: lms/templates/register-shib.html themes/red-theme/cms/templates/login.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
+#: lms/templates/register-shib.html
 msgid "example: username@domain.com"
 msgstr ""
 
 #: cms/templates/login.html lms/templates/login.html
-#: themes/red-theme/cms/templates/login.html
 msgid "Forgot password?"
 msgstr ""
 
 #. Translators: This is the placeholder text for a field that requests the
 #. user's full name.
 #: cms/templates/register.html lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "example: Jane Doe"
 msgstr ""
 
@@ -10165,8 +10210,6 @@ msgstr ""
 #. pick a username
 #: cms/templates/register.html lms/templates/register-form.html
 #: lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "example: JaneDoe"
 msgstr ""
 
@@ -10175,7 +10218,12 @@ msgstr ""
 msgid "Course End Date"
 msgstr ""
 
+#: cms/templates/settings.html lms/templates/courseware/program_marketing.html
+msgid "Instructors"
+msgstr ""
+
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Requirements"
 msgstr ""
 
@@ -10193,90 +10241,37 @@ msgstr ""
 
 #: cms/templates/darklang/preview_lang.html
 #: lms/templates/darklang/preview_lang.html
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
 msgid "Preview Language Setting"
 msgstr ""
 
 #: cms/templates/maintenance/_force_publish_course.html
 #: lms/templates/problem.html lms/templates/shoppingcart/shopping_cart.html
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Reset"
 msgstr ""
 
 #: cms/templates/widgets/footer.html lms/templates/footer.html
-#: themes/edx.org/lms/templates/footer.html
-#: themes/red-theme/lms/templates/footer.html
 msgid "Legal"
 msgstr ""
 
-#: cms/templates/widgets/header.html lms/templates/navigation.html
+#: cms/templates/widgets/header.html lms/templates/navigation/navigation.html
 #: lms/templates/widgets/footer-language-selector.html
 msgid "Choose Language"
 msgstr ""
 
 #: cms/templates/widgets/header.html lms/templates/user_dropdown.html
-#: themes/edx.org/lms/templates/header.html
 msgid "Account"
 msgstr ""
 
-#: cms/templates/widgets/header.html lms/templates/navigation.html
+#: cms/templates/widgets/header.html
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
 #: lms/templates/static_templates/help.html
-#: themes/edx.org/lms/templates/header.html wiki/plugins/help/wiki_plugin.py
+#: themes/KKUx-theme/lms/templates/static_templates/help.html
+#: wiki/plugins/help/wiki_plugin.py
 msgid "Help"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Looking for help with {studio_name}?"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Hide {studio_name} Help"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "{studio_name} Documentation"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Access documentation on http://docs.edx.org"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "edX Documentation"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Enroll in edX101: Overview of Creating an edX Course"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Enroll in edX101"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Enroll in StudioX: Creating a Course with edX Studio"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Enroll in StudioX"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "Send an email to {email}"
-msgstr ""
-
-#: cms/templates/widgets/sock.html
-#: themes/edx.org/cms/templates/widgets/sock.html
-#: themes/stanford-style/lms/templates/static_templates/about.html
-msgid "Contact Us"
 msgstr ""
 
 #: cms/templates/widgets/user_dropdown.html lms/templates/user_dropdown.html
@@ -10288,7 +10283,6 @@ msgid "Usermenu dropdown"
 msgstr ""
 
 #: cms/templates/widgets/user_dropdown.html lms/templates/user_dropdown.html
-#: themes/red-theme/lms/templates/header.html
 msgid "Sign Out"
 msgstr ""
 
@@ -10412,56 +10406,55 @@ msgid "View all Courses"
 msgstr ""
 
 #: lms/templates/dashboard.html lms/templates/user_dropdown.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "Dashboard"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "You are not enrolled in any courses yet."
 msgstr ""
 
-#: lms/templates/dashboard.html lms/templates/navigation.html
-#: themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
 msgid "Explore courses"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Course-loading errors"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Search Your Courses"
 msgstr ""
 
 #: lms/templates/dashboard.html lms/templates/courseware/courseware.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "Clear search"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Account Status Info"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Order History"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Email Settings for {course_number}"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Receive course emails"
 msgstr ""
 
-#: lms/templates/dashboard.html themes/edx.org/lms/templates/dashboard.html
+#: lms/templates/dashboard.html
 msgid "Save Settings"
 msgstr ""
 
 #: lms/templates/dashboard.html lms/templates/ccx/enrollment.html
 #: lms/templates/dashboard/_dashboard_course_listing.html
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "Unenroll"
 msgstr ""
 
@@ -10503,6 +10496,7 @@ msgstr ""
 #: lms/templates/enroll_staff.html lms/templates/ccx/enrollment.html
 #: lms/templates/courseware/course_about.html
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Enroll"
 msgstr ""
 
@@ -10559,8 +10553,6 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
 #: lms/templates/instructor/instructor_dashboard_2/invalidate_registration_code_modal.html
 #: lms/templates/instructor/instructor_dashboard_2/set_course_mode_price_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Required Information"
 msgstr ""
 
@@ -10750,7 +10742,6 @@ msgid "It works! This is the default homepage for this Open edX instance."
 msgstr ""
 
 #: lms/templates/index.html lms/templates/courseware/courses.html
-#: themes/stanford-style/lms/templates/index.html
 msgid "Search for a course"
 msgstr ""
 
@@ -10811,7 +10802,6 @@ msgid "Sign up for {platform_name} today!"
 msgstr ""
 
 #: lms/templates/login-sidebar.html lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "Need Help?"
 msgstr ""
 
@@ -10837,7 +10827,6 @@ msgstr ""
 
 #: lms/templates/login.html lms/templates/register-shib.html
 #: lms/templates/register.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Processing your account information"
 msgstr ""
 
@@ -10985,62 +10974,6 @@ msgstr ""
 msgid "Raw data:"
 msgstr ""
 
-#: lms/templates/navigation.html themes/red-theme/lms/templates/header.html
-msgid "Global"
-msgstr ""
-
-#: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "{platform_name} Home Page"
-msgstr ""
-
-#: lms/templates/navigation.html lms/templates/learner_dashboard/programs.html
-#: themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "Programs"
-msgstr ""
-
-#. Translators: This is short for "System administration".
-#: lms/templates/navigation.html themes/red-theme/lms/templates/header.html
-msgid "Sysadmin"
-msgstr ""
-
-#: lms/templates/navigation.html lms/templates/shoppingcart/shopping_cart.html
-#: themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "Shopping Cart"
-msgstr ""
-
-#: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "How it Works"
-msgstr ""
-
-#: lms/templates/navigation.html themes/red-theme/lms/templates/header.html
-msgid "Schools"
-msgstr ""
-
-#: lms/templates/navigation.html
-msgid "Explore Courses"
-msgstr ""
-
-#: lms/templates/navigation.html lms/templates/register-form.html
-#: themes/edx.org/lms/templates/header.html
-#: themes/stanford-style/lms/templates/register-form.html
-msgid "Register"
-msgstr ""
-
-#: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "Sign in"
-msgstr ""
-
-#: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
-msgid ""
-"{begin_strong}Warning:{end_strong} Your browser is not fully supported. We "
-"strongly recommend using {chrome_link} or {ff_link}."
-msgstr ""
-
 #: lms/templates/notes.html lms/templates/textannotation.html
 #: lms/templates/videoannotation.html
 msgid "You do not have any notes."
@@ -11132,32 +11065,24 @@ msgid "Return To %s"
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid ""
 "We're sorry, but this version of your browser is not supported. Try again "
 "using a different browser or a newer version of your browser."
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "The following errors occurred while processing your registration:"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Sign up with {provider_name}"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Create your own {platform_name} account below"
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid ""
 "Required fields are noted by <strong class=\"indicator\">bold text and an "
 "asterisk (*)</strong>."
@@ -11166,135 +11091,112 @@ msgstr ""
 #. Translators: selected_provider is the name of an external, third-party user
 #. authentication service (like Google or LinkedIn).
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "You've successfully signed in with {selected_provider}."
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid ""
 "We just need a little more information before you start learning with "
 "{platform_name}."
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Please complete the following fields to register for an account. "
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Your legal name, used for any certificates you earn."
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Will be shown in any discussions or forums you participate in"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "cannot be changed later"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Welcome {username}"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Enter a Public Display Name:"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Public Display Name"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Additional Personal Information"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "example: New York"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Highest Level of Education Completed"
 msgstr ""
 
 #: lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Please share with us your reasons for registering with {platform_name}"
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Account Acknowledgements"
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
 #: lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "I agree to the {link_start}Terms of Service{link_end}"
 msgstr ""
 
 #: lms/templates/register-form.html lms/templates/register-shib.html
 #: lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "I agree to the {link_start}Honor Code{link_end}"
 msgstr ""
 
+#: lms/templates/register-form.html
+#: lms/templates/navigation/navbar-not-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
+msgid "Register"
+msgstr ""
+
 #: lms/templates/register-form.html lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-form.html
 msgid "Create My Account"
 msgstr ""
 
 #: lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Preferences for {platform_name}"
 msgstr ""
 
 #: lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Update my {platform_name} Account"
 msgstr ""
 
 #: lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Welcome {username}!  Please set your preferences below"
 msgstr ""
 
 #: lms/templates/register-shib.html lms/templates/signup_modal.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Enter a public username:"
 msgstr ""
 
 #: lms/templates/register-shib.html
-#: themes/stanford-style/lms/templates/register-shib.html
 msgid "Update My Account"
 msgstr ""
 
 #: lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "Registration Help"
 msgstr ""
 
 #: lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "Already registered?"
 msgstr ""
 
 #: lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "Log in"
 msgstr ""
 
@@ -11310,7 +11212,6 @@ msgid ""
 msgstr ""
 
 #: lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "Next Steps"
 msgstr ""
 
@@ -11327,7 +11228,6 @@ msgid "Need help registering with {platform_name}?"
 msgstr ""
 
 #: lms/templates/register-sidebar.html
-#: themes/stanford-style/lms/templates/register-sidebar.html
 msgid "View our FAQs for answers to commonly asked questions."
 msgstr ""
 
@@ -11529,10 +11429,12 @@ msgid "Page"
 msgstr ""
 
 #: lms/templates/staticbook.html
+#: lms/templates/courseware/program_marketing.html
 msgid "Previous page"
 msgstr ""
 
 #: lms/templates/staticbook.html
+#: lms/templates/courseware/program_marketing.html
 msgid "Next page"
 msgstr ""
 
@@ -11704,7 +11606,7 @@ msgid ""
 " not mean to do this, {undo_link_start}you can re-subscribe{link_end}."
 msgstr ""
 
-#: lms/templates/user_dropdown.html themes/red-theme/lms/templates/header.html
+#: lms/templates/user_dropdown.html
 msgid "Dashboard for:"
 msgstr ""
 
@@ -12851,22 +12753,18 @@ msgid "Please wait while we retrieve your order details."
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Enroll In {course_name} | Choose Your Track"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Sorry, there was an error when trying to enroll you"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Pursue Academic Credit with a Verified Certificate"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Become eligible for academic credit and highlight your new skills and "
 "knowledge with a verified certificate. Use this valuable credential to "
@@ -12875,38 +12773,32 @@ msgid ""
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Benefits of a Verified Certificate"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Eligible for credit:{b_end} Receive academic credit after "
 "successfully completing the course"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Official:{b_end} Receive an instructor-signed certificate with the "
 "institution's logo"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Easily shareable:{b_end} Add the certificate to your CV or resume, "
 "or post it directly on LinkedIn"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Pursue a Verified Certificate"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Highlight your new knowledge and skills with a verified certificate. Use "
 "this valuable credential to improve your job prospects and advance your "
@@ -12914,47 +12806,40 @@ msgid ""
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Official: {b_end}Receive an instructor-signed certificate with the "
 "institution's logo"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Easily shareable: {b_end}Add the certificate to your CV or resume, "
 "or post it directly on LinkedIn"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Motivating: {b_end}Give yourself an additional incentive to "
 "complete the course"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course"
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Audit this course for free and have complete access to all the course "
 "material, activities, tests, and forums."
 msgstr ""
 
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course (No Certificate)"
 msgstr ""
 
 #. Translators: b_start notes the beginning of a section of text bolded for
 #. emphasis, and b_end marks the end of the bolded text.
 #: lms/templates/course_modes/choose.html
-#: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Audit this course for free and have complete access to all the course "
 "material, activities, tests, and forums.  {b_start}Please note that this "
@@ -12972,6 +12857,7 @@ msgstr ""
 
 #: lms/templates/courseware/accordion.html
 #: lms/templates/courseware/progress.html
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "due {date}"
 msgstr ""
 
@@ -12980,14 +12866,17 @@ msgid "{section_format} due {{date}}"
 msgstr ""
 
 #: lms/templates/courseware/accordion.html
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "This content is graded"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "An error occurred. Please try again later."
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid ""
 "The currently logged-in user account does not have permission to enroll in "
 "this course. You may need to {start_logout_tag}log out{end_tag} then try the"
@@ -12996,28 +12885,34 @@ msgid ""
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "You are enrolled in this course"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
 #: lms/templates/dashboard/_dashboard_course_listing.html
 #: lms/templates/shoppingcart/registration_code_receipt.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "View Course"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "This course is in your <a href=\"{cart_link}\">cart</a>."
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Course is full"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Enrollment in this course is by invitation only"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Enrollment is Closed"
 msgstr ""
 
@@ -13026,46 +12921,54 @@ msgid "Add {course_name} to Cart <span>({price} USD)</span>"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Enroll in {course_name}"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "View About Page in studio"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Classes Start"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Classes End"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Estimated Effort"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Prerequisites"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
 #: lms/templates/dashboard/_dashboard_course_listing.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid ""
 "You must successfully complete {link_start}{prc_display}{link_end} before "
 "you begin this course."
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "Additional Resources"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
 msgid "enroll"
 msgstr ""
 
 #: lms/templates/courseware/course_about_sidebar_header.html
-#: themes/stanford-style/lms/templates/courseware/course_about_sidebar_header.html
 msgid "Share with friends and family!"
 msgstr ""
 
@@ -13082,7 +12985,6 @@ msgid "I just enrolled in {number} {title} through {platform} {url}"
 msgstr ""
 
 #: lms/templates/courseware/course_about_sidebar_header.html
-#: themes/stanford-style/lms/templates/courseware/course_about_sidebar_header.html
 msgid "Tweet that you've enrolled in this course"
 msgstr ""
 
@@ -13091,7 +12993,6 @@ msgid "Post a Facebook message to say you've enrolled in this course"
 msgstr ""
 
 #: lms/templates/courseware/course_about_sidebar_header.html
-#: themes/stanford-style/lms/templates/courseware/course_about_sidebar_header.html
 msgid "Email someone to say you've enrolled in this course"
 msgstr ""
 
@@ -13121,6 +13022,7 @@ msgstr ""
 
 #: lms/templates/courseware/courseware-chromeless.html
 #: lms/templates/courseware/courseware.html
+#: openedx/features/course_bookmarks/templates/course_bookmarks/course-bookmarks.html
 msgid "{course_number} Courseware"
 msgstr ""
 
@@ -13195,6 +13097,8 @@ msgid "Welcome to {org}'s {course_name}!"
 msgstr ""
 
 #: lms/templates/courseware/info.html
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Resume Course"
 msgstr ""
 
@@ -13211,7 +13115,12 @@ msgid "Handout Navigation"
 msgstr ""
 
 #: lms/templates/courseware/info.html
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
 msgid "Course Tools"
+msgstr ""
+
+#: lms/templates/courseware/info.html
+msgid "Reviews"
 msgstr ""
 
 #: lms/templates/courseware/news.html
@@ -13220,6 +13129,133 @@ msgstr ""
 
 #: lms/templates/courseware/news.html
 msgid "Updates to Discussion Posts You Follow"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Purchase the Program"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Start Learning"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "View Program Trailer"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Play"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Number of Courses"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "{number_of_courses} courses in program"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Average Length"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "{weeks_to_complete} weeks per course"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Effort"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid ""
+"{min_hours_effort_per_week}-{max_hours_effort_per_week} hours per week, per "
+"course"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Price (USD)"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Original Price"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "${oldPrice}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Discounted Price"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "${newPrice}{htmlEnd} for entire program"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "You save ${discount_value} {currency}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "${full_program_price} for entire program"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Overview"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Job Outlook"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "What You'll Learn"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "{position} at {organization}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+#: lms/templates/static_templates/faq.html
+#: themes/KKUx-theme/lms/templates/static_templates/faq.html
+msgid "FAQ"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Endorser Image"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Meet the Instructors"
+msgstr ""
+
+#. Translators: Pagination range contains ordinal numbers of the first and the
+#. last instructor
+#. whose information is shown on the current page.
+#: lms/templates/courseware/program_marketing.html
+msgid "{pagination_range} of {number_of_instructors}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Courses in the {program_type}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Starts {course_start_datetime}"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Instructor - Paced"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "Self - Paced"
+msgstr ""
+
+#: lms/templates/courseware/program_marketing.html
+msgid "YouTube Video"
 msgstr ""
 
 #: lms/templates/courseware/progress.html
@@ -14112,7 +14148,7 @@ msgstr ""
 
 #: lms/templates/emails/business_order_confirmation_email.txt
 #: lms/templates/emails/order_confirmation_email.txt
-msgid "Total billed to credit/debit card: {currency_symbol}{total_cost}"
+msgid "Total billed to credit/debit card: {total_cost} {currency}"
 msgstr ""
 
 #: lms/templates/emails/business_order_confirmation_email.txt
@@ -14229,14 +14265,12 @@ msgid ""
 msgstr ""
 
 #: lms/templates/emails/confirm_email_change.txt
-#: themes/stanford-style/lms/templates/emails/confirm_email_change.txt
 msgid ""
 "We keep a log of old e-mails, so if this request was unintentional, we can "
 "investigate."
 msgstr ""
 
 #: lms/templates/emails/email_change.txt
-#: themes/stanford-style/lms/templates/emails/email_change.txt
 msgid ""
 "We received a request to change the e-mail associated with your "
 "{platform_name} account from {old_email} to {new_email}. If this is correct,"
@@ -14559,9 +14593,7 @@ msgstr ""
 #: lms/templates/embargo/default_courseware.html
 #: lms/templates/embargo/default_enrollment.html
 #: lms/templates/static_templates/embargo.html
-#: themes/stanford-style/lms/templates/embargo/default_courseware.html
-#: themes/stanford-style/lms/templates/embargo/default_enrollment.html
-#: themes/stanford-style/lms/templates/static_templates/embargo.html
+#: themes/KKUx-theme/lms/templates/static_templates/embargo.html
 msgid "This Course Unavailable In Your Country"
 msgstr ""
 
@@ -15505,6 +15537,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Organization Contact"
 msgstr ""
 
@@ -15608,6 +15641,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/invalidate_registration_code_modal.html
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Enrollment Code"
 msgstr ""
 
@@ -16193,12 +16227,17 @@ msgid "Show the status for the tasks that you submitted for this problem."
 msgstr ""
 
 #: lms/templates/learner_dashboard/_dashboard_navigation_courses.html
-#: themes/edx.org/lms/templates/dashboard.html
 msgid "My Courses"
 msgstr ""
 
 #: lms/templates/learner_dashboard/program_details.html
 msgid "Program Details"
+msgstr ""
+
+#: lms/templates/learner_dashboard/programs.html
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
+msgid "Programs"
 msgstr ""
 
 #: lms/templates/modal/_modal-settings-language.html
@@ -16235,6 +16274,53 @@ msgstr ""
 
 #: lms/templates/modal/accessible_confirm.html
 msgid "open"
+msgstr ""
+
+#. Translators: This is short for "System administration".
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
+msgid "Sysadmin"
+msgstr ""
+
+#: lms/templates/navigation/navbar-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-authenticated.html
+#: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
+msgid "Shopping Cart"
+msgstr ""
+
+#: lms/templates/navigation/navbar-logo-header.html
+#: lms/templates/navigation/bootstrap/navbar-logo-header.html
+msgid "{platform_name} Home Page"
+msgstr ""
+
+#: lms/templates/navigation/navbar-not-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
+msgid "How it Works"
+msgstr ""
+
+#: lms/templates/navigation/navbar-not-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
+msgid "Schools"
+msgstr ""
+
+#: lms/templates/navigation/navbar-not-authenticated.html
+msgid "Explore Courses"
+msgstr ""
+
+#: lms/templates/navigation/navbar-not-authenticated.html
+#: lms/templates/navigation/bootstrap/navbar-not-authenticated.html
+msgid "Sign in"
+msgstr ""
+
+#: lms/templates/navigation/navigation.html
+msgid "Global"
+msgstr ""
+
+#: lms/templates/navigation/navigation.html
+msgid ""
+"{begin_strong}Warning:{end_strong} Your browser is not fully supported. We "
+"strongly recommend using {chrome_link} or {ff_link}."
 msgstr ""
 
 #: lms/templates/peer_grading/peer_grading.html
@@ -16275,6 +16361,7 @@ msgstr ""
 
 #: lms/templates/peer_grading/peer_grading.html
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Available"
 msgstr ""
 
@@ -16515,32 +16602,41 @@ msgstr ""
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Billing Details"
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid ""
 "You can proceed to payment at any point in time. Any additional information "
 "you provide will be included in your receipt."
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Purchasing Organizational Details"
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Purchasing organization"
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Purchase order number (if any)"
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "email@example.com"
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Additional Receipt Recipient"
 msgstr ""
 
@@ -16551,21 +16647,27 @@ msgid ""
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
 msgid "Payment processing occurs on a separate secure site."
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Your Shopping cart is currently empty."
 msgstr ""
 
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "View Courses"
 msgstr ""
 
 #: lms/templates/shoppingcart/cybersource_form.html
 #: lms/templates/shoppingcart/shopping_cart_flow.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/pay_tabs_form.html
 msgid "Payment"
 msgstr ""
 
@@ -16618,21 +16720,25 @@ msgid "There was an error processing your order!"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Thank you for your purchase!"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/registration_code_redemption.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "View Dashboard"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid ""
 "You have successfully been enrolled for {course_names}. The following "
 "receipt has been emailed to {receipient_emails}"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid ""
 "You have successfully purchased <b>{number} course registration code</b> for"
 " {course_names}."
@@ -16643,10 +16749,12 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "The following receipt has been emailed to {receipient_emails}"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid ""
 "Please send each professional one of these unique registration codes to "
 "enroll into the course. The confirmation/receipt email you will receive has "
@@ -16654,50 +16762,62 @@ msgid ""
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Enrollment Link"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Used"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Invalid"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Date of purchase"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Print Receipt"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Billed To Details"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "N/A"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Purchase Order Number"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Company Contact Name"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Company Contact Email"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Recipient Name"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Recipient Email"
 msgstr ""
 
@@ -16710,6 +16830,7 @@ msgid "Credit Card Number"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Address 1"
 msgstr ""
 
@@ -16723,26 +16844,34 @@ msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Registration for:"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Price per student:"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Discount Applied:"
 msgstr ""
 
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Students"
 msgstr ""
 
 #. Translators: Please keep the "<del>" and "</del>" tags around your
 #. translation of the word "this" in your translation.
 #: lms/templates/shoppingcart/receipt.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
 msgid "Note: items with strikethough like <del>this</del> have been refunded."
 msgstr ""
 
@@ -16819,6 +16948,7 @@ msgid "Activate Course Enrollment"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid ""
 "{course_names} has been removed because the enrollment period has closed."
 msgid_plural ""
@@ -16826,47 +16956,66 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+#. Translators: currency_symbol is a symbol indicating type of currency, ex
+#. "$".
+#. This string would look like this when all variables are in:
+#. "$500.00"
 #: lms/templates/shoppingcart/shopping_cart.html
+msgid "{currency_symbol}{price}"
+msgstr ""
+
+#: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Cover Image"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Students:"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Input quantity and press enter."
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Increase"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Decrease"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Remove"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Discount or activation code"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "discount or activation code"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Apply"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "code has been applied"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "TOTAL:"
 msgstr ""
 
@@ -16881,17 +17030,20 @@ msgid "{currency_symbol}{price} {currency_abbr}"
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid ""
 "After this purchase is complete, a receipt is generated with relative "
 "billing details and registration codes for students."
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid ""
 "After this purchase is complete, {username} will be enrolled in this course."
 msgstr ""
 
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
 msgid "Empty Cart"
 msgstr ""
 
@@ -16908,6 +17060,7 @@ msgid "Confirmation"
 msgstr ""
 
 #: lms/templates/static_templates/404.html
+#: themes/KKUx-theme/lms/templates/static_templates/404.html
 msgid ""
 "The page that you were looking for was not found. Go back to the "
 "{link_start}homepage{link_end} or let us know about any pages that may have "
@@ -16927,10 +17080,20 @@ msgstr ""
 #: lms/templates/static_templates/press.html
 #: lms/templates/static_templates/privacy.html
 #: lms/templates/static_templates/tos.html
+#: themes/KKUx-theme/lms/templates/static_templates/blog.html
+#: themes/KKUx-theme/lms/templates/static_templates/donate.html
+#: themes/KKUx-theme/lms/templates/static_templates/faq.html
+#: themes/KKUx-theme/lms/templates/static_templates/help.html
+#: themes/KKUx-theme/lms/templates/static_templates/jobs.html
+#: themes/KKUx-theme/lms/templates/static_templates/media-kit.html
+#: themes/KKUx-theme/lms/templates/static_templates/news.html
+#: themes/KKUx-theme/lms/templates/static_templates/press.html
+#: themes/KKUx-theme/lms/templates/static_templates/privacy.html
 msgid "This page left intentionally blank. Feel free to add your own content."
 msgstr ""
 
 #: lms/templates/static_templates/embargo.html
+#: themes/KKUx-theme/lms/templates/static_templates/embargo.html
 msgid ""
 "Our system indicates that you are trying to access this {platform_name} "
 "course from a country or region currently subject to U.S. economic and trade"
@@ -16938,48 +17101,50 @@ msgid ""
 " export controls,we cannot allow you to access this course at this time."
 msgstr ""
 
-#: lms/templates/static_templates/faq.html
-#: themes/red-theme/lms/templates/footer.html
-msgid "FAQ"
-msgstr ""
-
 #: lms/templates/static_templates/jobs.html
-#: themes/red-theme/lms/templates/footer.html
+#: themes/KKUx-theme/lms/templates/static_templates/jobs.html
 msgid "Jobs"
 msgstr ""
 
 #: lms/templates/static_templates/news.html
 #: lms/templates/static_templates/press.html
+#: themes/KKUx-theme/lms/templates/static_templates/news.html
+#: themes/KKUx-theme/lms/templates/static_templates/press.html
 msgid "In the Press"
 msgstr ""
 
 #: lms/templates/static_templates/server-down.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-down.html
 msgid "Currently the {platform_name} servers are down"
 msgstr ""
 
 #: lms/templates/static_templates/server-down.html
 #: lms/templates/static_templates/server-overloaded.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-down.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-overloaded.html
 msgid ""
 "Our staff is currently working to get the site back up as soon as possible. "
 "Please email us at {tech_support_email} to report any problems or downtime."
 msgstr ""
 
 #: lms/templates/static_templates/server-error.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-error.html
 msgid "There has been a 500 error on the {platform_name} servers"
 msgstr ""
 
 #: lms/templates/static_templates/server-error.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-error.html
 msgid ""
 "Please wait a few seconds and then reload the page. If the problem persists,"
 " please email us at {email}."
 msgstr ""
 
 #: lms/templates/static_templates/server-overloaded.html
+#: themes/KKUx-theme/lms/templates/static_templates/server-overloaded.html
 msgid "Currently the {platform_name} servers are overloaded"
 msgstr ""
 
 #: lms/templates/student_account/account_settings.html
-#: themes/red-theme/lms/templates/header.html
 msgid "Account Settings"
 msgstr ""
 
@@ -17241,168 +17406,458 @@ msgstr ""
 msgid "Add article"
 msgstr ""
 
-#: themes/edx.org/cms/templates/widgets/sock.html
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
+msgid "Language Code"
+msgstr ""
+
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
+msgid "For example use en for English"
+msgstr ""
+
+#: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview_lang_include.html
+msgid "Please refresh the page to see the changes applied."
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "All Rights Reserved"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "Attribution"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "Noncommercial"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "No Derivatives"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "Share Alike"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "Creative Commons licensed content, with terms as follow:"
+msgstr ""
+
+#: openedx/core/lib/license/templates/license.html
+msgid "Some Rights Reserved"
+msgstr ""
+
+#: openedx/features/course_bookmarks/templates/course_bookmarks/course-bookmarks.html
+#: openedx/features/course_search/templates/course_search/course-search-fragment.html
+msgid "My Bookmarks"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-dates-fragment.html
+msgid "Important Course Dates"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-dates-fragment.html
+msgid "Today is {date}"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+#: openedx/features/course_search/templates/course_search/course-search-fragment.html
+msgid "Search the course"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+msgid "Start Course"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "{subsection_format} due {{date}}"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "This is your last visited course section."
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "This course has not started yet."
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "We're still working on course content."
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid ""
-"Access Course Staff Support on the Partner Portal to submit or review "
-"support tickets"
+"This course has not started yet, and will launch on {launch_date_html}."
 msgstr ""
 
-#: themes/edx.org/cms/templates/widgets/sock.html
-msgid "edX Partner Portal"
+#: openedx/features/course_experience/templates/course_experience/course-reviews-fragment.html
+msgid "Course Reviews"
 msgstr ""
 
-#: themes/edx.org/lms/templates/dashboard.html
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html
+msgid "This course does not have any updates."
+msgstr ""
+
+#: openedx/features/course_search/templates/course_search/course-search-fragment.html
+msgid "Search Results"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/courseware/course_about.html
+msgid "Add {course_name} to Cart <span>({price})</span>"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+msgid "Phone Number"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/shoppingcart/billing_details.html
+msgid "Postal Code"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+msgid "Phone number"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/shoppingcart/receipt.html
+msgid "Postal code"
+msgstr ""
+
+#. Translators: currency_symbol is a symbol indicating type of currency, ex
+#. "$". currency_abbr is
+#. an abbreviation for the currency, ex "USD". This string would look like
+#. this
+#. when all variables are in:
+#. "$500.00 USD"
+#: themes/KKUx-theme/lms/templates/shoppingcart/shopping_cart.html
+msgid "{price} {currency_abbr}"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "About US"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+#, python-format
 msgid ""
-"Browse recently launched courses and see what's new in your favorite "
-"subjects."
+"Studies predict that more than 65% of today's students will be working in a "
+"new and innovative futuristic jobs and is not present in the current time."
 msgstr ""
 
-#: themes/edx.org/lms/templates/dashboard.html
-msgid "Explore New Courses"
-msgstr ""
-
-#: themes/edx.org/lms/templates/footer.html
-msgid "Page Footer"
-msgstr ""
-
-#: themes/edx.org/lms/templates/footer.html
-msgid "About edX"
-msgstr ""
-
-#: themes/edx.org/lms/templates/footer.html
-msgid "edX Home Page"
-msgstr ""
-
-#: themes/edx.org/lms/templates/footer.html
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
 msgid ""
-"© 2012-{year} edX Inc.  All rights reserved except where noted.  EdX, Open "
-"edX and the edX and Open EdX logos are registered trademarks or trademarks "
-"of edX Inc."
+"By 2020, the Fourth Industrial Revolution will bring to our world advanced "
+"technologies such as robots, artificial intelligence and biotechnology. "
 msgstr ""
 
-#: themes/edx.org/lms/templates/header.html
-msgid "Main"
-msgstr ""
-
-#: themes/edx.org/lms/templates/header.html
-#: themes/red-theme/lms/templates/header.html
-msgid "Find Courses"
-msgstr ""
-
-#: themes/edx.org/lms/templates/header.html
-msgid "Schools & Partners"
-msgstr ""
-
-#: themes/edx.org/lms/templates/course_modes/choose.html
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
 msgid ""
-"{b_start}Support our Mission: {b_end} EdX, a non-profit, relies on verified "
-"certificates to help fund free education for everyone globally"
+"This development will require changing the way that we live and work. In the"
+" future, some jobs may disappear .. others may grow ... while other new jobs"
+" may appear. The only fact is that job seekers in future will need to "
+"strengthen their skills and gain new ones to keep pace with the demands of "
+"the future."
 msgstr ""
 
-#. Translators: 'EdX', 'edX', and 'Open edX' are trademarks of 'edX Inc.'.
-#. Please do not translate any of these trademarks and company names.
-#: themes/red-theme/lms/templates/footer.html
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Kingdom Vision 2030"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
 msgid ""
-"EdX, Open edX, and the edX and Open edX logos are registered trademarks or "
-"trademarks of {link_start}edX Inc.{link_end}"
+"focused on this value, since one of its goals is Learning for Working. In "
+"order to boost the economy by focusing on the development of basic skills "
+"and personal talents. According to the World Economic Forum 2016, The Future"
+" of Jobs"
 msgstr ""
 
-#: themes/red-theme/lms/templates/footer.html
-msgid ""
-"{tos_link_start}Terms of Service{tos_link_end} and {honor_link_start}Honor "
-"Code{honor_link_end}"
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "the top 10 most important skills needed by an employee in 2020"
 msgstr ""
 
-#: themes/red-theme/lms/templates/header.html
-msgid "More options dropdown"
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Complex problem saving"
 msgstr ""
 
-#: themes/red-theme/lms/templates/header.html
-msgid "My Profile"
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Critical thinking"
 msgstr ""
 
-#: themes/red-theme/lms/templates/header.html
-msgid "Register Now"
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Creativity"
 msgstr ""
 
-#: themes/stanford-style/lms/templates/footer.html
-#: themes/stanford-style/lms/templates/static_templates/tos.html
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "People management"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Coordinating with others"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Emotional intelligence"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Judgment and decision-making"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Service orientation"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Negotiation"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/about.html
+msgid "Cognitive flexibility"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/contact.html
+msgid "Thank you for your interest, You can contact us anytime by:"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/contact.html
+msgid "e-mail: kkux@kku.edu.sa"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/contact.html
+msgid "Twitter account: @kkuxedu"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/contact.html
+msgid "Calling or WhatsApp 0531603182"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid "Copyright"
 msgstr ""
 
-#: themes/stanford-style/lms/templates/footer.html
-msgid "Copyright {year}. All rights reserved."
-msgstr ""
-
-#: themes/stanford-style/lms/templates/index.html
-msgid "For anyone, anywhere, anytime"
-msgstr ""
-
-#: themes/stanford-style/lms/templates/register-sidebar.html
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"You will receive an activation email.  You must click on the activation link"
-" to complete the process.  Don't see the email?  Check your spam folder and "
-"mark emails from class.stanford.edu as 'not spam', since you'll want to be "
-"able to receive email from your courses."
+"KKUx recognizes and respects intellectual property rights (that include "
+"software or document copyright, design rights, patents, and source code "
+"licenses) associated with its platform."
 msgstr ""
 
-#: themes/stanford-style/lms/templates/register-sidebar.html
-msgid "Need help in registering with {platform_name}?"
-msgstr ""
-
-#: themes/stanford-style/lms/templates/register-sidebar.html
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"Once registered, most questions can be answered in the course specific "
-"discussion forums or through the FAQs."
+"The contained information herewith, which provided by KKUx, are for general "
+"and education purposes only. "
 msgstr ""
 
-#: themes/stanford-style/lms/templates/emails/activation_email.txt
-msgid "Thank you for signing up for {platform_name}."
-msgstr ""
-
-#: themes/stanford-style/lms/templates/emails/activation_email.txt
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"Change your life and start learning today by activating your {platform_name}"
-" account. Click on the link below or copy and paste it into your browser's "
-"address bar."
+"King Khalid University and its administration do not bear, in any way, any "
+"damage or losses arising from using or dealing with the KKUx"
 msgstr ""
 
-#: themes/stanford-style/lms/templates/emails/activation_email.txt
-#: themes/stanford-style/lms/templates/emails/email_change.txt
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"If you didn't request this, you don't need to do anything; you won't receive"
-" any more email from us. Please do not reply to this e-mail; if you require "
-"assistance, check the about section of the {platform_name} Courses web site."
+"Despite of the exerted efforts, King Khalid University do not guarantees the"
+" availability of the portal pages and as well do not bear, in any way, the "
+"responsibility of any damages and losses arising from the unavailability. "
+"platform, whether directly or indirectly. "
 msgstr ""
 
-#: themes/stanford-style/lms/templates/emails/confirm_email_change.txt
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid "Publishing Rules"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"This is to confirm that you changed the e-mail associated with "
-"{platform_name} from {old_email} to {new_email}. If you did not make this "
-"request, please contact us at"
+"For the purpose of safeguarding the identity of King Khalid University and "
+"provide an enriched content contribute in serving the community as whole, "
+"kindly be adhere with the followings : "
 msgstr ""
 
-#: themes/stanford-style/lms/templates/emails/reject_name_change.txt
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
 msgid ""
-"We are sorry. Our course staff did not approve your request to change your "
-"name from {old_name} to {new_name}. If you need further assistance, please "
-"e-mail the tech support at {email}"
+"Do not exposure to people, agencies and institutions by defamation, "
+"depreciation, insult or slander."
 msgstr ""
 
-#: themes/stanford-style/lms/templates/static_templates/tos.html
-msgid "Put your Terms of Service here!"
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Do not publish programs of illegal copyright, trademark or intellectual "
+"property rights."
 msgstr ""
 
-#: themes/stanford-style/lms/templates/static_templates/tos.html
-msgid "Put your Privacy Policy here!"
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Quoting of any protected-copyright content strictly prohibited unless "
+"approval from the source has been obtained."
 msgstr ""
 
-#: themes/stanford-style/lms/templates/static_templates/tos.html
-msgid "Put your Honor Code here!"
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Praising, promotion, correction, or support of each deviated intellectual "
+"thought and futile beliefs strictly prohibited."
 msgstr ""
 
-#: themes/stanford-style/lms/templates/static_templates/tos.html
-msgid "Put your Copyright Text here!"
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"False links and URLs that being contrary to Islam or intending to harm Saudi"
+" National Security are strictly prohibited."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Do not put any image shamelessly or contrary to the teachings of Islam, or "
+"any pictures that hurt souls."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Publication features must use to serve the academic and scientific purposes "
+"of King Khalid University University."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Any publication that agitates or threatens sectarianism, racialism and "
+"tribalism is not permissible. "
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Every member must refrain from advertising and promotion of non-university "
+"goods and services, unless he gains permissions."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"The KKUx is not hold responsible for any copyright or trademarks "
+"infringements. "
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"The KKUx is in no case accountable for the alteration or loss of any content"
+" or text causing from technical turbulence or development works."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"The university's name, its seal, the word mark, and the university logo are "
+"among the words and symbols that owned by King Khalid University and "
+"protected by law. Use of trademarks must comply with the prior permissions."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid "Data Use Policy"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"KKUx is committed to protecting your privacy in accordance with this Policy."
+" This Privacy Policy applies to personally identifiable information KKUx "
+"collects through this platform and does not apply to information KKU "
+"collects in any other manner. Your use of KKUx is subject to this Privacy "
+"Policy and KKU Terms of Use."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"Please read this Privacy Policy carefully to understand how KKUx treats "
+"information collected through this platform."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid "Collection and Retention of Information:"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"In some areas of the Website, such as when you submit an application for "
+"admission, request information, KKUx may request that you provide personal "
+"information, including, as applicable, your name, address, e-mail address, "
+"telephone number, credit card number, contact information, billing "
+"information and any other information from which your unique identity is "
+"discernible. In other areas of the Website, KKUx collects or may collect "
+"demographic information that is not unique to you such as your country of "
+"residence, age, level of education, gender, and other similar types of "
+"information. Sometimes KKUx collects or may collect a combination of these "
+"two types of information. KKUx also gathers or may gather certain "
+"information about your use of the Website, such as what areas you visit and "
+"what services you access. In addition, there is information about your "
+"computer hardware and software that is or may be collected by KKUx. This "
+"information can include without limitation your IP address, browser type, "
+"domain names, access times and referring website addresses.In order to "
+"maintain your information in an efficient manner, KKUx retains the "
+"information it gathers about you to make your repeat visits to the Website "
+"more efficient, practical, and relevant."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid "Information Sharing and Disclosure:"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"KKUx does not disclose to third parties your personal information, combined "
+"personal and demographic information or information about your use of the "
+"Website (such as the areas you visit or the services you access), except as "
+"set forth in the following subparagraphs.\\u200b "
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"KKUx may disclose such information to companies and individuals KKUx works "
+"with in carrying out its functions, including companies and individuals "
+"authorized to perform functions on its behalf."
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"KKUx may disclose such information if legally required to do so, if "
+"requested to do so by a governmental entity. "
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid "Changes to this Privacy Policy:"
+msgstr ""
+
+#: themes/KKUx-theme/lms/templates/static_templates/honor.html
+#: themes/KKUx-theme/lms/templates/static_templates/tos.html
+msgid ""
+"KKUx reserves the right to modify this Privacy Policy from time to time and "
+"such modification shall be effective upon posting by KKUx on this Website. "
+"If KKUx makes any material changes to the manner in which your personal "
+"information will be used under this Privacy Policy, you will be notified of "
+"such changes and will be given the opportunity to object to such new or "
+"different use. Please check this Privacy Policy periodically for updates or "
+"changes. Your continued use of this Website following the posting of any "
+"changes constitutes acceptance of those changes."
 msgstr ""
 
 #: cms/templates/404.html
@@ -17907,10 +18362,6 @@ msgid "Learn more about Course Re-runs"
 msgstr ""
 
 #: cms/templates/course_info.html
-msgid "Course Updates"
-msgstr ""
-
-#: cms/templates/course_info.html
 msgid "New Update"
 msgstr ""
 
@@ -17919,10 +18370,6 @@ msgid ""
 "Use course updates to notify students of important dates or exams, highlight"
 " particular discussions in the forums, announce schedule changes, and "
 "respond to student questions. You add or edit updates in HTML."
-msgstr ""
-
-#: cms/templates/course_outline.html
-msgid "Course Outline"
 msgstr ""
 
 #: cms/templates/course_outline.html
@@ -17936,10 +18383,6 @@ msgid ""
 "sure to review and reset all dates, including the Course Start Date; set up "
 "the course team; review course updates and other assets for dated material; "
 "and seed the discussions and wiki."
-msgstr ""
-
-#: cms/templates/course_outline.html cms/templates/index.html
-msgid "Dismiss"
 msgstr ""
 
 #: cms/templates/course_outline.html
@@ -19383,6 +19826,22 @@ msgstr ""
 msgid "Learn more about content libraries"
 msgstr ""
 
+#: cms/templates/login.html cms/templates/widgets/header.html
+msgid "Sign In"
+msgstr ""
+
+#: cms/templates/login.html
+msgid "Sign In to {studio_name}"
+msgstr ""
+
+#: cms/templates/login.html
+msgid "Don't have a {studio_name} Account? Sign up!"
+msgstr ""
+
+#: cms/templates/login.html
+msgid "Required Information to Sign In to {studio_name}"
+msgstr ""
+
 #: cms/templates/manage_users.html
 msgid "Course Team Settings"
 msgstr ""
@@ -19946,10 +20405,6 @@ msgstr ""
 
 #: cms/templates/settings.html
 msgid "Add Learning Outcome"
-msgstr ""
-
-#: cms/templates/settings.html
-msgid "Instructors"
 msgstr ""
 
 #: cms/templates/settings.html
@@ -20596,11 +21051,55 @@ msgid "Label"
 msgstr ""
 
 #: cms/templates/widgets/sock.html
+msgid "Looking for help with {studio_name}?"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Hide {studio_name} Help"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "{studio_name} Documentation"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Access documentation on http://docs.edx.org"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "edX Documentation"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
 msgid "Access the Open edX Portal"
 msgstr ""
 
 #: cms/templates/widgets/sock.html
 msgid "Open edX Portal"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Enroll in edX101: Overview of Creating an edX Course"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Enroll in edX101"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Enroll in StudioX: Creating a Course with edX Studio"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Enroll in StudioX"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Send an email to {email}"
+msgstr ""
+
+#: cms/templates/widgets/sock.html
+msgid "Contact Us"
 msgstr ""
 
 #: cms/templates/widgets/tabs-aggregator.html

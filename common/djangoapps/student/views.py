@@ -175,7 +175,7 @@ def index(request, extra_context=None, user=AnonymousUser()):
         extra_context = {}
 
     courses = get_courses(user)
-
+    enrollments = {}
     if configuration_helpers.get_value(
             "ENABLE_COURSE_SORTING_BY_START_DATE",
             settings.FEATURES["ENABLE_COURSE_SORTING_BY_START_DATE"],
@@ -184,7 +184,16 @@ def index(request, extra_context=None, user=AnonymousUser()):
     else:
         courses = sort_by_announcement(courses)
 
-    context = {'courses': courses}
+    courses_list = []
+    upcoming_course = []
+    for course in courses:
+        if course.has_started():
+            courses_list.append(course)
+        else:
+            upcoming_course.append(course)
+    context = {'courses': courses_list}
+
+    context['upcoming_skills'] = upcoming_course
 
     context['homepage_overlay_html'] = configuration_helpers.get_value('homepage_overlay_html')
 
@@ -209,7 +218,18 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     context['programs_list'] = get_programs_with_type(include_hidden=False)
 
+    for course in courses:
+        enrollments[course] = get_course_enrollments_by_id(course.id)
+    context['enrollments'] = enrollments
+
     return render_to_response('index.html', context)
+
+
+def get_course_enrollments_by_id(course_id):
+    """
+    returns number of students enrolled in course
+    """
+    return len(CourseEnrollment.objects.filter(course_id=course_id, is_active=True))
 
 
 def process_survey_link(survey_link, user):

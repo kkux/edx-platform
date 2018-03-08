@@ -201,6 +201,17 @@ class CourseModeAdmin(admin.ModelAdmin):
         if obj.expiration_datetime:
             return get_time_display(obj.expiration_datetime, '%B %d, %Y, %H:%M  %p')
 
+    def save_model(self, request, obj, form, change):
+        course_id = obj.course_id
+        obj.save()
+        try:
+            from cms.djangoapps.contentstore.courseware_index import CourseAboutSearchIndexer
+            store = modulestore()
+            course_structure = store.get_course(course_id, depth=None)
+            CourseAboutSearchIndexer.index_about_information(store, course_structure)
+        except Exception as error:
+            log.exception("Reindexing error encountered, Error-- %s", error)
+
     # Display a more user-friendly name for the custom expiration datetime field
     # in the Django admin list view.
     expiration_datetime_custom.short_description = "Upgrade Deadline"

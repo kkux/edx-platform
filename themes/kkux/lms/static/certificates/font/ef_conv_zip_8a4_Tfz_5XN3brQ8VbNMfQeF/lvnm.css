@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'lvnm';
+    src: url('fonts/lvnm.eot');
+    src: url('fonts/lvnm.eot') format('embedded-opentype'),
+         url('fonts/lvnm.woff2') format('woff2'),
+         url('fonts/lvnm.woff') format('woff'),
+         url('fonts/lvnm.ttf') format('truetype'),
+         url('fonts/lvnm.svg#lvnm') format('svg');
+}

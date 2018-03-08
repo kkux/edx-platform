@@ -1,0 +1,41 @@
+## mako
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+
+## This template should not use the target student's details when masquerading, see TNL-4895
+<%
+self.real_user = real_user if real_user != UNDEFINED else user
+%>
+
+<%!
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+%>
+
+<%
+username = self.real_user.username
+profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
+%>
+
+% if should_display_shopping_cart_func():
+  <li>
+    <a class="shoppingcart" href="${reverse('shoppingcart.views.show_cart')}">
+        <span class="fa fa-2x fa-shopping-cart" aria-hidden="true"></span>
+    </a>
+  </li>
+% endif
+<li class="usermenu">
+    <a href="javascript:;" class="user-profile dropdown-toggle">
+        <img src="${profile_image_url}" alt="">
+        <span class="fa fa-angle-down"></span>
+        <div class="user-name">${username} </div>
+    </a>
+    <ul class="dropdown-menu dropdown-usermenu pull-right hidden">
+        <li><a href="${reverse('dashboard')}">${_("Dashboard")}</a></li>
+        <li><a href="${reverse('learner_profile', kwargs={'username': self.real_user.username})}">${_("Profile")}</a></li>
+        <li><a href="${reverse('account_settings')}">${_("Account")}</a></li>
+        <li><a href="${reverse('logout')}">${_("Sign Out")} <i class="fa fa-sign-out pull-right"></i></a></li>
+    </ul>
+</li>
