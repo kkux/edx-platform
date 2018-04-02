@@ -188,11 +188,6 @@ class GatingTest(UniqueCourseTest):
         self._setup_prereq()
         self._setup_gated_subsection()
 
-        # Fulfill prerequisites for specific student
-        self._auto_auth(self.STUDENT_USERNAME, self.STUDENT_EMAIL, False)
-        self.courseware_page.visit()
-        self._fulfill_prerequisite()
-
         self._auto_auth(self.STAFF_USERNAME, self.STAFF_EMAIL, True)
 
         self.course_home_page.visit()
@@ -217,6 +212,16 @@ class GatingTest(UniqueCourseTest):
         # banner displayed informing section is a prereq
         self.assertTrue(self.courseware_page.has_banner())
 
+    def test_gated_subsection_in_lms_for_prereq_fulfilled(self):
+        self._setup_prereq()
+        self._setup_gated_subsection()
+        self._auto_auth(self.STUDENT_USERNAME, self.STUDENT_EMAIL, False)
+        self.courseware_page.visit()
+        self._fulfill_prerequisite()
+
+        self._auto_auth(self.STAFF_USERNAME, self.STAFF_EMAIL, True)
+        # With the pre-req fulfilled by this learner, make sure the learner can navigate to the
+        # gated subsection and don't see the lock banner
         self.course_home_page.visit()
         self.course_home_page.preview.set_staff_view_mode_specific_student(self.STUDENT_USERNAME)
         self.course_home_page.wait_for_page()
