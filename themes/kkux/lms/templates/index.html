@@ -4,7 +4,17 @@ from datetime import datetime
 from course_modes.models import CourseMode
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+
 from django.conf import settings
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.markup import HTML, Text
+
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+
 %>
 <%
 	year = datetime.now().year
@@ -28,6 +38,7 @@ from django.conf import settings
     <link href="${static.url('custom_css/bootstrap.css')}" rel="stylesheet">
 	<link href="${static.url('custom_css/bootstrap-select.css')}" rel="stylesheet">
     <link href="${static.url('custom_css/docs.css')}" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,13 +59,40 @@ from django.conf import settings
 				  <span class="icon-bar"></span>
 				</button>
             	<a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
+					% if header_language_selector_is_enabled():
+                                          <% languages = released_languages() %>
+                                          % if len(languages) > 1:
+                                            <ol class="user language_dropdown">
+                                              <li class="primary" style="display: none;">
+                                                <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                                                  <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                                                  % if user.is_authenticated():
+                                                    <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+                                                  % else:
+                                                    <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                                                  % endif
+                                                    <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
+                                                      % for language in languages:
+                                                        % if language[0] == LANGUAGE_CODE:
+                                                          <option value="${language[0]}" selected="selected">${language[1]}</option>
+                                                        % else:
+                                                          <option value="${language[0]}" >${language[1]}</option>
+                                                        % endif
+                                                      % endfor
+                                                    </select>
+                                                  </label>
+                                                </form>
+                                              </li>
+                                            </ol>
+                                          % endif
+                                        % endif
             	% if request.user.is_authenticated():
             		<ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
             			<%include file="user_dropdown.html"/>
             		</ul>
             	% else:
 					<ul class="right-top hidden-md  hidden-sm  hidden-lg">
-						<li><a href="#">ع</a></li>
+						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
 						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
 						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
 					</ul>
@@ -68,16 +106,23 @@ from django.conf import settings
             		</ul>
             	% else:
 					<ul class="right-top">
-						<li><a href="#">ع</a></li>
+				% endif
+				% if request.user.is_authenticated():
+					<ul class="right-top header-rightbar clearfix">
+            			<%include file="user_dropdown.html"/>
+            		</ul>
+            	% else:
+					<ul class="right-top" style="margin-top: -20px;">
+						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
 						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
 						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
 					</ul>
 				% endif
 				
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav" style="padding-top: 1px;">
 					<li class="active"><a href="${reverse('courses')}">Skills</a></li>
-				  	<li><a href="#">Why KKUx?</a></li>
-				  	<li><a href="#">Contact</a></li>
+				  	<li><a href="/about">Why KKUx?</a></li>
+				  	<li><a href="/contact">Contact</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -266,36 +311,36 @@ from django.conf import settings
 			<div class="fot-col">
 				<h4>About</h4>
 				<ul>
-					<li><a href="#">Mission</a></li>
-					<li><a href="#">Vision</a></li>
-					<li><a href="#">ELD Website</a></li>
+					<li><a href="/mission">Mission</a></li>
+					<li><a href="/vision">Vision</a></li>
+					<li><a href="http://eld.kku.edu.sa/">ELD Website</a></li>
 				</ul>
 			</div>
 			<div class="fot-col">
 				<h4>Terms</h4>
 				<ul>
-					<li><a href="#">Copyright</a></li>
-					<li><a href="#">Publishing Rules</a></li>
-					<li><a href="#">Data Use Policy</a></li>
+					<li><a href="/copyright">Copyright</a></li>
+					<li><a href="/publish_rules">Publishing Rules</a></li>
+					<li><a href="/data_use_policy">Data Use Policy</a></li>
 				</ul>
 			</div>
 			<div class="fot-col big">
 				<h4>ELD Open Learning</h4>
 				<ul>
-					<li><a href="#">Open CourseWare </a></li>
-					<li><a href="#">Olomna</a></li>
-					<li><a href="#">Tamkeen</a></li>
+					<li><a href="http://ocw.kku.edu.sa/">Open CourseWare </a></li>
+					<li><a href="http://olomna.org/">Olomna</a></li>
+					<li><a href="https://www.youtube.com/user/kkuTamkeen">Tamkeen</a></li>
 				</ul>
 			</div>
 			<div class="fot-col">
 				<h4>Contact</h4>
 				<ul>
-					<li><a href="#">Contact us</a></li>
+					<li><a href="/contact">Contact us</a></li>
 				</ul>
 			</div>
 			<div class="fot-col last">
 				<div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
-				<div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div>
+				<a href="https://twitter.com/kkuxedu"><div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div></a>
 			</div>
 			<div class="copyright">
 				<p>©KKUx All Right Reserved ${year}</p>
@@ -305,6 +350,8 @@ from django.conf import settings
 </div>
 	<!-- Bootstrap Core JavaScript -->
 	<script type="text/javascript" src="${static.url('js/jquery-1.10.2.min.js')}"></script>
+	<script type="text/javascript" src="${static.url('js/vendor/jquery.cookie.js')}"></script>
+	<script type="text/javascript" src="${static.url('xmodule_js/common_static/js/src/lang_edx.js')}"></script>
 	<script type="text/javascript" src="${static.url('js/bootstrap.min.js')}"></script>
 	<script type="text/javascript" src="${static.url('js/jquery.matchHeight.js')}"></script>
 	<script type="text/javascript" src="${static.url('js/owl.carousel.js')}"></script>
@@ -335,4 +382,19 @@ from django.conf import settings
 	</script>
 </body>
 </html>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        if ($('#settings-language-value option:selected').val() == 'en'){
+                $("a#language-btn.language-btn").text('En')
+        }
+        else{
+                 $("a#language-btn.language-btn").text('ع')
+        }
+
+        $( "a#language-btn.language-btn" ).click(function() {
+          	$('#settings-language-value').val($('#settings-language-value option:not(:selected)').val()).trigger('change');
+		debugger;
+        });
+    });
+</script>
 

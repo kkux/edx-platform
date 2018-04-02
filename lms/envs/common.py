@@ -2286,6 +2286,11 @@ MKTG_URL_LINK_MAP = {
     'BLOG': 'blog',
     'DONATE': 'donate',
     'SITEMAP.XML': 'sitemap_xml',
+    'MISSION': 'mission',
+    'VISION': 'vision',
+    'COPYRIGHT': 'copyright',
+    'PUBLISH_RULES': 'publish_rules',
+    'DATA_USE_POLICY': 'data_use_policy',
 
     # Verified Certificates
     'WHAT_IS_VERIFIED_CERT': 'verified-certificate',

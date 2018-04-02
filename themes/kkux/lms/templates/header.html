@@ -5,9 +5,27 @@
 <% 
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+
+from django.conf import settings
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.markup import HTML, Text
+
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+
 %>
 <%page expression_filter="h" args="online_help_token"/>
-
+<style type="text/css">
+	.usermenu{
+		left: 15px;
+	    	float: left;
+    		padding-left: 0px;
+    		margin-left: 0px;
+	}
+</style>
 <header id="header">
 	<nav class="navbar navbar-default">
     	<div class="custom-container">
@@ -19,13 +37,42 @@ from django.utils.translation import ugettext as _
 				  <span class="icon-bar"></span>
 				</button>
             	<a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
+					% if header_language_selector_is_enabled():
+                                          <% languages = released_languages() %>
+                                          % if len(languages) > 1:
+                                            <ol class="user language_dropdown">
+                                              <li class="primary">
+                                                <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                                                  <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                                                  % if user.is_authenticated():
+                                                    <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+                                                  % else:
+                                                    <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                                                  % endif
+                                                  <label><span class="sr">${_("Choose Language")}</span>
+                                                    <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
+                                                      % for language in languages:
+                                                        % if language[0] == LANGUAGE_CODE:
+                                                          <option value="${language[0]}" selected="selected">${language[1]}</option>
+                                                        % else:
+                                                          <option value="${language[0]}" >${language[1]}</option>
+                                                        % endif
+                                                      % endfor
+                                                    </select>
+                                                  </label>
+                                                </form>
+                                              </li>
+                                            </ol>
+                                          % endif
+                                        % endif
             	% if request.user.is_authenticated():
             		<ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
+				<li><a href="javascript:void(0);" class="language-btn" id="language-btn" style="padding-right:  0px;margin-right: -16px;padding-left: 5px;margin-top: -3px;">ع</a></li>
             			<%include file="user_dropdown.html"/>
             		</ul>
             	% else:
 					<ul class="right-top hidden-md  hidden-sm  hidden-lg">
-						<li><a href="#">ع</a></li>
+						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
 						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
 						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
 					</ul>
@@ -33,23 +80,39 @@ from django.utils.translation import ugettext as _
         	</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
-				% if request.user.is_authenticated():
-					<ul class="right-top header-rightbar clearfix">
+	        % if request.user.is_authenticated():
+        		  	<ul class="right-top header-rightbar clearfix">
+				<li><a href="javascript:void(0);" class="language-btn" id="language-btn" style="padding-right:  0px;margin-right: -16px;padding-left: 5px;margin-top: -3px;">ع</a></li>
             			<%include file="user_dropdown.html"/>
             		</ul>
             	% else:
 					<ul class="right-top">
-						<li><a href="#">ع</a></li>
+						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
 						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
 						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
 					</ul>
 				% endif
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="${reverse('courses')}">Skills</a></li>
-				  	<li><a href="#">Why KKUx?</a></li>
-				  	<li><a href="#">Contact</a></li>
+				  	<li><a href="/about">Why KKUx?</a></li>
+				  	<li><a href="/contact">Contact</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
 	</nav>
 </header>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        if ($('#settings-language-value option:selected').val() == 'en'){
+                $("a#language-btn.language-btn").text('ع')
+        }
+        else{
+                 $("a#language-btn.language-btn").text('En')
+        }
+
+        $( "a#language-btn.language-btn" ).click(function() {
+                $('#settings-language-value').val($('#settings-language-value option:not(:selected)').val()).trigger('change');
+        });
+    });
+</script>
+   

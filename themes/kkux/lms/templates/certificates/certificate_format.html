@@ -1,3 +1,4 @@
+
 <%namespace name='static' file='../static_content.html'/>
 <!doctype html>
 <html>
@@ -12,6 +13,7 @@
 html, 
 body {
     height: 100%;
+margin:0px;
 }
 
 *::before, *::after , *  {box-sizing: border-box; padding: 0px; margin: 0px; }
@@ -36,29 +38,37 @@ body {
 
 body {background: url('${static.url('certificates/images/main-bg.png')}') no-repeat 50% 50%; background-size: cover; font-family: 'lvnm';}
 
-.center {margin: 0 auto; width: 842px; }
-.certificate {position: relative; padding-top: 70px;}
-.certificate .left-logo {position: absolute; top: 125px; left: 39px; }
-.certificate .logo {display: block; text-align: center; padding: 57px 0 58px 0;}
-.certificate .text1 {display: block; text-align: center; line-height: 28px; font-size: 16px; color: #8a8a8a; font-family: 'ge_ss_twobold'; direction: rtl;}
-.certificate .text1 span{font-family: 'lvnm'; font-weight: 600;}
-.certificate .text2 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 28px; font-family: 'ge_ss_twomedium'; padding-bottom: 5px; direction: rtl;}
-.certificate .text3 {display: block; text-align: center; line-height: 28px; color: #6dabb6; font-size: 19px; padding-bottom: 8px; }
-.certificate .text4 {display: block; text-align: center; line-height: 30px; color: #8a8a8a; font-size: 16px; direction: rtl; font-family: 'ge_ss_twobold'; }
-.certificate .text5 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 29px; font-family: 'ge_ss_twomedium'; padding-bottom: 4px; direction: rtl; }
-.certificate .text6 {display: block; text-align: center; line-height: 28px; padding-bottom: 8px; font-size: 19px; color: #6dabb6; }
-.certificate .text7 {display: block; text-align: center; line-height: 28px; font-size: 16px; color: #8a8a8a;  direction: rtl;}
+.center {margin: 0 auto; width: 1050px; }
+.certificate {position: relative; padding-top: 20px;}
+.certificate .left-logo {position: absolute; top:63px; left: 32px; }
+.certificate .left-logo img {max-width:100px;}
+.certificate .logo {display: block; text-align: center; padding: 55px 0 70px 0;}
+.certificate .logo img {max-width:215px;}
 
-.certificate .bottom-text .left-text {display: inline-block; width: 350px; padding: 28px 0 0 0 ;}
-.certificate .bottom-text .left-text .bottom-logo {display: inline-block; padding: 0 10px 0 0;}
-.certificate .bottom-text .left-text .text {display: inline-block; width: 250px; }
-.certificate .bottom-text .left-text .text p {font-size: 10px; color: #8a8a8a; line-height: 12px; margin: 0px; padding-bottom: 10px; }
+.certificate .text1 {display: block; text-align: center; line-height: 28px; font-size: 19px; color: #8a8a8a; font-family: 'ge_ss_twobold'; direction: rtl;}
+.certificate .text1 span{font-family: 'lvnm'; font-weight: 600;}
+.certificate .text2 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 32px; font-family: 'ge_ss_twomedium'; padding-bottom: 5px; direction: rtl;}
+.certificate .text3 {display: block; text-align: center; line-height: 28px; color: #6dabb6; font-size: 21px; padding-bottom: 8px; }
+.certificate .text4 {display: block; text-align: center; line-height: 30px; color: #8a8a8a; font-size: 19px; direction: rtl; font-family: 'ge_ss_twobold'; }
+.certificate .text5 {display: block; text-align: center; line-height: 36px; color: #6dabb6; font-size: 31px; font-family: 'ge_ss_twomedium'; padding-bottom: 4px; direction: rtl; }
+.certificate .text6 {display: block; text-align: center; line-height: 28px; padding-bottom: 8px; font-size: 21px; color: #6dabb6; }
+.certificate .text7 {display: block; text-align: center; line-height: 28px; font-size: 19px; color: #8a8a8a;  direction: rtl;}
+
+.certificate .bottom-text  {width:100%;}
+.certificate .bottom-text .left-text {display: inline-block; width: 520px; padding: 63px 0 0 50px;}
+.certificate .bottom-text .left-text .bottom-logo img {max-width:100px;}
+.certificate .bottom-text .left-text .bottom-logo {display: inline-block; padding: 0 15px 0 0;}
+
+.certificate .bottom-text .left-text .text {display: inline-block; width: 350px; vertical-align: top; }
+.certificate .bottom-text .left-text .text p {font-size: 13px; color: #8a8a8a; line-height: 14px; margin: 0px; padding-bottom: 10px; }
 .certificate .bottom-text .left-text .text span {display: block; line-height: 12px; font-size: 12px; color: #8a8a8a; }
 .certificate .bottom-text .left-text .text span label {font-weight: normal; margin: 0px; color: #ff0000; }
-.certificate .bottom-text .stemp-img {display: inline-block; vertical-align: top; padding: 30px 70px 0 45px;}
-.certificate .bottom-text .signature {display: inline-block; text-align: center; vertical-align: top; width: 150px;}
-.certificate .bottom-text .signature img {width: 100%;}
-.certificate .bottom-text .signature span {display: block; text-align: center; line-height: 18px; color: #96a900; font-size: 14px; font-family: 'ge_ss_twomedium';  direction: rtl;}
+.certificate .bottom-text .stemp-img {display: inline-block; vertical-lign: top; padding: 0px 75px 0 34px;}
+.certificate .bottom-text .stemp-img img {max-width:95px;}
+
+.certificate .bottom-text .signature {display: inline-block; text-align: center; vertical-align: top; width: 230px; padding:25px 0 0 0;}
+.certificate .bottom-text .signature img {max-width:140px; margin-bottom:-8px; padding:0 0 0 10px;}
+.certificate .bottom-text .signature span {display: block; text-align: center; line-height: 20px; color: #96a900; font-size: 18px; font-family: 'ge_ss_twomedium';  direction: rtl;}
 .certificate .bottom-text .signature span.color {color: #8a8a8a; }
 .text2,.text3,.text4,.text5,.text6,.text7{padding-top: 10px;}
 </style>

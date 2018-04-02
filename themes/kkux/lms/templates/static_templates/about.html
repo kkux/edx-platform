@@ -1,25 +1,93 @@
 <%page expression_filter="h"/>
-<%! from django.utils.translation import ugettext as _ %>
+<%!
+from django.utils.translation import ugettext as _ 
+import sys  
+reload(sys)  
+sys.setdefaultencoding('utf8')
+%>
 <%inherit file="../main.html" />
-
-<%block name="pagetitle">${_("About")}</%block>
-
+<%namespace name='static' file='../static_content.html'/>
+<%block name="pagetitle">${_("About Us")}</%block>
+<style type="text/css">
+    .content-title{
+        color: #a5a533;
+        font-weight: bold;
+        margin-top: 20px;
+        font-family: arial;
+        font-size: 20px;
+        line-height: normal;
+    }
+    .sub-title{
+        color: #606263;
+        font-weight: bold;
+    margin-top: 20px;
+    }
+    .desc-title{
+        color: #a5a533;
+        display: inline;
+    }
+    h1{
+    text-align: left;
+    color: #066181;
+    font-family: Levenim MT;
+    font-size: 40px;
+    margin-bottom: 30px;
+    }
+    p {
+        margin: 0;
+        color: #606263;
+        font-family: arial;
+        font-size: 20px;
+        line-height: normal;
+    }
+    .about-img{
+        text-align: center;
+        margin: 45px;
+    }
+    .no-margin{
+         margin-top: 0px;
+    }
+</style>
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="container about">
-        <h1>${_("About US")}</h1>
+    <section class="container about" style="max-width: none !important;">
+        <h1>${_("About Us")}</h1>
         <p>${_("Studies predict that more than 65% of today's students will be working in a new and innovative futuristic jobs and is not present in the current time.")}</p>
-	<p>${_("By 2020, the Fourth Industrial Revolution will bring to our world advanced technologies such as robots, artificial intelligence and biotechnology. ")}</p>
+        <p>${_("By 2020, the Fourth Industrial Revolution will bring to our world advanced technologies such as robots, artificial intelligence and biotechnology. ")}</p>
         <p>${_("This development will require changing the way that we live and work. In the future, some jobs may disappear .. others may grow ... while other new jobs may appear. The only fact is that job seekers in future will need to strengthen their skills and gain new ones to keep pace with the demands of the future.")}</p>
         <p><a href="http://vision2030.gov.sa/" target="_blank">${_("Kingdom Vision 2030")}</a>, ${_("focused on this value, since one of its goals is Learning for Working. In order to boost the economy by focusing on the development of basic skills and personal talents. According to the World Economic Forum 2016, The Future of Jobs")} <a href="http://www3.weforum.org/docs/WEF_Future_of_Jobs.pdf" target="_blank">${_("the top 10 most important skills needed by an employee in 2020")}</a> are:</p>
         <p>- ${_("Complex problem saving")}</p>
-        <p>- ${_("Critical thinking")}</p>
-        <p>- ${_("Creativity")}</p>
-        <p>- ${_("People management")}</p>
-        <p>- ${_("Coordinating with others")}</p>
-        <p>- ${_("Emotional intelligence")}</p>
-        <p>- ${_("Judgment and decision-making")}</p>
-        <p>- ${_("Service orientation")}</p>
-        <p>- ${_("Negotiation")}</p>
-        <p>- ${_("Cognitive flexibility")}</p>
+        <p class="no-margin">- ${_("Critical thinking")}</p>
+        <p class="no-margin">- ${_("Creativity")}</p>
+        <p class="no-margin">- ${_("People management")}</p>
+        <p class="no-margin">- ${_("Coordinating with others")}</p>
+        <p class="no-margin">- ${_("Emotional intelligence")}</p>
+        <p class="no-margin">- ${_("Judgment and decision-making")}</p>
+        <p class="no-margin">- ${_("Service orientation")}</p>
+        <p class="no-margin">- ${_("Negotiation")}</p>
+        <p class="no-margin">- ${_("Cognitive flexibility")}</p>
+        <p>${_("As a result of all of the above, comes the idea of “KKUx”, To provide distinguished electronic content about the most important skills to prepare the seekers of the future jobs. King Khalid University provides this platform, which is one of the eLearning Deanship initiatives.")}</p>
+
+        <div class="about-img">
+            <img src="${static.url('images/about_en.png')}" alt="">
+        </div>
+
+        <p class="content-title">${_("Vision")}</p>
+        <p class="no-margin">${_("Aligned with the Kingdom Vision 2030, to contribute in providing the learning opportunities for all and enable the learners with the necessary skills that will help them to pursue their objectives")}</p>
+        <p class="content-title">${_("Mission")}</p>
+        <p class="no-margin">${_("To effectively contribute in providing the most important skills for the future jobs by distinguished electronic content with high quality and international standards to benefit the future job seekers or anyone who wants to develop his skills")}</p>
+        <p class="content-title">${_("Acronym meaning KKUx:")}</p>
+        <p class="no-margin">${_("This name comes in the context of the global platforms 'MOOCs'. It is divided into two parts KKU and x:")}</p>
+            <p><span class="desc-title">${_("First: ")}</span>
+            ${_("KKU stands for King Khalid University King.")}</p>
+            <p class="no-margin"><span class="desc-title">${_("Second: ")}</span>
+            ${_("X means the thing that holds several different values. The meaning is that the university will offer several variable courses through this platform. Commonly used in many international learning platforms, such as MITx, edX and HarvardX.")}</p>
+        <p class="content-title">${_("How KKUx works?")}</p>
+        <p class="no-margin">${_("KKUx will focus on three kinds of skills:")}</p>
+        <p class="no-margin">${_("1- Design ")} & ${_("Innovation: set of design thinking skills that help everyone to solve complex problem and increase creativity.")}</p>
+        <p class="no-margin">${_("2- Entrepreneurship: set of business skills and startup mindset needed to embark on learners entrepreneurial path.")}</p>
+        <p class="no-margin">${_("3- Standard tests: set of techniques and skills that can improve the score of students when they doing test such as IELTS, TOFEL or others.")}</p>
+
+
     </section>
 </main>
+
