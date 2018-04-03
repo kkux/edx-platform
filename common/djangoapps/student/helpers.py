@@ -65,6 +65,10 @@ DISABLE_UNENROLL_CERT_STATES = [
     'generating',
     'downloadable',
 ]
+USERNAME_EXISTS_MSG_FMT = _("An account with the Public Username '{username}' already exists.")
+
+RETIRED_USERNAME_START, RETIRED_USERNAME_END = settings.RETIRED_USERNAME_FMT.split("{}")
+RETIRED_EMAIL_START, RETIRED_EMAIL_END = settings.RETIRED_EMAIL_FMT.split("{}")
 
 
 log = logging.getLogger(__name__)
@@ -621,8 +625,9 @@ def do_create_account(form, custom_form=None):
     if errors:
         raise ValidationError(errors)
 
+    proposed_username = form.cleaned_data["username"]
     user = User(
-        username=form.cleaned_data["username"],
+        username=proposed_username,
         email=form.cleaned_data["email"],
         is_active=False
     )
@@ -647,7 +652,7 @@ def do_create_account(form, custom_form=None):
         # different username.")
         if len(User.objects.filter(username=user.username)) > 0:
             raise AccountValidationError(
-                _("An account with the Public Username '{username}' already exists.").format(username=user.username),
+                USERNAME_EXISTS_MSG_FMT.format(username=proposed_username),
                 field="username"
             )
         elif len(User.objects.filter(email=user.email)) > 0:
