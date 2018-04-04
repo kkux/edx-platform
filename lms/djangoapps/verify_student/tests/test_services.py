@@ -34,52 +34,6 @@ class TestIDVerificationService(MockS3Mixin, ModuleStoreTestCase):
     Tests for IDVerificationService.
     """
 
-    def test_active_for_user(self):
-        """
-        Make sure we can retrive a user's active (in progress) verification
-        attempt.
-        """
-        user = UserFactory.create()
-
-        # This user has no active at the moment...
-        assert_is_none(IDVerificationService.active_for_user(user))
-
-        # Create an attempt and mark it ready...
-        attempt = SoftwareSecurePhotoVerification(user=user)
-        attempt.mark_ready()
-        assert_equals(attempt, IDVerificationService.active_for_user(user))
-
-        # A new user won't see this...
-        user2 = UserFactory.create()
-        user2.save()
-        assert_is_none(IDVerificationService.active_for_user(user2))
-
-        # If it's got a different status, it doesn't count
-        for status in ["submitted", "must_retry", "approved", "denied"]:
-            attempt.status = status
-            attempt.save()
-            assert_is_none(IDVerificationService.active_for_user(user))
-
-        # But if we create yet another one and mark it ready, it passes again.
-        attempt_2 = SoftwareSecurePhotoVerification(user=user)
-        attempt_2.mark_ready()
-        assert_equals(attempt_2, IDVerificationService.active_for_user(user))
-
-        # And if we add yet another one with a later created time, we get that
-        # one instead. We always want the most recent attempt marked ready()
-        attempt_3 = SoftwareSecurePhotoVerification(
-            user=user,
-            created_at=attempt_2.created_at + timedelta(days=1)
-        )
-        attempt_3.save()
-
-        # We haven't marked attempt_3 ready yet, so attempt_2 still wins
-        assert_equals(attempt_2, IDVerificationService.active_for_user(user))
-
-        # Now we mark attempt_3 ready and expect it to come back
-        attempt_3.mark_ready()
-        assert_equals(attempt_3, IDVerificationService.active_for_user(user))
-
     def test_user_is_verified(self):
         """
         Test to make sure we correctly answer whether a user has been verified.
@@ -123,12 +77,12 @@ class TestIDVerificationService(MockS3Mixin, ModuleStoreTestCase):
         # test for correct status when no error returned
         user = UserFactory.create()
         status = IDVerificationService.user_status(user)
-        self.assertEquals(status, ('none', ''))
+        self.assertEquals(status, {'status': 'none', 'error': '', 'should_display': False})
 
         # test for when one has been created
         attempt = SoftwareSecurePhotoVerification.objects.create(user=user, status='approved')
         status = IDVerificationService.user_status(user)
-        self.assertEquals(status, ('approved', ''))
+        self.assertEquals(status, {'status': 'approved', 'error': '', 'should_display': True})
 
         # create another one for the same user, make sure the right one is
         # returned
@@ -136,13 +90,13 @@ class TestIDVerificationService(MockS3Mixin, ModuleStoreTestCase):
             user=user, status='denied', error_msg='[{"photoIdReasons": ["Not provided"]}]'
         )
         status = IDVerificationService.user_status(user)
-        self.assertEquals(status, ('approved', ''))
+        self.assertEquals(status, {'status': 'approved', 'error': '', 'should_display': True})
 
         # now delete the first one and verify that the denial is being handled
         # properly
         attempt.delete()
         status = IDVerificationService.user_status(user)
-        self.assertEquals(status, ('must_reverify', ['id_image_missing']))
+        self.assertEquals(status, {'status': 'must_reverify', 'error': ['id_image_missing'], 'should_display': True})
 
     @ddt.unpack
     @ddt.data(
