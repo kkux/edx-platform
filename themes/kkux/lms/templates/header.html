@@ -4,7 +4,7 @@
 <%namespace file='main.html' import="login_query"/>
 <% 
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, LANGUAGE_SESSION_KEY
 
 from django.conf import settings
 from lms.djangoapps.ccx.overrides import get_current_ccx
@@ -73,13 +73,13 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
             	% else:
 					<ul class="right-top hidden-md  hidden-sm  hidden-lg">
 						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
-						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
+						<li><a class="btn" href="${reverse('signin_user')}">${_("Sign in")}</a></li>
 						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
 					</ul>
 				% endif
         	</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
+				<div class="vision"><a href="http://vision2030.gov.sa/${request.session.get(LANGUAGE_SESSION_KEY, settings.LANGUAGE_CODE)}"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
 	        % if request.user.is_authenticated():
         		  	<ul class="right-top header-rightbar clearfix">
 				<li><a href="javascript:void(0);" class="language-btn" id="language-btn" style="padding-right:  0px;margin-right: -16px;padding-left: 5px;margin-top: -3px;">ع</a></li>
