@@ -440,7 +440,8 @@ class TestEnterpriseApi(EnterpriseServiceMockMixin, CacheIsolationTestCase):
                 'If you have concerns about sharing your data, please contact your administrator at GriffCo.',
                 'Enrollment in My Cool Course was not complete.'
             ],
-            "Title from DataSharingConsentPage modal", "Message from DataSharingConsentPage modal"
+            "Title from DataSharingConsentTextOverrides model in consent app",
+            "Message from DataSharingConsentTextOverrides model in consent app"
         ),
 
     )
