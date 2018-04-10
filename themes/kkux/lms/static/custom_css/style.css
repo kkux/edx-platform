@@ -126,9 +126,9 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
     #header .vision {width: 100px;padding-top: 15px;padding-left: 15px;}
 }
 @media(max-width:1023px) {
-	#header .navbar > .custom-container .navbar-brand, #header .navbar > .container-fluid .navbar-brand{max-width: 145px; float: left;padding: 12px 15px;}
-	#header .navbar-default{padding-bottom:5px;}
-	#header .navbar-default .navbar-nav > li > a{line-height: 30px;}
+    #header .navbar > .custom-container .navbar-brand, #header .navbar > .container-fluid .navbar-brand{max-width: 145px; float: left;padding: 12px 15px;}
+    #header .navbar-default{padding-bottom:5px;}
+    #header .navbar-default .navbar-nav > li > a{line-height: 30px;}
     #header ul.right-top {margin-left: 10px;}
 }
 @media (min-width: 768px){
@@ -159,7 +159,7 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
     #header .navbar-header ul.header-rightbar.hidden-md{padding-top: 0}
 }
 @media(max-width:991px) {
-	#header .navbar-nav > li > a{ font-size:16px;padding:10px;}
+    #header .navbar-nav > li > a{ font-size:16px;padding:10px;}
     #footer h4 {font-size: 20px;}
     #footer ul li a {font-size: 16px;}
 }

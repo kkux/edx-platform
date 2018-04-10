@@ -2241,6 +2241,7 @@ INSTALLED_APPS = (
 
     # For assign course category
     'category',
+    'kkux',
 )
 
 ######################### CSRF #########################################

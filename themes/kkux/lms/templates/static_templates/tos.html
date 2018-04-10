@@ -8,80 +8,79 @@ sys.setdefaultencoding('utf8')
 <%inherit file="../main.html" />
 <%namespace name='static' file='../static_content.html'/>
 <%block name="pagetitle">${_("Copyright")}</%block>
-<style type="text/css">
-    .kkux{
-        color: #a5a533;
-        display: inline-block;
-    }
-    .content-title{
-        color: #a5a533;
-        font-weight: bold;
-    margin-top: 20px;
-        font-family: arial;
-        font-size: 20px;
-        line-height: normal;
-    }
-    .sub-title{
-        color: #606263;
-        font-weight: bold;
-    margin-top: 20px;
-    }
-    .desc-title{
-        color: #a5a533;
-        display: inline;
-    }
-    h1{
-    text-align: left;
-    color: #066181;
-    font-family: Levenim MT;
-    font-size: 40px;
-    margin-bottom: 30px;
-    }
-    p+p{
-    margin-top: 0px;
-    }
-    p {
-        margin: 0;
-        color: #606263;
-        font-family: arial;
-        font-size: 20px;
-        line-height: normal;
-    }
-</style>
 
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="container about" style="max-width: none !important;">
-        <h1>${_("Terms of Service")}</h1>
-        <p class="content-title">${_("Copyright")}</p>
-            <p>• ${_("KKUx recognizes and respects intellectual property rights (that include software or document copyright, design rights, patents, and source code licenses) associated with its platform.")}</p>
-            <p style="display: inline-block;">• ${_("The contained information herewith, which provided by ")}<span class="kkux">${_("“KKUx”")}</span>${_(" are for general and education purposes only.")}</p>
-            <p style="display: inline-block;">• ${_("King Khalid University and its administration do not bear, in any way, any damage or losses arising from using or dealing with the ")}<span class="kkux">${_(" KKUx")}</span></p>
-            <p> • ${_("Despite of the exerted efforts, King Khalid University do not guarantees the availability of the portal pages and as well do not bear, in any way, the responsibility of any damages and losses arising from the unavailability. platform, whether directly or indirectly.")}</p>
-        <p class="content-title">${_("Publishing Rules")}</p>
-            <p>${_("For the purpose of safeguarding the identity of King Khalid University and provide an enriched content contribute in serving the community as whole, kindly be adhere with the followings : ")}</p>
-            <p>${_("* Do not exposure to people, agencies and institutions by defamation, depreciation, insult or slander.")}</p>
-            <p>${_("* Do not publish programs of illegal copyright, trademark or intellectual property rights.")}</p>
-            <p>${_("* Quoting of any protected-copyright content strictly prohibited unless approval from the source has been obtained.")}</p>
-            <p>${_("* Praising, promotion, correction, or support of each deviated intellectual thought and futile beliefs strictly prohibited.")}</p>
-            <p>${_("* False links and URLs that being contrary to Islam or intending to harm Saudi National Security are strictly prohibited.")}</p>
-            <p>${_("* Do not put any image shamelessly or contrary to the teachings of Islam, or any pictures that hurt souls.")}</p>
-            <p>${_("* Publication features must use to serve the academic and scientific purposes of King Khalid University University.")}</p>
-            <p>${_("* Any publication that agitates or threatens sectarianism, racialism and tribalism is not permissible.")}</p>
-            <p>${_("* Every member must refrain from advertising and promotion of non-university goods and services, unless he gains permissions.")}</p>
-            <p style="display: inline-block;">${_("* The ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is not hold responsible for any copyright or trademarks infringements.")}</p>
-            <p style="display: inline-block;">${_("* The ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is in no case accountable for the alteration or loss of any content or text causing from technical turbulence or development works.")}</p>
-            <p>${_("* The university's name, its seal, the word mark, and the university logo are among the words and symbols that owned by King Khalid University and protected by law. Use of trademarks must comply with the prior permissions. ")}</p>
-        <p class="content-title">${_("Data Use Policy")}</p>
-            <p style="display: inline-block;"><span class="kkux">${_(" KKUx ")}</span>${_(" is committed to protecting your privacy in accordance with this Policy. This Privacy Policy applies to personally identifiable information ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects through this platform and does not apply to information KKU collects in any other manner. Your use of ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is subject to this Privacy Policy and KKU Terms of Use.")}</p>
-            <p style="display: inline-block;">${_("Please read this Privacy Policy carefully to understand how ")}<span class="kkux">${_(" KKUx ")}</span>${_(" treats information collected through this platform.")}</p>
-        <p class="sub-title">${_("Collection and Retention of Information:")}</p>
-            <p>${_("In some areas of the Website, such as when you submit an application for admission, request information, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may request that you provide personal information, including, as applicable, your name, address, e-mail address, telephone number, credit card number, contact information, billing information and any other information from which your unique identity is discernible. In other areas of the Website, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects or may collect demographic information that is not unique to you such as your country of residence, age, level of education, gender, and other similar types of information. Sometimes ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects or may collect a combination of these two types of information. ")}<span class="kkux">${_(" KKUx ")}</span>${_(" also gathers or may gather certain information about your use of the Website, such as what areas you visit and what services you access. In addition, there is information about your computer hardware and software that is or may be collected by ")}<span class="kkux">${_(" KKUx ")}</span>${_(". This information can include without limitation your IP address, browser type, domain names, access times and referring website addresses.In order to maintain your information in an efficient manner, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" retains the information it gathers about you to make your repeat visits to the Website more efficient, practical, and relevant.")}</p>
-        <p class="sub-title">${_("Information Sharing and Disclosure:")}</p>
-            <p><span class="kkux">${_(" KKUx ")}</span>${_(" does not disclose to third parties your personal information, combined personal and demographic information or information about your use of the Website (such as the areas you visit or the services you access), except as set forth in the following subparagraphs.")}</p>
-            <p style="display: inline-block;">${_("• ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may disclose such information to companies and individuals KKUx works with in carrying out its functions, including companies and individuals authorized to perform functions on its behalf.")}</p>
-            <p style="display: inline-block;">${_("• ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may disclose such information if legally required to do so, if requested to do so by a governmental entity.")}</p>
-        <p class="sub-title">${_("Changes to this Privacy Policy:")}</p>
-            <p><span class="kkux">${_(" KKUx ")}</span>${_(" reserves the right to modify this Privacy Policy from time to time and such modification shall be effective upon posting by ")}<span class="kkux">${_(" KKUx ")}</span>${_(" on this Website. If ")}<span class="kkux">${_(" KKUx ")}</span>${_(" makes any material changes to the manner in which your personal information will be used under this Privacy Policy, you will be notified of such changes and will be given the opportunity to object to such new or different use. Please check this Privacy Policy periodically for updates or changes. Your continued use of this Website following the posting of any changes constitutes acceptance of those changes.")}</p>
+    <section class="container static-content static-content-tos">
+        % if LANGUAGE_CODE == "en":
+            <h1>${_("Terms of Service")}</h1>
+            <p class="content-title">${_("Copyright")}</p>
+                <p>• ${_("KKUx recognizes and respects intellectual property rights (that include software or document copyright, design rights, patents, and source code licenses) associated with its platform.")}</p>
+                <p>• ${_("The contained information herewith, which provided by ")}<span class="kkux">${_("“KKUx”")}</span>${_(" are for general and education purposes only.")}</p>
+                <p>• ${_("King Khalid University and its administration do not bear, in any way, any damage or losses arising from using or dealing with the ")}<span class="kkux">${_(" KKUx")}</span></p>
+                <p> • ${_("Despite of the exerted efforts, King Khalid University do not guarantees the availability of the portal pages and as well do not bear, in any way, the responsibility of any damages and losses arising from the unavailability. platform, whether directly or indirectly.")}</p>
+            <p class="content-title">${_("Publishing Rules")}</p>
+                <p>${_("For the purpose of safeguarding the identity of King Khalid University and provide an enriched content contribute in serving the community as whole, kindly be adhere with the followings : ")}</p>
+                <p>${_("* Do not exposure to people, agencies and institutions by defamation, depreciation, insult or slander.")}</p>
+                <p>${_("* Do not publish programs of illegal copyright, trademark or intellectual property rights.")}</p>
+                <p>${_("* Quoting of any protected-copyright content strictly prohibited unless approval from the source has been obtained.")}</p>
+                <p>${_("* Praising, promotion, correction, or support of each deviated intellectual thought and futile beliefs strictly prohibited.")}</p>
+                <p>${_("* False links and URLs that being contrary to Islam or intending to harm Saudi National Security are strictly prohibited.")}</p>
+                <p>${_("* Do not put any image shamelessly or contrary to the teachings of Islam, or any pictures that hurt souls.")}</p>
+                <p>${_("* Publication features must use to serve the academic and scientific purposes of King Khalid University University.")}</p>
+                <p>${_("* Any publication that agitates or threatens sectarianism, racialism and tribalism is not permissible.")}</p>
+                <p>${_("* Every member must refrain from advertising and promotion of non-university goods and services, unless he gains permissions.")}</p>
+                <p>${_("* The ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is not hold responsible for any copyright or trademarks infringements.")}</p>
+                <p>${_("* The ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is in no case accountable for the alteration or loss of any content or text causing from technical turbulence or development works.")}</p>
+                <p>${_("* The university's name, its seal, the word mark, and the university logo are among the words and symbols that owned by King Khalid University and protected by law. Use of trademarks must comply with the prior permissions. ")}</p>
+            <p class="content-title">${_("Data Use Policy")}</p>
+                <p><span class="kkux">${_(" KKUx ")}</span>${_(" is committed to protecting your privacy in accordance with this Policy. This Privacy Policy applies to personally identifiable information ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects through this platform and does not apply to information KKU collects in any other manner. Your use of ")}<span class="kkux">${_(" KKUx ")}</span>${_(" is subject to this Privacy Policy and KKU Terms of Use.")}</p>
+                <p>${_("Please read this Privacy Policy carefully to understand how ")}<span class="kkux">${_(" KKUx ")}</span>${_(" treats information collected through this platform.")}</p>
+            <p class="sub-title">${_("Collection and Retention of Information:")}</p>
+                <p>${_("In some areas of the Website, such as when you submit an application for admission, request information, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may request that you provide personal information, including, as applicable, your name, address, e-mail address, telephone number, credit card number, contact information, billing information and any other information from which your unique identity is discernible. In other areas of the Website, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects or may collect demographic information that is not unique to you such as your country of residence, age, level of education, gender, and other similar types of information. Sometimes ")}<span class="kkux">${_(" KKUx ")}</span>${_(" collects or may collect a combination of these two types of information. ")}<span class="kkux">${_(" KKUx ")}</span>${_(" also gathers or may gather certain information about your use of the Website, such as what areas you visit and what services you access. In addition, there is information about your computer hardware and software that is or may be collected by ")}<span class="kkux">${_(" KKUx ")}</span>${_(". This information can include without limitation your IP address, browser type, domain names, access times and referring website addresses.In order to maintain your information in an efficient manner, ")}<span class="kkux">${_(" KKUx ")}</span>${_(" retains the information it gathers about you to make your repeat visits to the Website more efficient, practical, and relevant.")}</p>
+            <p class="sub-title">${_("Information Sharing and Disclosure:")}</p>
+                <p><span class="kkux">${_(" KKUx ")}</span>${_(" does not disclose to third parties your personal information, combined personal and demographic information or information about your use of the Website (such as the areas you visit or the services you access), except as set forth in the following subparagraphs.")}</p>
+                <p>${_("• ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may disclose such information to companies and individuals KKUx works with in carrying out its functions, including companies and individuals authorized to perform functions on its behalf.")}</p>
+                <p>${_("• ")}<span class="kkux">${_(" KKUx ")}</span>${_(" may disclose such information if legally required to do so, if requested to do so by a governmental entity.")}</p>
+            <p class="sub-title">${_("Changes to this Privacy Policy:")}</p>
+                <p><span class="kkux">${_(" KKUx ")}</span>${_(" reserves the right to modify this Privacy Policy from time to time and such modification shall be effective upon posting by ")}<span class="kkux">${_(" KKUx ")}</span>${_(" on this Website. If ")}<span class="kkux">${_(" KKUx ")}</span>${_(" makes any material changes to the manner in which your personal information will be used under this Privacy Policy, you will be notified of such changes and will be given the opportunity to object to such new or different use. Please check this Privacy Policy periodically for updates or changes. Your continued use of this Website following the posting of any changes constitutes acceptance of those changes.")}</p>
+
+        % else:
+            <h1>${_("Terms of Service")}</h1>
+            <p>منصة <span class="kkux">"KKUx"</span> تقدر وتحترم حقوق الملكية الفكرية (التي تشمل حقوق النسخ، وحقوق التصميم، وحقوق براءة الاختراع وتراخيص الشفرات المصدرية للبرامج والوثائق) المرتبطة بأنظمتها.  </p>
+            <p>• المعلومات المحتواة في هذا الموقع هي فقط للأغراض التعليمية . وهى مقدمة من قبل <span class="kkux">"KKUx"</span>. </p>
+            <p>• الجامعة وإدارتها لا تتحمل بأي شكل من الأشكال أي ضرر أو خسائر تنتج عن استخدام الموقع لغير أهدافه .</p>
+            <p>• على الرغم من الجهد المبذول، فإن الجامعة لا تعطي أي ضمانات على مدى توفر المنصة ولا تتحمل بأي شكل من الأشكال مسؤولية أي أضرار أو خسائر تنتج من عدم توفر المنصة.</p>
+
+            <p class="content-title">قواعد النشر</p>
+            <p>من أجل الحفاظ على هوية <span class="kkux">KKUx</span> وتوفير محتوى إثرائي يساهم فى خدمة المجتمع ككل ، يرجى فضلاً الإلتزام بما يلى:   </p>
+            <p>* عدم التعرض للأشخاص والجهات والمؤسسات بالطعن أوالانتقاص أوالسب أوالتشهير.  </p>
+            <p>* عدم نشر البرامج ذات حقوق النشر أو العلامات التجارية أو حقوق الملكية الفكرية بصفة غير قانونية.   </p>
+            <p>* يمنع اقتباس أي محتوى محمي بحقوق النشر إلا بعد الموافقة من المصدر.   </p>
+            <p>* يمنع المدح أو الإشادة أو الترويج أو التصويب أو الدعم لكل فكر منحرف ورموزه)   </p>
+            <p>* يمنع وضع روابط لمواقع أخرى مخالفة للشرع، أو يقصد بها الإضرار بالأمن الوطني.   </p>
+            <p>* يمنع وضع أي صورة خادشة للحياء أو مخالفة لتعاليم الدين، أو أي صور تؤذي النفوس.      </p>
+            <p>* استخدام النشر لخدمة أغراض الجامعة الأكاديمية و العلمية فقط.     </p>
+            <p>* يحظر الموقع نشر جميع أنواع المحتوى و التعليقات التي تؤجج الطائفية، والعنصرية،  والقبلية، والمناطقية بجميع أشكالها وصورها.   </p>
+            <p>* لا يحق لأي عضو نشر دعاية لمنتج تجاري أو غيره دون الحصول على موافقة إدارة الموقع.   </p>
+            <p>* المنصة غير ملزمة بنشر أي موضوع أو التقيد بزمن محدد للنشر أو إعادة النشر.   </p>
+            <p>* لا تتحمل المنصة أي مسؤولية عن تغير، أو فقد المحتوى نتيجة أي خلل فني أو أعمال تطويرية.   </p>
+            <p>* لا يجوز استخدام أي أسماء أو شعارات موجودة في المنصة دون إذن مسبق.</p>
+            <p class="content-title">بيان الخصوصية</p>
+            <p>تلتزم منصة <span class="kkux">KKUx</span> بحماية خصوصيتك تبعاً لما جاء في هذه السياسة التي تنطبق على المعلومات المحددة للشخصية التي تجمعها جامعة الملك خالد، ويخضع استخدامك للمنصة إلى سياسة الخصوصية وشروط الاستخدام التي تخص جامعة الملك خالد. </p>
+
+            <h3>جمع وحفظ المعلومات:</h3>
+            <p>عند انضمامك لمنصة <span class="kkux">KKUx</span>، قد تطلب جامعة الملك خالد منك أن تقدم معلومات شخصية، منها، حسبما يقتضي الأمر، اسمك، وعنوانك، وبريدك الإلكتروني، ورقم هاتفك، ورقم بطاقة الإئتمان الخاصة بك، ومعلومات الإتصال، ومعلومات الفوترة، وأية معلومات أخرى تحدد من خلالها هويتك الخاصة. وفي أقسام أخرى من الموقع قد تجمع منصة <span class="kkux">KKUx</span> معلومات ديموغرافية ليست متفردة بك مثل الدولة التي تقيم بها، والعمر، والمستوى التعليمي، والجنس، وغيرها من أنواع المعلومات المشابهة، وأحياناً تجمع جامعة الملك خالد مزيجاً من هذين النوعين من المعلومات. وقد تجمع منصة <span class="kkux">KKUx</span> معلومات عن جهاز الحاسب الآلي الخاص بك وبرمجياته، وقد تتضمن هذه المعلومات، على سبيل المثال لا الحصر، عنوان بروتوكول الإنترنت (IP address) ونوع متصفحك وأسماء النطاقات وأوقات الدخول وعناوين المواقع الإلكترونية المرجعية.ومن أجل جعل زياراتك المتكررة للموقع أكثر فعالية وتخصصاً وكذلك من أجل المحافظة على معلوماتك بأسلوب فعال، فإن جامعة الملك خالد تحفظ المعلومات التي تجمعها.</p>
+
+            <h3>مشاركة المعلومات والكشف عنها:</h3>
+            <p>• لا تكشف منصة <span class="kkux">KKUx</span> عن معلوماتك الشخصية أو مزيج معلوماتك الشخصية والديموغرافية أو المعلومات الخاصة بإستخدامك للموقع الإلكتروني (مثل الأقسام التي تزورها أو الخدمات التي تدخل عليها) لآخرين.</p>
+            <p>• يحق لمنصة <span class="kkux">KKUx</span> أن تكشف عن هذه المعلومات للشركات والأفراد الذين تعمل معهم الجامعة، بهدف تنفيذ مهامها، بما في ذلك الشركات والأفراد المخولين بأداء المهام نيابة عنها. </p>
+            <p>• يحق لمنصة <span class="kkux">KKUx</span> الكشف عن هذه المعلومات إذا تحتم قانونياً القيام بذلك، أو إذا طلبت هيئة حكومية ذلك.</p>
+
+            <h3>التغييرات الطارئة على سياسة الخصوصية :</h3>
+            <p>تحتفظ منصة <span class="kkux">KKUx</span> بحقها في تعديل سياسة الخصوصية هذه من وقت لآخر، وستكون هذه التعديلات نافذة فور نشرها على هذا الموقع من قِبل منصة <span class="kkux">KKUx</span>، وإذا قامت منصة <span class="kkux">KKUx</span> بعمل أي تغييرات مادية على الأسلوب الذي تستخدم به معلوماتك الشخصية بموجب سياسة الخصوصية هذه فسيتم إخطارك بهذه التغييرات وستعطى لك فرصة الاعتراض على هذا الاستخدام الجديد أو المختلف. سيتم الإرشاد لهذه التحديثات من خلال المنصة، ولذا يرجى مراجعة سياسة الخصوصية بشكل دوري لمتابعة التحديثات أو التعديلات، واستمرارك في استخدام هذه المنصة بعد نشر أية تعديلات يعني قبولك بهذه التعديلات.</p>
+
+        % endif
+
     </section>
 </main>
 

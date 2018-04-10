@@ -227,7 +227,7 @@ def _update_course_context(request, context, course, platform_name):
     """
     Updates context dictionary with course info.
     """
-    context['course_display_name_in_arabic'] = course.display_name_in_arabic
+    context['course_display_name_in_arabic'] = course.display_name_in_arabic if course.display_name_in_arabic else ""
     context['full_course_image_url'] = request.build_absolute_uri(course_image_url(course))
     course_title_from_cert = context['certificate_data'].get('course_title', '')
     accomplishment_copy_course_name = course_title_from_cert if course_title_from_cert else course.display_name
@@ -341,7 +341,8 @@ def _get_user_certificate(request, user, course_key, course, preview_mode=None):
             user_certificate = GeneratedCertificate(
                 mode=preview_mode,
                 verify_uuid=unicode(uuid4().hex),
-                modified_date=datetime.now().date()
+                modified_date=datetime.now().date(),
+                user=user
             )
     else:
         # certificate is being viewed by learner or public

@@ -1,54 +1,73 @@
-	## mako
+## mako
 <%page expression_filter="h"/>
 <%!
-	from datetime import datetime
-	from django.core.urlresolvers import reverse
-	from django.utils.translation import ugettext as _
-	from branding.api import get_footer
+    from datetime import datetime
+    from django.core.urlresolvers import reverse
+    from django.utils.translation import ugettext as _
+    from branding.api import get_footer
 %>
 <% footer = get_footer(is_secure=is_secure) %>
 <% year = datetime.now().year %>
 <%namespace name='static' file='static_content.html'/>
 
 <footer class="footer" id="footer">
-	<div class="custom-container">
-		<div class="fot-col">
-			<h4>About</h4>
-			<ul>
-				<li><a href="/mission">Mission</a></li>
-				<li><a href="/vision">Vision</a></li>
-				<li><a href="http://eld.kku.edu.sa/">ELD Website</a></li>
-			</ul>
-		</div>
-		<div class="fot-col">
-			<h4>Terms</h4>
-			<ul>
-				<li><a href="/copyright">Copyright</a></li>
-				<li><a href="/publish_rules">Publishing Rules</a></li>
-				<li><a href="data_use_policy">Data Use Policy</a></li>
-			</ul>
-		</div>
-		<div class="fot-col big">
-			<h4>ELD Open Learning</h4>
-			<ul>
-				<li><a href="http://ocw.kku.edu.sa/">Open CourseWare </a></li>
-				<li><a href="http://olomna.org/">Olomna</a></li>
-				<li><a href="https://www.youtube.com/user/kkuTamkeen">Tamkeen</a></li>
-			</ul>
-		</div>
-		<div class="fot-col">
-			<h4>Contact</h4>
-			<ul>
-				<li><a href="/contact">Contact us</a></li>
-			</ul>
-		</div>
-		<div class="fot-col last">
-			<div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
-			<!-- <a class="twitter-follow-button" href="https://twitter.com/kkuxedu" data-size="large" data-lang="en">Follow @kkuxedu</a> -->
-			<a href="https://twitter.com/kkuxedu"><div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div></a>
-		</div>
-		<div class="copyright">
-			<p>©KKUx All Right Reserved ${year}</p>
-		</div>
-	</div>
+    <div class="custom-container">
+        <div class="fot-col">
+            <h4>${_('About')}</h4>
+            <ul>
+                <li><a href="/about">${_('Mission')}</a></li>
+                <li><a href="/about">${_('Vision')}</a></li>
+                <li><a href="http://eld.kku.edu.sa/">${_('ELD Website')}</a></li>
+            </ul>
+        </div>
+        <div class="fot-col">
+            <h4>${_('Terms')}</h4>
+            <ul>
+                <li><a href="/tos">${_('Copyright')}</a></li>
+                <li><a href="/tos">${_('Publishing Rules')}</a></li>
+                <li><a href="/tos">${_('Data Use Policy')}</a></li>
+            </ul>
+        </div>
+        <div class="fot-col big">
+            <h4>${_('ELD Open Learning')}</h4>
+            <ul>
+                <li><a href="http://ocw.kku.edu.sa/">${_('Open CourseWare')}</a></li>
+                <li><a href="http://olomna.org/">${_('Olomna')}</a></li>
+                <li><a href="https://www.youtube.com/user/kkuTamkeen">${_('Tamkeen')}</a></li>
+            </ul>
+        </div>
+        <div class="fot-col">
+            <h4>${_('Contact')}</h4>
+            <ul>
+                <li><a href="/contact">${_('Contact us')}</a></li>
+            </ul>
+        </div>
+        <div class="fot-col last">
+            <div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
+            <!-- <a class="twitter-follow-button" href="https://twitter.com/kkuxedu" data-size="large" data-lang="en">Follow @kkuxedu</a> -->
+            <!-- <a href="https://twitter.com/kkuxedu"><div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div></a> -->
+            <a class="twitter-follow-button" href="https://twitter.com/kkuxedu" data-size="large" data-lang="en">Follow @kkuxedu</a>
+        </div>
+        <div class="copyright">
+            <p>${_('KKUx All Right Reserved')} ${year} ©</p>
+        </div>
+    </div>
 </footer>
+<script>
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>

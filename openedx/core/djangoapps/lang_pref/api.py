@@ -53,6 +53,8 @@ def released_languages():
         released_language_codes.append(default_language_code)
         released_language_codes.sort()
 
+    if 'en' not in released_language_codes:
+        released_language_codes.append('en')
     # Intersect the list of valid language tuples with the list
     # of released language codes
     return [

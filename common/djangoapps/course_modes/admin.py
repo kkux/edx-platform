@@ -1,6 +1,8 @@
 """
 Django admin page for course modes
 """
+import logging
+
 from django.conf import settings
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -29,6 +31,8 @@ from course_modes.models import CourseMode, CourseModeExpirationConfig
 from lms.djangoapps.verify_student import models as verification_models
 
 COURSE_MODE_SLUG_CHOICES = [(mode_slug, mode_slug) for mode_slug in settings.COURSE_ENROLLMENT_MODES]
+
+log = logging.getLogger(__name__)
 
 
 class CourseModeForm(forms.ModelForm):

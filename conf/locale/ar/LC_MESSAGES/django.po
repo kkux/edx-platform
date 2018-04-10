@@ -25890,3 +25890,98 @@ msgid ""
 "A new revision was created: Merge between Revision #%(r1)d and Revision "
 "#%(r2)d"
 msgstr "أُنشأت مراجعة جديدة: الدمج بين المراجعة #%(r1)d والمراجعة #%(r2)d "
+
+
+
+
+#: /themes/kkux/lms/templates/header.html
+msgid "Why KKUx?"
+msgstr "عن المنصة"
+
+msgid "Skills"
+msgstr "المهارات"
+
+
+#: /themes/kkux/lms/templates/index.html
+msgid "Future Skills"
+msgstr "مهارات المستقبل"
+
+msgid "Welcome to KKUx"
+msgstr" مرحبًا بكم في KKUx"
+
+msgid "Featured Skills"
+msgstr "أبرز المهارات"
+
+msgid "Upcoming Skills"
+msgstr "المهارات القادمة"
+
+msgid "KKUX News"
+msgstr "أبرز الأخبار"
+
+msgid "Achievements at"
+msgstr "مكاسب في "
+
+msgid "Our Partners"
+msgstr "شركاؤنا"
+
+msgid "Earn Lifelong Skills"
+msgstr "إكسب مهارة للحياة"
+
+msgid "Earn Certificate from KKU"
+msgstr "إكسب شهادة من KKU"
+
+msgid "You Will earn a New Skill In Your Life"
+msgstr "في حال إتمام المهارة سوف تضيف قيمة حقيقية لحياتك"
+
+msgid "You will receive a certificate from King Khalid University to post to your professional network"
+msgstr "في حال إتمام المهارة بنجاح سوف ستحصل على شهادة من جامعة الملك خالد تضاف الى سيرتك المهنية"
+
+msgid "Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs."
+msgstr "تعد مهارات الإبداع والابتكار والريادة من أساسيات جيل المستقبل، ونحن نسعى من خلال هذه المنصة الى تنويع خبرات ابناءنا وتزويدهم بمجموعة من المهارات الأساسية التي تتطلبها وظائف المستقبل ."
+
+msgid "Prof. Falleh R. M. Al-Solamy , Rector of King Khalid University"
+msgstr "أ.د. فالح رجاء الله السلمي - مدير جامعة الملك خالد"
+
+msgid "KKUx Provides Distinguished and High Quality Content about the Most Important Skills For Future Jobs."
+msgstr "تهدف المنصة إلى المساهمة في تقديم أهم المهارات لوظائف المستقبل عن طريق تقديم محتوى نوعي و عالي الجودة"
+
+
+#: /themes/kkux/lms/templates/footer.html
+
+msgid "Mission"
+msgstr "الرؤية"
+
+msgid "Vision"
+msgstr "الرسالة"
+
+msgid "ELD Website"
+msgstr "عمادة التعلم الإلكتروني"
+
+msgid "Terms"
+msgstr "السياسات"
+
+msgid "Publishing Rules"
+msgstr "قواعد النشر"
+
+msgid "Data Use Policy"
+msgstr "بيان الخصوصية"
+
+msgid "ELD Open Learning"
+msgstr "التعلم المفتوح"
+
+msgid "Open CourseWare"
+msgstr "المقررات المفتوحة "
+
+msgid "Olomna"
+msgstr "علومنا "
+
+msgid "Tamkeen"
+msgstr "تمكين للتدريب"
+
+msgid "Contact us"
+msgstr "تواصل معنا"
+
+msgid "KKUx All Right Reserved"
+msgstr "جميع الحقوق محفوظة لـ  KKUx"
+
+

@@ -24,7 +24,13 @@
   {% optional_include "head-extra.html"|microsite_template_path %}
 
   <meta name="path_prefix" content="{{EDX_ROOT_URL}}">
-  <link rel="stylesheet" type="text/css" href="{% static 'custom_css/style.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'custom_css/lms-common.css' %}">
+  {% if LANGUAGE_BIDI|yesno:'rtl,ltr' == 'ltr' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom_css/lms-custom-ltr.css' %}">
+  {% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom_css/lms-custom-rtl.css' %}">
+  {% endif %}
   
 </head>
 
@@ -47,7 +53,7 @@
     {% javascript 'base_application' %}
 
     {% render_block "js" %}
-    <script type="text/javascript" src="${% static 'js/header_footer.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'js/lms-common.js' %}"></script>
 </body>
 </html>
 

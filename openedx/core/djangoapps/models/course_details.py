@@ -32,6 +32,7 @@ ABOUT_ATTRIBUTES = [
     'entrance_exam_id',
     'entrance_exam_minimum_score_pct',
     'course_category',
+    'short_description_in_arabic',
 ]
 
 

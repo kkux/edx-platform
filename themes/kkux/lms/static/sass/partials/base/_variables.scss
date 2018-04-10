@@ -74,12 +74,12 @@ $courseware-border-bottom-color: #93b045;
 //---------------------------------------
 @font-face {
     font-family: 'Levenim MT';
-    src: url('#{$static-path}/custom_css/LevenimMT.eot');
-    src: url('#{$static-path}/custom_css/LevenimMT.eot?#iefix') format('embedded-opentype'),
-        url('#{$static-path}/custom_css/LevenimMT.woff2') format('woff2'),
-        url('#{$static-path}/custom_css/LevenimMT.woff') format('woff'),
-        url('#{$static-path}/custom_css/LevenimMT.ttf') format('truetype'),
-        url('#{$static-path}/custom_css/LevenimMT.svg#LevenimMT') format('svg');
+    src: url('#{$static-path}/fonts/LevenimMT.eot');
+    src: url('#{$static-path}/fonts/LevenimMT.eot?#iefix') format('embedded-opentype'),
+        url('#{$static-path}/fonts/LevenimMT.woff2') format('woff2'),
+        url('#{$static-path}/fonts/LevenimMT.woff') format('woff'),
+        url('#{$static-path}/fonts/LevenimMT.ttf') format('truetype'),
+        url('#{$static-path}/fonts/LevenimMT.svg#LevenimMT') format('svg');
     font-weight: normal;
     font-style: normal;
 }

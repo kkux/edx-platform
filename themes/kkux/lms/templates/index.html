@@ -1,3 +1,5 @@
+<%page expression_filter="h"/>
+<%inherit file="main.html" />
 <%namespace name='static' file='static_content.html'/>
 <% 
 from datetime import datetime
@@ -15,386 +17,219 @@ from branding import api as branding_api
 from status.status import get_site_status_msg
 from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
 
+from kkux.models import News
 %>
 <%
-	year = datetime.now().year
+    year = datetime.now().year
 %>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Meta, title, CSS, favicons, etc. -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title> KKUx </title>
-    <!-- Bootstrap Core CSS -->
-    <!-- Custom CSS -->
-    
-    <link href="${static.url('custom_css/font-awesome.css')}" rel="stylesheet">
-    <link href="${static.url('custom_css/owl.carousel.css')}" rel="stylesheet">
-	<link href="${static.url('custom_css/owl.theme.default.css')}" rel="stylesheet">
-    <link href="${static.url('custom_css/bootstrap.css')}" rel="stylesheet">
-	<link href="${static.url('custom_css/bootstrap-select.css')}" rel="stylesheet">
-    <link href="${static.url('custom_css/docs.css')}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
 <div class="page">
-	<nav class="navbar navbar-default">
-    	<div class="container">
-         	<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-            	<a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
-					% if header_language_selector_is_enabled():
-                                          <% languages = released_languages() %>
-                                          % if len(languages) > 1:
-                                            <ol class="user language_dropdown">
-                                              <li class="primary" style="display: none;">
-                                                <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
-                                                  <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
-                                                  % if user.is_authenticated():
-                                                    <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
-                                                  % else:
-                                                    <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
-                                                  % endif
-                                                    <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
-                                                      % for language in languages:
-                                                        % if language[0] == LANGUAGE_CODE:
-                                                          <option value="${language[0]}" selected="selected">${language[1]}</option>
-                                                        % else:
-                                                          <option value="${language[0]}" >${language[1]}</option>
-                                                        % endif
-                                                      % endfor
-                                                    </select>
-                                                  </label>
-                                                </form>
-                                              </li>
-                                            </ol>
-                                          % endif
+    <section class="section-banner">
+        <div class="banner-img">
+            <img src="${static.url('images/banner-img.png')}" alt="" >  
+        </div>
+        <div class="banner-text">
+            <div class="text-block">
+                <h1>${_('Future Skills')}</h1>
+                <a class="btn" href="${reverse('register_user')}" >${_('Sign Up')}</a>
+            </div>
+        </div>
+    </section>
+    <section class="section welcom">
+        <div class="container">
+            <h2>${_('Welcome to KKUx')}</h2>
+            <div class="text-center">
+                <p>${_('KKUx Provides Distinguished and High Quality Content about the Most')}<br>${_('Important Skills For Future Jobs.')}</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="welcom-block">
+                        <div class="icon"><img src="${static.url('images/icon1.png')}" alt="" ></div>
+                        <p>${_('Learn how to become an entrepreneur, and how to startup your own business')}</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="welcom-block highlight">
+                        <div class="icon"><img src="${static.url('images/icon2.png')}" alt="" ></div>
+                        <p>${_('Discover the latest ways to solve complex problems and learn how ask the right questions')}</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="welcom-block">
+                        <div class="icon"><img src="${static.url('images/icon3.png')}" alt="" ></div>
+                        <p>${_('Learn tips and techniques to help you to successfully pass IELTS exam, offered by British Council and the Faculty of Languages & Translation at KKU')}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section video-section">
+        <div class="container">
+            <iframe height="410px" width="64%" src="https://www.youtube.com/embed/aMdOaPtW0gc"></iframe>
+        </div>  
+    </section>
+    </div>
+    <section class="section skills">
+        <div class="container">
+            <h2>${_('Featured Skills')}</h2>
+            <div class="row">
+                % for course in courses[:settings.HOMEPAGE_COURSE_MAX]:
+                    <% 
+                        price = CourseMode.min_course_price_for_currency(course.pk,settings.PAID_COURSE_REGISTRATION_CURRENCY[0])
+                        if LANGUAGE_CODE == 'ar':
+                            short_description = course.short_description_in_arabic if course.short_description_in_arabic else course.short_description
+                        else:
+                            short_description = course.short_description
+                    %>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="featured-block">
+                            <a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
+                                <div class="image">
+                                    <img src="${course.course_image_url}" alt="${course.display_name_with_default}" >
+                                </div>
+                                <div class="skills-details">
+                                    % if LANGUAGE_CODE == 'ar':
+                                      <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
+                                    % else:
+                                      <h3>${course.display_name_with_default}</h3>
+                                    % endif
+                                    <div class="">
+                                        % if course.course_category:
+                                            <label><i class="fa fa-tags" aria-hidden="true"></i>${course.course_category}</label>
                                         % endif
-            	% if request.user.is_authenticated():
-            		<ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
-            			<%include file="user_dropdown.html"/>
-            		</ul>
-            	% else:
-					<ul class="right-top hidden-md  hidden-sm  hidden-lg">
-						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
-						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
-						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
-					</ul>
-				% endif
-        	</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
-				% if request.user.is_authenticated():
-					<ul class="right-top header-rightbar clearfix">
-            			<%include file="user_dropdown.html"/>
-            		</ul>
-            	% else:
-					<ul class="right-top">
-				% endif
-				% if request.user.is_authenticated():
-					<ul class="right-top header-rightbar clearfix">
-            			<%include file="user_dropdown.html"/>
-            		</ul>
-            	% else:
-					<ul class="right-top" style="margin-top: -20px;">
-						<li><a href="javascript:void(0);" class="language-btn" id="language-btn">ع</a></li>
-						<li><a class="btn" href="${reverse('signin_user')}">Sign in</a></li>
-						<li><a class="btn" href="${reverse('register_user')}">Register</a></li>
-					</ul>
-				% endif
-				
-				<ul class="nav navbar-nav" style="padding-top: 1px;">
-					<li class="active"><a href="${reverse('courses')}">Skills</a></li>
-				  	<li><a href="/about">Why KKUx?</a></li>
-				  	<li><a href="/contact">Contact</a></li>
-				</ul>
-			</div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-	</nav>
-	<section class="section-banner">
-		<div class="banner-img">
-			<img src="${static.url('images/banner-img.png')}" alt="" >	
-		</div>
-		<div class="banner-text">
-			<div class="text-block">
-				<h1>Future Skills</h1>
-				<a class="btn" href="${reverse('register_user')}" >Sign Up</a>
-			</div>
-		</div>
-	</section>
-	<section class="section welcom">
-		<div class="container">
-			<h2>Welcom  to KKUx</h2>
-			<div class="text-center">
-				<p>KKUx Provides Distinguished and High Quality Content about the Most<br>Important Skills For Future Jobs.</p>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="welcom-block">
-						<div class="icon"><img src="${static.url('images/icon1.png')}" alt="" ></div>
-						<p>Learn how to become an entrepreneur, and how to startup your own business</p>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="welcom-block highlight">
-						<div class="icon"><img src="${static.url('images/icon2.png')}" alt="" ></div>
-						<p>Discover the latest ways to solve complex problems and learn how ask the right questions</p>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="welcom-block">
-						<div class="icon"><img src="${static.url('images/icon3.png')}" alt="" ></div>
-						<p>Learn tips and techniques to help you to successfully pass IELTS exam, offered by British Council and the Faculty of Languages & Translation at KKU</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section class="section video-section">
-		<div class="container">
-			<iframe height="410px" width="64%" src="https://www.youtube.com/embed/aMdOaPtW0gc"></iframe>
-		</div>	
-	</section>
-	</div>
-	<section class="section skills">
-		<div class="container">
-			<h2>Featured Skills</h2>
-			<div class="row">
-				% for course in courses[:settings.HOMEPAGE_COURSE_MAX]:
-					<% 
-						price = CourseMode.min_course_price_for_currency(course.pk,settings.PAID_COURSE_REGISTRATION_CURRENCY[0])
-					%>
-					<div class="col-md-4 col-sm-6">
-						<div class="featured-block">
-							<a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
-								<div class="image">
-									<img src="${course.course_image_url}" alt="${course.display_name_with_default}" >
-								</div>
-								<div class="skills-details">
-									<h3>${course.display_name_with_default}</h3>
-									<div class="">
-                                                                            % if course.course_category:
-										<label><i class="fa fa-tags" aria-hidden="true"></i>${course.course_category}</label>
-                                                                            % endif
-										<span class="free">
-											%if price == 0:
-												Free
-											%else:
-												${price} SAR
-											%endif
-										</span>
-									</div>
-									<p>${course.short_description}</p>
-									<ul>
-										<li><i class="fa fa-users" aria-hidden="true"></i>${enrollments[course]}</li>
-										<li><i class="fa fa-comments" aria-hidden="true"></i>2</li>
-										<li><i class="fa fa-clock-o" aria-hidden="true"></i>7 Days</li>
-									</ul>
-								</div>
-							</a>
-						</div>
-					</div>
-				% endfor
-			</div>
-			<div class="upcoming-skills">
-				<h2>Upcoming Skills</h2>
-				<div class="skills-carousel owl-carousel owl-theme">
-					% for course in upcoming_skills:
-						<%	
-							start_date = course.start
-							date = start_date.strftime("%d")
-							month_year = start_date.strftime("%b %Y")
-						%>
-						<div class="item">
-							<a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
-								<div class="upcoming">
-									<div class="date"><strong>${date}</strong> ${month_year}</div>
-									<div class="img">
-										<img src="${course.course_image_url}" alt="${course.display_name_with_default}" >
-									</div>
-									<div class="upcoming-details">
-										<h3>${course.display_name_with_default}</h3>
-										<p>${course.short_description}</p>
-										<div class="">
-											<label><i class="fa fa-tags" aria-hidden="true"></i>Business</label>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					% endfor
-				</div>
-			</div>
-			<div class="kku-rector">
-				<div class="row">
-					<div class="col-sm-4">
-						<img src="${static.url('images/client.png')}" alt="" >
-					</div>
-					<div class="col-sm-8">
-						<div class="rector">
-							<p>Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.</p>
-							<p><strong>Prof. Falleh R. M. Al-Solamy , Rector of King Khalid University</strong></p>
-						</div>	
-					</div>
-				</div>
-			</div>
-		</div>	
-	</section>
-	<section class="section news">
-		<div class="container">
-			<h2>KKUX News</h2>
-			<ul>
-				<li>
-					<h3>FAST COMPANY</h3>
-					<p>How To Build An Entrepreneurial Culture: 5 Tips From Eric Ries</p>
-				</li>
-				<li>
-					<h3>FAST COMPANY</h3>
-					<p>How To Build An Entrepreneurial Culture: 5 Tips From Eric Ries</p>
-				</li>
-				<li>
-					<h3>HARVARD BUSINESS REVIEW</h3>
-					<p>Teaching Creativity to Leaders</p>
-				</li>
-				<li>
-					<h3>FORBES</h3>
-					<p>How to Capture an Audience with Your Service Prototypes</p>
-				</li>
-			</ul>
-		</div>	
-	</section>
-	<section class="section achievements ">
-		<div class="container">
-			<h2>Achievements at <img src="${static.url('images/kkux-small-logo.png')}" alt="" ></h2>
-			<div class="row">
-				<div class="col-sm-4">
-					<h3>Earn Certificate from KKU</h3>
-					<p>You will receive a certificate from King Khalid University to post to your professional network</p>
-				</div>
-				<div class="col-sm-4 text-center">
-					<img src="${static.url('images/certificate.png')}" alt="" >
-				</div>
-				<div class="col-sm-4">
-					<h3>Earn Lifelong Skills</h3>
-					<p>You Will earn a New Skill In Your Life</p>
-				</div>
-			</div>
-			<div class="our-partners">
-				<h2>Our Partners</h2>
-				<ul>
-					<li><img src="${static.url('images/our-partners-1.png')}" alt="" ></li>
-					<li><img src="${static.url('images/our-partners-2.png')}" alt="" ></li>
-					<li><img src="${static.url('images/our-partners-3.png')}" alt="" ></li>
-					<li><img src="${static.url('images/our-partners-4.png')}" alt="" ></li>
-				</ul>
-			</div>
-		</div>	
-	</section>
-	<footer class="footer">
-		<div class="container">
-			<div class="fot-col">
-				<h4>About</h4>
-				<ul>
-					<li><a href="/mission">Mission</a></li>
-					<li><a href="/vision">Vision</a></li>
-					<li><a href="http://eld.kku.edu.sa/">ELD Website</a></li>
-				</ul>
-			</div>
-			<div class="fot-col">
-				<h4>Terms</h4>
-				<ul>
-					<li><a href="/copyright">Copyright</a></li>
-					<li><a href="/publish_rules">Publishing Rules</a></li>
-					<li><a href="/data_use_policy">Data Use Policy</a></li>
-				</ul>
-			</div>
-			<div class="fot-col big">
-				<h4>ELD Open Learning</h4>
-				<ul>
-					<li><a href="http://ocw.kku.edu.sa/">Open CourseWare </a></li>
-					<li><a href="http://olomna.org/">Olomna</a></li>
-					<li><a href="https://www.youtube.com/user/kkuTamkeen">Tamkeen</a></li>
-				</ul>
-			</div>
-			<div class="fot-col">
-				<h4>Contact</h4>
-				<ul>
-					<li><a href="/contact">Contact us</a></li>
-				</ul>
-			</div>
-			<div class="fot-col last">
-				<div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
-				<a href="https://twitter.com/kkuxedu"><div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div></a>
-			</div>
-			<div class="copyright">
-				<p>©KKUx All Right Reserved ${year}</p>
-			</div>
-		</div>
-	</footer>
+                                        <span class="free">
+                                            %if price == 0:
+                                                Free
+                                            %else:
+                                                ${price} SAR
+                                            %endif
+                                        </span>
+                                    </div>
+                                    <p>${short_description}</p>
+                                    <ul>
+                                        <li><i class="fa fa-users" aria-hidden="true"></i>${enrollments[course]}</li>
+                                        <li><i class="fa fa-comments" aria-hidden="true"></i>2</li>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>7 Days</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                % endfor
+            </div>
+            <div class="upcoming-skills">
+                <h2>${_('Upcoming Skills')}</h2>
+                <div class="skills-carousel owl-carousel owl-theme">
+                    % for course in upcoming_skills:
+                        <%  
+                            start_date = course.start
+                            date = start_date.strftime("%d")
+                            month_year = start_date.strftime("%b %Y")
+                        %>
+                        <div class="item">
+                            <a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
+                                <div class="upcoming">
+                                    <div class="date"><strong>${date}</strong> ${month_year}</div>
+                                    <div class="img">
+                                        <img src="${course.course_image_url}" alt="${course.display_name_with_default}" >
+                                    </div>
+                                    <div class="upcoming-details">
+                                        <h3>${course.display_name_with_default}</h3>
+                                        <p>${course.short_description}</p>
+                                        <div class="">
+                                            <label><i class="fa fa-tags" aria-hidden="true"></i>Business</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    % endfor
+                </div>
+            </div>
+            <div class="kku-rector">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="${static.url('images/client.png')}" alt="" >
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="rector">
+                            <p>${_('Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.')}</p>
+                            <p><strong>${_('Prof. Falleh R. M. Al-Solamy , Rector of King Khalid University')}</strong></p>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </section>
+    <%
+        news_list = News.objects.filter(language__code=LANGUAGE_CODE)
+    %>
+    % if len(news_list):
+        <section class="section news">
+            <div class="container">
+                <h2>${_('KKUX News')}</h2>
+                <ul>
+                    % for news in news_list:
+                        <li>
+                            <h3><a href="${news.link}" target="_blank">${news.title}</a></h3>
+                            <p>${news.short_description}</p>
+                        </li>
+                    % endfor
+                </ul>
+            </div>
+        </section>
+    % endif
+    <section class="section achievements ">
+        <div class="container">
+            <h2>${_('Achievements at')} <img src="${static.url('images/kkux-small-logo.png')}" alt="" ></h2>
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3>${_('Earn Certificate from KKU')}</h3>
+                    <p>${_('You will receive a certificate from King Khalid University to post to your professional network')}</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <img src="${static.url('images/certificate.png')}" alt="" >
+                </div>
+                <div class="col-sm-4">
+                    <h3>${_('Earn Lifelong Skills')}</h3>
+                    <p>${_('You Will earn a New Skill In Your Life')}</p>
+                </div>
+            </div>
+            <div class="our-partners">
+                <h2>${_('Our Partners')}</h2>
+                <ul>
+                    <li><img src="${static.url('images/our-partners-1.png')}" alt="" ></li>
+                    <li><img src="${static.url('images/our-partners-2.png')}" alt="" ></li>
+                    <li><img src="${static.url('images/our-partners-3.png')}" alt="" ></li>
+                    <li><img src="${static.url('images/our-partners-4.png')}" alt="" ></li>
+                </ul>
+            </div>
+        </div>  
+    </section>
 </div>
-	<!-- Bootstrap Core JavaScript -->
-	<script type="text/javascript" src="${static.url('js/jquery-1.10.2.min.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/vendor/jquery.cookie.js')}"></script>
-	<script type="text/javascript" src="${static.url('xmodule_js/common_static/js/src/lang_edx.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/bootstrap.min.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/jquery.matchHeight.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/owl.carousel.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/custom.js')}"></script>
-	<script type="text/javascript" src="${static.url('js/jquery.leanModal.min.js')}" charset="utf-8"></script>
-	<script type="text/javascript">
-		$(function() {
-			$('a[rel*=leanModal]').leanModal({
-				top: 60,
-				closeButton: "#close_video"
-			});
-		});
-		$(document).ready(function() {
-			$(".play-btn").click(function(e) {
-				e.preventDefault()
-				document.getElementById("youtube_iframe").src = 'https://www.youtube.com/embed/' +this.id + "?autoplay=1&enablejsapi=1"
-				document.getElementById("youtube_iframe").playVideo();
-			});
-		});
-		function toggleVideo(state) {
-			// if state == 'hide', hide. Else: show video
-			var div = document.getElementById("iframe_div");
-			var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
-			div.style.display = state == 'hide' ? 'none' : '';
-			func = state == 'hide' ? 'pauseVideo' : 'playVideo';
-			iframe.postMessage('{"event":"command","func":"' + func + '","args":""}','*');
-		}
-	</script>
-</body>
-</html>
 <script type="text/javascript">
-    $( document ).ready(function() {
-        if ($('#settings-language-value option:selected').val() == 'en'){
-                $("a#language-btn.language-btn").text('En')
-        }
-        else{
-                 $("a#language-btn.language-btn").text('ع')
-        }
-
-        $( "a#language-btn.language-btn" ).click(function() {
-          	$('#settings-language-value').val($('#settings-language-value option:not(:selected)').val()).trigger('change');
-		debugger;
-        });
+$(function() {
+    $('a[rel*=leanModal]').leanModal({
+        top: 60,
+        closeButton: "#close_video"
     });
-</script>
+});
 
+function toggleVideo(state) {
+    // if state == 'hide', hide. Else: show video
+    var div = document.getElementById("iframe_div");
+    var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
+    div.style.display = state == 'hide' ? 'none' : '';
+    func = state == 'hide' ? 'pauseVideo' : 'playVideo';
+    iframe.postMessage('{"event":"command","func":"' + func + '","args":""}','*');
+}
+
+$(document).ready(function() {
+    $(".play-btn").click(function(e) {
+        e.preventDefault()
+        document.getElementById("youtube_iframe").src = 'https://www.youtube.com/embed/' +this.id + "?autoplay=1&enablejsapi=1"
+        document.getElementById("youtube_iframe").playVideo();
+    });
+});
+
+</script>

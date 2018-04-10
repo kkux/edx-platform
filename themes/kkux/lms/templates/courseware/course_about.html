@@ -111,7 +111,11 @@ from openedx.core.lib.courses import course_image_url
       <section class="intro">
         <div class="heading-group">
           <h1>
-            ${course.display_name_with_default_escaped}
+            % if LANGUAGE_CODE == 'ar':
+              ${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default_escaped}
+            % else:
+              ${course.display_name_with_default_escaped}
+            % endif
             <button type="button">${course.display_org_with_default | h}</button>
           </h1>
         </div>

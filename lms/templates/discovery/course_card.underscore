@@ -18,9 +18,9 @@
                       { start_date: start }, true
                     ) %>
                 <% if(price > 0) {%>
-                    <span style="float:right"><%- price %> SAR</span>
+                    <span><%- price %> SAR</span>
                 <% } else {%>
-                    <span style="float:right">Free</span>
+                    <span>Free</span>
                 <% } %>
             </div>
         </section>

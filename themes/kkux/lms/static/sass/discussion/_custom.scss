@@ -2,56 +2,56 @@ $theme-primary : #93b045;
 $theme-primary-t1 : #93d3de;
 
 body, .has-breadcrumbs .breadcrumbs .all-topics, .field-group{
-	font-family: 'Levenim MT';
+    font-family: 'Levenim MT';
 }
 .discussion, .discussion-module {
-	.btn {
-		color: $theme-primary;
-		border-color: $theme-primary;
-		&:hover,
-		&:focus,
-		&:active {
-			background-color: $theme-primary-t1;
-			border-color: $theme-primary-t1;
-			color: #fff;
-		}
-	}
-	.btn-brand {
-		background-color: $theme-primary;
-		border-color: $theme-primary;
-		&:hover,
-		&:focus,
-		&:active {
-			background-color: $theme-primary-t1;
-			border-color: $theme-primary-t1;
-		}
-	}
-	.post-label.post-label-following {
-		color: $theme-primary;
-	}
-	.field-label .field-input:checked+.field-input-label {
-		color: $theme-primary;
-	}
+    .btn {
+        color: $theme-primary;
+        border-color: $theme-primary;
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: $theme-primary-t1;
+            border-color: $theme-primary-t1;
+            color: #fff;
+        }
+    }
+    .btn-brand {
+        background-color: $theme-primary;
+        border-color: $theme-primary;
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: $theme-primary-t1;
+            border-color: $theme-primary-t1;
+        }
+    }
+    .post-label.post-label-following {
+        color: $theme-primary;
+    }
+    .field-label .field-input:checked+.field-input-label {
+        color: $theme-primary;
+    }
 }
 .discussion-article .posted-details .username, .has-breadcrumbs .breadcrumbs .all-topics {
-	color: $theme-primary;
+    color: $theme-primary;
 }
 .tabs .tab a{
-	&:active,
-	&:visited,
-	&:focus {
-		color: $theme-primary !important;
-		border-bottom-color: $theme-primary !important;
-	}
+    &:active,
+    &:visited,
+    &:focus {
+        color: $theme-primary !important;
+        border-bottom-color: $theme-primary !important;
+    }
 }
 .forum-new-post-form .post-type-input:checked+.post-type-label, .edit-post-form .post-type-input:checked+.post-type-label{
-	background-color: $theme-primary;
-	border-color: $theme-primary;
+    background-color: $theme-primary;
+    border-color: $theme-primary;
 }
 .forum-new-post-form .post-field .field-label .field-input .topic-title{
-	&:active,
-	&:visited,
-	&:focus {
-		background-color: $theme-primary !important;
-	}	
+    &:active,
+    &:visited,
+    &:focus {
+        background-color: $theme-primary !important;
+    }   
 }

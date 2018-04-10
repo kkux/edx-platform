@@ -1,31 +1,23 @@
 <%page expression_filter="h"/>
+<%namespace name='static' file='../static_content.html'/>
 <%! from django.utils.translation import ugettext as _ %>
 <%inherit file="../main.html" />
 
 <%block name="pagetitle">${_("Contact")}</%block>
-<style type="text/css">
-    h1{
-    text-align: left;
-    color: #066181;
-    font-family: Levenim MT;
-    font-size: 40px;
-    margin-bottom: 30px;
-    }
-    p {
-        margin: 0;
-        color: #606263;
-        font-family: arial;
-        font-size: 20px;
-        line-height: normal;
-    }
-</style>
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="container about" style="max-width: none !important;">
+    <section class="container static-content">
         <h1>${_("Contact")}</h1>
-        <p>${_("Thank you for your interest, You can contact us anytime by:")}</p>
-    <p>${_("e-mail: kkux@kku.edu.sa")}</p>
-        <p>${_("Twitter account: @kkuxedu")}</p>
-    <p>${_("Calling or WhatsApp 0531603182")}</p>
+        % if LANGUAGE_CODE == "ar":
+            <p>نشكر لك اهتمامكم بالتواصل معنا حيث يمكنك ذلك أينما كنت عبر قنوات التواصل التالية :</p>
+            <p>البريد الالكتروني : kkux@kku.edu.sa</p>
+            <p>تويتر عبر الحساب : kkuxedu@</p>
+            <p>التواصل عن طريق الاتصال او WhatsApp الرقم 0531603182 </p>
+        % else:
+            <p>Thank you for your interest, You can contact us anytime by:</p>
+            <p>e-mail: kkux@kku.edu.sa</p>
+            <p>Twitter account: @kkuxedu</p>
+            <p>Calling or WhatsApp 0531603182</p>
+        % endif 
     </section>
 </main>
 

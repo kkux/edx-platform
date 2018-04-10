@@ -735,11 +735,11 @@ def billing_details(request):
             full_name = full_name.split(' ')
             first_name = cart.user.first_name if cart.user.first_name else full_name[0]
             last_name = cart.user.last_name
-            mailing_address = cart.user.profile.mailing_address
-            city = cart.user.profile.city
-            country_code = cart.user.profile.country_code
-            phone_number = cart.user.profile.phone_number
-            postal_code = cart.user.profile.postalcode
+            mailing_address = cart.user.profile.mailing_address if cart.user.profile.mailing_address else ''
+            city = cart.user.profile.city if cart.user.profile.city else ''
+            country_code = cart.user.profile.country_code if cart.user.profile.country_code else ''
+            phone_number = cart.user.profile.phone_number if cart.user.profile.phone_number else ''
+            postal_code = cart.user.profile.postalcode if cart.user.profile.postalcode else ''
         else:
             first_name = cart.user.first_name
             last_name = cart.user.last_name

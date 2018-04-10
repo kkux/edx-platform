@@ -98,6 +98,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.$el.find('#' + this.fieldToSelectorMap.description).val(this.model.get('description'));
 
                    this.$el.find('#' + this.fieldToSelectorMap['short_description']).val(this.model.get('short_description'));
+                   this.$el.find('#' + this.fieldToSelectorMap['short_description_in_arabic']).val(this.model.get('short_description_in_arabic'));
 
                    this.$el.find('.current-course-introduction-video iframe').attr('src', this.model.videosourceSample());
                    this.$el.find('#' + this.fieldToSelectorMap['intro_video']).val(this.model.get('intro_video') || '');
@@ -182,7 +183,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'course_settings_learning_fields': 'course-settings-learning-fields',
                    'add_course_learning_info': 'add-course-learning-info',
                    'add_course_instructor_info': 'add-course-instructor-info',
-                   'course_learning_info': 'course-learning-info'
+                   'course_learning_info': 'course-learning-info',
+                   'short_description_in_arabic': 'course-short-description-ar'
                },
 
                addLearningFields: function() {
@@ -312,6 +314,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    // Added by Mahendra Chaudhari
                    case 'course_category':
                    case 'course-short-description':
+                   case 'course-short-description-ar':
                        this.setField(event);
                        break;
                    default: // Everything else is handled by datepickers and CodeMirror.
