@@ -3,12 +3,12 @@ Signal receivers for the "student" application.
 """
 from __future__ import absolute_import
 
+from django.conf import settings
 from django.utils import timezone
 
 from openedx.core.djangoapps.user_api.config.waffle import PREVENT_AUTH_USER_WRITES, waffle
 from student.helpers import (
     AccountValidationError,
-    RETIRED_USERNAME_START,
     USERNAME_EXISTS_MSG_FMT
 )
 from student.models import is_username_retired
@@ -31,10 +31,18 @@ def on_user_updated(sender, instance, **kwargs):  # pylint: disable=unused-argum
     """
     # Check only at User creation time and when not raw.
     if not instance.id and not kwargs['raw']:
-        # Check for username that's too close to retired username format.
-        if RETIRED_USERNAME_START and instance.username.startswith(RETIRED_USERNAME_START):
-            raise AccountValidationError(USERNAME_EXISTS_MSG_FMT.format(username=instance.username), field="username")
+        prefix_to_check = getattr(settings, 'DISALLOWED_USERNAME_PREFIX', None)
+        if prefix_to_check:
+            # Check for username that's too close to retired username format.
+            if instance.username.startswith(prefix_to_check):
+                raise AccountValidationError(
+                    USERNAME_EXISTS_MSG_FMT.format(username=instance.username),
+                    field="username"
+                )
 
         # Check for a retired username.
         if is_username_retired(instance.username):
-            raise AccountValidationError(USERNAME_EXISTS_MSG_FMT.format(username=instance.username), field="username")
+            raise AccountValidationError(
+                USERNAME_EXISTS_MSG_FMT.format(username=instance.username),
+                field="username"
+            )

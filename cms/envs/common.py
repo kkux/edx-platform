@@ -131,6 +131,7 @@ from lms.envs.common import (
     RETIRED_EMAIL_FMT,
     RETIRED_USER_SALTS,
     RETIREMENT_SERVICE_WORKER_USERNAME,
+    DISALLOWED_USERNAME_PREFIX,
 
     # Methods to derive settings
     _make_mako_template_dirs,

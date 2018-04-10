@@ -3,10 +3,12 @@ Test user retirement methods
 """
 import json
 
+import ddt
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.test.utils import override_settings
 import pytest
 
 from student.models import (
@@ -190,6 +192,7 @@ def test_get_potentially_retired_user_bad_hash():
         get_potentially_retired_user_by_username_and_hash(fake_username, "bad hash")
 
 
+@ddt.ddt
 class TestRegisterRetiredUsername(TestCase):
     """
     Tests to ensure that retired usernames can no longer be used in registering new accounts.
@@ -234,11 +237,25 @@ class TestRegisterRetiredUsername(TestCase):
         response = self.client.post(self.url, self.url_params)
         self._validate_exiting_username_response(orig_username, response)
 
-    def test_username_close_to_retired_format(self):
+    def test_username_close_to_retired_format_active(self):
         """
         Ensure that a username similar to the format of a retired username cannot be created.
         """
-        # Attempt to create an account with a username similar to the format of a retired username.
+        # Attempt to create an account with a username similar to the format of a retired username
+        # which matches the DISALLOWED_USERNAME_PREFIX setting.
         self.url_params['username'] = RETIRED_USERNAME_START
         response = self.client.post(self.url, self.url_params)
         self._validate_exiting_username_response(RETIRED_USERNAME_START, response)
+
+    @ddt.data(None, '')
+    def test_username_close_to_retired_format_inactive(self, prefix_setting):
+        """
+        Ensure that a username similar to the format of a retired username can be created
+        if checking is de-activated.
+        """
+        with override_settings(DISALLOWED_USERNAME_PREFIX=prefix_setting):
+            # Attempt to create an account with a username similar to the format of a retired username
+            # which matches the DISALLOWED_USERNAME_PREFIX setting.
+            self.url_params['username'] = RETIRED_USERNAME_START
+            response = self.client.post(self.url, self.url_params)
+            assert response.status_code == 200

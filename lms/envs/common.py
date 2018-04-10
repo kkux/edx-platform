@@ -3409,11 +3409,14 @@ RATELIMIT_ENABLE = True
 RATELIMIT_RATE = '120/m'
 
 ############### Settings for Retirement #####################
-# The two retired formats below should contain '{}' - they are used as Python string formats for the one-way hash.
+# The two retired formats below must contain '{}' - they are used as Python string formats for the one-way hash.
 RETIRED_USERNAME_FMT = 'retired__user_{}'
 RETIRED_EMAIL_FMT = 'retired__user_{}@retired.invalid'
 RETIRED_USER_SALTS = ['abc', '123']
 RETIREMENT_SERVICE_WORKER_USERNAME = 'RETIREMENT_SERVICE_USER'
+# Setting which prevents any learner from registering a username starting with this prefix.
+# Unset/remove the setting to turn off the username prefix checking.
+DISALLOWED_USERNAME_PREFIX = 'retired__user_'
 
 ############### Settings for django-fernet-fields ##################
 FERNET_KEYS = [
