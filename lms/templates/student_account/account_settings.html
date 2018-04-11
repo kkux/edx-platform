@@ -10,6 +10,10 @@ from django.utils.translation import ugettext as _
 from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_string
 %>
 
+# GDPR Flag
+from openedx.features.course_experience import ENABLE_GDPR_COMPAT_FLAG
+%>
+
 <!--<%namespace name='static' file='/static_content.html'/>-->
 
 <%inherit file="/main.html" />
@@ -25,10 +29,17 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
 % endif
 
 <div class="wrapper-account-settings"></div>
-
-<%block name="headextra">
-    <%static:css group='style-course'/>
-</%block>
+ % if ENABLE_GDPR_COMPAT_FLAG.is_enabled_without_course_context():
+    <%block name="headextra">
+        <%static:css group='style-course'/>
+        <link type="text/css" rel="stylesheet" href="${STATIC_URL}paragon/static/paragon.min.css">
+    </%block>
+    ${static.renderReact(
+        component="StudentAccountDeletion",
+        id="wrapper-account-deletion",
+        props={}
+    )}
+  % endif
 
 <%block name="js_extra">
 <%static:require_module module_name="js/student_account/views/account_settings_factory" class_name="AccountSettingsFactory">
