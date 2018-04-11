@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from tempfile import mkdtemp
+
 import ddt
 
 from django.test import TestCase
@@ -11,7 +13,6 @@ from mock import Mock, patch
 
 from pytz import UTC
 from six import text_type
-from tempfile import mkdtemp
 
 from xmodule.xml_module import is_pointer_tag
 from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
