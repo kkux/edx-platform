@@ -121,6 +121,27 @@ def send_request(user, course_id, page, page_size, path="", text=None):
     return response
 
 
+def delete_all_notes_for_user(user, user_id):
+    url = get_internal_endpoint(path='annotations')
+    params = {
+        "user_id": anonymous_id_for_user(user_id, None),
+    }
+    try:
+        response = requests.delete(
+            url,
+            headers={
+                "x-annotator-auth-token": get_edxnotes_id_token(user)
+            },
+            params=params,
+            timeout=(settings.EDXNOTES_CONNECT_TIMEOUT, settings.EDXNOTES_READ_TIMEOUT)
+        )
+    except RequestException:
+        log.error("Failed to connect to edx-notes-api: url=%s, params=%s", url, str(params))
+        raise EdxNotesServiceUnavailable(_("EdxNotes Service is unavailable. Please try again in a few minutes."))
+
+    return response
+
+
 def preprocess_collection(user, course, collection):
     """
     Prepare `collection(notes_list)` provided by edx-notes-api
