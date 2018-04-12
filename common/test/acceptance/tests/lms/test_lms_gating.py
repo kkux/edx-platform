@@ -165,7 +165,6 @@ class GatingTest(UniqueCourseTest):
 
         self.course_home_page.visit()
         self.assertEqual(self.course_home_page.outline.num_subsections, 2)
-        self.course_home_page.outline.go_to_section('Test Section 1', 'Test Subsection 2')
 
         # Fulfill prerequisite and verify that gated subsection is shown
         self.courseware_page.visit()
@@ -224,7 +223,8 @@ class GatingTest(UniqueCourseTest):
         # With the pre-req fulfilled by this learner, make sure the learner can navigate to the
         # gated subsection and don't see the lock banner
         self.course_home_page.visit()
-        self.course_home_page.preview.set_staff_view_mode_specific_student(self.STUDENT_USERNAME)
+        self.assertEqual(self.course_home_page.preview.staff_view_mode, 'Staff')
+        #self.course_home_page.preview.set_staff_view_mode_specific_student(self.STUDENT_USERNAME)
         self.course_home_page.wait_for_page()
         self.assertEqual(self.course_home_page.outline.num_subsections, 2)
         self.course_home_page.outline.go_to_section('Test Section 1', 'Test Subsection 2')
