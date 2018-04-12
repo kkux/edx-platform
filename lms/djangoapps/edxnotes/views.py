@@ -24,7 +24,8 @@ from edxnotes.helpers import (
     get_course_position,
     get_edxnotes_id_token,
     get_notes,
-    is_feature_enabled
+    is_feature_enabled,
+    delete_all_notes_for_user
 )
 from util.json_request import JsonResponse, JsonResponseBadRequest
 
@@ -205,3 +206,13 @@ def edxnotes_visibility(request, course_id):
             "Could not decode request body as JSON and find a boolean visibility field: '%s'", request.body
         )
         return JsonResponseBadRequest()
+
+
+@login_required
+def edxnotes_delete_user_all(request, user_id):
+    """
+    LMS endpoint for edxnotes - no URL pattern currently enabled
+    """
+    if not request.user.is_staff:
+        return HttpResponse('Unauthorized', status=401)
+    return delete_all_notes_for_user(user=request.user, user_id=user_id)

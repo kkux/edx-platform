@@ -6,6 +6,7 @@ import urlparse
 from contextlib import contextmanager
 from datetime import datetime
 from unittest import skipUnless
+import mock
 
 import ddt
 import jwt
@@ -527,6 +528,24 @@ class EdxNotesHelpersTest(ModuleStoreTestCase):
             helpers.get_notes(self.request, self.course)
         )
 
+    @override_settings(EDXNOTES_PUBLIC_API="http://example.com")
+    @override_settings(EDXNOTES_INTERNAL_API="http://example.com")
+    @patch("edxnotes.helpers.requests.delete")
+    def test_delete_all_notes_for_user(self, mock_delete):
+        """
+        Test GDPR data deletion for Notes user_id
+        """
+        with mock.patch('edxnotes.helpers.get_edxnotes_id_token', return_value="test_token"):
+            helpers.delete_all_notes_for_user(user=self.user, user_id="anonymous_id")
+            mock_delete.assert_called_with(
+                url='http://example.com/',
+                headers={
+                    'user_id': 'anonymous_id',
+                    'x-annotator-auth-token': 'test_token'
+                },
+                timeout=(settings.EDXNOTES_CONNECT_TIMEOUT, settings.EDXNOTES_READ_TIMEOUT)
+            )
+
     def test_preprocess_collection_no_item(self):
         """
         Tests the result if appropriate module is not found.
@@ -948,6 +967,7 @@ class EdxNotesViewsTest(ModuleStoreTestCase):
         self.notes_url = reverse("notes", args=[unicode(self.course.id)])
         self.get_token_url = reverse("get_token", args=[unicode(self.course.id)])
         self.visibility_url = reverse("edxnotes_visibility", args=[unicode(self.course.id)])
+        self.delete_url = reverse("edxnotes_delete", args=[unicode(self.course.id)])
 
     def _get_course_module(self):
         """
@@ -1124,6 +1144,21 @@ class EdxNotesViewsTest(ModuleStoreTestCase):
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 400)
+
+    # @patch.dict("django.conf.settings.FEATURES", {"ENABLE_EDXNOTES": True})
+    def test_edxnotes_delete_user_all(self):
+        """
+        Tests view endpoint for edxnotes
+        """
+        client = Client.objects.get(name='edx-notes')
+        response = client.delete(
+            url=self.delete_url,
+            data={
+                'user_id': 'test_user_id',
+                # 'user': self.user
+            },
+        )
+        self.assertEqual(response.status_code, 401)
 
 
 @attr(shard=3)
