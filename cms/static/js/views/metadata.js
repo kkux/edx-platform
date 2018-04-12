@@ -4,10 +4,11 @@ define(
         'js/models/uploads', 'js/views/uploads',
         'js/models/license', 'js/views/license',
         'js/views/video/transcripts/metadata_videolist',
-        'js/views/video/translations_editor'
+        'js/views/video/translations_editor',
+        'js/views/video/transcripts/utils'
     ],
 function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
-         LicenseModel, LicenseView, VideoList, VideoTranslations) {
+         LicenseModel, LicenseView, VideoList, VideoTranslations, TranscriptUtils) {
     var Metadata = {};
 
     Metadata.Editor = BaseView.extend({
@@ -109,6 +110,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                     .addClass('is-disabled')
                     .attr('aria-disabled', true);
             }
+            console.log('render');
         },
 
         getValueFromEditor: function() {
@@ -117,6 +119,40 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
 
         setValueInEditor: function(value) {
             this.$el.find('input').val(value);
+        }
+    });
+
+    Metadata.VideoID = Metadata.String.extend({
+        // Delay time between check_transcript requests
+        requestDelay: 300,
+
+        initialize: function() {
+            Metadata.String.prototype.initialize.apply(this, arguments);
+
+            this.$el.on(
+                'input',
+                'input',
+                _.debounce(_.bind(this.sendCheckTranscriptRequest, this), this.requestDelay)
+            );
+
+            console.log('Metadata.VideoID initialized');
+        },
+
+        render: function() {
+            Metadata.String.prototype.render.apply(this);
+            this.sendCheckTranscriptRequest();
+        },
+
+        sendCheckTranscriptRequest: function() {
+            var locator = this.$el.closest('[data-locator]').data('locator');
+            console.log('sendCheckTranscriptRequest');
+            TranscriptUtils.command('check', locator, this.getValueFromEditor())
+                .done(function(response) {
+                    Backbone.trigger('transcripts:basicTabUpdateMessage', true, response);
+                })
+                .fail(function(response) {
+                    Backbone.trigger('transcripts:basicTabUpdateMessage', false, response);
+                });
         }
     });
 
