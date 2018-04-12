@@ -21,6 +21,8 @@
 
 }
 body{font-family: 'Levenim MT'}
+body, h1, h2, h3, h4, h5, h6, p, label {font-family: 'Levenim MT'}
+html, button, input, select, textarea {font-family: 'Levenim MT';}
 img{max-width:100%;}
 a{transition:all 0.3s ease-in-out 0s;-webkit-transition:all 0.3s ease-in-out 0s; -moz-transition:all 0.3s ease-in-out 0s;}
 a:focus, a:hover{text-decoratiright-topon:none;outline:none; } 
@@ -247,7 +249,7 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
 /*common style end*/
 
 /*header css start*/
-#header, #footer{font-family: 'Levenim MT' !important}
+#header, #footer{font-family: 'Levenim MT'}
 #header *, #header *:before, #header *:after, #footer *, #footer *:before, #footer *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 #header .navbar-default {background-color: #fff;border-color: #94d3dd;border-bottom: 2px solid #94d3dd;}
 #header .navbar:before, #header .navbar:after, .custom-container:before, .custom-container:after,
@@ -318,17 +320,17 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
 #footer{background:#545454;padding:30px 0 40px; overflow: hidden;}
 #footer .fot-col{width:18%;float: left;}
 #footer .fot-col.big{ width: 23%;}
-#footer h4{color: #fff; font-size: 24px;line-height:25px;margin-bottom:35px; margin-top:30px; text-transform: uppercase; font-family: inherit; }
+#footer h4{color: #fff; font-size: 24px;line-height:25px;margin-bottom:20px; margin-top:15px; text-transform: uppercase; font-family: inherit; }
 #footer ul{list-style:none;padding: 0; margin: 0;}
 #footer ul li{float: left;width: 100%;line-height:32px;}
-#footer ul li a{color: #fff; font-size: 21px; text-decoration:none;}
+#footer ul li a{color: #fff; font-size: 1em; text-decoration:none;}
 #footer ul li a:hover{color:#93b045;}
 #footer .fot-col.last{ width: 23%;}
 #footer .fot-logo{width:100%; display: inline-block;}
 #footer .fot-col img{max-width: 100%;margin-bottom: 30px;}
 #footer .followers{width:100%; display: inline-block; margin-top:40px; }
 #footer .copyright{width: 100%;overflow: hidden;padding: 40px 0 0; text-align: center;}
-#footer .copyright p{margin:0;font-size: 18px;line-height: 24px;color: #fff; }
+#footer .copyright p{margin:0;font-size: 18px;line-height: 24px;color: #fff; text-align: center;}
 /*footer css end*/
 
 

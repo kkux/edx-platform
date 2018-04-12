@@ -1,8 +1,29 @@
+@font-face {
+    font-family: 'GE-SS-Two-Light';
+    src: url('../fonts/GE-SS-Two-Light.eot');
+    src: url('../fonts/GE-SS-Two-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/GE-SS-Two-Light.woff') format('woff'),
+        url('../fonts/GE-SS-Two-Light.ttf') format('truetype'),
+        url('../fonts/GE-SS-Two-Light.svg#GE-SS-Two-Light') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GE-SS-Two-Medium';
+    src: url('../fonts/GE-SS-Two-Medium.eot');
+    src: url('../fonts/GE-SS-Two-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/GE-SS-Two-Medium.woff') format('woff'),
+        url('../fonts/GE-SS-Two-Medium.ttf') format('truetype'),
+        url('../fonts/GE-SS-Two-Medium.svg#GE-SS-Two-Light') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
-body {margin: 0px; font-family: 'Levenim MT';}
-body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial;}
+body {margin: 0px; font-family: 'GE-SS-Two-Light';}
+body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial; font-family: 'GE-SS-Two-Light';}
+html, button, input, select, textarea {font-family: 'GE-SS-Two-Light';}
 /*.container{padding:0;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;}*/
-#header, #footer{font-family: 'Levenim MT'}
+#header, #footer{font-family: 'GE-SS-Two-Light'}
 #header .vision {float: left; padding-right: 36px; padding-left: 0px; }
 #header ul.right-top {float: left; margin: 0 40px 0 0; }
 #header ul.right-top li {float: right; }
@@ -29,6 +50,8 @@ body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial;}
 .upcoming-skills label i {margin-left: 10px; margin-right: 0px;  }
 
 #footer .copyright p, .welcom p, .welcom-block p{text-align: center;}
+.course-info .details{font:normal 1em/1.6em 'GE-SS-Two-Light';}
+.course-info .details h2, .home>header .title>.heading-group p, section.outside-app h1{font:normal 1.2em/1.2em 'GE-SS-Two-Light';}
 .courses-container .courses .course .course-info .course-date span{float: left;}
 .featured-block a{text-decoration: none;}
 .featured-block a:hover{text-decoration: underline;}
@@ -37,7 +60,8 @@ body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial;}
 .course-about-ar{display: block;}
 
 /*static content css*/
-.static-content h1 {text-align: right;}
+.static-content h1 {text-align: right; font-family: 'GE-SS-Two-Light';}
+body, .instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link{font-family: 'GE-SS-Two-Light'}
 
 @media (max-width: 991px) {
 #header .navbar-nav > li a {font-size: 16px; padding: 10px;}
