@@ -5,8 +5,9 @@ For additional information and historical context, see:
 https://openedx.atlassian.net/wiki/display/TNL/User+API
 """
 
+import edx_oauth2_provider
+from django.contrib.auth import get_user_model, logout
 from django.db import transaction
-from django.contrib.auth import get_user_model
 from edx_rest_framework_extensions.authentication import JwtAuthentication
 from rest_framework import permissions
 from rest_framework import status
@@ -14,6 +15,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 from six import text_type
+from social_django.models import UserSocialAuth
 
 from openedx.core.djangoapps.user_api.preferences.api import update_email_opt_in
 from openedx.core.lib.api.authentication import (
@@ -21,7 +23,8 @@ from openedx.core.lib.api.authentication import (
     OAuth2AuthenticationAllowInactiveUser,
 )
 from openedx.core.lib.api.parsers import MergePatchParser
-from student.models import User, get_potentially_retired_user_by_username_and_hash
+from student.cookies import delete_logged_in_cookies
+from student.models import User, get_potentially_retired_user_by_username_and_hash, get_retired_email_by_email
 
 from .api import get_account_settings, update_account_settings
 from .permissions import CanDeactivateUser, CanRetireUser
@@ -250,11 +253,7 @@ class AccountDeactivationView(APIView):
 
         Marks the user as having no password set for deactivation purposes.
         """
-        user = User.objects.get(username=username)
-        user.set_unusable_password()
-        user.save()
-        account_settings = get_account_settings(request, [username])[0]
-        return Response(account_settings)
+        return Response(_set_unusable_password(request, username))
 
 
 class AccountRetireMailingsView(APIView):
@@ -294,3 +293,64 @@ class AccountRetireMailingsView(APIView):
             return Response(text_type(exc), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DeactivateLogoutView(APIView):
+    """
+    POST /api/user/v1/accounts/{username}/deactivate_logout/
+
+        Allows an administrative user to take the following actions
+        on behalf of an LMS user:
+        -  Change the user's password permanently to Django's unusable password
+        -  Log the user out
+    """
+    authentication_classes = (JwtAuthentication, )
+    permission_classes = (permissions.IsAuthenticated, CanRetireUser)
+
+    def post(self, request):
+        """
+        POST /api/user/v1/accounts/{username}/deactivate_logout
+
+        Marks the user as having no password set for deactivation purposes,
+        and logs the user out.
+        """
+        username = request.data.get('username', None)
+        if not username:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    'message': u'The user was not specified.'
+                }
+            )
+
+        user_model = get_user_model()
+        try:
+            # make sure the specified user exists
+            user = User.objects.get(username=username)
+
+            with transaction.atomic():
+                # 1. Unlink LMS social auth accounts
+                UserSocialAuth.objects.filter(user_id=user.id).delete()
+                # 2. Change LMS password & email (???)
+                user.email = get_retired_email_by_email(user.email)
+                user.save()
+                _set_unusable_password(request, username)
+
+                """ 3. Unlink social accounts & change password on each IDA """
+        except user_model.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception as exc:  # pylint: disable=broad-except
+            return Response(text_type(exc), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+def _set_unusable_password(request, username):
+    """
+    Helper method for the shared functionality of setting a user's
+    password to the unusable password, thus deactivating the account.
+    """
+    user = User.objects.get(username=username)
+    user.set_unusable_password()
+    user.save()
+    account_settings = get_account_settings(request, [username])[0]
+    return account_settings
