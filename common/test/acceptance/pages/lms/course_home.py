@@ -243,7 +243,6 @@ class CourseOutlinePage(PageObject):
         subsection.
         """
         courseware_page = CoursewarePage(self.browser, self.parent_page.course_id)
-        courseware_page.wait_for_page()
 
         # TODO: TNL-6546: Remove this if/visit_course_outline_page
         if self.parent_page.course_outline_page:
