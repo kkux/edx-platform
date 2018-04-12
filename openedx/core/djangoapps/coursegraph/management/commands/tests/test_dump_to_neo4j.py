@@ -27,9 +27,10 @@ from openedx.core.djangoapps.coursegraph.tasks import (
     should_dump_course,
     strip_branch_and_version,
 )
-from openedx.core.djangoapps.content.course_structures.signals import (
-    listen_for_course_publish
+from openedx.core.djangoapps.content.block_structure.signals import (
+    update_block_structure_on_course_publish
 )
+import openedx.core.djangoapps.content.block_structure.config as block_structure_config
 
 
 class TestDumpToNeo4jCommandBase(SharedModuleStoreTestCase):
@@ -492,7 +493,8 @@ class TestModuleStoreSerializer(TestDumpToNeo4jCommandBase):
         self.assertEqual(len(submitted), len(self.course_strings))
 
         # simulate one of the courses being published
-        listen_for_course_publish(None, self.course.id)
+        with block_structure_config.waffle().override(block_structure_config.STORAGE_BACKING_FOR_CACHE):
+            update_block_structure_on_course_publish(None, self.course.id)
 
         # make sure only the published course was dumped
         submitted, __ = self.mss.dump_courses_to_neo4j(mock_credentials)

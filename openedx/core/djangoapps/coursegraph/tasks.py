@@ -143,7 +143,7 @@ def get_course_last_published(course_key):
     course_usage_key = store.make_course_usage_key(course_key)
     try:
         structure = BlockStructureModel.get(course_usage_key)
-        course_last_published_date = six.text_type(structure.data_edit_timestamp)
+        course_last_published_date = six.text_type(structure.modified)
     except BlockStructureNotFound:
         course_last_published_date = None
 
