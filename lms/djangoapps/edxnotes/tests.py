@@ -1145,21 +1145,6 @@ class EdxNotesViewsTest(ModuleStoreTestCase):
         )
         self.assertEqual(response.status_code, 400)
 
-    # @patch.dict("django.conf.settings.FEATURES", {"ENABLE_EDXNOTES": True})
-    def test_edxnotes_delete_user_all(self):
-        """
-        Tests view endpoint for edxnotes
-        """
-        client = Client.objects.get(name='edx-notes')
-        response = client.delete(
-            url=self.delete_url,
-            data={
-                'user_id': 'test_user_id',
-                # 'user': self.user
-            },
-        )
-        self.assertEqual(response.status_code, 401)
-
 
 @attr(shard=3)
 @skipUnless(settings.FEATURES["ENABLE_EDXNOTES"], "EdxNotes feature needs to be enabled.")
