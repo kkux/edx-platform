@@ -102,7 +102,7 @@ class XQueueCertInterface(object):
         )
         self.whitelist = CertificateWhitelist.objects.all()
         self.restricted = UserProfile.objects.filter(allow_certificate=False)
-        self.use_https = True
+        self.use_https = False
 
     def regen_cert(self, student, course_id, course=None, forced_grade=None, template_file=None, generate_pdf=True):
         """(Re-)Make certificate for a particular student in a particular course
@@ -282,16 +282,16 @@ class XQueueCertInterface(object):
         if template_file is not None:
             template_pdf = template_file
         elif mode_is_verified and user_is_verified:
-            template_pdf = "certificate-template-{id.org}-{id.course}-verified.pdf".format(id=course_id)
+            template_pdf = "certificate-template-{id.org}-verified.pdf".format(id=course_id)
         elif mode_is_verified and not user_is_verified:
-            template_pdf = "certificate-template-{id.org}-{id.course}.pdf".format(id=course_id)
+            template_pdf = "certificate-template-{id.org}.pdf".format(id=course_id)
             if CourseMode.mode_for_course(course_id, CourseMode.HONOR):
                 cert_mode = GeneratedCertificate.MODES.honor
             else:
                 unverified = True
         else:
             # honor code and audit students
-            template_pdf = "certificate-template-{id.org}-{id.course}.pdf".format(id=course_id)
+            template_pdf = "certificate-template-{id.org}.pdf".format(id=course_id)
 
         LOGGER.info(
             (
@@ -445,6 +445,17 @@ class XQueueCertInterface(object):
 
         if generate_pdf:
             try:
+                contents.update({
+                    'name_in_arabic': student.profile.name_in_arabic,
+                    'course_name_in_arabic': course.display_name_in_arabic if course.display_name_in_arabic else "",
+                    'certificate_date_issued': '{month} {day}, {year}'.format(
+                        month=cert.modified_date.strftime("%B"),
+                        day=cert.modified_date.day,
+                        year=cert.modified_date.year
+                    ),
+                    'candidate_serial_no': cert.candidate_serial_no,
+                    'gender': student.profile.gender,
+                })
                 self._send_to_xqueue(contents, key)
             except XQueueAddToQueueError as exc:
                 cert.status = ExampleCertificate.STATUS_ERROR

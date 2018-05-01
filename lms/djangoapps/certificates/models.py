@@ -683,9 +683,9 @@ class ExampleCertificateSet(TimeStampedModel):
     def _template_for_mode(mode_slug, course_key):
         """Calculate the template PDF based on the course mode. """
         return (
-            u"certificate-template-{key.org}-{key.course}-verified.pdf".format(key=course_key)
+            u"certificate-template-{key.org}-verified.pdf".format(key=course_key)
             if mode_slug == 'verified'
-            else u"certificate-template-{key.org}-{key.course}.pdf".format(key=course_key)
+            else u"certificate-template-{key.org}.pdf".format(key=course_key)
         )
 
 
