@@ -25903,6 +25903,9 @@ msgstr "المهارات"
 
 
 #: /themes/kkux/lms/templates/index.html
+msgid "Days"
+msgstr "أيام"
+
 msgid "Future Skills"
 msgstr "مهارات المستقبل"
 

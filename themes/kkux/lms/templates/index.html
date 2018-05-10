@@ -99,7 +99,7 @@ from kkux.models import News
                                         % endif
                                         <span class="free">
                                             %if price == 0:
-                                                Free
+                                                ${_("Free")}
                                             %else:
                                                 ${price} SAR
                                             %endif
@@ -109,7 +109,7 @@ from kkux.models import News
                                     <ul>
                                         <li><i class="fa fa-users" aria-hidden="true"></i>${enrollments[course]}</li>
                                         <li><i class="fa fa-comments" aria-hidden="true"></i>2</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>7 Days</li>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>7 ${_('Days')}</li>
                                     </ul>
                                 </div>
                             </a>
@@ -134,7 +134,11 @@ from kkux.models import News
                                         <img src="${course.course_image_url}" alt="${course.display_name_with_default}" >
                                     </div>
                                     <div class="upcoming-details">
-                                        <h3>${course.display_name_with_default}</h3>
+                                        % if LANGUAGE_CODE == 'ar':
+                                          <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
+                                        % else:
+                                          <h3>${course.display_name_with_default}</h3>
+                                        % endif
                                         <p>${course.short_description}</p>
                                         <div class="">
                                             <label><i class="fa fa-tags" aria-hidden="true"></i>Business</label>
