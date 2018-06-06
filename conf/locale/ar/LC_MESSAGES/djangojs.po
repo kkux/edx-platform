@@ -9424,3 +9424,13 @@ msgstr ""
 #: cms/templates/js/video/transcripts/messages/transcripts-use-existing.underscore
 msgid "Use Current Transcript"
 msgstr "استخدم النص الحالي"
+
+#: lms/static/js/student_account/views/account_settings_factory.js
+msgid "Full Name in Arabic"
+msgstr "الاسم الكامل باللغة العربية"
+
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+msgid "Country or Region"
+msgstr "الدولة او المنطقة"

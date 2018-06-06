@@ -25987,4 +25987,7 @@ msgstr "تواصل معنا"
 msgid "KKUx All Right Reserved"
 msgstr "جميع الحقوق محفوظة لـ  KKUx"
 
+#: common/lib/xmodule/xmodule/course_module.py
+msgid "Course Display Name in Arabic"
+msgstr "اسم عرض الدورة باللغة العربية"
 

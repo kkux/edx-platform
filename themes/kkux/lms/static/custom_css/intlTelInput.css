@@ -120,6 +120,7 @@
     display: table-cell;
     vertical-align: middle;
     padding-left: 28px; }
+  .ar .intl-tel-input.separate-dial-code .selected-dial-code{padding-right: 28px;}
   .intl-tel-input.separate-dial-code.iti-sdc-2 input, .intl-tel-input.separate-dial-code.iti-sdc-2 input[type=text], .intl-tel-input.separate-dial-code.iti-sdc-2 input[type=tel] {
     padding-left: 66px; }
   .intl-tel-input.separate-dial-code.iti-sdc-2 .selected-flag {

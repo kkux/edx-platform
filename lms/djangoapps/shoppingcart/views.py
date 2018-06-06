@@ -672,7 +672,7 @@ def _get_verify_flow_redirect(order):
 
 
 @csrf_exempt
-@require_POST
+# @require_POST
 def postpay_callback(request):
     """
     Receives the POST-back from processor.
@@ -683,7 +683,8 @@ def postpay_callback(request):
     If unsuccessful the order will be left untouched and HTML messages giving more detailed error info will be
     returned.
     """
-    params = request.POST.dict()
+    # params = request.POST.dict()
+    params = {'payment_reference': request.session.get('p_id','')}
     result = process_postpay_callback(params)
 
     if result['success']:
@@ -692,6 +693,7 @@ def postpay_callback(request):
         # to continue with verification.
 
         # Only orders where order_items.count() == 1 might be attempting to upgrade
+        request.session['p_id'] = ''
         attempting_upgrade = request.session.get('attempting_upgrade', False)
         if attempting_upgrade:
             if result['order'].has_items(CertificateItem):

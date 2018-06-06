@@ -164,7 +164,7 @@ def create_invoice(request):
             return render_to_response('shoppingcart/error.html', {'order': None,
                                                                   'error_html': error_html})
         else:
-            # request.session['p_id'] = str(response.p_id)
+            request.session['p_id'] = str(response.p_id)
             return HttpResponseRedirect(str(response.payment_url))
     except:
         error_html = _get_processor_exception_html()

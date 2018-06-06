@@ -27,6 +27,16 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
 }
 </style>
 <header id="header">
+  % if settings.FEATURES['IS_UNDER_MAINTENANCE_MESSAGE']:
+    <div class="info-msg">
+      <i class="fa fa-exclamation-circle"></i>
+      % if LANGUAGE_CODE == 'ar':
+          الموقع تحت الصيانة. نحن نبني ميزات جديدة لك. شكرا لصبرك
+      % else:
+          ${_('Site is under maintenance. We are building new features for you. Thanks for your patience.')}
+      % endif
+    </div>
+  % endif
   <nav class="navbar navbar-default">
     <div class="custom-container">
         <div class="navbar-header">

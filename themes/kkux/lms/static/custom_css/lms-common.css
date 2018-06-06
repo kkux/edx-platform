@@ -141,13 +141,27 @@ ul.header-rightbar .dropdown-menu > li > a:hover, ul.header-rightbar .dropdown-m
 .welcom-block p{font-size: 18px;line-height:22px;margin-bottom:10px;}
 .welcom-block.highlight{ background: #ebebeb}
 .video-section{background:#94d3dd;padding:52px 0;text-align:center;}
+.kkuxpromo {width:64%; margin:0 auto;}
+.kkuxpromo .embed-responsive{
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;
+}
+.kkuxpromo .embed-responsive iframe{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 .skills{padding-top:70px;}
 .skills h2{margin-bottom:100px;}
 .featured-block{border: 1px solid #e6e6e6;overflow: hidden;background:#f8f8f8; margin-bottom:30px; }
 .featured-block a, .skills-details ul li{color: #000;}
 .skills-details a{text-decoration:none;}
 .skills-details{border-top:1px solid #e6e6e6;padding:17px; }
-.skills-details h3{margin:0;font-family: 'levenim_mtbold';margin-bottom:15px; font-size:20px; color:#000; text-align: justify;}
+.skills-details h3{margin:0;font-family: 'levenim_mtbold';margin-bottom:15px; font-size:20px; color:#000;}
 .skills-details label{font-size:18px; line-height: 21px;color: #6e6e6e; float:left; line-height: 24px;color: #6e6e6e; font-weight: normal;margin: 0;}
 .skills-details label i{ margin-right:10px;}
 .skills-details .free{font-size:20px; color: #93b045;float: right;line-height: 24px;font-family: 'levenim_mtbold';text-transform:uppercase;}
@@ -247,6 +261,15 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
 .page-header-search .search-form .search-button, .course-outline .block-tree .section ol.outline-item .subsection.current, .course-outline .block-tree .section ol.outline-item .subsection.current a, .course-outline .block-tree .section ol.outline-item .subsection:hover, .course-outline .block-tree .section ol.outline-item .subsection:focus{color: #93b045; border-color:#93b045 }
 .copy-lead a, .copy-large a, .copy-base a, .alert-copy a, .alert-copy-with-title a, .copy-meta a, .table caption a, .table-simplified caption a, .copy-micro a, .wrapper-footer footer#footer-openedx a, a, .link, .btn-link, .table-sortable .sortable .action-sorta{color: #93b045;}
 /*common style end*/
+
+/*Site under maintenance msg*/
+.info-msg{
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #0c4571;
+  background-color: #BEF;
+  text-align: center;
+}
 
 /*header css start*/
 #header, #footer{font-family: 'Levenim MT'}

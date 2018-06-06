@@ -53,7 +53,7 @@ from django.core.urlresolvers import reverse
             <input type="text"id="id_last_name" name="cc_last_name" value="${parmas.get('cc_last_name', '')}" required="required">
             <span id="error_last_name" class="error-text"></span>
           </div>
-          <div class="data-group">
+          <div class="data-group ${LANGUAGE_CODE}">
             <label for="id_phone_number">${_('Phone Number')} *</label>
             <input type="tel" id="phone" name="phone_number">
             <span id="error_phone_number" class="error-text"></span>
