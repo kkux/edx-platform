@@ -11,6 +11,9 @@ $(document).ready(function(){
             $(".navbar-collapse").addClass("in");
         }
     });
+    $('.search-toggle').click(function(){
+        $('.search input[type=search]').slideToggle();
+    });
 });
 $(document).on("click", function(event){
     var $trigger = $(".usermenu");

@@ -4,6 +4,7 @@ Declaration of CourseOverview model
 import json
 import logging
 from urlparse import urlparse, urlunparse
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.db import models, transaction
@@ -327,6 +328,20 @@ class CourseOverview(TimeStampedModel):
                 version__gte=cls.VERSION
             )
         }
+
+    @classmethod
+    def get_homepage_course(cls):
+        """
+        Return courses that within 60days from today's date
+        """
+        today = datetime.today()
+        # today_minus_sixty = today - timedelta(days=60)
+        today_minus_sixty = datetime(2018, 07, 01, 00, 00)
+        courses = cls.objects.filter(start__gte=today_minus_sixty.date()).exclude(course_category="").order_by('-start')
+        design_courses = courses.filter(course_category='Design')
+        technology_courses = courses.filter(course_category='Technology')
+        business_courses = courses.filter(course_category='Business')
+        return courses, design_courses, technology_courses, business_courses
 
     def clean_id(self, padding_char='='):
         """

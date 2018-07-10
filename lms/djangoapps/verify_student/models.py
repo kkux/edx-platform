@@ -35,6 +35,7 @@ from model_utils.models import StatusModel, TimeStampedModel
 from simple_history.models import HistoricalRecords
 
 from course_modes.models import CourseMode
+from lms.djangoapps.verify_student.image import get_image_url
 from lms.djangoapps.verify_student.ssencrypt import (
     encrypt_and_encode,
     generate_signed_message,
@@ -193,6 +194,21 @@ class PhotoVerification(StatusModel):
         app_label = "verify_student"
         abstract = True
         ordering = ['-created_at']
+
+    def face_image_tag(self):
+        url = get_image_url(self, '/face/')
+        # return u'<img src="%s" width="300px" height="300px"/>' % url
+        return u'<img src="{url}" width="300px" height="300px"/>'.format(url=url)
+
+    face_image_tag.short_description = 'Face image'
+    face_image_tag.allow_tags = True
+
+    def photo_id_image_tag(self):
+        url = get_image_url(self, '/photo_id/')
+        # url='https://cdn.browshot.com/static/images/not-found.png'
+        return u'<img src="{url}" width="300px" height="300px"/>'.format(url=url)
+    photo_id_image_tag.short_description = 'Photo ID image'
+    photo_id_image_tag.allow_tags = True
 
     ##### Methods listed in the order you'd typically call them
     @classmethod
@@ -662,11 +678,12 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
         if settings.FEATURES.get('AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'):
             return
 
-        aes_key_str = settings.VERIFY_STUDENT["SOFTWARE_SECURE"]["FACE_IMAGE_AES_KEY"]
-        aes_key = aes_key_str.decode("hex")
+        # aes_key_str = settings.VERIFY_STUDENT["SOFTWARE_SECURE"]["FACE_IMAGE_AES_KEY"]
+        # aes_key = aes_key_str.decode("hex")
 
         path = self._get_path("face")
-        buff = ContentFile(encrypt_and_encode(img_data, aes_key))
+        # buff = ContentFile(encrypt_and_encode(img_data, aes_key))
+        buff = ContentFile(img_data)
         self._storage.save(path, buff)
 
     @status_before_must_be("created")
@@ -697,7 +714,8 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
 
         # Save this to the storage backend
         path = self._get_path("photo_id")
-        buff = ContentFile(encrypt_and_encode(img_data, aes_key))
+        # buff = ContentFile(encrypt_and_encode(img_data, aes_key))
+        buff = ContentFile(img_data)
         self._storage.save(path, buff)
 
         # Update our record fields
@@ -940,7 +958,7 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
         # create the message because that would require encryption and message
         # signing that rely on settings.VERIFY_STUDENT values that aren't set
         # in dev. So we just pretend like we successfully posted
-        if settings.FEATURES.get('AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'):
+        if True or settings.FEATURES.get('AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'): # Intentionally pass true we don't have Software secure access.
             fake_response = requests.Response()
             fake_response.status_code = 200
             return fake_response

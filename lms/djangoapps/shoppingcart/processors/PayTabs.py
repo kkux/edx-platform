@@ -61,12 +61,12 @@ DEFAULT_REASON = ugettext_noop("UNKNOWN REASON")
 @csrf_exempt
 @require_POST
 @login_required
-def create_invoice(request):
+def create_invoice(request, certy_cart=None):
     """
     Create invoice at Paytabs end using KKUx wrapper.
     """
     user = request.user
-    cart = Order.get_cart_for_user(user)
+    cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
     # is_any_course_expired, expired_cart_items, expired_cart_item_names, valid_cart_item_tuples = \
     #     verify_for_closed_enrollment(user, cart)
     # if is_any_course_expired:
@@ -165,7 +165,7 @@ def create_invoice(request):
                                                                   'error_html': error_html})
         else:
             request.session['p_id'] = str(response.p_id)
-            return HttpResponseRedirect(str(response.payment_url))
+            return str(response.payment_url) if certy_cart else HttpResponseRedirect(str(response.payment_url))
     except:
         error_html = _get_processor_exception_html()
         return render_to_response('shoppingcart/error.html', {'order': None,

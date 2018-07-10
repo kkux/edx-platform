@@ -84,6 +84,7 @@ from openedx.core.djangoapps.programs.utils import ProgramProgressMeter
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangolib.markup import HTML
 from openedx.features.course_experience import course_home_url_name
 from openedx.features.enterprise_support.api import get_dashboard_consent_notification
@@ -174,26 +175,12 @@ def index(request, extra_context=None, user=AnonymousUser()):
     if extra_context is None:
         extra_context = {}
 
-    courses = get_courses(user)
     enrollments = {}
-    if configuration_helpers.get_value(
-            "ENABLE_COURSE_SORTING_BY_START_DATE",
-            settings.FEATURES["ENABLE_COURSE_SORTING_BY_START_DATE"],
-    ):
-        courses = sort_by_start_date(courses)
-    else:
-        courses = sort_by_announcement(courses)
+    courses, design_courses, technology_courses, business_courses = CourseOverview.get_homepage_course()
 
-    courses_list = []
-    upcoming_course = []
-    for course in courses:
-        if course.has_started():
-            courses_list.append(course)
-        else:
-            upcoming_course.append(course)
-    context = {'courses': courses_list}
+    banner_image_courses = {'design': design_courses, 'technology': technology_courses, 'leads': business_courses}
 
-    context['upcoming_skills'] = upcoming_course
+    context = {'courses': courses}
 
     context['homepage_overlay_html'] = configuration_helpers.get_value('homepage_overlay_html')
 
@@ -220,7 +207,9 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     for course in courses:
         enrollments[course] = get_course_enrollments_by_id(course.id)
+
     context['enrollments'] = enrollments
+    context['banner_image_courses'] = banner_image_courses
 
     return render_to_response('index.html', context)
 

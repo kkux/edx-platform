@@ -10,22 +10,22 @@
 <% year = datetime.now().year %>
 <%namespace name='static' file='static_content.html'/>
 
-<footer class="footer" id="footer">
+<footer class="footer">
     <div class="custom-container">
         <div class="fot-col">
             <h4>${_('About')}</h4>
             <ul>
-                <li><a href="/about">${_('Mission')}</a></li>
-                <li><a href="/about">${_('Vision')}</a></li>
+                <li><a href="${reverse('about')}">${_('Mission')}</a></li>
+                <li><a href="${reverse('about')}">${_('Vision')}</a></li>
                 <li><a href="http://eld.kku.edu.sa/">${_('ELD Website')}</a></li>
             </ul>
         </div>
         <div class="fot-col">
             <h4>${_('Terms')}</h4>
             <ul>
-                <li><a href="/tos">${_('Copyright')}</a></li>
-                <li><a href="/tos">${_('Publishing Rules')}</a></li>
-                <li><a href="/tos">${_('Data Use Policy')}</a></li>
+                <li><a href="${reverse('tos')}">${_('Copyright')}</a></li>
+                <li><a href="${reverse('tos')}">${_('Publishing Rules')}</a></li>
+                <li><a href="${reverse('tos')}">${_('Data Use Policy')}</a></li>
             </ul>
         </div>
         <div class="fot-col big">
@@ -39,20 +39,19 @@
         <div class="fot-col">
             <h4>${_('Contact')}</h4>
             <ul>
-                <li><a href="/contact">${_('Contact us')}</a></li>
+                <li><a href="${reverse('contact')}">${_('Contact us')}</a></li>
             </ul>
         </div>
         <div class="fot-col last">
             <div class="fot-logo"><img src="${static.url('images/footer-logo.png')}" alt="" ></div>
-            <!-- <a class="twitter-follow-button" href="https://twitter.com/kkuxedu" data-size="large" data-lang="en">Follow @kkuxedu</a> -->
-            <!-- <a href="https://twitter.com/kkuxedu"><div class="followers"><img src="${static.url('images/followers.jpg')}" alt="" ></div></a> -->
-            <a class="twitter-follow-button" href="https://twitter.com/kkuxedu" data-size="large" data-lang="en">Follow @kkuxedu</a>
+            <div class="followers text-right twitter-follow-button"><a href="https://twitter.com/kkuxedu"  data-toggle="tooltip" data-placement="left">Follow @kkuxedu<i class="fa fa-twitter"></i></a></div>
         </div>
         <div class="copyright">
             <p>${_('KKUx All Right Reserved')} ${year} ©</p>
         </div>
     </div>
 </footer>
+<%block name="js_extra">
 <script>
 $( window ).load(function() {
     window.twttr = (function(d, s, id) {
@@ -73,3 +72,4 @@ $( window ).load(function() {
     }(document, "script", "twitter-wjs"));
 });
 </script>
+</%block>

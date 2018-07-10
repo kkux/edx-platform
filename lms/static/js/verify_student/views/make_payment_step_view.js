@@ -135,6 +135,22 @@ var edx = edx || {};
 
             // Handle payment submission
             $('.payment-button').on('click', _.bind(this.createOrder, this));
+            var paymentDetails = document.querySelector("#pay-and-verify-container");
+            var phoneNumber = paymentDetails.dataset.userCountryCode + paymentDetails.dataset.userPhoneNumber;
+            $("#phone").intlTelInput({
+                nationalMode: false,
+                separateDialCode: true,
+                initialCountry: "auto",
+                geoIpLookup: function(callback) {
+                    $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+                        var countryCode = (resp && resp.country) ? resp.country : "";
+                        callback(countryCode);
+                    });
+                },
+                utilsScript: $('input[name="country_utils"]').val(),
+            });
+            $("#phone").intlTelInput("setNumber", phoneNumber);
+
         },
 
         setPaymentEnabled: function(isEnabled) {
@@ -153,12 +169,84 @@ var edx = edx || {};
         // and the expected response will consist of an appropriate payment processor endpoint for
         // redirection, along with parameters to be passed along in the request.
         createOrder: function(event) {
+
+            var is_valid_email = true;
+            var cc_first_name = $('input[name="cc_first_name"]').val();
+            var cc_last_name = $('input[name="cc_last_name"]').val();
+            var country_code = '+'
+            var billing_address = $('input[name="billing_address"]').val();
+            var city = $('input[name="city"]').val();
+            var postal_code = $('input[name="postal_code"]').val();
+
+            var phone_number = $("#phone").intlTelInput("getNumber");
+            country_code = country_code + $("#phone").intlTelInput("getSelectedCountryData").dialCode;
+            phone_number = phone_number.replace(country_code, "");
+
+            if (! cc_first_name){
+                $('span#error_first_name').html('Please enter your first name');
+                $('input[name="cc_first_name"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="cc_first_name"]').removeClass('error');
+                $('span#error_first_name').html('');
+            }
+            if (! cc_last_name){
+                $('span#error_last_name').html('Please enter your last name');
+                $('input[name="cc_last_name"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="cc_last_name"]').removeClass('error');
+                $('span#error_last_name').html('');
+            }
+            if (! phone_number){
+                $('span#error_phone_number').html('Please enter phone number');
+                $('input[name="phone_number"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="phone_number"]').removeClass('error');
+                $('span#error_phone_number').html('');
+            }
+            if (! billing_address){
+                $('span#error_billing_address').html('Please enter billing address');
+                $('input[name="billing_address"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="billing_address"]').removeClass('error');
+                $('span#error_billing_address').html('');
+            }
+            if (! city){
+                $('span#error_city').html('Please enter city');
+                $('input[name="city"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="city"]').removeClass('error');
+                $('span#error_city').html('');
+            }
+            if (! postal_code){
+                $('span#error_postal_code').html('Please enter postal code');
+                $('input[name="postal_code"]').addClass('error');
+                is_valid_email = false;
+            } else {
+                $('input[name="postal_code"]').removeClass('error');
+                $('span#error_postal_code').html('');
+            }
+            if (!is_valid_email) {
+                return false;
+            }
+            event.preventDefault();
             var paymentAmount = this.getPaymentAmount(),
                 postData = {
                     'processor': event.target.id,
                     'contribution': paymentAmount,
                     'course_id': this.stepData.courseKey,
-                    'sku': this.templateContext().sku
+                    'sku': this.templateContext().sku,
+                    'cc_first_name': cc_first_name,
+                    'cc_last_name': cc_last_name,
+                    'country_code': country_code,
+                    'phone_number': phone_number,
+                    'billing_address': billing_address,
+                    'city': city,
+                    'postal_code': postal_code
                 };
 
             // Disable the payment button to prevent multiple submissions
@@ -187,27 +275,31 @@ var edx = edx || {};
             // these parameters, then submit it to the payment processor.
             // This will send the user to an externally-hosted page
             // where she can proceed with payment.
-            var form = $('#payment-processor-form');
+            if (paymentData.payment_processor_name == 'PayTabs') {
+                window.location.href = paymentData.payment_page_url;
+            } else{
+                var form = $('#payment-processor-form');
 
-            $('input', form).remove();
+                $('input', form).remove();
 
-            form.attr('action', paymentData.payment_page_url);
-            form.attr('method', 'POST');
+                form.attr('action', paymentData.payment_page_url);
+                form.attr('method', 'POST');
 
-            _.each(paymentData.payment_form_data, function(value, key) {
-                $('<input>').attr({
-                    type: 'hidden',
-                    name: key,
-                    value: value
-                }).appendTo(form);
-            });
+                _.each(paymentData.payment_form_data, function(value, key) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: key,
+                        value: value
+                    }).appendTo(form);
+                });
 
-            // Marketing needs a way to tell the difference between users
-            // leaving for the payment processor and users dropping off on
-            // this page. A virtual pageview can be used to do this.
-            window.analytics.page('payment', 'payment_processor_step');
+                // Marketing needs a way to tell the difference between users
+                // leaving for the payment processor and users dropping off on
+                // this page. A virtual pageview can be used to do this.
+                window.analytics.page('payment', 'payment_processor_step');
 
-            this.submitForm(form);
+                this.submitForm(form);
+            }
         },
 
         handleCreateOrderError: function(xhr) {
@@ -284,3 +376,4 @@ var edx = edx || {};
 
     });
 })(jQuery, _, gettext, interpolate_text);
+

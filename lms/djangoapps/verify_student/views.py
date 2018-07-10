@@ -751,15 +751,37 @@ def checkout_with_shoppingcart(request, user, course_key, course_mode, amount):
         reverse("shoppingcart.views.postpay_callback")
     )
 
+    ip_customer = get_ip(request)
+    cart.add_billing_details(
+        cc_first_name=user.first_name,
+        cc_last_name=user.last_name,
+        country_code=user.profile.country_code,
+        phone_number=user.profile.phone_number,
+        billing_address=user.profile.mailing_address,
+        city=user.profile.city,
+        postal_code=user.profile.postalcode,
+        ip_customer=ip_customer
+    )
+
+    payment_processor_name = settings.CC_PROCESSOR_NAME
     payment_data = {
-        'payment_processor_name': settings.CC_PROCESSOR_NAME,
-        'payment_page_url': get_purchase_endpoint(),
-        'payment_form_data': get_signed_purchase_params(
-            cart,
-            callback_url=callback_url,
-            extra_data=[unicode(course_key), course_mode.slug]
-        ),
+        'payment_processor_name': payment_processor_name
     }
+    if payment_processor_name == 'PayTabs':
+        from shoppingcart.processors.PayTabs import create_invoice
+        payment_data.update({
+            'payment_page_url': create_invoice(request, cart)
+        })
+
+    else:
+        payment_data.update({
+            'payment_page_url': get_purchase_endpoint(),
+            'payment_form_data': get_signed_purchase_params(
+                cart,
+                callback_url=callback_url,
+                extra_data=[unicode(course_key), course_mode.slug]
+            ),
+        })
     return payment_data
 
 
@@ -772,6 +794,15 @@ def create_order(request):
     immediate checkout.
     """
     course_id = request.POST['course_id']
+
+    cc_first_name = request.POST.get("cc_first_name", "")
+    cc_last_name = request.POST.get("cc_last_name", "")
+    country_code = request.POST.get("country_code", "")
+    phone_number = request.POST.get("phone_number", "")
+    billing_address = request.POST.get("billing_address", "")
+    city = request.POST.get("city", "")
+    postal_code = request.POST.get("postal_code", "")
+
     course_id = CourseKey.from_string(course_id)
     donation_for_course = request.session.get('donation_for_course', {})
     contribution = request.POST.get("contribution", donation_for_course.get(unicode(course_id), 0))
@@ -809,16 +840,28 @@ def create_order(request):
     if amount < current_mode.min_price:
         return HttpResponseBadRequest(_("No selected price or selected price is below minimum."))
 
+    user = request.user
+    user.first_name = cc_first_name
+    user.last_name = cc_last_name
+    if hasattr(user, 'profile'):
+        user.profile.country_code = country_code
+        user.profile.phone_number = phone_number
+        user.profile.postalcode = postal_code
+        user.profile.mailing_address = billing_address
+        user.profile.city = city
+        user.profile.save()
+    user.save()
+
     if current_mode.sku:
         # if request.POST doesn't contain 'processor' then the service's default payment processor will be used.
         payment_data = checkout_with_ecommerce_service(
-            request.user,
+            user,
             course_id,
             current_mode,
             request.POST.get('processor')
         )
     else:
-        payment_data = checkout_with_shoppingcart(request, request.user, course_id, current_mode, amount)
+        payment_data = checkout_with_shoppingcart(request, user, course_id, current_mode, amount)
 
     if 'processor' not in request.POST:
         # (XCOM-214) To be removed after release.

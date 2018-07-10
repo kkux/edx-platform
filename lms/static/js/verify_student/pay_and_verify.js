@@ -70,7 +70,14 @@ var edx = edx || {};
                 courseModeSlug: el.data('course-mode-slug'),
                 alreadyVerified: el.data('already-verified'),
                 verificationGoodUntil: el.data('verification-good-until'),
-                isABTesting: el.data('is-ab-testing')
+                isABTesting: el.data('is-ab-testing'),
+                userFirstName: el.data('user-first-name'),
+                userLastName: el.data('user-last-name'),
+                userPhoneNumber: el.data('user-phone-number'),
+                userCountryCode: el.data('user-country-code'),
+                userPostalcode: el.data('user-postalcode'),
+                userCity: el.data('user-city'),
+                userAddress: el.data('user-address')
             },
             'payment-confirmation-step': {
                 courseKey: el.data('course-key'),

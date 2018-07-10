@@ -9434,3 +9434,26 @@ msgstr "عنوان البريد الإلكتروني"
 
 msgid "Country or Region"
 msgstr "الدولة او المنطقة"
+
+
+# /verify_student/upgrade/<course_id>/
+msgid "Billing Details"
+msgstr "تفاصيل الفوترة"
+
+msgid "Billing Address"
+msgstr "عنوان الفوترة"
+
+msgid "City"
+msgstr "المدينة"
+
+msgid "Postal Code"
+msgstr "الرمز البريدي"
+
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+msgid "Last Name"
+msgstr "الاسم الأخير"
+
+msgid "First Name"
+msgstr "الاسم الأول"

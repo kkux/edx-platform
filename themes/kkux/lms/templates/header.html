@@ -27,90 +27,128 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
 }
 </style>
 <header id="header">
-  % if settings.FEATURES['IS_UNDER_MAINTENANCE_MESSAGE']:
+    % if settings.FEATURES.get('IS_UNDER_MAINTENANCE_MESSAGE'):
     <div class="info-msg">
       <i class="fa fa-exclamation-circle"></i>
-      % if LANGUAGE_CODE == 'ar':
-          الموقع تحت الصيانة. نحن نبني ميزات جديدة لك. شكرا لصبرك
-      % else:
-          ${_('Site is under maintenance. We are building new features for you. Thanks for your patience.')}
-      % endif
-    </div>
-  % endif
-  <nav class="navbar navbar-default">
-    <div class="custom-container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-              <a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
-          % if header_language_selector_is_enabled():
-            <% languages = released_languages() %>
-            % if len(languages) > 1:
-              <ol class="user language_dropdown hidden">
-                <li class="primary">
-                  <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
-                    <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
-                    % if user.is_authenticated():
-                      <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
-                    % else:
-                      <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
-                    % endif
-                    <label><span class="sr">${_("Choose Language")}</span>
-                      <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
-                        % for language in languages:
-                          % if language[0] == LANGUAGE_CODE:
-                            <option value="${language[0]}" selected="selected">${language[1]}</option>
-                          % else:
-                            <option value="${language[0]}" >${language[1]}</option>
-                          % endif
-                        % endfor
-                      </select>
-                    </label>
-                  </form>
-                </li>
-              </ol>
-            % endif
-          % endif
-          % if request.user.is_authenticated():
-            <ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
-              <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-              <%include file="user_dropdown.html"/>
-            </ul>
+          % if LANGUAGE_CODE=='en':
+              Site is under maintenance. We are building new features for you. Thanks for your patience.
           % else:
-            <ul class="right-top hidden-md  hidden-sm  hidden-lg">
-              <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-              <li><a class="btn" href="${reverse('signin_user')}">${_("Sign in")}</a></li>
-              <li><a class="btn" href="${reverse('register_user')}">${_('Register')}</a></li>
-            </ul>
+              الموقع تحت الصيانة. نحن نبني ميزات جديدة لك. شكرا لصبرك.
           % endif
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <div class="vision"><a href="http://vision2030.gov.sa/${request.session.get(LANGUAGE_SESSION_KEY, settings.LANGUAGE_CODE)}" target="_blank"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
-          % if request.user.is_authenticated():
-            <ul class="right-top header-rightbar clearfix">
-              <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-              <%include file="user_dropdown.html"/>
-            </ul>
-          % else:
-            <ul class="right-top">
-              <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-              <li><a class="btn" href="${reverse('signin_user')}">${_('Sign in')}</a></li>
-              <li><a class="btn" href="${reverse('register_user')}">${_('Register')}</a></li>
-            </ul>
-          % endif
-          <ul class="nav navbar-nav">
-              <li class="${('active' if request.path=='/courses' or request.path=='/courses/' else '')}"><a href="${reverse('courses')}">${_('Skills')}</a></li>
-              <li class="${('active' if request.path=='/about' or request.path=='/about/' else '')}"><a href="/about">${_('Why KKUx?')}</a></li>
-              <li class="${('active' if request.path=='/contact' or request.path=='/contact/' else '')}"><a href="/contact">${_('Contact')}</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
-  </nav>
+    </div>    
+    % endif
+    <nav class="navbar navbar-default">
+        <div class="custom-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="${static.url('images/logo.png')}" alt="KKUx" ></a>
+              % if header_language_selector_is_enabled():
+                <% languages = released_languages() %>
+                % if len(languages) > 1:
+                  <ol class="user language_dropdown hidden">
+                    <li class="primary">
+                      <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                        <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                        % if user.is_authenticated():
+                          <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+                        % else:
+                          <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                        % endif
+                        <label><span class="sr">${_("Choose Language")}</span>
+                          <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
+                            % for language in languages:
+                              % if language[0] == LANGUAGE_CODE:
+                                <option value="${language[0]}" selected="selected">${language[1]}</option>
+                              % else:
+                                <option value="${language[0]}" >${language[1]}</option>
+                              % endif
+                            % endfor
+                          </select>
+                        </label>
+                      </form>
+                    </li>
+                  </ol>
+                % endif
+              % endif            
+                % if request.user.is_authenticated():
+                    <ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
+                      <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                      <%include file="user_dropdown.html"/>
+                    </ul>
+                % else:
+                    <ul class="right-top hidden-md  hidden-sm  hidden-lg">
+                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li><a class="btn" href="${reverse('signin_user')}">${_('Sign in')}</a></li>
+                        <li><a class="btn" href="${reverse('register_user')}">${_('Register')}</a></li>
+                    </ul>
+                % endif
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
+                % if request.user.is_authenticated():
+                    <ul class="right-top header-rightbar clearfix">
+                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li>
+                            <button class="search-toggle"></button>
+                            <form class="search">
+                                <input type="search" name="Search">
+                            </form>
+                        </li>
+                        <%include file="user_dropdown.html"/>  
+                    </ul>            
+                % else:
+                    <ul class="right-top">
+                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li class="active"><a class="btn" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
+                        <li><a class="btn" href="${reverse('signin_user')}">${_('Login')}</a></li>
+                        <li>
+                            <button class="search-toggle"></button>
+                            <form class="search">
+                                <input type="search" name="Search">
+                            </form>
+                        </li>
+                    </ul>
+                % endif
+                
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="${reverse('courses')}">${_('Skills')}</a></li>
+                    <li><a href="${reverse('about')}">${_('Why KKUx?')}</a></li>
+                    <li><a href="${reverse('contact')}">${_('Contact')}</a></li>
+                </ul>
+                % if request.user.is_authenticated():
+                    <ul class="right-top hidden-menu header-rightbar clearfix">
+                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li>
+                            <button class="search-toggle"></button>
+                            <form class="search">
+                                <input type="search" name="Search">
+                            </form>
+                        </li>
+                        <%include file="user_dropdown.html"/>
+                    </ul>            
+                % else:
+                    <ul class="right-top hidden-menu">
+                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li class="active"><a class="btn" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
+                        <li><a class="btn" href="${reverse('signin_user')}">${_('Login')}</a></li>
+                        <li>
+                            <button class="search-toggle"></button>
+                            <form class="search">
+                                <input type="search" name="Search">
+                            </form>
+                        </li>
+                    </ul>
+                % endif
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
 </header>
+<%block name="js_extra">
 <script type="text/javascript">
   $( document ).ready(function() {
     $( "a#language-btn.language-btn" ).click(function() {
@@ -118,3 +156,4 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
     });
   });
 </script>
+</%block>
