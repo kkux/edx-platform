@@ -77,14 +77,14 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
               % endif            
                 % if request.user.is_authenticated():
                     <ul class="right-top hidden-md  hidden-sm  hidden-lg header-rightbar clearfix">
-                      <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                      <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
                       <%include file="user_dropdown.html"/>
                     </ul>
                 % else:
                     <ul class="right-top hidden-md  hidden-sm  hidden-lg">
-                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li><a class="btn sign_min" href="${reverse('register_user')}">${_('Register')}</a></li>
                         <li><a class="btn" href="${reverse('signin_user')}">${_('Sign in')}</a></li>
-                        <li><a class="btn" href="${reverse('register_user')}">${_('Register')}</a></li>
                     </ul>
                 % endif
             </div>
@@ -92,54 +92,54 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
                 <div class="vision"><a href="#"><img src="${static.url('images/vision-logo.png')}" alt="KKUx" ></a></div>
                 % if request.user.is_authenticated():
                     <ul class="right-top header-rightbar clearfix">
-                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
                         <li>
                             <button class="search-toggle"></button>
-                            <form class="search">
-                                <input type="search" name="Search">
+                            <form class="search" method="get" action="${reverse('courses')}">
+                                <input type="search" name="search_query">
                             </form>
                         </li>
                         <%include file="user_dropdown.html"/>  
                     </ul>            
                 % else:
                     <ul class="right-top">
-                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-                        <li class="active"><a class="btn" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
+                        <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li class="active"><a class="btn sign_min" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
                         <li><a class="btn" href="${reverse('signin_user')}">${_('Login')}</a></li>
                         <li>
                             <button class="search-toggle"></button>
-                            <form class="search">
-                                <input type="search" name="Search">
+                            <form class="search" method="get" action="${reverse('courses')}">
+                                <input type="search" name="search_query">
                             </form>
                         </li>
                     </ul>
                 % endif
                 
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="${reverse('courses')}">${_('Skills')}</a></li>
+                    <li><a href="${reverse('courses')}">${_('Skills')}</a></li>
                     <li><a href="${reverse('about')}">${_('Why KKUx?')}</a></li>
                     <li><a href="${reverse('contact')}">${_('Contact')}</a></li>
                 </ul>
                 % if request.user.is_authenticated():
                     <ul class="right-top hidden-menu header-rightbar clearfix">
-                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
                         <li>
                             <button class="search-toggle"></button>
-                            <form class="search">
-                                <input type="search" name="Search">
+                            <form class="search" method="get" action="${reverse('courses')}">
+                                <input type="search" name="search_query">
                             </form>
                         </li>
                         <%include file="user_dropdown.html"/>
                     </ul>            
                 % else:
                     <ul class="right-top hidden-menu">
-                        <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
-                        <li class="active"><a class="btn" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
+                        <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>
+                        <li class="active"><a class="btn sign_min" href="${reverse('register_user')}">${_('Sign Up')}</a></li>
                         <li><a class="btn" href="${reverse('signin_user')}">${_('Login')}</a></li>
                         <li>
                             <button class="search-toggle"></button>
-                            <form class="search">
-                                <input type="search" name="Search">
+                            <form class="search" method="get" action="${reverse('courses')}">
+                                <input type="search" name="search_query">
                             </form>
                         </li>
                     </ul>

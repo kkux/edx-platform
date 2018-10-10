@@ -22,36 +22,45 @@ from kkux.models import News
 <%
     year = datetime.now().year
     category_map = {"Design": "design", "Technology": "technology", "Business": "leads"}
-    banner_design = banner_image_courses.get('Design')
-    banner_technology = banner_image_courses.get('Technology')
-    banner_leads = banner_image_courses.get('Business')
+    banner_design = "course-v1:KKU+DesignThinking001+2018_sem2"
+    banner_technology = "course-v1:KKU+DDIOS101+2018_T1"
+    banner_leads = "course-v1:KKU+UE101+Summar2018"
+    time_now = datetime.now()
 %>
 <div class="page">
     <section class="section-banner">
       <div class="main-story">
         <div>
-          <div class="story-slide">
-              <img src="${static.url('images/story-slide-3.jpg')}" class="img-responsive" alt="image">
-              <div class="story-slide-txt">
-                <div class="container">
-                    <h5>${_('Future jobs')}</h5>
-                    <p>${_('Learn the tips and techniques that help')} <br> ${_('you find your future job')}</p>
-                    <div class="learn-more">
-                        <a href="${reverse('about_course', args=[banner_design.id.to_deprecated_string()]) if banner_design else '#'}">${_('LEARN MORE')}</a>
+            <div class="story-slide">
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${static.url('images/story-slide-3-ar.jpg')}" class="img-responsive" alt="image">
+                % else:
+                <img src="${static.url('images/story-slide-3-en.jpg')}" class="img-responsive" alt="image">
+                % endif
+                <div class="story-slide-txt">
+                    <div class="container">
+                        <h5 class="story-slide-title">${_('Designing and developing IOS App')}</h5>
+                        <p class='story-description'>${_('Join our newest class and earn a certificate from KKU')}</p>
+                        <div class="learn-more">
+                            <a href="${reverse('about_course', args=[banner_technology]) if banner_design else '#'}">${_('LEARN MORE')}</a>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
         </div>
         <div>
             <div class="story-slide">
-                <img src="${static.url('images/story-slide-1.jpg')}" class="img-responsive" alt="image">
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${static.url('images/story-slide-1-ar.jpg')}" class="img-responsive" alt="image">
+                % else:
+                <img src="${static.url('images/story-slide-1-en.jpg')}" class="img-responsive" alt="image">
+                % endif
                 <div class="story-slide-txt">
                     <div class="container">
-                        <h5>${_('Welcome to KKUx')}</h5>
-                        <p>${_('Discover the latest ways to solve complex problems')} <br> ${_('and learn how ask the right questions')}</p>
+                        <h5 class="story-slide-title">${_('Design Thinking')}</h5>
+                        <p class='story-description'>${_('Earn new and important skill for future and add a certificate from KKU')}</p>
                         <div class="learn-more">
-                            <a href="${reverse('about_course', args=[banner_technology.id.to_deprecated_string()]) if banner_technology else '#'}">${_('LEARN MORE')}</a>
+                            <a href="${reverse('about_course', args=[banner_design]) if banner_technology else '#'}">${_('LEARN MORE')}</a>
                         </div>
                     </div>
                 </div>
@@ -59,13 +68,17 @@ from kkux.models import News
         </div>
         <div>
           <div class="story-slide">
-            <img src="${static.url('images/story-slide-2.jpg')}" class="img-responsive" alt="image">
+            % if LANGUAGE_CODE == 'ar':
+            <img src="${static.url('images/story-slide-2-ar.jpg')}" class="img-responsive" alt="image">
+            % else:
+            <img src="${static.url('images/story-slide-2-en.jpg')}" class="img-responsive" alt="image">
+            % endif
             <div class="story-slide-txt">
                 <div class="container">
-                    <h5>${_('Organize your Business')}</h5>
-                    <p>${_('Learn how to become an entrepreneur, and')} <br> ${_('how to start your own business')}</p>
+                    <h5 class="story-slide-title">${_('User Experience Design')}</h5>
+                    <p class='story-description'>${_('Earn new and important skill for future and add a certificate from KKU')}</p>
                     <div class="learn-more">
-                        <a href="${reverse('about_course', args=[banner_leads.id.to_deprecated_string()]) if banner_leads else '#'}">${_('LEARN MORE')}</a>
+                        <a href="${reverse('about_course', args=[banner_leads]) if banner_leads else '#'}">${_('LEARN MORE')}</a>
                     </div>
                 </div>  
             </div>  
@@ -76,14 +89,19 @@ from kkux.models import News
     </section>
     <section class="section video-section">
         <div class="container">
-            <div class="col-md-7">
-                <img src="${static.url('images/video-img.png')}" alt="">
+            <div class="col-md-7 video">
+                <!--iframe width="100%" height="357" src="https://www.youtube.com/embed/aMdOaPtW0gc" frameborder="0" allowfullscreen></iframe-->
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${static.url('images/video-section-ar.png')}">
+                % else:
+                <img src="${static.url('images/video-section-en.png')}">
+                % endif
             </div>
             <div class="col-md-5">  
                 <div class="text-left video-content">
-                    <p><strong>${_('Earn future skills through KKUx')}</strong></p>
-                    <p>${_('We are part of the Deanship of e-learning at King Khalid University. We won more than 18 national and international awards in e-learning over the past 10 years. We provide distinguished value of education and high quality of learning experience.')}</p>
-                    <p>${_('Learn the skills required for future jobs through our KKUx today. Our online courses will focus on three main topics: design, entrepreneurship and IT. Join us to expand your creative potential.')}</p>
+                    <p class="video-title">${_('Earn future skills through KKUx')}</p>
+                    <p class="video-text01">${_('We are part of the Deanship of e-learning at King Khalid University. We won more than 20 national and international awards in e-learning over the past 10 years.')}</p>
+                    <p class="video-text02">${_('Learn the skills required for future jobs through our KKUx today. Our online courses will focus on three main topics: design, entrepreneurship and IT. Join us to expand your creative potential.')}</p>
                 </div>
             </div>  
         </div>  
@@ -111,13 +129,27 @@ from kkux.models import News
                                 <div class="skills-details">
                                     % if LANGUAGE_CODE == 'ar':
                                       <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
-                                    % else:
-                                      <h3>${course.display_name_with_default}</h3>
+                                      <p>${course.short_description_in_arabic}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${_(str(course.start.day))} ${_(course.start.strftime("%b"))} ${_(str(course.start.year))}</li>
+                                          <li><span class="date-icon" style="display: none;">. AR</li>
+                                        </ul>
+                                          % else:
+                                          <h3>${course.display_name_with_default}</h3>
+                                          <p>${course.short_description}</p>
+                                        <ul>
+                                            <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${course.start.strftime("%d %b %Y")}</li>
+                                            <li><span class="date-icon" style="display: none;">.. EN ${course.enrollment_start.strftime("%Y-%m-%d")} ${course.enrollment_end.strftime("%Y-%m-%d")}</li>
+
+                                            % if time_now.strftime("%Y-%m-%d") <= course.enrollment_end.strftime("%Y-%m-%d"):
+                                                <li><span class="date-icon" style="display: none;">in between 070 - ${time_now.strftime("%Y-%m-%d")} </li>
+                                            % else:
+                                                <li><span class="date-icon" style="display: none;">No! 070 - ${time_now.strftime("%Y-%m-%d")} </li>
+                                            % endif
+
+
+                                      </ul>
                                     % endif
-                                    <p>${course.short_description}</p>
-                                    <ul>
-                                        <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span> ${course.start.strftime("%d %b %Y")}</li>
-                                    </ul>                    
                                 </div>
                             </a>
                         </div>
@@ -132,13 +164,17 @@ from kkux.models import News
                                 <div class="skills-details">
                                     % if LANGUAGE_CODE == 'ar':
                                       <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
+                                      <p>${course.short_description_in_arabic}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${_(str(course.start.day))} ${_(course.start.strftime("%b"))} ${_(str(course.start.year))}</li>  
+                                      </ul>
                                     % else:
                                       <h3>${course.display_name_with_default}</h3>
+                                      <p>${course.short_description}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${course.start.strftime("%d %b %Y")}</li>
+                                      </ul>
                                     % endif
-                                    <p>${course.short_description}</p>
-                                    <ul>
-                                        <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span> ${course.start.strftime("%d %b %Y")}</li>
-                                    </ul> 
                                 </div>
                             </a>
                         </div>
@@ -155,7 +191,7 @@ from kkux.models import News
     </section>
     <section class="section certificates">
         <div class="container">
-            <h2 class="text-right page-title"><span>${_('Nanodegree')}</span></h2>
+            <h2 class="page-title"><span>${_('Nanodegree')}</span></h2>
             <div class="row">
                 <div class="col-md-8">
                     <div class="certificate-full certificate-img">
@@ -192,26 +228,18 @@ from kkux.models import News
                                 <img src="${static.url('images/testimonial-2.png')}" class="img-responsive" alt="image">
                             </div>
                         </div>
-                        <div>
-                            <div class="recslider-1-slide">
-                                <img src="${static.url('images/testimonial-1.png')}" class="img-responsive" alt="image">
-                            </div>
-                        </div>
                     </div>
                     <div class="kku-rector-slider-2">
-                        <div>
+                        <div class="slide-text">
+                            <div class="slide-text-up"><img src="${static.url('images/comma.png')}"></div>
                             <div class="recslider-2-slide">
                                 <p>${_('Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.')}</p>
                             </div>
                         </div>
-                        <div>
+                        <div class="slide-text">
+                            <div class="slide-text-up"><img src="${static.url('images/comma.png')}"></div>
                             <div class="recslider-2-slide">
-                                <p>${_('Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.')}</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="recslider-2-slide">
-                                <p>${_('Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.')}</p>
+                                <p>${_('You will experience an exciting business in the world of entrepreneurship, and this course would help inspire you as an employer to take action to fulfill your professional dreams as it will pay you to the right direction to achieve a qualitative transfer in your business.')}</p>
                             </div>
                         </div>
                     </div>
@@ -224,7 +252,7 @@ from kkux.models import News
         <div class="container">
             <h2 class="text-left page-title"><span>${_('Achievements at KKUx')}</span></h2>
             <div class="row">
-                <div class="col-sm-6 col-md-6">
+                <div class="col-sm-6 col-md-6 certi-image">
                     <div class="gains-image">
                         <img src="${static.url('images/gains.png')}">
                     </div>  
@@ -249,10 +277,14 @@ from kkux.models import News
                         <p>${_('Get Notified of any updates!')}</p>
                         <p class="small">${_('Subscribe to our newsletter to be notified about new Courses at')} <strong>KKUx</strong></p>
                     </div>
-                    <form class="newsform">
-                      <button type="">${_('Subscribe')}</button>
-                      <input type="email" placeholder="${_('Your email address')}" name="search2">
-                    </form>
+                    <div class="newsform">
+                        <button class="newsform-button">${_('Subscribe')}</button>
+                        <input type="email" placeholder="${_('Your email address')}" name="search2">
+                    </div>
+                    <div class="newsform">
+                        <p class="success hidden">${_("You have been subscribed")}</p>
+                        <p class="error hidden">${_("Please enter a valid email address")}</p>
+                    </div>
                 </div>  
             </div>
         </div>
@@ -260,13 +292,14 @@ from kkux.models import News
 
     <section class="section ourpartner-section">
         <div class="container">
-            <h2 class="text-right page-title"><span>شركاؤنا</span></h2>
+            <h2 class="page-title"><span>${_('Our Partners')}</span></h2>
             <div class="row">
                 <div class="our-partners">
                     <ul>
                         <li><a href="#"><img src="${static.url('images/b1.jpg')}" alt=""></a></li>
                         <li><a href="#"><img src="${static.url('images/b2.jpg')}" alt=""></a></li>
                         <li><a href="#"><img src="${static.url('images/b3.jpg')}" alt=""></a></li>
+                        <li><a href="#"><img src="${static.url('images/b4.jpg')}" alt=""></a></li>
                     </ul>
                 </div>
             </div>

@@ -22,10 +22,10 @@ ul.right-top:after  {left: auto; right: -60px; }
 
 
 #navbar .navbar-nav,
-#navbar .navbar-nav > li,.skills-details span.date-icon,
-form.newsform button
-{float: left;}
-.skills-details span.date-icon{direction: ltr !important;}
+#navbar .navbar-nav > li,.skills-details span.date-icon {float:left;}
+.newsform input[type=email] {border-bottom-left-radius: 0px;border-top-left-radius: 0px;border-bottom-right-radius: 99px;border-top-right-radius: 99px;}
+.newsform button{float:left;border-bottom-left-radius: 99px;border-top-left-radius: 99px;border-bottom-right-radius: 0px;border-top-right-radius: 0px;}
+.skills-details span.date-icon{float:right;padding-left:10px;}
 div.navbar-header,
 .skills-details ul li {float: right;}
 input {
@@ -37,17 +37,18 @@ input {
 form.newsform input[type=email]{direction: rtl;}
 .main-story .story-slide .story-slide-txt ,
 .skills-details{text-align: right;}
+.video-section .video{float: right;}
 .video-section .btn-action button{margin-top: 26px;float:right;}
 
 .caption{
     margin-top: -60px;
-    margin-left: -217px;
+    margin-left: -165px;
 }
-.kku-rector-slider-1 {float: right;}
+
 .certificate-half .caption{
-    margin-left: -79px;
+    margin-left: -93px;
     margin-top: -34px;
-}
+} 
 form.newsform button {
      border-bottom-left-radius: 99px;
     border-top-left-radius: 99px;
@@ -74,10 +75,11 @@ form.newsform input[type="email"] {
     border-left: 0px;
      outline: none;
 }
+#portfoliolist .portfolio {float: right;}
 .skill-tab li:first-child a {margin-right: 0px;}
-.skill-tab li:last-child a {font-size: 22px;color: #3e3e3e;margin: 10px 24px 10px 0px;text-decoration: none;position: relative;}
+.skill-tab li:last-child a {color: #3e3e3e;margin: 10px 24px 10px 0px;text-decoration: none;position: relative;}
 .skill-tab li a:after {content: "";height: 16px;width: 1px;background: #92b23e;top: 13px;left: -20px;right: initial;position: absolute;}
-
+.section.kku-gains .certi-image{float:right;}
 @media (min-width: 1200px){
 /*    .video-content{padding:100px 55px 0px 0px;}*/
 }
@@ -95,3 +97,55 @@ form.newsform input[type="email"] {
         text-align: right;
     }
 }
+
+
+@media screen and (max-width: 767px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+@media (min-width: 992px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+

@@ -2,7 +2,7 @@
   <div class="idphoto view">
     <h3 class="title"><%- gettext( "Take a Photo of Your ID" ) %></h3>
     <div class="instruction">
-      <p><%- gettext("Use your webcam to take a photo of your ID. We will match this photo with the photo of your face and the name on your account.") %></p>
+      <p><%- gettext("Use your webcam to take a photo of your ID") %></p>
     </div>
 
     <div class="wrapper-task">
@@ -34,7 +34,7 @@
               <dt class="faq-question">
                 <%- _.sprintf( gettext( "Why does %(platformName)s need my photo?" ), { platformName: platformName } ) %>
               </dt>
-              <dd class="faq-answer"><%- gettext( "As part of the verification process, you take a photo of both your face and a government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID." ) %></dd>
+              <dd class="faq-answer"><%- gettext( "As part of the verification process, you take a photo of your government-issued photo ID. Our authorization service confirms your identity." ) %></dd>
 
               <dt class="faq-question">
                 <%- _.sprintf( gettext( "What does %(platformName)s do with this photo?" ), { platformName: platformName } ) %>

@@ -85,6 +85,7 @@ from pipeline_mako import render_require_js_path_overrides
 
   <script>
     window.baseUrl = "${settings.STATIC_URL | n, js_escaped_string}";
+    window.languageCode = "${LANGUAGE_CODE}";
     (function (require) {
       require.config({
           baseUrl: window.baseUrl
@@ -190,12 +191,19 @@ from pipeline_mako import render_require_js_path_overrides
     <script type="text/javascript" src="${static.url('js/owl.carousel.js')}"></script>
     <script type="text/javascript" src="${static.url('js/jquery.leanModal.min.js')}" charset="utf-8"></script>
     <script type="text/javascript" src="${static.url('js/slick.js')}"></script>
-    <script type="text/javascript" src="${static.url('js/custom-rtl.js' if static.dir_rtl()=='rtl' else 'js/custom.js')}"></script>
+    <script type="text/javascript" src="${static.url('js/custom.js')}"></script>
     <script type="text/javascript" src="${static.url('js/jquery.mixitup.min.js')}"></script>
     <script type="text/javascript" src="${static.url('js/filter.js')}"></script>
   % else:
     <script type="text/javascript" src="${static.url('js/lms-common.js')}"></script>
   % endif
+  <script>
+    $(document).ready(function() {
+      $("#slick-slide-control00").html('01');
+      $("#slick-slide-control01").html('02');
+      $("#slick-slide-control02").html('03');
+    });
+  </script>
 
   <%static:optional_include_mako file="body-extra.html" is_theming_enabled="True" />
 </body>
@@ -232,5 +240,9 @@ from pipeline_mako import render_require_js_path_overrides
       });
     }
   }());
+
+
+
+
 </script>
 % endif

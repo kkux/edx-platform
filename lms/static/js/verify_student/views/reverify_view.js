@@ -18,7 +18,6 @@
          el: '#reverify-container',
 
          stepOrder: [
-             'face-photo-step',
              'id-photo-step',
              'review-photos-step',
              'reverify-success-step'
@@ -38,7 +37,6 @@
             // outside of this method the subview classes
             // might not yet have been loaded.
              stepViewConstructors = {
-                 'face-photo-step': edx.verify_student.FacePhotoStepView,
                  'id-photo-step': edx.verify_student.IDPhotoStepView,
                  'review-photos-step': edx.verify_student.ReviewPhotosStepView,
                  'reverify-success-step': edx.verify_student.ReverifySuccessStepView

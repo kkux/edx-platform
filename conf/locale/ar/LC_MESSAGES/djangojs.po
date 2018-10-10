@@ -3264,7 +3264,7 @@ msgstr "نأسف لحدوث خطأ. "
 #. */
 #: lms/static/js/student_account/views/FormView.js
 msgid "(optional)"
-msgstr ""
+msgstr "(اختياري)"
 
 #: lms/static/js/student_account/views/LoginView.js
 msgid "We couldn't sign you in."
@@ -3310,8 +3310,8 @@ msgstr "لم نتمكّن من إنشاء حسابك. "
 
 #: lms/static/js/student_account/views/RegisterView.js
 #: lms/templates/student_account/register.underscore
-msgid "Create Account"
-msgstr ""
+msgid "Create account"
+msgstr "إنشاء حساب"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "(required)"
@@ -6944,7 +6944,6 @@ msgid "Forgot password?"
 msgstr "هل نسيت كلمة المرور؟"
 
 #: lms/templates/student_account/hinted_login.underscore
-#: lms/templates/student_account/login.underscore
 msgid "Sign in"
 msgstr "تسجيل الدخول"
 
@@ -6985,11 +6984,11 @@ msgstr "التسجيل من خلال edX"
 
 #: lms/templates/student_account/login.underscore
 msgid "First time here?"
-msgstr ""
+msgstr "أول مر ة هنا ؟"
 
 #: lms/templates/student_account/login.underscore
 msgid "Create an Account."
-msgstr ""
+msgstr "أنشئ حساب ."
 
 #: lms/templates/student_account/login.underscore
 msgid "Sign in to continue learning as {email}"
@@ -7022,7 +7021,7 @@ msgstr ""
 
 #: lms/templates/student_account/login.underscore
 msgid "Sign In"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: lms/templates/student_account/login.underscore
 msgid ""
@@ -7072,11 +7071,11 @@ msgstr "تغيير كلمة المرور"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an {platformName} account?"
-msgstr ""
+msgstr "لديك حساب في منصة {platformName} ؟"
 
 #: lms/templates/student_account/register.underscore
 msgid "Sign in."
-msgstr ""
+msgstr "سجل الدخول ."
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an account using"
@@ -7093,7 +7092,7 @@ msgstr "أو أنشئ حساباً جديداً باستخدام"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an Account"
-msgstr ""
+msgstr "قم بإنشاء حساب  :"
 
 #: lms/templates/student_account/register.underscore
 msgid "Support education research by providing additional information"
@@ -9438,10 +9437,10 @@ msgstr "الدولة او المنطقة"
 
 # /verify_student/upgrade/<course_id>/
 msgid "Billing Details"
-msgstr "تفاصيل الفوترة"
+msgstr "تفاصيل الفاتوره"
 
 msgid "Billing Address"
-msgstr "عنوان الفوترة"
+msgstr "العنوان البريدي"
 
 msgid "City"
 msgstr "المدينة"

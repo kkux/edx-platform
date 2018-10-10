@@ -105,7 +105,7 @@
                             <%- gettext("Webcam") %>
                         </h6>
                         <p>
-                            <%- gettext("You will use your webcam to take a picture of your face and of your government-issued photo ID.") %>
+                            <%- gettext("You will use your webcam to take a picture of your government-issued photo ID.") %>
                         </p>
                     </div>
                 <% } %>

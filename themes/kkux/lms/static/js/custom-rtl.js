@@ -16,13 +16,18 @@ $( document ).ready(function() {
             }
         }
     });
+    if (window.languageCode == 'ar') {
+        rtl = true
+    } else {
+        rtl = false
+    }
     // Main Story Slider
     $(".main-story").slick({
         dots: true,
         arrows:false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        rtl: true
+        rtl: rtl
     });
 
     $( ".story-slide" ).children('img').each(function(n, img){

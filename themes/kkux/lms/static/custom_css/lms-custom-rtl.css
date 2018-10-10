@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo:300,400,600,700');
+
 @font-face {
     font-family: 'GE-SS-Two-Light';
     src: url('../fonts/GE-SS-Two-Light.eot');
@@ -52,13 +54,13 @@
     src: url('../fonts/Verdana.ttf');
     font-weight: normal;
     font-style: normal;
-}
+} 
 
-body {margin: 0px; font-family: 'GE-SS-Two-Light';}
-body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial; font-family: 'GE-SS-Two-Light';}
-html, button, input, select, textarea {font-family: 'GE-SS-Two-Light';}
+body {margin: 0px; font-family: 'Cairo-Regular';}
+body, h1, h2, h3, h4, h5, h6, p, label {text-align: initial; font-family: 'Cairo-Regular';}
+html, button, input, select, textarea {font-family: 'Cairo-Regular';}
 /*.container{padding:0;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;}*/
-#header, #footer{font-family: 'GE-SS-Two-Light'}
+#header, #footer{font-family: 'Cairo-Regular'}
 #header .vision {float: left; padding-right: 10px; padding-left: 0px; }
 #header ul.right-top {float: left; margin: 0 0 0 0; }
 #header ul.right-top li {float: right;}
@@ -66,8 +68,8 @@ html, button, input, select, textarea {font-family: 'GE-SS-Two-Light';}
 #header ul.right-top:after  {left: auto; right: -5px; }
 #header .navbar-default .navbar-nav > li {list-style: none;}
 /*#header .navbar-default .navbar-nav > li {list-style: none; float: right;}*/
-#header .navbar-default .navbar-nav > li.active a {color: #93b045}
-#header .navbar-default .navbar-nav > li a {font-size: 24px; line-height: 38px; padding:0 11px; color: #aea9ae; text-decoration: none; display: block; }
+/*#header .navbar-default .navbar-nav > li.active a {color: #93b045}*/
+#header .navbar-default .navbar-nav > li a {font-size: 24px; line-height: 38px; padding:0 11px; color: #878787; text-decoration: none; display: block; }
 #header .navbar-default .navbar-nav > li a:hover {color: #93b045}
 /*#header .navbar-header{ float: right; }*/
 /*#header .navbar-nav {float: left;}*/
@@ -78,18 +80,18 @@ html, button, input, select, textarea {font-family: 'GE-SS-Two-Light';}
 .section-banner .text-block h1 {font-size: 48px; font-weight: normal; }
 .section-banner .text-block {left: auto; right: 0px; }
 .text-center {text-align: center; }
-.skills-details ul li {float: right; direction: ltr;}
+.skills-details ul li {float: right;}
 .skills-details ul li i {padding-right: 0px; padding-left: 8px; }
 .skills-details label i {margin-right: 0px; margin-left: 10px; }
 #footer .fot-col {float: right; }
 .navbar-default .navbar-toggle .icon-bar {background: #fff;}
-.section h2 {font-size: 45px; font-weight: normal; text-align: right;}
+.section h2 {font-size: 30px; text-align: right;font-family: 'Cairo-Bold';}
 .upcoming-skills label i {margin-left: 10px; margin-right: 0px;  }
 
 #footer .copyright p, .welcom p, .welcom-block p{text-align: center;}
 .footer .fot-col {float: right !important;}
-.course-info .details{font:normal 1em/1.6em 'GE-SS-Two-Light';}
-.course-info .details h2, .home>header .title>.heading-group p, section.outside-app h1{font:normal 1.2em/1.2em 'GE-SS-Two-Light';}
+.course-info .details{font:normal 1em/1.6em 'Cairo-Regular';}
+.course-info .details h2, .home>header .title>.heading-group p, section.outside-app h1{font:normal 1.2em/1.2em 'Cairo-Regular';}
 .courses-container .courses .course .course-info .course-date span{float: left;}
 .featured-block a{text-decoration: none;}
 .featured-block a:hover{text-decoration: underline;}
@@ -105,8 +107,8 @@ div.info-wrapper section.updates div article .date {font-family: 'Verdana';}
 /* Courseware css ends */
 
 /*static content css*/
-.static-content h1 {text-align: right; font-family: 'GE-SS-Two-Light';}
-body, .instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link{font-family: 'GE-SS-Two-Light'}
+.static-content h1 {text-align: right; font-family: 'Cairo-Regular';}
+body, .instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link{font-family: 'Cairo-Regular'}
 
 @media (max-width: 991px) {
 #header .navbar-nav > li a {font-size: 16px; padding: 10px;}
@@ -116,7 +118,7 @@ ul.right-top {margin-right: 10px;}
 @media (min-width: 768px){
     #header .navbar-header {float: right;}
     #header .navbar-nav>li {float: right;}
-    #header .navbar-nav {float: left;padding-right: 0px;}
+    #header .navbar-nav {float: right;padding-right: 5%;}
 }
 @media (max-width: 767px) {
     .navbar-brand {padding: 12px 0 12px 15px; }
@@ -126,6 +128,233 @@ ul.right-top {margin-right: 10px;}
     #header ul.right-top {margin: 0px;}
     #header ul.right-top li a{padding: 0 8px;}
 }
-@media(max-width:479px) {
-    #header ul.right-top li a{padding: 13px 15px 12px;}
+
+
+header.course-profile {
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-bottom:1px solid #DBDCDD !important;
+}
+
+.navbar-default {
+    border:none !important;
+}
+
+p,
+a,
+h1, h2, h3, h4, h5, h6, h7,
+.heading-group h1
+{
+    font-family: "Cairo";
+    font-weight:200;
+}
+
+.content-wrapper .course-info {
+    margin: 0 !important;
+}
+
+.course-info header.course-profile .intro-inner-wrapper {
+    border: none;
+    box-shadow: none;
+    margin-top: 40px;
+}
+
+.heading-group{
+    border-bottom: none !important;
+    margin:0 !important;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .media .hero {
+    border: none;
+}
+
+#course-about section h2 {
+    font-family: "Cairo";
+    border-right: 10px solid #BAD32B;
+    padding-right: 10px;
+    color: #121212;
+    font-weight: 600;
+}
+
+.course-info .details .inner-wrapper .course-staff .teacher .teacher-image {
+    margin: 0;
+    margin-left: 15px;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart {
+    background: #94D2DC;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    font-weight: 600;
+    padding: 0.5em 0.2em;
+    font-family: 'Cairo' !important;
+    letter-spacing: 0;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart:hover:not(:disabled) {
+    background: #5fbac7;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+p, h4 {
+    font-family: 'Cairo' !important;
+}
+
+.fot-col h4, .fot-col ul {
+    text-align: right;
+}
+
+.copyright {
+    direction: rtl;
+}
+
+.footer{
+    background: #93d3de;
+}
+
+ul.right-top li a {
+    font-family: 'Cairo' !important;
+}
+
+ul.right-top li a:hover {
+    border: 1px solid #73a049 !important;
+}
+
+a.btn.sign_min {
+    border: 1px solid #73a049 !important;
+}
+
+a.btn.sign_min:hover {
+    background-color: #73a049 !important;
+}
+
+.course-sidebar .course-summary header {
+    border-bottom: 2px solid #808080;
+    margin: 0 10px 15px 10px;
+}
+
+.course-sidebar .course-summary header::after {
+        height: 0;
+}
+
+/* My Coures Page */
+
+.dashboard .my-courses {
+    float:none;
+    margin: 0 auto;
+}
+
+.dashboard .my-courses .wrapper-header-courses .header-courses {
+    padding-left: 0;
+    font-family: 'Cairo';
+    font-weight: 600;
+    border-right: 10px solid #BCD32B;
+    padding-right: 10px;
+    color: #585858;
+}
+
+.dashboard .my-courses .wrapper-header-courses {
+    border-bottom-color: #BCD32B;
+}
+
+.dashboard .my-courses .listing-courses .course-item .course-container {
+    border: none;
+    border-bottom: 3px solid #9d9d9d;
+    border-radius: 0;
+}
+
+.message.message-upsell.has-actions.is-shown {
+    padding: 0 !important;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade-container {
+    display: block;
+    margin: 0;
+    float:none;
+    padding: 0;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade {
+    position:inherit;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    padding-top: 5px;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade span{
+    font-family: 'Cairo';
+    color: #bcd32b;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade .action-upgrade-icon {
+    display: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-image {
+    float: left;
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses .course .details .wrapper-course-image a.fade-cover {
+    border: none;
+}
+
+a,
+p,
+span {
+    font-family: 'Cairo' !important;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome !important;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:hover, .verification-process .action-primary:hover, .verification-process .action-confirm:hover, .verification-process .carousel .wrapper-task .controls .control.approved .action:hover, .verification-process.step-select-track .register-choice-certificate .action-select input:hover, .wrapper-msg .has-actions .nav-actions .action-primary:hover, .wrapper-msg .has-actions .msg-actions .action-primary:hover, .dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:active, .verification-process .action-primary:active, .verification-process .action-confirm:active, .verification-process .carousel .wrapper-task .controls .control.approved .action:active, .verification-process.step-select-track .register-choice-certificate .action-select input:active, .wrapper-msg .has-actions .nav-actions .action-primary:active, .wrapper-msg .has-actions .msg-actions .action-primary:active, .dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:focus, .verification-process .action-primary:focus, .verification-process .action-confirm:focus, .verification-process .carousel .wrapper-task .controls .control.approved .action:focus, .verification-process.step-select-track .register-choice-certificate .action-select input:focus, .wrapper-msg .has-actions .nav-actions .action-primary:focus, .wrapper-msg .has-actions .msg-actions .action-primary:focus {
+    background: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-actions {
+    float: none;
+    width: auto;
+}
+
+.dashboard .my-courses .course .details .course-info {
+    width: auto;
+    float: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-actions .course-actions {display: flex;}
+
+.dashboard .my-courses .course .details .enter-course {
+    background: #94D2DC;
+    color: white;
+    border: none;
+    margin-left: 10px;
+}
+
+.dashboard .my-courses .course .details .enter-course:hover {
+    background: #5fbac7;
+    border: none;
+}
+
+.dashboard .my-courses .course {
+    margin: 0;
+    padding: 10px 0;
+}
+
+h3.course-title a {
+    font-weight: 600 !important;
+    color: #BCD13D;
 }

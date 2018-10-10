@@ -28,7 +28,7 @@ from lms.djangoapps.verify_student.views import PayAndVerifyView
       template_names = (
           ["webcam_photo", "image_input", "error"] +
           ["intro_step", "payment_confirmation_step"] +
-          ["face_photo_step", "id_photo_step", "review_photos_step", "enrollment_confirmation_step"]
+          ["id_photo_step", "review_photos_step", "enrollment_confirmation_step"]
       )
 
       if not is_ab_testing:

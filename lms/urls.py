@@ -982,6 +982,11 @@ urlpatterns += (
     url(r'config/forums', ConfigurationModelCurrentAPIView.as_view(model=ForumsConfig)),
 )
 
+urlpatterns += (
+    url(r'subscribe', 'kkux.views.subscribe', name='subscribe'),
+    url(r'subsciption/activation/(?P<activation_code>[^/]+)/', 'kkux.views.activate', name='subscribe_activate'),
+)
+
 urlpatterns = patterns(*urlpatterns)
 
 if settings.DEBUG:

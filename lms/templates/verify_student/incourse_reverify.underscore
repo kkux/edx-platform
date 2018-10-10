@@ -32,7 +32,7 @@
               <dt class="faq-question">
                 <%- _.sprintf( gettext( "Why does %(platformName)s need my photo?" ), { platformName: platformName } ) %>
               </dt>
-              <dd class="faq-answer"><%- gettext( "As part of the verification process, you take a photo of both your face and a government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID." ) %></dd>
+              <dd class="faq-answer"><%- gettext( "As part of the verification process, you take a photo of your government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID." ) %></dd>
               <dt class="faq-question">
                 <%- _.sprintf( gettext( "What does %(platformName)s do with this photo?" ), { platformName: platformName } ) %>
               </dt>

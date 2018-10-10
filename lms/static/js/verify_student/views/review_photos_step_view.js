@@ -21,7 +21,6 @@ var edx = edx || {};
 
         postRender: function() {
             // Load the photos from the previous steps
-            $('#face_image')[0].src = this.model.get('faceImage');
             $('#photo_id_image')[0].src = this.model.get('identificationImage');
 
             // Prep the name change dropdown
@@ -44,8 +43,6 @@ var edx = edx || {};
             window.analytics.track('edx.bi.user.images.retaken', {
                 category: 'verification'
             });
-
-            this.goToStep('face-photo-step');
         },
 
         submitPhotos: function() {

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, Language
+from .models import News, Language, Subscribers
 
 
 class LanguageAdmin(admin.ModelAdmin):
@@ -15,3 +15,12 @@ class NewsAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 admin.site.register(News, NewsAdmin)
+
+
+class SubscribersAdmin(admin.ModelAdmin):
+    list_display = ['email']
+    list_filter = ['created', 'activated']
+    search_fields = ['email']
+
+admin.site.register(Subscribers, SubscribersAdmin)
+

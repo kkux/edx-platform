@@ -40,3 +40,50 @@ class News(TimeStampedModel):
 
     def __repr__(self):
         return self.__unicode__()
+
+
+class Subscribers(TimeStampedModel):
+    """
+    Stores subscribers email address
+    """
+    email = models.EmailField(max_length=255)
+    activation_code = models.CharField(max_length=512)
+    activated = models.BooleanField(default=False)
+
+    class Meta(object):
+        app_label = "kkux"
+        verbose_name = "Subscribers"
+        verbose_name_plural = "Subscribers"
+
+    @classmethod
+    def store_subscriber(cls, email, activation_code):
+        try:
+            sub, _ = cls.objects.get_or_create(email=email)
+            sub.activation_code = activation_code
+            sub.save()
+            return sub
+        except Exception as error:
+            return None
+
+    @classmethod
+    def get_subscriber(cls, email):
+        try:
+            return cls.objects.get(email=email)
+        except cls.DoesNotExist:
+            return None
+
+    @classmethod
+    def update_subscription(cls, activation_code):
+        try:
+            sub = cls.objects.get(activation_code=activation_code)
+            if sub.activated:
+                return {
+                    'activated': False
+                }
+            sub.activated = True
+            sub.save()
+            return {
+                'activated': True
+            }
+        except cls.DoesNotExist:
+            return None

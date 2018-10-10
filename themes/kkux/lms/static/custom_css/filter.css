@@ -1,21 +1,21 @@
 #filters {
-	padding:0;
-	list-style:none;
+    padding:0;
+    list-style:none;
 }
- 
 #portfoliolist .portfolio {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	display:none;
-	float:left;
-	overflow:hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    display:none;
+    float:left;
+    overflow:hidden;
+    padding: 0px 25px;
 }
 
-	.portfolio-wrapper {
-		overflow:hidden;
-		position: relative !important;
-		background: #666;
-		cursor:pointer;
-	}
+.portfolio-wrapper {
+    overflow:hidden;
+    position: relative !important;
+    background: #666;
+    cursor:pointer;
+}
 
