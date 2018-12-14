@@ -9,6 +9,7 @@ import urllib
 from datetime import datetime
 import pytz
 from uuid import uuid4
+from django.views.decorators.csrf import csrf_exempt
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -18,7 +19,8 @@ from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
-
+from django.shortcuts import render
+    
 from badges.events.course_complete import get_completion_badge
 from badges.utils import badges_enabled
 from certificates.api import (
@@ -412,6 +414,7 @@ def _render_certificate_template(request, context, course, user_certificate):
     Picks appropriate certificate templates and renders it.
     """
     #return render_to_response("certificates/certificate_format.html", context)
+    
     path = settings.MEDIA_ROOT + '/Certificates/'
     if not os.path.exists(path):
         os.makedirs(path)
@@ -621,3 +624,17 @@ def render_html_view(request, user_id, course_id):
 
     # FINALLY, render appropriate certificate
     return _render_certificate_template(request, context, course, user_certificate)
+
+
+@csrf_exempt
+def verify_certificates(request):
+    if request.method == "GET":
+        return render_to_response("certificates/certificate_verify.html")
+    else:
+       
+        try:
+            certificate = GeneratedCertificate.objects.get(candidate_serial_no=request.POST.get("srno"))
+            context={"certificate":certificate}
+            return render_to_response("certificates/certificate_verify.html",context)
+        except:
+            return render_to_response("certificates/certificate_verify.html")

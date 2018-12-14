@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 <%block name="billing_details_highlight"><li class="active" >${_('Billing Details')}</li></%block>
 <%block name="confirmation_highlight"></%block>
 <link rel="stylesheet" href="${static.url('custom_css/intlTelInput.css')}">
+<link rel="stylesheet" href="${static.url('custom_css/countrySelect.css')}">
 
 <%block name="custom_content">
 <div class="container">
@@ -44,14 +45,9 @@ from django.core.urlresolvers import reverse
         % endif
         <div class="col-half">
           <div class="data-group">
-            <label for="id_first_name">${_('First Name')} *</label>
-            <input type="text"id="id_first_name" name="cc_first_name" value="${parmas.get('cc_first_name', '')}" required="required">
+            <label for="id_first_name">${_('Full Name')} *</label>
+            <input type="text"id="id_first_name" name="cc_full_name" value="${parmas.get('cc_full_name', '')}" required="required">
             <span id="error_first_name" class="error-text"></span>
-          </div>
-          <div class="data-group">
-            <label for="id_last_name">${_('Last Name')} *</label>
-            <input type="text"id="id_last_name" name="cc_last_name" value="${parmas.get('cc_last_name', '')}" required="required">
-            <span id="error_last_name" class="error-text"></span>
           </div>
           <div class="data-group ${LANGUAGE_CODE}">
             <label for="id_phone_number">${_('Phone Number')} *</label>
@@ -61,8 +57,9 @@ from django.core.urlresolvers import reverse
         </div>
         <div class="col-half">
           <div class="data-group">
-            <label for="id_billing_address">${_('Billing Address')} *</label>
-            <input type="text" id="id_billing_address" name="billing_address" value="${parmas.get('billing_address', '')}" required="required">
+             <script type="text/javascript" src="${static.url('js/countrySelect.js')}"></script>
+            <label for="id_billing_address">${_('Country')} *</label>
+              <select id="country" name="country"></select>
             <span id="error_billing_address" class="error-text"></span>
           </div>
           <div class="data-group">
@@ -70,11 +67,12 @@ from django.core.urlresolvers import reverse
             <input type="text" id="id_city" name="city" value="${parmas.get('city', '')}" required="required">
             <span id="error_city" class="error-text"></span>
           </div>
-          <div class="data-group">
-            <label for="id_postal_code">${_('Postal Code')} *</label>
-            <input type="text" id="id_postal_code" name="postal_code" value="${parmas.get('postal_code', '')}" required="required">
-            <span id="error_postal_code" class="error-text"></span>
+          <div class="data-group hidden">
+            
+            <input type="text" id="id_city" name="postal_code" value="${parmas.get('postal_code', '')}" >
+            
           </div>
+         
         </div>
       </div>
     <div class="discount">
@@ -102,6 +100,18 @@ from django.core.urlresolvers import reverse
 <script src="${static.url('js/intlTelInput.js')}"></script>
 
 <script>
+  $( document ).ready(function() {
+x=${countries}
+    for (var i =0; i < x.length; i++) {
+       $("#country").append("<option value=" +x[i][0] + ">"+x[i][1]+"</option>")
+    }
+$("#country").css("width","523px")
+$("#country").css("background","white")
+y = "${selected_country}"
+x=$('#country option[value=' + y +']')
+x.attr("selected","selected")
+});
+
   $(function() {
     // $("#phone").intlTelInput("setNumber", "+917878787878");
     var phoneNumber = "${str(parmas.get('cc_phone_number', '')) + str(parmas.get('phone_number', ''))}"
@@ -129,33 +139,26 @@ from django.core.urlresolvers import reverse
       var recipient_email = $('input[name="recipient_email"]').val();
       var company_contact_email =  $('input[name="company_contact_email"]').val();
 
-      var cc_first_name = $('input[name="cc_first_name"]').val();
-      var cc_last_name = $('input[name="cc_last_name"]').val();
+      var cc_full_name = $('input[name="cc_full_name"]').val();
+      // var cc_last_name = $('input[name="cc_last_name"]').val();
       var country_code = '+'
       var billing_address = $('input[name="billing_address"]').val();
       var city = $('input[name="city"]').val();
       var postal_code = $('input[name="postal_code"]').val();
-
+      var country=$('#country').val();
       var phone_number = $("#phone").intlTelInput("getNumber");
       country_code = country_code + $("#phone").intlTelInput("getSelectedCountryData").dialCode;
       phone_number = phone_number.replace(country_code, "");
 
-      if (! cc_first_name){
-         $('span#error_first_name').html('Please enter your first name');
-         $('input[name="cc_first_name"]').addClass('error');
+      if (! cc_full_name){
+         $('span#error_first_name').html('Please enter your full name');
+         $('input[name="cc_full_name"]').addClass('error');
          is_valid_email = false;
       } else {
-         $('input[name="cc_first_name"]').removeClass('error');
-         $('span#error_first_name').html('');
+         $('input[name="cc_full_name"]').removeClass('error');
+         $('span#error_full_name').html('');
       }
-      if (! cc_last_name){
-         $('span#error_last_name').html('Please enter your last name');
-         $('input[name="cc_last_name"]').addClass('error');
-         is_valid_email = false;
-      } else {
-         $('input[name="cc_last_name"]').removeClass('error');
-         $('span#error_last_name').html('');
-      }
+      
       if (! phone_number){
          $('span#error_phone_number').html('Please enter phone number');
          $('input[name="phone_number"]').addClass('error');
@@ -164,14 +167,7 @@ from django.core.urlresolvers import reverse
          $('input[name="phone_number"]').removeClass('error');
          $('span#error_phone_number').html('');
       }
-      if (! billing_address){
-         $('span#error_billing_address').html('Please enter billing address');
-         $('input[name="billing_address"]').addClass('error');
-         is_valid_email = false;
-      } else {
-         $('input[name="billing_address"]').removeClass('error');
-         $('span#error_billing_address').html('');
-      }
+      
       if (! city){
          $('span#error_city').html('Please enter city');
          $('input[name="city"]').addClass('error');
@@ -180,16 +176,7 @@ from django.core.urlresolvers import reverse
          $('input[name="city"]').removeClass('error');
          $('span#error_city').html('');
       }
-      if (! postal_code){
-         $('span#error_postal_code').html('Please enter postal code');
-         $('input[name="postal_code"]').addClass('error');
-         is_valid_email = false;
-      } else {
-         $('input[name="postal_code"]').removeClass('error');
-         $('span#error_postal_code').html('');
-      }
-
-
+      
       if ( recipient_email != undefined && recipient_email != '' && !(validateEmail(recipient_email))) {
          $('span#recipient_email_error').html('Please enter valid email address');
          $('input[name="recipient_email"]').addClass('error');
@@ -222,16 +209,17 @@ from django.core.urlresolvers import reverse
           "recipient_name" : $('input[name="recipient_name"]').val(),
           "recipient_email" : recipient_email,
           "customer_reference_number" : $('input[name="customer_reference_number"]').val(),
-          "cc_first_name": cc_first_name,
-          "cc_last_name": cc_last_name,
+          "cc_full_name": cc_full_name,
+          "country":country,
           "country_code": country_code,
           "phone_number": phone_number,
           "billing_address": billing_address,
           "city": city,
-          "postal_code": postal_code,
+          
       };
       $.post(post_url, data)
       .success(function(data) {
+        debugger;
             if (data.is_course_enrollment_closed == true) {
               location.href = "${reverse('shoppingcart.views.show_cart')}";
             } else {

@@ -7,7 +7,9 @@ from .aws import *  # pylint: disable=wildcard-import, unused-wildcard-import
 
 # Don't use S3 in devstack, fall back to filesystem
 del DEFAULT_FILE_STORAGE
-MEDIA_ROOT = "/edx/var/edxapp/uploads"
+MEDIA_ROOT = "/edx/var/edxapp/uploads/media"
+MEDIA_URL = "/"
+
 ORA2_FILEUPLOAD_BACKEND = 'django'
 
 
@@ -117,16 +119,24 @@ PIPELINE_SASS_ARGUMENTS = '--debug-info'
 ########################### VERIFIED CERTIFICATES #################################
 
 FEATURES['AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'] = True
-FEATURES['ENABLE_PAYMENT_FAKE'] = True
+FEATURES['ENABLE_PAYMENT_FAKE'] = False
 
-CC_PROCESSOR_NAME = 'CyberSource2'
+CC_PROCESSOR_NAME = 'PayTabs'
 CC_PROCESSOR = {
     'CyberSource2': {
         "PURCHASE_ENDPOINT": '/shoppingcart/payment_fake/',
         "SECRET_KEY": 'abcd123',
         "ACCESS_KEY": 'abcd123',
         "PROFILE_ID": 'edx',
-    }
+    },
+    "PayTabs": {
+            "WSDL_SERVICE_URL": "http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL",
+            "SERVICE_KEY": "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^",
+            "SECRET_KEY": "i1ZdBsg9c2l1gHoEkOXGoMEMbSNQd4Iw6IJIb0Sn2dpiVOXfCUV1GANSsBJFGrcNaVvlVnJYB8hwWeLy9HAQhnIKYrqETCr4yXpu",
+            "MERCHANT_EMAIL": "kkux@kku.edu.sa",
+            "SITE_URL": "http://kkux.org"
+        }, 
+        
 }
 
 ########################### External REST APIs #################################

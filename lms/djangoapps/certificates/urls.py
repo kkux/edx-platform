@@ -23,6 +23,7 @@ urlpatterns = patterns(
         views.render_cert_by_uuid,
         name='render_cert_by_uuid'
     ),
+ 
 
     # End-points used by student support
     # The views in the lms/djangoapps/support use these end-points

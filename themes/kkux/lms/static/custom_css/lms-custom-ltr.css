@@ -103,9 +103,9 @@ a.btn.sign_min:hover {
 }
 
 /* My Coures Page */
-
+/*added by prachi shah*/
 .dashboard .my-courses {
-    float:none;
+    float:left;
     margin: 0 auto;
 }
 

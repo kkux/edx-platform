@@ -11,11 +11,11 @@ from django.db import models, transaction
 from django.db.models.fields import BooleanField, DateTimeField, DecimalField, TextField, FloatField, IntegerField
 from django.db.utils import IntegrityError
 from django.template import defaultfilters
-
+# from openedx.core.djangoapps.iimbx_programs.models import Courses
 from ccx_keys.locator import CCXLocator
 from model_utils.models import TimeStampedModel
 from opaque_keys.edx.keys import CourseKey
-
+from django.db.models.signals import post_save,pre_save
 from config_models.models import ConfigurationModel
 from lms.djangoapps import django_comment_client
 from openedx.core.djangoapps.models.course_details import CourseDetails
@@ -852,3 +852,9 @@ class CourseOverviewImageConfig(ConfigurationModel):
         return u"CourseOverviewImageConfig(enabled={}, small={}, large={})".format(
             self.enabled, self.small, self.large
         )
+
+
+# def user_function(**kwargs):
+
+#     Courses.create_or_update_from_course_overview(kwargs['instance'])
+# post_save.connect(user_function,sender=CourseOverview)

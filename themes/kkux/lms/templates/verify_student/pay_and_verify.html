@@ -105,8 +105,10 @@ input#phone::placeholder {
       data-user-last-name='${request.user.last_name if request.user.last_name else ""}'
       data-user-phone-number='${request.user.profile.phone_number if request.user.profile.phone_number else ""}'
       data-user-country-code='${request.user.profile.country_code if request.user.profile.country_code else ""}'
-      data-user-postalcode='${request.user.profile.postalcode if request.user.profile.postalcode else ""}'
+      data-user-country='${countries}'
+      data-user-postalcode='${request.user.profile.postalcode if request.user.profile.postalcode else "11564"}'
       data-user-city='${request.user.profile.city if request.user.profile.city else ""}'
+      data-selected-country='${selected_country if selected_country else ""}'
       data-user-address='${request.user.profile.mailing_address if request.user.profile.mailing_address else ""}'
 
       ## If we reached the verification flow from an in-course checkpoint,
@@ -144,3 +146,8 @@ input#phone::placeholder {
   </section>
 </div>
 </%block>
+<script type="text/javascript">
+  debugger;
+    
+
+</script>

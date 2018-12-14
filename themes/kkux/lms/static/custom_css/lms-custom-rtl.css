@@ -245,7 +245,7 @@ a.btn.sign_min:hover {
 /* My Coures Page */
 
 .dashboard .my-courses {
-    float:none;
+    float:right;
     margin: 0 auto;
 }
 

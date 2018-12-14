@@ -71,13 +71,16 @@ var edx = edx || {};
                 alreadyVerified: el.data('already-verified'),
                 verificationGoodUntil: el.data('verification-good-until'),
                 isABTesting: el.data('is-ab-testing'),
+                userFullName: el.data('full-name'),
                 userFirstName: el.data('user-first-name'),
                 userLastName: el.data('user-last-name'),
                 userPhoneNumber: el.data('user-phone-number'),
                 userCountryCode: el.data('user-country-code'),
                 userPostalcode: el.data('user-postalcode'),
                 userCity: el.data('user-city'),
-                userAddress: el.data('user-address')
+                userAddress: el.data('user-address'),
+                userCountry: el.data('user-country'),
+                selected_country:el.data('selected-country')
             },
             'payment-confirmation-step': {
                 courseKey: el.data('course-key'),

@@ -6,7 +6,14 @@ html, button, input, select, textarea {font-family: 'Cairo-Regular';}
 img{max-width:100%;}
 a{transition:all 0.3s ease-in-out 0s;-webkit-transition:all 0.3s ease-in-out 0s; -moz-transition:all 0.3s ease-in-out 0s;}
 a:focus, a:hover{text-decoratiright-topon:none;outline:none; } 
-
+.programs-container img{
+    width:275px;
+    height:180px;
+}
+.grid-manual .left-col{
+    border-right:none !important;
+    margin-top: 53px;
+}
 .page{position:relative;}
 #header ul.right-top{float: right;width: auto;padding: 21px 0 0 0 ;margin: 0 40px 0 0 ;list-style: none;position: relative;}
 #header ul.right-top li{float: left;font-size: 18px;padding: 0 7px;}
@@ -250,6 +257,11 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
   color: #0c4571;
   background-color: #BEF;
   text-align: center;
+}
+.accordion-content p,.accordion-content li{
+    font-size: 16px !important;
+    color:black !important;
+    font-weight: 400 !important;
 }
 
 /*header css start*/
@@ -540,4 +552,9 @@ form.search{margin-bottom: 22px;}
 
 .req-webcam{
     display: none !important;
+}
+
+.serach-certifiacte input{
+    
+    width :400px !important;
 }

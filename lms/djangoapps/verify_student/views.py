@@ -6,9 +6,11 @@ import datetime
 import decimal
 import json
 import logging
-
+import pycountry
 import analytics
 import waffle
+from django_countries import countries
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -234,7 +236,8 @@ class PayAndVerifyView(View):
         # The URL regex should guarantee that the key format is valid.
         course_key = CourseKey.from_string(course_id)
         course = modulestore().get_course(course_key)
-
+        import pdb;
+        pdb.set_trace()
         # Verify that the course exists
         if course is None:
             log.warn(u"Could not find course with ID %s.", course_id)
@@ -378,7 +381,7 @@ class PayAndVerifyView(View):
                 'course_root',
                 kwargs={'course_id': unicode(course_key)}
             )
-
+        
         full_name = (
             request.user.profile.name
             if request.user.profile.name
@@ -405,7 +408,8 @@ class PayAndVerifyView(View):
         else:
             # transaction will be conducted using legacy shopping cart
             processors = [settings.CC_PROCESSOR_NAME]
-
+        # countries = [country.name for country in pycountry.countries]
+        import pdb;pdb.set_trace()   
         # Render the top-level page
         context = {
             'contribution_amount': contribution_amount,
@@ -430,6 +434,8 @@ class PayAndVerifyView(View):
             'capture_sound': staticfiles_storage.url("audio/camera_capture.wav"),
             'nav_hidden': True,
             'is_ab_testing': 'begin-flow' in request.path,
+            'countries':json.dumps(list(countries)),
+            'selected_country': request.user.profile.country.code or "SA",
         }
 
         return render_to_response("verify_student/pay_and_verify.html", context)
@@ -794,7 +800,7 @@ def create_order(request):
     immediate checkout.
     """
     course_id = request.POST['course_id']
-
+    import pdb;pdb.set_trace()
     cc_first_name = request.POST.get("cc_first_name", "")
     cc_last_name = request.POST.get("cc_last_name", "")
     country_code = request.POST.get("country_code", "")
@@ -849,6 +855,7 @@ def create_order(request):
         user.profile.postalcode = postal_code
         user.profile.mailing_address = billing_address
         user.profile.city = city
+        user.profile.country = request.POST.get("country")
         user.profile.save()
     user.save()
 

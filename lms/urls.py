@@ -18,6 +18,7 @@ from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.features.enterprise_support.api import enterprise_enabled
+# from openedx.core.djangoapps.iimbx_programs.views import programs_list
 
 
 # Uncomment the next two lines to enable the admin:
@@ -27,9 +28,10 @@ if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
 # Use urlpatterns formatted as within the Django docs with first parameter "stuck" to the open parenthesis
 urlpatterns = (
     '',
-
+    # url(r'^programs/',
+        # include('openedx.core.djangoapps.iimbx_programs.urls')),
     url(r'^$', 'branding.views.index', name="root"),   # Main marketing page, or redirect to courseware
-
+    # url(r'^programs-list$', programs_list, name="programs-list"),
     url(r'', include('student.urls')),
     # TODO: Move lms specific student views out of common code
     url(r'^dashboard$', 'student.views.dashboard', name="dashboard"),
@@ -945,6 +947,7 @@ if settings.FEATURES.get('ENABLE_OAUTH2_PROVIDER'):
 # Certificates
 urlpatterns += (
     url(r'^certificates/', include('certificates.urls', app_name="certificates", namespace="certificates")),
+    url(r'^verify_certificates', 'certificates.views.verify_certificates', name="verify_certificates"),
 
     # Backwards compatibility with XQueue, which uses URLs that are not prefixed with /certificates/
     url(r'^update_certificate$', 'certificates.views.update_certificate'),

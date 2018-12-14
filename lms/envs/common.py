@@ -1062,7 +1062,7 @@ PAYMENT_SUPPORT_EMAIL = 'payment@example.com'
 
 ##### Using cybersource by default #####
 
-CC_PROCESSOR_NAME = 'CyberSource'
+CC_PROCESSOR_NAME = 'PayTabs'
 CC_PROCESSOR = {
     'CyberSource': {
         'SHARED_SECRET': '',
@@ -2246,6 +2246,7 @@ INSTALLED_APPS = (
     # For assign course category
     'category',
     'kkux',
+    # 'openedx.core.djangoapps.iimbx_programs',
 )
 
 ######################### CSRF #########################################
