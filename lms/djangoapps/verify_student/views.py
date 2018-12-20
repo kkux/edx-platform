@@ -10,7 +10,11 @@ import pycountry
 import analytics
 import waffle
 from django_countries import countries
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -236,8 +240,13 @@ class PayAndVerifyView(View):
         # The URL regex should guarantee that the key format is valid.
         course_key = CourseKey.from_string(course_id)
         course = modulestore().get_course(course_key)
+<<<<<<< HEAD
         # import pdb;
         # pdb.set_trace()
+=======
+        import pdb;
+        pdb.set_trace()
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         # Verify that the course exists
         if course is None:
             log.warn(u"Could not find course with ID %s.", course_id)
@@ -410,7 +419,11 @@ class PayAndVerifyView(View):
             # transaction will be conducted using legacy shopping cart
             processors = [settings.CC_PROCESSOR_NAME]
         # countries = [country.name for country in pycountry.countries]
+<<<<<<< HEAD
         # import pdb;pdb.set_trace()   
+=======
+        import pdb;pdb.set_trace()   
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         # Render the top-level page
         context = {
             'contribution_amount': contribution_amount,
@@ -801,7 +814,11 @@ def create_order(request):
     immediate checkout.
     """
     course_id = request.POST['course_id']
+<<<<<<< HEAD
     # import pdb;pdb.set_trace()
+=======
+    import pdb;pdb.set_trace()
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
     cc_first_name = request.POST.get("cc_first_name", "")
     cc_last_name = request.POST.get("cc_last_name", "")
     country_code = request.POST.get("country_code", "")

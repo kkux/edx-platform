@@ -18,6 +18,7 @@ from django.http import (
     HttpResponseNotFound,
     HttpResponseRedirect
 )
+from django_countries import countries
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
@@ -684,8 +685,12 @@ def postpay_callback(request):
     If unsuccessful the order will be left untouched and HTML messages giving more detailed error info will be
     returned.
     """
+<<<<<<< HEAD
     # import pdb;
     # pdb.set_trace()
+=======
+    
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
     # params = request.POST.dict()
     params = {'payment_reference': request.session.get('p_id','')}
     result = process_postpay_callback(params)
@@ -763,8 +768,12 @@ def billing_details(request):
             'postal_code': postal_code,
             'email': cart.user.email,
         }
+<<<<<<< HEAD
         # import pdb;
         # pdb.set_trace()
+=======
+        
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         callback_url = request.build_absolute_uri(
             reverse("shoppingcart.views.postpay_callback")
         )
@@ -779,6 +788,8 @@ def billing_details(request):
             'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[1],
             'currency': settings.PAID_COURSE_REGISTRATION_CURRENCY[0],
             'site_name': configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME),
+            'countries':json.dumps(list(countries)),
+            'selected_country': request.user.profile.country.code or "SA",
         }
         return render_to_response("shoppingcart/billing_details.html", context)
     elif request.method == "POST":
@@ -788,10 +799,20 @@ def billing_details(request):
         recipient_name = request.POST.get("recipient_name", "")
         recipient_email = request.POST.get("recipient_email", "")
         customer_reference_number = request.POST.get("customer_reference_number", "")
+<<<<<<< HEAD
         full_name=request.POST.get("cc_first_name").split(" ")
         cc_first_name = full_name[0]
         cc_last_name = full_name[1]
         country_code = request.POST.get("country_code", "")
+=======
+        full_name=request.POST.get("cc_full_name").split(" ")
+        cc_first_name = full_name[0]
+        cc_last_name = full_name[1]
+        import pdb;
+        pdb.set_trace()
+        country = request.POST.get("country", "")
+        country_code=request.POST.get("country_code", "")
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         phone_number = request.POST.get("phone_number", "")
         billing_address = request.POST.get("billing_address", "")
         city = request.POST.get("city", "")
@@ -804,6 +825,7 @@ def billing_details(request):
             user.profile.country_code = country_code
             user.profile.phone_number = phone_number
             user.profile.postalcode = postal_code
+            user.profile.country = country
             if not user.profile.mailing_address:
                 user.profile.mailing_address = billing_address
             if not user.profile.city:

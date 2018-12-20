@@ -113,17 +113,24 @@ def create_invoice(request, certy_cart=None):
         full_name = cart.user.profile.name
         full_name = full_name.split(' ')
         first_name = cart.user.first_name if cart.user.first_name else full_name[0]
+<<<<<<< HEAD
         if cart.user.first_name:
                 last_name = cart.user.last_name
         elif  len(full_name)>1:
                 last_name=full_name[1]
         else:
                 last_name=''
+=======
+        last_name = cart.user.last_name if cart.user.first_name else full_name[1]
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         mailing_address = cart.user.profile.country_code
         city = cart.user.profile.city
         country_code = cart.user.profile.country_code
         phone_number = cart.user.profile.phone_number
+<<<<<<< HEAD
 
+=======
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
        
     else:
         first_name = cart.user.first_name

@@ -283,7 +283,11 @@ a.btn.sign_min:hover {
 /* My Coures Page */
 
 .dashboard .my-courses {
+<<<<<<< HEAD
     /* float:none; */
+=======
+    float:right;
+>>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
     margin: 0 auto;
 }
 
