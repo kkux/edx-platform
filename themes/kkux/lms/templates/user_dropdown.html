@@ -35,11 +35,11 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
     <ul class="dropdown-menu dropdown-usermenu pull-right hidden">
         <li><a href="${reverse('dashboard')}">${_("Dashboard")}</a></li>
         <li><a href="${reverse('learner_profile', kwargs={'username': self.real_user.username})}">${_("Profile")}</a></li>
-<<<<<<< HEAD
+
          <!-- <li><a href="${('verify_certificates')}">${_("Verify Certificate")}</a></li> -->
-=======
+
        
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
         <li><a href="${reverse('account_settings')}">${_("Account")}</a></li>
         <li><a href="${reverse('logout')}">${_("Sign Out")} <i class="fa fa-sign-out pull-right"></i></a></li>
     </ul>

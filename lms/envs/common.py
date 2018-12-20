@@ -2247,13 +2247,9 @@ INSTALLED_APPS = (
     # For assign course category
     'category',
     'kkux',
-<<<<<<< HEAD
- 
+
     'openedx.core.djangoapps.iimbx_programs',
-    # 'openedx.core.djangoapps.micro_masters',
-=======
-    # 'openedx.core.djangoapps.iimbx_programs',
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
 )
 
 ######################### CSRF #########################################

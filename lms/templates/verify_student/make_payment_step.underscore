@@ -162,11 +162,7 @@
 </div>
 
 <script>
-<<<<<<< HEAD
-debugger;
-=======
 
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
 x=JSON.parse($("#pay-and-verify-container").attr("data-user-country"))
     for (var i =0; i < x.length; i++) {
        $("#country").append("<option value=" +x[i][0] + ">"+x[i][1]+"</option>")

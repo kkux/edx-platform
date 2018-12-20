@@ -414,12 +414,11 @@ def _render_certificate_template(request, context, course, user_certificate):
     Picks appropriate certificate templates and renders it.
     """
     #return render_to_response("certificates/certificate_format.html", context)
-<<<<<<< HEAD
+
     # import pdb;
     # pdb.set_trace()
-=======
     
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
     path = settings.MEDIA_ROOT + '/Certificates/'
     if not os.path.exists(path):
         os.makedirs(path)
@@ -636,12 +635,6 @@ def verify_certificates(request):
     if request.method == "GET":
         return render_to_response("certificates/certificate_verify.html")
     else:
-<<<<<<< HEAD
-        # import pdb;
-        # pdb.set_trace()
-=======
-       
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
         try:
             certificate = GeneratedCertificate.objects.get(candidate_serial_no=request.POST.get("srno"))
             context={"certificate":certificate}

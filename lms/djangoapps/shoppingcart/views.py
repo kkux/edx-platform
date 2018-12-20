@@ -685,12 +685,11 @@ def postpay_callback(request):
     If unsuccessful the order will be left untouched and HTML messages giving more detailed error info will be
     returned.
     """
-<<<<<<< HEAD
+
     # import pdb;
     # pdb.set_trace()
-=======
     
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
     # params = request.POST.dict()
     params = {'payment_reference': request.session.get('p_id','')}
     result = process_postpay_callback(params)
@@ -768,12 +767,11 @@ def billing_details(request):
             'postal_code': postal_code,
             'email': cart.user.email,
         }
-<<<<<<< HEAD
+
         # import pdb;
         # pdb.set_trace()
-=======
         
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
         callback_url = request.build_absolute_uri(
             reverse("shoppingcart.views.postpay_callback")
         )
@@ -799,20 +797,19 @@ def billing_details(request):
         recipient_name = request.POST.get("recipient_name", "")
         recipient_email = request.POST.get("recipient_email", "")
         customer_reference_number = request.POST.get("customer_reference_number", "")
-<<<<<<< HEAD
+
         full_name=request.POST.get("cc_first_name").split(" ")
         cc_first_name = full_name[0]
         cc_last_name = full_name[1]
         country_code = request.POST.get("country_code", "")
-=======
+
         full_name=request.POST.get("cc_full_name").split(" ")
         cc_first_name = full_name[0]
         cc_last_name = full_name[1]
-        import pdb;
-        pdb.set_trace()
+       
         country = request.POST.get("country", "")
         country_code=request.POST.get("country_code", "")
->>>>>>> f73a20559d2032d630825f4caafbc164b29353b6
+
         phone_number = request.POST.get("phone_number", "")
         billing_address = request.POST.get("billing_address", "")
         city = request.POST.get("city", "")
