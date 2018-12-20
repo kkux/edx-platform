@@ -1,5 +1,7 @@
 <div id="wrapper-review" tab-index="0" class="wrapper-view make-payment-step">
-  <div class="review view">
+
+  <div class="review view" value="">
+
     <% if ( !upgrade ) { %>
       <h2 class="right-col">
         <%= HtmlUtils.interpolateHtml(
@@ -109,15 +111,11 @@
     <div class="billing-data">
       <div class="col-half">
         <div class="data-group">
-          <label for="id_first_name"><%- gettext( "First Name") %> *</label>
-          <input type="text"id="id_first_name" name="cc_first_name" value="<%- userFirstName %>" required="required">
+          <label for="id_full_name"><%- gettext( "Full Name") %> *</label>
+          <input type="text"id="id_full_name" name="cc_full_name" value="<%- userFullName %>" required="required">
           <span id="error_first_name" class="error-text"></span>
         </div>
-        <div class="data-group">
-          <label for="id_last_name"><%- gettext( "Last Name") %> *</label>
-          <input type="text"id="id_last_name" name="cc_last_name" value="<%- userLastName %>" required="required">
-          <span id="error_last_name" class="error-text"></span>
-        </div>
+        
         <div class="data-group ${LANGUAGE_CODE}">
           <label for="id_phone_number"><%- gettext( "Phone Number") %> *</label>
           <input type="tel" id="phone" name="phone_number">
@@ -125,9 +123,10 @@
         </div>
       </div>
       <div class="col-half">
-        <div class="data-group">
-          <label for="id_billing_address"><%- gettext( "Billing Address") %> *</label>
-          <input type="text" id="id_billing_address" name="billing_address" value="<%- userAddress %>" required="required">
+        <div class="data-group ">
+          <label for="id_billing_address"><%- gettext( "Country") %> *</label>
+          <select id="country" name="country"></select>
+
           <span id="error_billing_address" class="error-text"></span>
         </div>
         <div class="data-group">
@@ -135,8 +134,8 @@
           <input type="text" id="id_city" name="city" value="<%- userCity %>" required="required">
           <span id="error_city" class="error-text"></span>
         </div>
-        <div class="data-group">
-          <label for="id_postal_code"><%- gettext( "Postal Code") %> *</label>
+        <div class="data-group hidden">
+         
           <input type="text" id="id_postal_code" name="postal_code" value="<%- userPostalcode %>" required="required">
           <span id="error_postal_code" class="error-text"></span>
         </div>
@@ -162,3 +161,16 @@
   <form id="payment-processor-form"></form>
 </div>
 
+<script>
+debugger;
+x=JSON.parse($("#pay-and-verify-container").attr("data-user-country"))
+    for (var i =0; i < x.length; i++) {
+       $("#country").append("<option value=" +x[i][0] + ">"+x[i][1]+"</option>")
+    }
+$("#country").css("width","460px")
+
+y = "<%- selected_country %>"
+x=$('#country option[value=' + y +']')
+x.attr("selected","selected")
+
+</script>

@@ -2,7 +2,7 @@ import datetime
 import decimal
 import json
 import logging
-
+import pycountry
 import pytz
 from config_models.decorators import require_config
 from django.conf import settings
@@ -188,6 +188,7 @@ def show_cart(request):
     """
     This view shows cart items.
     """
+   
     cart = Order.get_cart_for_user(request.user)
     is_any_course_expired, expired_cart_items, expired_cart_item_names, valid_cart_item_tuples = \
         verify_for_closed_enrollment(request.user, cart)
@@ -683,6 +684,8 @@ def postpay_callback(request):
     If unsuccessful the order will be left untouched and HTML messages giving more detailed error info will be
     returned.
     """
+    # import pdb;
+    # pdb.set_trace()
     # params = request.POST.dict()
     params = {'payment_reference': request.session.get('p_id','')}
     result = process_postpay_callback(params)
@@ -732,34 +735,36 @@ def billing_details(request):
     #     raise Http404('Page not found!')
 
     if request.method == "GET":
+        country_name = [country.name for country in pycountry.countries]
         if hasattr(cart.user, 'profile'):
             full_name = cart.user.profile.name
-            full_name = full_name.split(' ')
-            first_name = cart.user.first_name if cart.user.first_name else full_name[0]
-            last_name = cart.user.last_name
+            # full_name = full_name.split(' ')
+            # first_name = cart.user.first_name if cart.user.first_name else full_name[0]
+            # last_name = cart.user.last_name
             mailing_address = cart.user.profile.mailing_address if cart.user.profile.mailing_address else ''
             city = cart.user.profile.city if cart.user.profile.city else ''
             country_code = cart.user.profile.country_code if cart.user.profile.country_code else ''
             phone_number = cart.user.profile.phone_number if cart.user.profile.phone_number else ''
-            postal_code = cart.user.profile.postalcode if cart.user.profile.postalcode else ''
+            postal_code = cart.user.profile.postalcode if cart.user.profile.postalcode else '11564'
         else:
-            first_name = cart.user.first_name
-            last_name = cart.user.last_name
+            # first_name = cart.user.first_name
+            # last_name = cart.user.last_name
             mailing_address = ''
             city = ''
             country_code = ''
             phone_number = ''
             postal_code = ''
         parmas = {
-            'cc_first_name': first_name,
-            'cc_last_name': last_name,
+            'cc_full_name': full_name,
             'cc_phone_number': country_code,
             'phone_number': phone_number,
-            'billing_address': mailing_address,
+            'country': country_name,
             'city': city,
             'postal_code': postal_code,
             'email': cart.user.email,
         }
+        # import pdb;
+        # pdb.set_trace()
         callback_url = request.build_absolute_uri(
             reverse("shoppingcart.views.postpay_callback")
         )
@@ -783,14 +788,14 @@ def billing_details(request):
         recipient_name = request.POST.get("recipient_name", "")
         recipient_email = request.POST.get("recipient_email", "")
         customer_reference_number = request.POST.get("customer_reference_number", "")
-
-        cc_first_name = request.POST.get("cc_first_name", "")
-        cc_last_name = request.POST.get("cc_last_name", "")
+        full_name=request.POST.get("cc_first_name").split(" ")
+        cc_first_name = full_name[0]
+        cc_last_name = full_name[1]
         country_code = request.POST.get("country_code", "")
         phone_number = request.POST.get("phone_number", "")
         billing_address = request.POST.get("billing_address", "")
         city = request.POST.get("city", "")
-        postal_code = request.POST.get("postal_code", "")
+        postal_code = request.POST.get("postal_code", "11564")
         ip_customer = get_ip(request)
 
         user.first_name = cc_first_name
@@ -1090,3 +1095,4 @@ def csv_report(request):
 
     else:
         return HttpResponseBadRequest("HTTP Method Not Supported")
+

@@ -39,6 +39,7 @@ def request_certificate(request):
     then if and only if they pass, do they get a certificate issued.
     """
     if request.method == "POST":
+        
         if request.user.is_authenticated():
             username = request.user.username
             student = User.objects.get(username=username)

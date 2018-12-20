@@ -48,7 +48,8 @@ def get_programs(uuid=None):
         dict, if a specific program is requested.
     """
     missing_details_msg_tpl = 'Failed to get details for program {uuid} from the cache.'
-
+    # import pdb;
+    # pdb.set_trace()
     if uuid:
         program = cache.get(PROGRAM_CACHE_KEY_TPL.format(uuid=uuid))
         if not program:

@@ -6,9 +6,11 @@ import datetime
 import decimal
 import json
 import logging
-
+import pycountry
 import analytics
 import waffle
+from django_countries import countries
+    
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -182,7 +184,7 @@ class PayAndVerifyView(View):
     WEBCAM_REQ = "webcam-required"
 
     STEP_REQUIREMENTS = {
-        ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ],
+        # ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ],
         # FACE_PHOTO_STEP: [WEBCAM_REQ]
     }
 
@@ -234,7 +236,8 @@ class PayAndVerifyView(View):
         # The URL regex should guarantee that the key format is valid.
         course_key = CourseKey.from_string(course_id)
         course = modulestore().get_course(course_key)
-
+        # import pdb;
+        # pdb.set_trace()
         # Verify that the course exists
         if course is None:
             log.warn(u"Could not find course with ID %s.", course_id)
@@ -356,6 +359,7 @@ class PayAndVerifyView(View):
 
         # Override the actual value if account activation has been disabled
         # Also see the reference to this parameter in context dictionary further down
+        import pdb;pdb.set_trace()
         user_is_active = self._get_user_active_status(request.user)
         requirements = self._requirements(display_steps, user_is_active)
 
@@ -378,7 +382,7 @@ class PayAndVerifyView(View):
                 'course_root',
                 kwargs={'course_id': unicode(course_key)}
             )
-
+        
         full_name = (
             request.user.profile.name
             if request.user.profile.name
@@ -405,7 +409,8 @@ class PayAndVerifyView(View):
         else:
             # transaction will be conducted using legacy shopping cart
             processors = [settings.CC_PROCESSOR_NAME]
-
+        # countries = [country.name for country in pycountry.countries]
+        # import pdb;pdb.set_trace()   
         # Render the top-level page
         context = {
             'contribution_amount': contribution_amount,
@@ -430,6 +435,8 @@ class PayAndVerifyView(View):
             'capture_sound': staticfiles_storage.url("audio/camera_capture.wav"),
             'nav_hidden': True,
             'is_ab_testing': 'begin-flow' in request.path,
+            'countries':json.dumps(list(countries)),
+            'selected_country': request.user.profile.country.code or "SA",
         }
 
         return render_to_response("verify_student/pay_and_verify.html", context)
@@ -606,7 +613,7 @@ class PayAndVerifyView(View):
         # Remove the account activation requirement if disabled via waffle
         if is_account_activation_requirement_disabled():
             all_requirements.pop(self.ACCOUNT_ACTIVATION_REQ)
-
+       
         display_steps = set(step['name'] for step in display_steps)
 
         for step, step_requirements in self.STEP_REQUIREMENTS.iteritems():
@@ -794,7 +801,7 @@ def create_order(request):
     immediate checkout.
     """
     course_id = request.POST['course_id']
-
+    # import pdb;pdb.set_trace()
     cc_first_name = request.POST.get("cc_first_name", "")
     cc_last_name = request.POST.get("cc_last_name", "")
     country_code = request.POST.get("country_code", "")
@@ -849,6 +856,7 @@ def create_order(request):
         user.profile.postalcode = postal_code
         user.profile.mailing_address = billing_address
         user.profile.city = city
+        user.profile.country = request.POST.get("country")
         user.profile.save()
     user.save()
 
@@ -862,7 +870,6 @@ def create_order(request):
         )
     else:
         payment_data = checkout_with_shoppingcart(request, user, course_id, current_mode, amount)
-
     if 'processor' not in request.POST:
         # (XCOM-214) To be removed after release.
         # the absence of this key in the POST payload indicates that the request was initiated from

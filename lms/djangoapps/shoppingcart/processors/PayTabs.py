@@ -73,7 +73,7 @@ def create_invoice(request, certy_cart=None):
     #     for expired_item in expired_cart_items:
     #         Order.remove_cart_item_from_order(expired_item, request.user)
     #     cart.update_order_type()
-
+    
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
     secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
@@ -108,19 +108,26 @@ def create_invoice(request, certy_cart=None):
             products_per_title += ' || ' + cart_item.line_desc
     # Paymnet gateway only allow 175 characters
     products_per_title = products_per_title[:175]
+
     if hasattr(user, 'profile'):
         full_name = cart.user.profile.name
         full_name = full_name.split(' ')
         first_name = cart.user.first_name if cart.user.first_name else full_name[0]
-        last_name = cart.user.last_name
-        mailing_address = cart.user.profile.mailing_address
+        if cart.user.first_name:
+                last_name = cart.user.last_name
+        elif  len(full_name)>1:
+                last_name=full_name[1]
+        else:
+                last_name=''
+        mailing_address = cart.user.profile.country_code
         city = cart.user.profile.city
         country_code = cart.user.profile.country_code
         phone_number = cart.user.profile.phone_number
-        postal_code = cart.user.profile.postalcode
+
+       
     else:
         first_name = cart.user.first_name
-        last_name = cart.user.last_name
+        last_name = cart.user.last_name 
         mailing_address = ''
         city = ''
         country_code = ''
@@ -129,6 +136,7 @@ def create_invoice(request, certy_cart=None):
 
     client = Client(url_service)
     # client.set_options(port='MarketServiceSoap12')
+    # import pdb;pdb.set_trace()
     client.set_options(port='MarketServiceSoap')
     response = client.service.CreateInvoice(
         merchant_email=merchant_email,
@@ -146,13 +154,13 @@ def create_invoice(request, certy_cart=None):
         phone_number=phone_number,
         billing_address=mailing_address,
         city=city,
-        postal_code=postal_code,
+        postal_code=11564,
         email=cart.user.email,
         ip_customer=ip_customer,
         ip_merchant=ip_merchant,
         address_shipping=mailing_address,
         city_shipping=city,
-        postal_code_shipping=postal_code,
+        postal_code_shipping=11564,
         other_charges='0.0',
         discount='0',
         reference_no=str(cart.id),
@@ -196,6 +204,7 @@ def process_postpay_callback(params):
     """
 
     try:
+        # import pdb;pdb.set_trace()
         result = _payment_accepted(params)
         params = result.get('processor_reply')
         if result['accepted']:

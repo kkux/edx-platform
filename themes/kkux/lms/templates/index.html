@@ -16,8 +16,10 @@ from branding import api as branding_api
 # app that handles site status messages
 from status.status import get_site_status_msg
 from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
-
+from  lms.djangoapps.slidder.models import indexslidder
 from kkux.models import News
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+
 %>
 <%
     year = datetime.now().year
@@ -26,64 +28,54 @@ from kkux.models import News
     banner_technology = "course-v1:KKU+DDIOS101+2018_T1"
     banner_leads = "course-v1:KKU+UE101+Summar2018"
     time_now = datetime.now()
+    slidderdata=indexslidder.objects.all()
+
 %>
 <div class="page">
     <section class="section-banner">
       <div class="main-story">
+        % for data in slidderdata:
+      
         <div>
             <div class="story-slide">
                 % if LANGUAGE_CODE == 'ar':
-                <img src="${static.url('images/story-slide-3-ar.jpg')}" class="img-responsive" alt="image">
+                <img src="${data.arabic_image}" class="img-responsive" alt="image">
                 % else:
-                <img src="${static.url('images/story-slide-3-en.jpg')}" class="img-responsive" alt="image">
+                <img src="${data.english_image}" class="img-responsive" alt="image">
                 % endif
                 <div class="story-slide-txt">
                     <div class="container">
-                        <h5 class="story-slide-title">${_('Designing and developing IOS App')}</h5>
-                        <p class='story-description'>${_('Join our newest class and earn a certificate from KKU')}</p>
+                        <h5 class="story-slide-title">
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.title_in_arabic}
+                        % else:
+                            ${data.title_in_english}
+                        % endif
+                        </h5>
+                        <p class='story-description'>
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.description_in_arabic}
+                        % else:
+                            ${data.description_in_english}
+                        % endif
+                        </p>
                         <div class="learn-more">
-                            <a href="${reverse('about_course', args=[banner_technology]) if banner_design else '#'}">${_('LEARN MORE')}</a>
+                            % if data.link:
+                                <a href="${reverse('about_course', args=[data.link]) if banner_design else '#'}">
+                                    % if LANGUAGE_CODE == 'ar':
+                                        ${data.button_text_in_arabic}
+                                    % else:
+                                        ${data.button_text_in_english}
+                                    % endif
+                                </a>
+                            %endif 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <div class="story-slide">
-                % if LANGUAGE_CODE == 'ar':
-                <img src="${static.url('images/story-slide-1-ar.jpg')}" class="img-responsive" alt="image">
-                % else:
-                <img src="${static.url('images/story-slide-1-en.jpg')}" class="img-responsive" alt="image">
-                % endif
-                <div class="story-slide-txt">
-                    <div class="container">
-                        <h5 class="story-slide-title">${_('Design Thinking')}</h5>
-                        <p class='story-description'>${_('Earn new and important skill for future and add a certificate from KKU')}</p>
-                        <div class="learn-more">
-                            <a href="${reverse('about_course', args=[banner_design]) if banner_technology else '#'}">${_('LEARN MORE')}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-          <div class="story-slide">
-            % if LANGUAGE_CODE == 'ar':
-            <img src="${static.url('images/story-slide-2-ar.jpg')}" class="img-responsive" alt="image">
-            % else:
-            <img src="${static.url('images/story-slide-2-en.jpg')}" class="img-responsive" alt="image">
-            % endif
-            <div class="story-slide-txt">
-                <div class="container">
-                    <h5 class="story-slide-title">${_('User Experience Design')}</h5>
-                    <p class='story-description'>${_('Earn new and important skill for future and add a certificate from KKU')}</p>
-                    <div class="learn-more">
-                        <a href="${reverse('about_course', args=[banner_leads]) if banner_leads else '#'}">${_('LEARN MORE')}</a>
-                    </div>
-                </div>  
-            </div>  
-          </div>
-        </div>
+      % endfor
+           
         
       </div>
     </section>

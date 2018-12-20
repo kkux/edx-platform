@@ -150,6 +150,7 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
     xqueue = XQueueCertInterface()
     if insecure:
         xqueue.use_https = False
+  
     generate_pdf = not has_html_certificates_enabled(course_key, course)
     cert = xqueue.add_cert(
         student,
@@ -158,6 +159,7 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
         generate_pdf=generate_pdf,
         forced_grade=forced_grade
     )
+
     # If cert_status is not present in certificate valid_statuses (for example unverified) then
     # add_cert returns None and raises AttributeError while accesing cert attributes.
     if cert is None:
