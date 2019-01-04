@@ -25,6 +25,13 @@ from student.models import (
 from student.roles import REGISTERED_ACCESS_ROLES
 from xmodule.modulestore.django import modulestore
 
+from django.contrib.admin.views.decorators import staff_member_required
+from django.conf.urls import url
+from django.http import JsonResponse
+
+
+
+
 User = get_user_model()  # pylint:disable=invalid-name
 
 
@@ -174,6 +181,45 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     """ Admin interface for the User model. """
     inlines = (UserProfileInline,)
+    change_list_template = "admin/student/auth_userprofile/change_list.html"
+
+    actions = ['ForceToUpdate']
+
+    list_display = ('username','email','first_name','last_name','is_staff','force_to_update_in_list',)
+    # list_display_links =('force_to_update_in_list',)
+
+
+    def force_to_update_in_list(self,obj):
+        # add Force_To_Update field in Admin panel list_display
+        try:
+            user_obj = UserProfile.objects.get(user=obj)
+            response = user_obj.force_to_update
+        except Exception:
+            response = False
+        return response
+
+    force_to_update_in_list.short_description = "ForceToUpdate Status"
+
+    def ForceToUpdate(self, request, queryset):
+        # Selected Users ForceToUpdate Enable 
+        for student in queryset:
+            try:
+                user_obj = UserProfile.objects.get(user=student)
+                user_obj.force_to_update = True
+                user_obj.save()
+            except Exception:
+                pass
+
+        self.message_user(request, "Selected Users ForceToUpdate Enable Successfully.")
+        # user_obj = UserProfile.objects.all()
+        # for student in queryset:
+        #     for user in user_obj:
+        #         if user.user.username == student.username:
+        #             user.force_to_update = True
+        #             user.save()            
+
+        
+    ForceToUpdate.short_description = "ForceToUpdate Selected Users"
 
     def get_readonly_fields(self, *args, **kwargs):
         """
@@ -184,6 +230,24 @@ class UserAdmin(BaseUserAdmin):
         django_readonly = super(UserAdmin, self).get_readonly_fields(*args, **kwargs)
         return django_readonly + ('username',)
 
+    def get_urls(self):
+        urls = super(UserAdmin, self).get_urls()
+        my_urls = [
+            url(r"^export/$", export, name='export'),
+        ]
+        return my_urls + urls
+
+@staff_member_required
+def export(request):
+    from student.models import UserProfile
+    try:
+        user_obj = UserProfile.objects.all()
+        for student in user_obj:
+            student.force_to_update = True
+            student.save()
+    except Exception:
+        pass
+    return JsonResponse({'success': 'success'})
 
 @admin.register(UserAttribute)
 class UserAttributeAdmin(admin.ModelAdmin):

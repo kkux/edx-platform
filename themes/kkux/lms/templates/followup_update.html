@@ -1,0 +1,39 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+%>
+<%namespace name='static' file='static_content.html'/>
+<style type="text/css">
+	table, th, td {
+	  border: 1px solid black;
+	  text-align: center;
+	}
+</style>
+<%inherit file="main.html" />
+% if user_obj_list:
+	<h1>${_("Below Students Are don't update his Profile")}</h1>
+	
+		<table style="width:99%">
+		  <tr>
+		    <th>Username</th>
+		    <th>Fullname In English</th> 
+		    <th>Fullname In Arabic</th>
+		    <th>Country</th>
+		    <th>Email</th>
+		    <th>Gender</th>
+		  </tr>
+		  % for user in user_obj_list:
+		  <tr>
+		    <td>${user.user.username}</td>
+		    <td>${user.name}</td>
+		    <td>${user.name_in_arabic}</td>
+		    <td>${user.country}</td>
+		    <td>${user.user.email}</td>
+		    <td>${user.gender}</td>
+		  </tr>
+		  % endfor
+	</table>
+	
+% else:
+	<h1>${_('All Students Profile are Update.')}</h1>
+% endif

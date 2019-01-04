@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: utf8 -*-
 """
 Utility functions for validating forms
 """
@@ -138,6 +140,7 @@ def validate_username(username):
     )
 
     validator(username)
+
 
 
 class UsernameField(forms.CharField):
@@ -325,6 +328,35 @@ class AccountCreationForm(forms.Form):
             for key, value in self.cleaned_data.items()
             if key in self.extended_profile_fields and value is not None
         }
+
+
+
+    def clean_name(self):
+        # First Install this this library "pip install alphabet-detector"
+        # Added By Kava HD
+        from alphabet_detector import AlphabetDetector
+        ad = AlphabetDetector()
+        name = self.cleaned_data["name"]
+
+        if not ad.only_alphabet_chars(name, "LATIN"):
+            raise ValidationError("Enter Valid English Words in Full Name in English Field.")
+
+        return name
+
+    def clean_name_in_arabic(self):
+        # First Install this this library "pip install alphabet-detector"
+        # Added By Kava HD
+        from alphabet_detector import AlphabetDetector
+        ad = AlphabetDetector()
+
+        name_in_arabic = self.cleaned_data["name_in_arabic"]
+
+        if not ad.only_alphabet_chars(name_in_arabic, 'ARABIC'):
+            raise ValidationError("Enter Valid Arabic Words in Full Name in Arabic Field.")
+
+        return name_in_arabic
+
+
 
 
 def get_registration_extension_form(*args, **kwargs):

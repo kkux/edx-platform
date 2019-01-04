@@ -1,0 +1,7 @@
+<%! 
+from django.utils.translation import ugettext as _ 
+from django.conf import settings
+%>
+${_('Hello')}
+${_('Thank you for subscribing in KKUx mailing list. Please click the below link to activate your subscription.')}
+${settings.LMS_ROOT_URL}/subsciption/activation/${activation_code}

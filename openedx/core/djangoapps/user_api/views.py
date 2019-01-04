@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: utf8 -*-
 """HTTP end-points for the User API. """
 import copy
 
@@ -159,10 +161,9 @@ class LoginSessionView(APIView):
 class RegistrationView(APIView):
     """HTTP end-points for creating a new user. """
 
-    DEFAULT_FIELDS = ["email", "name", "username", "password"]
+    DEFAULT_FIELDS = ["email", "name","name_in_arabic", "username", "password"]
 
     EXTRA_FIELDS = [
-        "name_in_arabic",
         "confirm_email",
         "first_name",
         "last_name",
@@ -452,11 +453,11 @@ class RegistrationView(APIView):
         """
         # Translators: This label appears above a field on the registration form
         # meant to hold the user's full name.
-        name_label = _(u"Full Name")
+        name_label = _(u"Full Name in English")
 
         # Translators: This example name is used as a placeholder in
         # a field on the registration form meant to hold the user's name.
-        name_placeholder = _(u"Jane Q. Learner")
+        name_placeholder = _(u"Mohammed Abdullah")
 
         # Translators: These instructions appear on the registration form, immediately
         # below a field meant to hold the user's full name.
@@ -489,7 +490,7 @@ class RegistrationView(APIView):
 
         # Translators: This example name is used as a placeholder in
         # a field on the registration form meant to hold the user's name.
-        name_placeholder = _(u"Full Name in Arabic")
+        name_placeholder = _(u"محمد عبدالله")
 
         # Translators: These instructions appear on the registration form, immediately
         # below a field meant to hold the user's full name.

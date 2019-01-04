@@ -1240,6 +1240,10 @@ MIDDLEWARE_CLASSES = (
 
     # This must be last
     'openedx.core.djangoapps.site_configuration.middleware.SessionCookieDomainOverrideMiddleware',
+
+    #custom middleware for update user details
+    'student.middleware.UserDataMiddleware',
+
 )
 
 # Clickjacking protection can be enabled by setting this to 'DENY'

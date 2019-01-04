@@ -6,7 +6,10 @@ from django.conf import settings
 from django.http import HttpResponseForbidden
 from django.utils.translation import ugettext as _
 
-from student.models import UserStanding
+from student.models import UserStanding,UserProfile
+from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 
 class UserStandingMiddleware(object):
@@ -35,3 +38,27 @@ class UserStandingMiddleware(object):
                     ),
                 )
                 return HttpResponseForbidden(msg)
+
+
+
+class UserDataMiddleware(object):
+    # Added by Kava HD
+    # Check User Details
+    def process_request(self, request):
+        user = request.user
+        try:
+            user_obj = UserProfile.objects.get(user=user.id)
+            if user_obj.force_to_update == True:
+                if request.path != '/account/settings' and request.path != '/api/user/v1/accounts/'+ str(user.username) and request.path != '/api/user/v1/preferences/'+str(user.username) and request.path !='/user_api/v1/preferences/time_zones/' and request.path !='/event' and request.path != '/user_api/v1/preferences/time_zones/?country_code='+ str(user_obj.country.code) and request.path != '/' and request.path != '/dashboard':
+                    if not (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country):
+                        msg = _(
+                            'Your account has been disabled. Please Update Your Details.'
+                            '{support_link}'
+                        ).format(
+                            support_link=u'<a href="{address}">Click Here For Update Your Details</a>'.format(
+                                address=reverse('account_settings'),
+                            ),
+                        )
+                        return HttpResponseForbidden(msg)
+        except UserProfile.DoesNotExist:
+            pass

@@ -9,6 +9,11 @@ from edxmako.shortcuts import render_to_response
 from .models import Subscribers
 from kkux.tasks import send_subcription_activation_mail
 
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+
+
+
 EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
 ALREADY_SUBCRIBED = _('You are already subscribed')
@@ -48,3 +53,13 @@ def activate(request, activation_code):
     context['activated'] = sub.get('activated')
     return render_to_response('subscription_activation_status.html', context)
 
+@staff_member_required
+@login_required
+def followup_update(request):
+    from student.models import UserProfile
+    user_obj_list=[]
+    userprofile_obj = UserProfile.objects.all()
+    for user_obj in userprofile_obj:
+        if not (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country): 
+            user_obj_list.append(user_obj)
+    return render_to_response('followup_update.html', {'user_obj_list':user_obj_list})

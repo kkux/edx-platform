@@ -1,0 +1,49 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static %}
+{% block extrastyle %}
+  {{ block.super }}
+    <style type="text/css">
+    	.notification{display: none;}
+  	</style>
+{% endblock %}
+{% block object-tools-items %}
+{% if request.user.is_superuser %}
+    <li>
+        <a href="javascript:;" id="export_request" class="btn btn-high btn-success">Force To Update All Student</a>
+    <li>
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        $("#export_request").click(function() {
+            $.ajax({
+                type: "GET",
+                data: {},
+                url: "export/",
+                success: function(response) {
+                   	$(".notification").css("display", "block")
+                    console.log("All Students ForceToUpdate Enable Successfully.")               
+                },
+                error: function(response){
+                    console.log(response)
+                }
+            });
+        });
+    })
+})(django.jQuery);
+</script>
+{% endblock %}
+
+{% block breadcrumbs %}
+{{ block.super }} 
+    <div class="notification">
+        <ul class="messagelist">
+          <li id="success">All Students ForceToUpdate Enable.</li>
+        </ul>
+    </div>
+{% endblock %}

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: utf8 -*-
 """
 Programmatic integration point for User API Accounts sub-application
 """
@@ -71,6 +73,7 @@ def get_account_settings(request, usernames=None, configuration=None, view=None)
             `username` is not specified)
          UserAPIInternalError: the operation failed due to an unexpected error.
     """
+    
     requesting_user = request.user
     usernames = usernames or [requesting_user.username]
 
@@ -123,6 +126,24 @@ def update_account_settings(requesting_user, update, username=None):
             but then the e-mail change request, which is processed last, may throw an error.
         UserAPIInternalError: the operation failed due to an unexpected error.
     """
+
+    field_errors = {}
+    # First Install this this library "pip install alphabet-detector"
+    # Added By Kava HD
+    from alphabet_detector import AlphabetDetector
+    ad = AlphabetDetector()
+    if update.get("name"):
+        if not ad.only_alphabet_chars(update.get("name"), "LATIN"):
+            field_errors["name"]={"developer_message":"Enter Valid English Words.",
+            "user_message":"Enter Valid English Words."}
+
+    if update.get("name_in_arabic"):
+        if not ad.only_alphabet_chars(update.get("name_in_arabic"), 'ARABIC'):
+            field_errors["name_in_arabic"]={"developer_message":"Enter Valid Arabic Words.",
+            "user_message":"Enter Valid Arabic Words."}
+
+
+
     if username is None:
         username = requesting_user.username
 
@@ -151,7 +172,6 @@ def update_account_settings(requesting_user, update, username=None):
     )
 
     # Build up all field errors, whether read-only, validation, or email errors.
-    field_errors = {}
 
     if read_only_fields:
         for read_only_field in read_only_fields:

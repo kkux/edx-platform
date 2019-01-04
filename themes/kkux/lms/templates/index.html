@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from lms.djangoapps.ccx.overrides import get_current_ccx
 from openedx.core.djangolib.markup import HTML, Text
-
+import boto3
 # App that handles subdomain specific branding
 from branding import api as branding_api
 # app that handles site status messages
@@ -35,13 +35,13 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
     <section class="section-banner">
       <div class="main-story">
         % for data in slidderdata:
-      
+        
         <div>
             <div class="story-slide">
                 % if LANGUAGE_CODE == 'ar':
-                <img src="${data.arabic_image}" class="img-responsive" alt="image">
+                <img src="${data.arabic_image.url}" class="img-responsive" alt="image">
                 % else:
-                <img src="${data.english_image}" class="img-responsive" alt="image">
+                <img src="${data.english_image.url}" class="img-responsive" alt="image">
                 % endif
                 <div class="story-slide-txt">
                     <div class="container">
@@ -60,8 +60,8 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
                         % endif
                         </p>
                         <div class="learn-more">
-                            % if data.link:
-                                <a href="${reverse('about_course', args=[data.link]) if banner_design else '#'}">
+                            % if data.link_arabic:
+                                <a href="${data.link}">
                                     % if LANGUAGE_CODE == 'ar':
                                         ${data.button_text_in_arabic}
                                     % else:

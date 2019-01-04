@@ -1,0 +1,167 @@
+<%page expression_filter="h"/>
+<%inherit file="../main.html"/>
+<%!
+from datetime import datetime
+
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+from mako import exceptions
+
+from openedx.core.djangolib.markup import HTML, Text
+%>
+
+<%namespace name='static' file='../static_content.html'/>
+
+
+<%static:css group='style-main-v2'/>
+<%static:css group='style-learner-dashboard'/>
+
+<%block name="js_extra">
+  <script src="${static.url('js/slick.min.js')}"></script>
+  <script src="${static.url('js/leanModal.js')}"></script>
+  <script src="${static.url('js/program_marketing.js')}"></script>
+</%block>
+<style type="text/css">
+  
+  .courses-container .courses{
+    width: 30%;
+  }
+  #courses .hd{
+    margin-left: -2%; 
+  }
+  #courses{
+    margin-top: 30px;
+  }
+</style>
+<%block name="pagetitle">${program.name}</%block>
+<main id="main" aria-label="Content" tabindex="-1">
+<div id="program-details-page">
+  <div class="main-banner" style="background: #000 url(/${program.image}) no-repeat center center / cover;">
+    <div class="grid-manual">
+      <div class="row">
+        <div class="col col-12 md-col-8 lg-col-9">
+          <div class="org-logo">
+           
+          </div>
+          <h1 class="banner-title">test</h1>
+          
+          <p class="banner-description">Earn a MicroMasters credential from MIT’s #1 ranked Supply Chain Management Program to advance your career.</p>
+
+
+        </div>
+    
+      </div>
+    </div>
+  </div>
+  <div id="accordion-group">
+          <div class="accordion-item">
+            <div class="accordion-head">${_('Overview')}</div>
+            <div class="accordion-content">
+              <p>${HTML(program.long_description)}</p>
+            </div>
+          </div>
+    
+          <div class="accordion-item">
+            <div class="accordion-head">${_("What You'll Learn")}</div>
+            <div class="accordion-content">
+              <ul class="list-bulleted list-disc no-indent">
+                % for item in program.expected_learning.all():
+                  <li>${item}</li>
+                % endfor
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+  <div class="grid-manual data-table">
+    <div class="row">
+      <div class="col col-12 md-col-7 lg-col-8 left-col">
+        <ul class="list-divided program-desc-tbl">
+          <li class="item">
+            <span class="description">
+              <span class="fa fa-book fa-lg" aria-hidden="true"></span>
+              ${_('Number of Courses')}
+            </span>
+            <a href="#courses">
+              ${Text(_('{number_of_courses} courses in program')).format(
+                number_of_courses=program.courses.count()
+              )}
+            </a>
+          </li>
+         
+             <li class="item">
+            <span class="description">
+              <span class="fa fa-clock-o fa-lg" aria-hidden="true"></span>
+              ${_('Average Length')}
+            </span>
+            <span>
+              ${Text(_('{weeks_to_complete} weeks per course')).format(
+                weeks_to_complete=program.weeks_to_complete
+              )}
+            </span>
+          </li>
+          <li class="item">
+            <span class="description">
+              <span class="fa fa-tachometer fa-lg" aria-hidden="true"></span>
+              ${_('Effort')}
+            </span>
+            <span>
+              ${Text(_('{min_hours_effort_per_week}-{max_hours_effort_per_week} hours per week, per course')).format(
+                max_hours_effort_per_week=program.max_hours_effort_per_week,
+                min_hours_effort_per_week=program.min_hours_effort_per_week
+              )}
+            </span>
+          </li>
+          <li class="item">
+            <span class="description">
+              <span class="fa fa-tag fa-lg" aria-hidden="true"></span>
+              ${_('Price (SAR)')}
+            </span>
+            
+              <span>
+                ${Text(_('${full_program_price} for entire program')).format(
+                  full_program_price=program.fee
+                )}
+              </span>
+           
+          </li>
+        
+        </ul>
+      
+    </div>
+  </div>
+
+  <div class="container courses-in-program" id="courses">
+    <h3 class="hd">
+      ${Text(_('Courses in the {program_type}')).format(
+        program_type=program.name
+      )}
+    </h3>
+   
+      <section class="courses-container">
+    <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
+      <ul class="courses-listing">
+      % for course_obj in program.courses.all():
+        <%
+          from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+          course = CourseOverview.objects.get(id=course_obj.course_key)
+        %>
+            <li class="courses-listing-item">
+              <%include file="../course.html" args="course=course" />
+            </li>
+            %endfor
+          </ul>
+        </div>
+      </section>
+    </section>
+ 
+    <span class="pagingInfo"></span>
+  </div>
+
+  <section id="video-modal" class="modal modal-custom custom-video-modal">
+    <div class="inner-wrapper">
+    
+    </div>
+  </section>
+
+</main>
