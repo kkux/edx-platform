@@ -59,17 +59,7 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
                             ${data.description_in_english}
                         % endif
                         </p>
-                        <div class="learn-more">
-                            % if data.link_arabic:
-                                <a href="${data.link}">
-                                    % if LANGUAGE_CODE == 'ar':
-                                        ${data.button_text_in_arabic}
-                                    % else:
-                                        ${data.button_text_in_english}
-                                    % endif
-                                </a>
-                            %endif 
-                        </div>
+                   
                     </div>
                 </div>
             </div>

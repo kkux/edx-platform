@@ -1,0 +1,347 @@
+<%page expression_filter="h"/>
+<%inherit file="main.html" />
+<%namespace name='static' file='static_content.html'/>
+<% 
+from datetime import datetime
+from course_modes.models import CourseMode
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+
+from django.conf import settings
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.markup import HTML, Text
+import boto3
+
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+from  lms.djangoapps.slidder.models import indexslidder
+from kkux.models import News
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+
+%>
+<%
+    year = datetime.now().year
+    category_map = {"Design": "design", "Technology": "technology", "Business": "leads"}
+    banner_design = "course-v1:KKU+DesignThinking001+2018_sem2"
+    banner_technology = "course-v1:KKU+DDIOS101+2018_T1"
+    banner_leads = "course-v1:KKU+UE101+Summar2018"
+    time_now = datetime.now()
+    slidderdata=indexslidder.objects.all()
+
+%>
+<div class="page">
+    <section class="section-banner">
+      <div class="main-story">
+        % for data in slidderdata:
+     <% 
+                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+                arabic_image=data.arabic_image.url.split("/")[-1]
+                english_image=data.english_image.url.split("/")[-1]
+                arabic_image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key':arabic_image
+                        },
+                    
+                 )
+
+                english_image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key': english_image
+                        },
+                    
+                 )
+            %>      
+        <div>
+            <div class="story-slide">
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${arabic_image_url}" class="img-responsive" alt="image">
+                % else:
+                <img src="${english_image_url}" class="img-responsive" alt="image">
+                % endif
+                <div class="story-slide-txt">
+                    <div class="container">
+                        <h5 class="story-slide-title">
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.title_in_arabic}
+                        % else:
+                            ${data.title_in_english}
+                        % endif
+                        </h5>
+                        <p class='story-description'>
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.description_in_arabic}
+                        % else:
+                            ${data.description_in_english}
+                        % endif
+                        </p>
+                        <div class="learn-more">
+                        % if  LANGUAGE_CODE == 'ar' and data.link_arabic != '':
+                            <a href="${data.link_arabic}">
+                                ${data.button_text_in_arabic}
+                        % elif data.link_english != '':
+                             <a href="${data.link_english}">
+                                ${data.button_text_in_english}
+                        % endif
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      % endfor
+           
+        
+      </div>
+    </section>
+    <section class="section video-section">
+        <div class="container">
+            <div class="col-md-7 video">
+                <!--iframe width="100%" height="357" src="https://www.youtube.com/embed/aMdOaPtW0gc" frameborder="0" allowfullscreen></iframe-->
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${static.url('images/video-section-ar.png')}">
+                % else:
+                <img src="${static.url('images/video-section-en.png')}">
+                % endif
+            </div>
+            <div class="col-md-5">  
+                <div class="text-left video-content">
+                    <p class="video-title">${_('Earn future skills through KKUx')}</p>
+                    <p class="video-text01">${_('We are part of the Deanship of e-learning at King Khalid University. We won more than 20 national and international awards in e-learning over the past 10 years.')}</p>
+                    <p class="video-text02">${_('Learn the skills required for future jobs through our KKUx today. Our online courses will focus on three main topics: design, entrepreneurship and IT. Join us to expand your creative potential.')}</p>
+                </div>
+            </div>  
+        </div>  
+    </section>
+    <section class="section skills">
+        <div class="container">
+            <h2 class="text-left page-title"><span>${_('Skills')}</span> </h2>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <ul class="list-unstyled list-inline skill-tab">
+                        <li class="active filter" data-filter=".all"><a href="#!">${_('All')}</a></li>
+                        <li><a href="#!" class="filter" data-filter=".design">${_('Design')}</a></li>
+                        <li><a href="#!" class="filter" data-filter=".technology">${_('Technology')}</a></li>
+                        <li><a href="#!" class="filter" data-filter=".leads">${_('Business')} </a></li>
+                    </ul>
+                </div>  
+            </div>
+            <div class="row">
+                <div id="portfoliolist">
+                % for course in courses[:settings.HOMEPAGE_COURSE_MAX]:
+                    <div class="col-md-4 col-sm-6 col-xs-12 portfolio all">
+                        <div class="featured-block">
+                            <a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
+                                <div class="image"><img src="${course.course_image_url}" alt="" ></div>
+                                <div class="skills-details">
+                                    % if LANGUAGE_CODE == 'ar':
+                                      <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
+                                      <p>${course.short_description_in_arabic}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${_(str(course.start.day))} ${_(course.start.strftime("%b"))} ${_(str(course.start.year))}</li>
+                                          <li><span class="date-icon" style="display: none;">. AR</li>
+                                        </ul>
+                                          % else:
+                                          <h3>${course.display_name_with_default}</h3>
+                                          <p>${course.short_description}</p>
+                                        <ul>
+                                            <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${course.start.strftime("%d %b %Y")}</li>
+                                            <li><span class="date-icon" style="display: none;">.. EN ${course.enrollment_start.strftime("%Y-%m-%d")} ${course.enrollment_end.strftime("%Y-%m-%d")}</li>
+
+                                            % if time_now.strftime("%Y-%m-%d") <= course.enrollment_end.strftime("%Y-%m-%d"):
+                                                <li><span class="date-icon" style="display: none;">in between 070 - ${time_now.strftime("%Y-%m-%d")} </li>
+                                            % else:
+                                                <li><span class="date-icon" style="display: none;">No! 070 - ${time_now.strftime("%Y-%m-%d")} </li>
+                                            % endif
+
+
+                                      </ul>
+                                    % endif
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                 % endfor
+                 % for category in banner_image_courses:
+                    % for course in banner_image_courses[category][:settings.HOMEPAGE_COURSE_MAX]:
+                    <div class="col-md-4 col-sm-6 col-xs-12 portfolio ${category}">
+                        <div class="featured-block">
+                            <a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
+                                <div class="image"><img src="${course.course_image_url}" alt="" ></div>
+                                <div class="skills-details">
+                                    % if LANGUAGE_CODE == 'ar':
+                                      <h3>${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}</h3>
+                                      <p>${course.short_description_in_arabic}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${_(str(course.start.day))} ${_(course.start.strftime("%b"))} ${_(str(course.start.year))}</li>  
+                                      </ul>
+                                    % else:
+                                      <h3>${course.display_name_with_default}</h3>
+                                      <p>${course.short_description}</p>
+                                      <ul>
+                                          <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${course.start.strftime("%d %b %Y")}</li>
+                                      </ul>
+                                    % endif
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    % endfor
+                 % endfor
+                </div>
+                <div class="clearfix"></div>
+                <div class="btn-action text-center">
+                    <a href="${reverse('courses')}"><button class="btn btn-default btn-green">${_('More')}</button></a>
+                </div>  
+            </div>
+        </div>
+    </section>
+    <section class="section certificates">
+        <div class="container">
+            <h2 class="page-title"><span>${_('Nanodegree')}</span></h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="certificate-full certificate-img">
+                        <img src="${static.url('images/design-full.png')}">
+                        <div class="caption"><h2>${_('Design')}</h2><span>${_("Soon")}</span></div>
+                    </div>
+                </div>  
+                <div class="col-md-4 right-space">
+                    <div class="certificate-half certificate-img">
+                        <img src="${static.url('images/business.png')}">
+                        <div class="caption"><h2>${_('Business')}</h2><span>${_("Soon")}</span></div>
+                    </div>
+                    <div class="certificate-half certificate-img">
+                        <img src="${static.url('images/technology.png')}">
+                        <div class="caption"><h2>${_('Technology')}</h2><span>${_("Soon")}</span></div>
+                    </div>
+                </div>  
+            </div>
+        </div>  
+    </section>
+    <section class="section testimonial">       
+        <div class="container">
+            <div class="kku-rector">
+
+                <div class="kku-rector-sliders">
+                    <div class="kku-rector-slider-1">
+                        <div>
+                            <div class="recslider-1-slide">
+                                <img src="${static.url('images/testimonial-1.png')}" class="img-responsive" alt="image">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="recslider-1-slide">
+                                <img src="${static.url('images/testimonial-2.png')}" class="img-responsive" alt="image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kku-rector-slider-2">
+                        <div class="slide-text">
+                            <div class="slide-text-up"><img src="${static.url('images/comma.png')}"></div>
+                            <div class="recslider-2-slide">
+                                <p>${_('Creativity, innovation and entrepreneurship are essential skills for the future generation. Through KKUx, we seek to diversify the experiences of our learners and provide them with a set of basic skills required for the future jobs.')}</p>
+                            </div>
+                        </div>
+                        <div class="slide-text">
+                            <div class="slide-text-up"><img src="${static.url('images/comma.png')}"></div>
+                            <div class="recslider-2-slide">
+                                <p>${_('You will experience an exciting business in the world of entrepreneurship, and this course would help inspire you as an employer to take action to fulfill your professional dreams as it will pay you to the right direction to achieve a qualitative transfer in your business.')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </section>
+
+    <section class="section kku-gains">
+        <div class="container">
+            <h2 class="text-left page-title"><span>${_('Achievements at KKUx')}</span></h2>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 certi-image">
+                    <div class="gains-image">
+                        <img src="${static.url('images/gains.png')}">
+                    </div>  
+                </div>              
+                <div class="col-sm-6 col-md-6 ">
+                    <div class="gains-list">
+                        <h3>${_('Earn Certificate from KKU')}</h3>
+                        <p>${_('You will receive a certificate from King Khalid University to post to your professional network')}</p>
+                        <h3 class="earn-title">${_('Earn Lifelong Skills')}</h3>
+                        <p>${_('You Will earn a New Skill In Your Life')}</p>
+                    </div>  
+                </div>
+            </div>          
+        </div>  
+    </section>
+    <section class="section newsletter">
+        <div class="container">
+            <div class="text-center mail-icon"><img src="${static.url('images/mail-icon.png')}"></div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center newsletter-box">
+                    <div class="direction">
+                        <p>${_('Get Notified of any updates!')}</p>
+                        <p class="small">${_('Subscribe to our newsletter to be notified about new Courses at')} <strong>KKUx</strong></p>
+                    </div>
+                    <div class="newsform">
+                        <button class="newsform-button">${_('Subscribe')}</button>
+                        <input type="email" placeholder="${_('Your email address')}" name="search2">
+                    </div>
+                    <div class="newsform">
+                        <p class="success hidden">${_("You have been subscribed")}</p>
+                        <p class="error hidden">${_("Please enter a valid email address")}</p>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section>          
+
+    <section class="section ourpartner-section">
+        <div class="container">
+            <h2 class="page-title"><span>${_('Our Partners')}</span></h2>
+            <div class="row">
+                <div class="our-partners">
+                    <ul>
+                        <li><a href="#"><img src="${static.url('images/b1.jpg')}" alt=""></a></li>
+                        <li><a href="#"><img src="${static.url('images/b2.jpg')}" alt=""></a></li>
+                        <li><a href="#"><img src="${static.url('images/b3.jpg')}" alt=""></a></li>
+                        <li><a href="#"><img src="${static.url('images/b4.jpg')}" alt=""></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+$(function() {
+    $('a[rel*=leanModal]').leanModal({
+        top: 60,
+        closeButton: "#close_video"
+    });
+});
+
+function toggleVideo(state) {
+    // if state == 'hide', hide. Else: show video
+    var div = document.getElementById("iframe_div");
+    var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
+    div.style.display = state == 'hide' ? 'none' : '';
+    func = state == 'hide' ? 'pauseVideo' : 'playVideo';
+    iframe.postMessage('{"event":"command","func":"' + func + '","args":""}','*');
+}
+
+$(document).ready(function() {
+    $(".play-btn").click(function(e) {
+        e.preventDefault()
+        document.getElementById("youtube_iframe").src = 'https://www.youtube.com/embed/' +this.id + "?autoplay=1&enablejsapi=1"
+        document.getElementById("youtube_iframe").playVideo();
+    });
+});
+
+</script>

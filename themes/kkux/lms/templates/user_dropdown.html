@@ -18,7 +18,20 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
 username = self.real_user.username
 profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
 %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .dropdown-submenu {
+  position: relative;
+}
 
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+</style>
 % if should_display_shopping_cart_func():
   <li>
     <a class="shoppingcart" href="${reverse('shoppingcart.views.show_cart')}">
@@ -38,10 +51,17 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
 
          <!-- <li><a href="${('verify_certificates')}">${_("Verify Certificate")}</a></li> -->
 
-        % if self.real_user.is_staff:
-            <li><a href="${reverse('followup_update')}">${_("FollowUp")}</a></li>
-        % endif
+       
         <li><a href="${reverse('account_settings')}">${_("Account")}</a></li>
         <li><a href="${reverse('logout')}">${_("Sign Out")} <i class="fa fa-sign-out pull-right"></i></a></li>
     </ul>
 </li>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>

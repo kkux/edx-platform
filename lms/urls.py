@@ -999,7 +999,7 @@ urlpatterns += (
 urlpatterns += (
     url(r'subscribe', 'kkux.views.subscribe', name='subscribe'),
     url(r'subsciption/activation/(?P<activation_code>[^/]+)/', 'kkux.views.activate', name='subscribe_activate'),
-    url(r'followup_update', 'kkux.views.followup_update', name='followup_update'),
+    url(r'followup_update/(?P<update>[^/]+)/', 'kkux.views.followup_update', name='followup_update'),
 
 )
 

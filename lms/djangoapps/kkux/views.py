@@ -11,6 +11,7 @@ from kkux.tasks import send_subcription_activation_mail
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -55,11 +56,26 @@ def activate(request, activation_code):
 
 @staff_member_required
 @login_required
-def followup_update(request):
+def followup_update(request,update=None):
+    
     from student.models import UserProfile
     user_obj_list=[]
     userprofile_obj = UserProfile.objects.all()
     for user_obj in userprofile_obj:
-        if not (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country): 
-            user_obj_list.append(user_obj)
-    return render_to_response('followup_update.html', {'user_obj_list':user_obj_list})
+        if update == 'False':
+            if not (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country): 
+                user_obj_list.append(user_obj)
+        else:
+            if (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country): 
+                user_obj_list.append(user_obj)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(user_obj_list, 2)
+    try:
+        users_page = paginator.page(page)
+    except PageNotAnInteger:
+        users_page = paginator.page(1)
+    except EmptyPage:
+        users_page = paginator.page(paginator.num_pages)
+
+   
+    return render_to_response('followup_update.html', {'users_page':users_page,'update':update})

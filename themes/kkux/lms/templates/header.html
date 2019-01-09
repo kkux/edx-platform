@@ -25,6 +25,24 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
     padding-left: 0px;
     margin-left: 0px;
 }
+
+#header .navbar-default .navbar-nav > li >div> a {
+    color: #878787;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 38px;
+    font-size: 24px;
+    background: none;
+  }
+#header .nav > li >div> a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+#header .navbar-default .navbar-nav > li >div> a:hover{
+text-decoration: none;
+}
+
 </style>
 <header id="header">
     % if settings.FEATURES.get('IS_UNDER_MAINTENANCE_MESSAGE'):
@@ -119,8 +137,27 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
                     <li><a href="${reverse('courses')}">${_('Skills')}</a></li>
                     <li><a href="${reverse('about')}">${_('Why KKUx?')}</a></li>
                     <li><a href="${reverse('contact')}">${_('Contact')}</a></li>
+                  % if request.user.is_staff:
+                  <li>
+                  <div class="dropdown">
+                    <a class="dropdown-toggle"  data-toggle="dropdown">${_('FollowUp')}
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
 
-                   <!--  <li><a href="${reverse('programs-list')}">${_('Programs')}</a></li> -->
+                      <li><a href="${reverse('followup_update',kwargs={'update':'True'})}">updated settings</a></li>
+                      <li><a href="${reverse('followup_update',kwargs={'update':'False'})}">Not Updated settings</a></li>
+                    </ul>
+                  </div>
+                </li>
+                   <!--  <div class="dropdown">
+                    <li class="followup"><a class="btn btn-primary dropdown-toggle"  data-toggle="dropdown">${_('FollowUp')}</a></li>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">3rd level dropdown</a></li>
+                      <li><a href="#">3rd level dropdown</a></li>
+                    </ul>
+                  </div> -->
+                    <!-- <li><a href="${reverse('programs-list')}">${_('Programs')}</a></li> -->
+                  % endif 
                  
 
                 </ul>
