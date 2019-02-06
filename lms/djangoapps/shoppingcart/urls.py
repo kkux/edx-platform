@@ -17,7 +17,9 @@ urlpatterns = patterns(
     url(r'^use_code/$', 'use_code'),
     url(r'^update_user_cart/$', 'update_user_cart'),
     url(r'^reset_code_redemption/$', 'reset_code_redemption'),
+    url(r'^billing_details/(?P<programs>[0-9A-Za-z]+)/(?P<id>[0-9]+)/$', 'billing_details', name='program-billing_details'),
     url(r'^billing_details/$', 'billing_details', name='billing_details'),
+
     url(r'^verify_cart/$', 'verify_cart'),
 )
 

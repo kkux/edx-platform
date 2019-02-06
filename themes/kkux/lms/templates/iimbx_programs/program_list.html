@@ -10,7 +10,11 @@
 
 
 <%block name="pagetitle">${_("Courses")}</%block>
-
+<style type="text/css">
+  .courses-container .courses .course .course-image .cover-image img{
+      height: 157px;
+  }
+</style>
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
       <section class="courses-container">
@@ -20,26 +24,25 @@
           <ul class="courses-listing">
             %for course in programs:
             <li class="courses-listing-item">
+            
               <article class="course" id="${course.id}" role="region" aria-label="${course.name}">
-                <a href="${reverse('program_about', kwargs=dict(id=course.id))}">
+                <a href="${reverse('program_about', kwargs=dict(program_id=course.id))}">
                   <header class="course-image">
                     <div class="cover-image">
-                      <img src="${course.image}" alt="${course.name} " />
+                      <img src="${course.banner_image.url}" alt="${course.name} " />
                       <div class="learn-more" aria-hidden="true">${_("LEARN MORE")}</div>
                     </div>
                   </header>
                   <div class="course-info" aria-hidden="true">
                     <h2 class="course-name">
                     
-                      <span class="course-code">${course.program_category}</span>
+                      <span class="course-code">${course.short_description}</span>
                       <span class="course-title">${course.name}</span>
                     </h2>
                     
                   </div>
                   <div class="sr">
-                    <ul>
-              
-                      
+                    <ul> 
                     </ul>
                   </div>
                 </a>
@@ -52,10 +55,6 @@
             %endfor
           </ul>
         </div>
-
-
-   
-
       </section>
     </section>
 </main>

@@ -101,7 +101,7 @@ def get_account_settings(request, usernames=None, configuration=None, view=None)
 @intercept_errors(UserAPIInternalError, ignore_errors=[UserAPIRequestError])
 def update_account_settings(requesting_user, update, username=None):
     """Update user account information.
-
+    
     Note:
         It is up to the caller of this method to enforce the contract that this method is only called
         with the user who made the request.
@@ -126,7 +126,7 @@ def update_account_settings(requesting_user, update, username=None):
             but then the e-mail change request, which is processed last, may throw an error.
         UserAPIInternalError: the operation failed due to an unexpected error.
     """
-
+  
     field_errors = {}
     # First Install this this library "pip install alphabet-detector"
     # Added By Kava HD

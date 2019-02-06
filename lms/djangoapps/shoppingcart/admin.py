@@ -7,7 +7,8 @@ from shoppingcart.models import (
     DonationConfiguration,
     Invoice,
     InvoiceTransaction,
-    PaidCourseRegistrationAnnotation
+    PaidCourseRegistrationAnnotation,
+    Order
 )
 
 
@@ -178,3 +179,4 @@ admin.site.register(PaidCourseRegistrationAnnotation)
 admin.site.register(Coupon, SoftDeleteCouponAdmin)
 admin.site.register(DonationConfiguration)
 admin.site.register(Invoice, InvoiceAdmin)
+admin.site.register(Order)

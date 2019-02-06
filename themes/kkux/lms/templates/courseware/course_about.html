@@ -120,6 +120,7 @@ from openedx.core.lib.courses import course_image_url
         </div>
 
         <div class="main-cta">
+         
         %if user.is_authenticated() and registered:
           %if show_courseware_link:
             <a href="${course_target}">

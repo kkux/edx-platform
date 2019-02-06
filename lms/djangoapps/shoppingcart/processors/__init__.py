@@ -14,6 +14,7 @@ from django.conf import settings
 
 # Import the processor implementation, using `CC_PROCESSOR_NAME`
 # as the name of the Python module in `shoppingcart.processors`
+
 PROCESSOR_MODULE = __import__(
     'shoppingcart.processors.' + settings.CC_PROCESSOR_NAME,
     fromlist=[

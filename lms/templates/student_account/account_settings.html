@@ -53,3 +53,20 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
     );
 </%static:require_module>
 </%block>
+
+<script type="text/javascript">
+$(window).bind("load", function() {
+  
+    alert("asdf")
+      debugger;
+    $(".account-settings-sections ").append("<div class='checkbox'><input type='checkbox' required>All information i added is correct and i am responsible of any errors on them.</input></div>") 
+    $(".account-settings-sections ").append("<button class='save'>Save changes</button>")
+$(".save").on("click",function(){
+
+    alert("Your changes have been saved")
+
+})
+});
+
+
+</script>

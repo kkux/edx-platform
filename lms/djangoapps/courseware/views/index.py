@@ -103,7 +103,6 @@ class CoursewareIndex(View):
         self.chapter, self.section = None, None
         self.course = None
         self.url = request.path
-
         try:
             set_custom_metrics_for_course_key(self.course_key)
             self._clean_position()

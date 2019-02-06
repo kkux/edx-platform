@@ -9,7 +9,7 @@ import uuid
 import warnings
 from collections import defaultdict, namedtuple
 from urlparse import parse_qs, urlsplit, urlunsplit
-
+from openedx.core.djangoapps.micro_masters.models import *
 import analytics
 import edx_oauth2_provider
 from django.conf import settings
@@ -48,7 +48,7 @@ from requests import HTTPError
 from social_core.backends import oauth as social_oauth
 from social_core.exceptions import AuthAlreadyAssociated, AuthException
 from social_django import utils as social_utils
-
+from openedx.core.djangoapps.micro_masters.models import *
 import dogstats_wrapper as dog_stats_api
 import openedx.core.djangoapps.external_auth.views
 import third_party_auth
@@ -60,6 +60,9 @@ from certificates.models import (  # pylint: disable=import-error
     GeneratedCertificate,
     certificate_status_for_student
 )
+from leaderboard.models import LeaderBoard
+# from lms.djangoapps.leaderboard.models   import LeaderBoard
+from django.http import HttpResponseRedirect
 from course_modes.models import CourseMode
 from courseware.access import has_access
 from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
@@ -72,6 +75,7 @@ from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 # Note that this lives in LMS, so this dependency should be refactored.
 from notification_prefs.views import enable_notifications
 from openedx.core.djangoapps import monitoring_utils
+
 from openedx.core.djangoapps.catalog.utils import get_programs_with_type
 from openedx.core.djangoapps.credit.email_utils import get_credit_provider_display_names, make_providers_strings
 from openedx.core.djangoapps.embargo import api as embargo_api
@@ -800,7 +804,7 @@ def dashboard(request):
             user_already_has_certs_for=user_already_has_certs_for
         )
     )
-
+    
     block_courses = frozenset(
         enrollment.course_id for enrollment in course_enrollments
         if is_course_blocked(
@@ -824,7 +828,7 @@ def dashboard(request):
 
     # Populate the Order History for the side-bar.
     order_history_list = order_history(user, course_org_filter=course_org_filter, org_filter_out_set=org_filter_out_set)
-
+    # x = programs_order_history(user)
     # get list of courses having pre-requisites yet to be completed
     courses_having_prerequisites = frozenset(
         enrollment.course_id for enrollment in course_enrollments
@@ -842,9 +846,84 @@ def dashboard(request):
         )
     else:
         redirect_message = ''
-
+    course_grades = {}
+    for enrollment in course_enrollments:
+        try:
+            course_grade = LeaderBoard.objects.get(student=user, course_id=enrollment.course_id)
+            course_grades.update({
+                enrollment.course_id: {
+                    'points': course_grade.points,
+                    'pass': course_grade.has_passed
+                }
+            })
+        except Exception, e:
+            course_grades.update({
+                enrollment.course_id: {
+                    'points': 0,
+                    'pass': False
+                }
+            })
     valid_verification_statuses = ['approved', 'must_reverify', 'pending', 'expired']
     display_sidebar_on_dashboard = len(order_history_list) or verification_status in valid_verification_statuses
+    user_program_enrollments = ProgramEnrollment.objects.filter(user=user, is_active=True)
+    programs = {}
+    program_grades = {}
+    program_course_states = {}
+    user_program_certificates=[]
+
+    for user_program_enrollment in user_program_enrollments:
+        courses = []
+        no_of_courses = len(user_program_enrollment.program.courses.select_related())
+        program_grade = 0
+        course_pass_count = 0
+        course_in_progress = 0
+        course_not_started = 0
+        for course in user_program_enrollment.program.courses.select_related():
+            course_enroll = CourseEnrollment.get_enrollment(user, course.course_key)
+            courses += [course_enroll]
+            if course_enroll in course_enrollments:
+                course_enrollments.remove(course_enroll)
+            course_point = course_grades.get(course.course_key, {})
+            program_grade += course_point.get('points', 0.0)
+            if course_point.get('points'):
+                try:
+                    course_grade = LeaderBoard.objects.get(student=user, course_id=course.course_key)
+                    if course_grade.has_passed:
+                        course_pass_count += 1
+                    else:
+                        course_in_progress += 1
+                except Exception, e:
+                    course_in_progress += 1
+            else:
+                course_not_started += 1
+
+        issued = False
+
+        if no_of_courses == course_pass_count and course_pass_count:
+            issued = True
+            ProgramGeneratedCertificate.create_user_certificate(
+                user,
+                user_program_enrollment.program,
+                issued
+            )
+        else:
+            ProgramGeneratedCertificate.create_user_certificate(
+                user,
+                user_program_enrollment.program,
+                issued
+            )
+        program_course_states.update({
+            user_program_enrollment.program: {
+                'in_progress': course_in_progress,
+                'passed': course_pass_count,
+                'not_started': course_not_started
+            }
+        })
+        program_grades.update({user_program_enrollment.program: program_grade / no_of_courses})
+        programs.update({user_program_enrollment.program: courses})
+
+        # get user certificate for program
+        user_program_certificates = ProgramGeneratedCertificate.objects.filter(user=user, issued=True)
 
     context = {
         'enterprise_message': enterprise_message,
@@ -891,8 +970,15 @@ def dashboard(request):
             'use_ecommerce_payment_flow': True,
             'ecommerce_payment_page': ecommerce_service.payment_page_url(),
         })
-
-    response = render_to_response('dashboard.html', context)
+   
+    context.update({
+            'programs': programs,
+            'user_program_grades': program_grades,
+            'user_course_grades': course_grades,
+            'user_program_certificates': user_program_certificates,
+            'program_course_states': program_course_states,
+        })
+    response = render_to_response('course_program_dashboard.html', context)
     set_user_info_cookie(response, request)
     return response
 
@@ -934,6 +1020,7 @@ def _create_recent_enrollment_message(course_enrollments, course_modes):  # pyli
         None if there are no recently enrolled courses.
 
     """
+    # import pdb;pdb.set_trace()
     recently_enrolled_courses = _get_recently_enrolled_courses(course_enrollments)
 
     if recently_enrolled_courses:
@@ -964,8 +1051,9 @@ def _get_recently_enrolled_courses(course_enrollments):
     Returns:
         list[CourseEnrollment]: A list of recent course enrollments.
     """
+    # import pdb;pdb.set_trace()
     seconds = DashboardConfiguration.current().recent_enrollment_time_delta
-    time_delta = (datetime.datetime.now(UTC) - datetime.timedelta(seconds=seconds))
+    time_delta = (datetime.now(UTC) - timedelta(seconds=seconds))
     return [
         enrollment for enrollment in course_enrollments
         # If the enrollment has no created date, we are explicitly excluding the course
@@ -1186,6 +1274,23 @@ def change_enrollment(request, check_access=True):
     """
     # Get the user
     user = request.user
+    if len(request.POST.get("program_id")):
+        user = request.user
+        program_id = request.POST.get('program_id', '')
+        try:
+            program = Program.objects.get(pk=program_id)
+        except Exception, e:
+            raise Http404('Program not found!')
+
+        courses = []
+        for course in program.courses.select_related():
+            courses += [CourseOverview.get_from_id(course.course_key)]
+        if program.price <= 0:
+            ProgramEnrollment.unenroll(user, program.id)
+            return HttpResponse()
+        else:
+            return HttpResponseRedirect(reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=[program.id]))
+
 
     # Ensure the user is authenticated
     if not user.is_authenticated():

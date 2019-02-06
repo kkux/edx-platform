@@ -472,6 +472,8 @@ def account_settings(request):
         GET /account/settings
 
     """
+    import pdb;
+    # pdb.set_trace()
     return render_to_response('student_account/account_settings.html', account_settings_context(request))
 
 

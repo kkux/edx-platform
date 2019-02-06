@@ -11,6 +11,7 @@ from django.conf import settings
 from lms.djangoapps.ccx.overrides import get_current_ccx
 from openedx.core.djangolib.markup import HTML, Text
 import boto3
+
 # App that handles subdomain specific branding
 from branding import api as branding_api
 # app that handles site status messages
@@ -34,38 +35,7 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 <div class="page">
     <section class="section-banner">
       <div class="main-story">
-        % for data in slidderdata:
-        
-        <div>
-            <div class="story-slide">
-                % if LANGUAGE_CODE == 'ar':
-                <img src="${data.arabic_image.url}" class="img-responsive" alt="image">
-                % else:
-                <img src="${data.english_image.url}" class="img-responsive" alt="image">
-                % endif
-                <div class="story-slide-txt">
-                    <div class="container">
-                        <h5 class="story-slide-title">
-                        % if LANGUAGE_CODE == 'ar':
-                            ${data.title_in_arabic}
-                        % else:
-                            ${data.title_in_english}
-                        % endif
-                        </h5>
-                        <p class='story-description'>
-                        % if LANGUAGE_CODE == 'ar':
-                            ${data.description_in_arabic}
-                        % else:
-                            ${data.description_in_english}
-                        % endif
-                        </p>
-                   
-                    </div>
-                </div>
-            </div>
-        </div>
-      % endfor
-           
+      
         
       </div>
     </section>
@@ -314,3 +284,4 @@ $(document).ready(function() {
 });
 
 </script>
+

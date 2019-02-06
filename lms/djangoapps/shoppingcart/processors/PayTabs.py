@@ -50,7 +50,7 @@ from shoppingcart.processors.helpers import get_processor_config
 # from shoppingcart.views import verify_for_closed_enrollment
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from suds.client import Client
-
+from openedx.core.djangoapps.micro_masters.models import *
 log = logging.getLogger(__name__)
 
 # Translators: this text appears when an unfamiliar error code occurs during payment,
@@ -66,7 +66,14 @@ def create_invoice(request, certy_cart=None):
     Create invoice at Paytabs end using KKUx wrapper.
     """
     user = request.user
-    cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
+    if request.POST =={}:
+        cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
+        program = False
+        total_cost = cart.total_cost
+    else:
+        cart = ProgramOrder.get_cart_for_user(user)
+        total_cost = cart.item_price
+        program = True
     # is_any_course_expired, expired_cart_items, expired_cart_item_names, valid_cart_item_tuples = \
     #     verify_for_closed_enrollment(user, cart)
     # if is_any_course_expired:
@@ -75,19 +82,37 @@ def create_invoice(request, certy_cart=None):
     #     cart.update_order_type()
     
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = get_processor_config().get('SECRET_KEY', '')
-    service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = get_processor_config().get('SITE_URL', '')
-    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    secret_key = "I4e6UR09z4tuv1PjSQtFEBUGe7RX2wDKBRRwJRFiW9MraCL3sfJ6REM5ME3ObGyNypjhgZzd9mEjYqnrF7xwLkCxZFlalUXTjgaA"
+    service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
+    site_url = "http://kkux.org"
+    merchant_email = 'pbshah1326@gmail.com'
     ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
-
     return_url = request.build_absolute_uri(
         reverse("shoppingcart.views.postpay_callback")
     )
-
-    total_cost = cart.total_cost
+    url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
+    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
+    service_key = get_processor_config().get('SERVICE_KEY', '')
+    site_url = "www.testing.com"
+    merchant_email = 'prachi.shah@ia.ooo'
+  
+    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
+    return_url = request.build_absolute_uri(
+        reverse("shoppingcart.views.postpay_callback")
+    )
+    # url_service ="http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL"
+    # secret_key =  "i1ZdBsg9c2l1gHoEkOXGoMEMbSNQd4Iw6IJIb0Sn2dpiVOXfCUV1GANSsBJFGrcNaVvlVnJYB8hwWeLy9HAQhnIKYrqETCr4yXpu"
+    # service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
+    # site_url = "http://kkux.org"
+    # merchant_email =  "kkux@kku.edu.sa"
+    # url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
+    # secret_key = get_processor_config().get('SECRET_KEY', '')
+    # service_key = get_processor_config().get('SERVICE_KEY', '')
+    # site_url = get_processor_config().get('SITE_URL', '')
+    # merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    # ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
     amount = "{0:0.2f}".format(total_cost)
-    ip_customer = cart.ip_customer if cart.ip_customer else '-'
+    
     ip_merchant = ip_merchant
 
     try:
@@ -97,15 +122,23 @@ def create_invoice(request, certy_cart=None):
     unit_price = ''
     quantity = ''
     products_per_title = ''
-    for index, cart_item in enumerate(cart.orderitem_set.filter(status=cart.status)):
-        if not index:
-            quantity = str(cart_item.qty)
-            unit_price = str(cart_item.unit_cost)
-            products_per_title = cart_item.line_desc
-        else:
-            quantity += ' || ' + str(cart_item.qty)
-            unit_price += ' || ' + str(cart_item.unit_cost)
-            products_per_title += ' || ' + cart_item.line_desc
+    if program:
+        quantity = 1
+        unit_price = cart.item_price
+        products_per_title = cart.item_name
+        ip_customer = 'program'
+    else:
+        ip_customer = cart.ip_customer if cart.ip_customer else '-'
+        for index, cart_item in enumerate(cart.orderitem_set.filter(status=cart.status)):
+            if not index:
+                quantity = str(cart_item.qty)
+                unit_price = str(cart_item.unit_cost)
+                products_per_title = cart_item.line_desc
+
+            else:
+                quantity += ' || ' + str(cart_item.qty)
+                unit_price += ' || ' + str(cart_item.unit_cost)
+                products_per_title += ' || ' + cart_item.line_desc
     # Paymnet gateway only allow 175 characters
     products_per_title = products_per_title[:175]
 
@@ -119,17 +152,12 @@ def create_invoice(request, certy_cart=None):
         elif  len(full_name)>1:
                 last_name=full_name[1]
         else:
-                last_name=''
-        last_name = cart.user.last_name if cart.user.first_name else full_name[1]
+                last_name=cart.user.last_name
 
         mailing_address = cart.user.profile.country_code
         city = cart.user.profile.city
         country_code = cart.user.profile.country_code
         phone_number = cart.user.profile.phone_number
-
-
-
-       
     else:
         first_name = cart.user.first_name
         last_name = cart.user.last_name 
@@ -140,8 +168,6 @@ def create_invoice(request, certy_cart=None):
         postal_code = ''
 
     client = Client(url_service)
-    # client.set_options(port='MarketServiceSoap12')
-    # import pdb;pdb.set_trace()
     client.set_options(port='MarketServiceSoap')
     response = client.service.CreateInvoice(
         merchant_email=merchant_email,
@@ -172,12 +198,16 @@ def create_invoice(request, certy_cart=None):
         KEY=service_key,
     )
     try:
+        # import pdb;pdb.set_trace()
         if not int(response.response_code) == 4012:
             error_html = _get_processor_exception_html()
             return render_to_response('shoppingcart/error.html', {'order': None,
                                                                   'error_html': error_html})
         else:
             request.session['p_id'] = str(response.p_id)
+            request.session['ip_customer'] = ip_customer
+            request.session['reference_no'] = str(cart.id)
+
             return str(response.payment_url) if certy_cart else HttpResponseRedirect(str(response.payment_url))
     except:
         error_html = _get_processor_exception_html()
@@ -285,10 +315,13 @@ def _payment_accepted(params):
         Wrong amount or currency: The user did not pay the correct amount.
 
     """
+    # import pdb;pdb.set_trace()
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = get_processor_config().get('SECRET_KEY', '')
+    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    site_url = "www.testing.com"
+    merchant_email = 'prachi.shah@ia.ooo'
+    
     payment_reference = params.get('payment_reference', '')
     if not payment_reference:
         return HttpResponseRedirect(reverse("shoppingcart.views.show_cart"))
@@ -318,9 +351,15 @@ def _payment_accepted(params):
             'result': result,
         })
         try:
-            order = Order.objects.get(id=order_id)
+            # import pdb;pdb.set_trace()
+            if params['program'] =='program':
+                order = ProgramOrder.objects.get(id=order_id)
+                total_cost = order.item_price
+            else:
+                order = Order.objects.get(id=order_id)
+                total_cost = order.total_cost
             if response_code == 100:
-                if auth_amount == order.total_cost and currency.lower() == order.currency.lower():
+                if auth_amount == total_cost or currency.lower() == order.currency.lower():
                     transaction_id = str(response.transaction_id)
                     processor_reply['transaction_id'] = transaction_id
                     return {

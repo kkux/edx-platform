@@ -1,0 +1,146 @@
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from datetime import datetime
+from pytz import timezone, utc
+
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+
+<%inherit file="../main.html" />
+<%block name="headextra">
+  ## OG (Open Graph) title and description added below to give social media info to display
+  ## (https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#tags)
+  <meta property="og:title" content="${program.name}" />
+  <meta property="og:description" content="${program.short_description}" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="${static.url('css/program_info.css')}">
+ 
+</%block>
+
+<%block name="js_extra">
+  <!--
+   <script src="${static.url('js/course_info.js')}"></script> 
+  -->
+</%block>
+
+<%block name="pagetitle">${program.name}</%block>
+
+<%
+    total_courses = len(program.courses.select_related())
+    c_progress = 0
+%>
+
+<main id="main" aria-label="Content" tabindex="-1">
+  <div id="wrapper">
+    <div class="courseware-container">
+      <div class="course_title">
+        <h1>${program.name}</h1>
+      </div>
+      <div class="heading-bar">
+        <ul id="tabSet" class="scroll_tabs_theme_dark">
+        </ul>
+      </div>
+
+      <div class="left-block" id="${program.name}_${program.id}">
+        <div class="blocks">
+          <h6>${program.name}</h6>
+            <div class="listing">
+              <ul>
+                  % for index, course in enumerate(program_courses):
+                  <%
+                    c_progress += course_grades.get(course.id).get('points', 0.0)
+                    if course.start:
+                        started = datetime.now(utc) > course.start
+                    else:
+                        started = False
+                  %>
+                  <li id="${course.id}" class="lighttext">
+                      <div class="type_icon">
+                        <!-- <i class="fa fa-file" aria-hidden="true"></i> -->
+                      </div>
+
+                        % if course_grades.get(course.id)['course_states']['completed']:
+                          <div class="dot-icon"><img src="${static.url('images/green-dots.png')}" alt=""></div>
+                        % elif course_grades.get(course.id)['course_states']['in_progress']:
+                          <div class="dot-icon"><img src="${static.url('images/orange-dots.png')}" alt=""></div>
+                        % else:
+                          % if started:
+                            <div class="dot-icon"><img src="${static.url('images/red-dot.png')}" alt=""></div>
+                          % else:
+                            <div class="dot-icon"><img src="${static.url('images/gray-dots.png')}" alt=""></div>
+                          % endif
+                        % endif
+
+                        % if started:
+                          <a href="${reverse('info', args=[unicode(course.id)])}">${course.display_name}</a>
+                        % else:
+                          ${course.display_name}
+                        % endif
+                  </li>
+                  % endfor
+                </ul>
+            </div>
+        </div>
+      </div>
+
+
+      <div class="right-block">
+        <div class="blocks-right">
+            <div class="taskname">
+                <ul>
+                    <li><img src="${static.url('images/green-dots.png')}" alt=""> Finished</li>
+                      <li><img src="${static.url('images/orange-dots.png')}" alt=""> In-Progress</li>
+                      <li><img src="${static.url('images/red-dot.png')}" alt=""> Not Started</li>
+                      <li><img src="${static.url('images/gray-dots.png')}" alt=""> Upcoming</li>
+                  </ul>
+              </div>
+
+              <div class="progress">
+                <div id="rotator" class="progress-pie-chart" data-percent="0">
+                  <div class="ppc-progress">
+                    <div class="ppc-progress-fill"></div>
+                  </div>
+                  <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                      <span>%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="title">Progress</div>
+              </div>
+
+              <div class="course-block">
+                <ul>
+                    <li><em class="fa fa-calendar"></em> Starts: <span>${program.start}</span></li>
+                    % if program.subject.name:
+                      <li><em class="fa fa-graduation-cap fa-lg"></em> Subject: <span>${program.subject.name}</span></li>
+                    % endif
+                    <li><em class="fa fa-university fa-lg"></em> Institution: <span>${program.institution.name}</span></li>
+                    <li><em class="fa fa-book fa-lg"></em> Number Of Courses: <span>${len(program.courses.select_related())}</span></li>
+                </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</main>
+
+<%
+  if c_progress:
+    c_progress = c_progress / total_courses
+%>
+<script type="text/javascript">
+  $("#rotator").attr("data-percent","${c_progress}")
+  $(function(){
+    var $ppc = $('#rotator'),
+    percent = parseInt($ppc.data('percent')),
+    deg = 360*percent/100;
+  if (percent > 50) {
+    $ppc.addClass('gt-50');
+  }
+  $("#rotator").find('.ppc-progress-fill').css('transform','rotate('+ deg +'deg)');
+  $("#rotator").find('.ppc-percents span').html(percent+'%');
+  });
+
+</script>

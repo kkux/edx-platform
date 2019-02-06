@@ -302,6 +302,7 @@ class SequenceModule(SequenceFields, ProctoringFields, XModule):
         self._update_position(context, len(display_items))
 
         fragment = Fragment()
+       
         params = {
             'items': self._render_student_view_for_items(context, display_items, fragment),
             'element_id': self.location.html_id(),

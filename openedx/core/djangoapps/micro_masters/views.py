@@ -21,7 +21,6 @@ from django.http import (
     HttpResponseBadRequest
 )
 from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 from django.utils.translation import ugettext as _, ugettext_noop
 
 from edxmako.shortcuts import render_to_response, render_to_string
@@ -47,7 +46,7 @@ from certificates.api import (
     get_certificate_footer_context,
 )
 from leaderboard.models import LeaderBoard
-
+from django.conf import settings
 log = logging.getLogger(__name__)
 
 CC_PROCESSOR = settings.CC_PROCESSOR.get(settings.CC_PROCESSOR_NAME)
@@ -132,7 +131,7 @@ def get_purchase_params(cart, callback_url=None):
         dict
 
     """
-
+   
     params = OrderedDict()
     program_price = cart.discounted_price if cart.discount_applied else cart.program.price
     amount = "{0:0.2f}".format(program_price)
@@ -300,6 +299,7 @@ def _payment_accepted(order_id, auth_amount, currency, decision):
         CCProcessorWrongAmountException: The user did not pay the correct amount.
 
     """
+    
     try:
         order = ProgramOrder.objects.get(id=order_id)
     except Order.DoesNotExist:
@@ -480,6 +480,7 @@ def process_postpay_callback(params):
 
     """
     try:
+        # import pdb;pdb.set_trace()
         valid_params = verify_signatures(params)
         result = _payment_accepted(
             valid_params['req_reference_number'],
@@ -571,6 +572,7 @@ def show_program_receipt(request, ordernum):
     Displays a receipt for a particular order.
     404 if order is not yet purchased or request.user != order.user
     """
+    # import pdb;pdb.set_trace()
     try:
         order = ProgramOrder.objects.get(id=ordernum)
     except ProgramOrder.DoesNotExist:
@@ -730,7 +732,7 @@ def render_purchase_form_html(cart, callback_url=None, extra_data=None):
 
     """
     return render_to_string('micro_masters/cybersource_form.html', {
-        'action': CC_PROCESSOR.get('PURCHASE_ENDPOINT', ''),
+        'action': CC_PROCESSOR.get('PURCHASE_ENDPOINT', '/shoppingcart/create_invoice/'),
         'params': get_purchase_params(cart, callback_url),
     })
 
@@ -738,7 +740,7 @@ def render_purchase_form_html(cart, callback_url=None, extra_data=None):
 @csrf_exempt
 @login_required
 def program_buy(request, program_id):
-
+    # import pdb;pdb.set_trace()
     user = request.user
     try:
         program = Program.objects.get(pk=program_id)
@@ -755,7 +757,7 @@ def program_buy(request, program_id):
         courses += [get_course_by_id(course.course_key)]
 
     cart = ProgramOrder.get_or_create_order(user, program)
-
+    
     # check coupon expiration_date
     if cart.discount_applied:
         try:
@@ -780,11 +782,12 @@ def program_buy(request, program_id):
     )
     protocol = 'https' if request.is_secure() else 'http'
     callback_urls = {
-        'success': 'http://edlab.edx.drcsystems.com/programs/program_postpay_callback/',
+        'success': protocol + '://' + request.get_host()+'programs/program_postpay_callback/',
         'cancel': protocol + '://' + request.get_host() + request.path
     }
 
     form_html = render_purchase_form_html(cart, callback_url=callback_urls)
+
     context = {
         'order': cart,
         'shoppingcart_items': courses,
@@ -1115,3 +1118,7 @@ def program_info(request, program_id):
     context['program'] = user_program.program
     context['course_grades'] = course_grades
     return render_to_response('micro_masters/program_info.html', context)
+
+def program_listing(request):
+    programs = Program.objects.all()
+    return render_to_response('iimbx_programs/program_list.html', {"programs":programs})

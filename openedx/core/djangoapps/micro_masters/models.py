@@ -13,8 +13,7 @@ from io import BytesIO
 # this is a super-class of SESError and catches connection errors
 from boto.exception import BotoServerError
 from decimal import Decimal
-from datetime import datetime, timedelta
-
+from datetime import datetime,timedelta
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.core.mail.message import EmailMessage
@@ -24,10 +23,9 @@ from django.core.validators import URLValidator
 from django_extensions.db.models import TimeStampedModel
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _, ugettext_noop
-
+from student.models import *
 from edxmako.shortcuts import render_to_string
 from util.models import CompressedTextField
-from student.models import CourseEnrollment
 from shoppingcart.pdf import PDFInvoice
 from shoppingcart.exceptions import MultipleCouponsNotAllowedException
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
@@ -230,7 +228,6 @@ class Program(TimeStampedModel):
     price = models.IntegerField()
     banner_image = models.ImageField(
         max_length=200,
-        upload_to=content_file_name,
         blank=True,
         null=True
     )
@@ -326,6 +323,7 @@ class ProgramOrder(TimeStampedModel):
         null=True,
         default=0
     )
+    currency = models.CharField(default=settings.PAID_COURSE_REGISTRATION_CURRENCY,max_length = 30,blank = True)
     discounted_price = models.IntegerField(
         blank=True,
         null=True,
@@ -362,6 +360,19 @@ class ProgramOrder(TimeStampedModel):
 
     def __repr__(self):
         return self.__unicode__()
+
+    @classmethod
+    def get_cart_for_user(cls, user):
+        """
+        Always use this to preserve the property that at most 1 order per user has status = 'cart'
+        """
+        # find the newest element in the db
+        try:
+            cart_order = cls.objects.filter(user=user, status='initiate').order_by('-id')[:1].get()
+        except ObjectDoesNotExist:
+            # if nothing exists in the database, create a new cart
+           pass
+        return cart_order
 
     @classmethod
     def get_or_create_order(cls, user, program):
@@ -554,6 +565,8 @@ class ProgramEnrollment(TimeStampedModel):
 
     @classmethod
     def enroll(cls, user, program_id):
+        from student.models import  CourseEnrollment
+       
         try:
             program = Program.objects.get(pk=program_id)
         except:

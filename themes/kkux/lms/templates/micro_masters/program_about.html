@@ -1,0 +1,304 @@
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from datetime import datetime
+from pytz import timezone, utc
+
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+
+from openedx.core.djangolib.markup import HTML, Text
+%>
+
+<%inherit file="../main.html" />
+<%block name="headextra">
+  ## OG (Open Graph) title and description added below to give social media info to display
+  ## (https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#tags)
+  <meta property="og:title" content="${program.name}" />
+  <meta property="og:description" content="${program.short_description}" />
+  <link rel="stylesheet" type="text/css" href="${static.url('css/program_about.css')}">
+</%block>
+
+<%block name="js_extra">
+  <script src="${static.url('js/course_info.js')}"></script>
+</%block>
+
+<%block name="pagetitle">${program.name}</%block>
+
+<style type="text/css">
+.course-info header.program-profile {
+  background-image: url("${program.banner_image.url if program.banner_image else static.url('images/banner-black-background.jpg')}");
+}
+
+</style>
+
+
+<section class="course-info">
+  <header class="program-profile banner">
+    <div class="container">
+      <div class="col-6 text">
+        <div class="org-label">
+          <div class="org-logo">
+            <img src="${program.institution.logo.url}" alt="org-logo">
+          </div>
+        </div>
+      </div>
+      <div class="col-6 video-wrapper">
+        % if program.introductory_video:
+        <a href="#video-modal" class="media" rel="leanModal">
+        <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+          <div class="hero">
+            <div class="play-intro"></div>
+          </div>
+        </a>
+        % endif
+      </div>
+      <div class="col-6 banner-text_buy_button">
+        <h1 id="program-title">${program.name}</h1>
+        <p class="banner-description">${program.short_description}</p>
+        <div class="start-program-btn">
+          <div role="group" aria-label="Program purchase and email options">
+            % if user_is_enrolled:
+              <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+            % elif program_is_free_not_enroll:
+              <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+            % else:
+              % if program.price <= 0:
+                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+              % else:
+                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
+              % endif
+            % endif
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <div class="page-nav">
+      <ul>
+        <li class="${'col-4' if len(program.instructors.select_related()) else 'col-8'}"><a href="#courses">View Courses</a></li>
+        % if len(program.instructors.select_related()):
+          <li class="col-4"><a href="#instructors">Meet the Instructors</a></li>
+        % endif
+      </ul>
+  </div>
+  <div class="container">
+    <div class="details">
+      <div class="inner-wrapper">
+        ${program.overview}
+      </div> 
+    </div>
+    <div class="course-sidebar">
+        <div class="course-summary">
+            <ol class="important-dates">
+              %if program.average_length:
+                <li class="important-dates-item">
+                    <span class="block-list__label">
+                        <span aria-hidden="true" class="fa fa-clock-o fa-lg"></span>
+                        Average Length:
+                    </span>
+                    <span class="block-list__desc">${program.average_length}</span>
+                </li>
+              %endif
+              %if program.effort:
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-tachometer fa-lg"></span>
+                    Effort:
+                  </span>
+                  <span class="block-list__desc">${program.effort}</span>
+                </li>
+              %endif
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-book fa-lg"></span>
+                    Number Of Courses:
+                  </span>
+                  <span class="block-list__desc">${len(program.courses.select_related())} Courses in Program</span>
+                </li>
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-graduation-cap fa-lg"></span>
+                    Subject:
+                  </span>
+                  <span class="block-list__desc">
+                    ${program.subject.name}
+                  </span>
+                </li>
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-university fa-lg"></span>
+                    Institution:
+                  </span>
+                  <span class="block-list__desc">
+                    ${program.institution.name}
+                  </span>
+                </li>
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-comment-o fa-lg"></span>
+                    Language:
+                  </span>
+
+                  <span class="block-list__desc">
+                     ${program.language.name}
+                  </span>
+                </li>
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-file-video-o fa-lg"></span>
+                    Video Transcripts:
+                  </span>
+                    <span class="block-list__desc">
+                     ${program.video_transcripts.name}
+                   </span>
+                </li>
+                <li class="important-dates-item">
+                  <span class="block-list__label">
+                    <span aria-hidden="true" class="fa fa-tag fa-lg"></span>
+                    Price:
+                  </span>
+                  <span class="block-list__desc">
+                    % if program.price <= 0:
+                         Free
+                    % else:
+                        ${currency[1]}${program.price}
+                    % endif
+                  </span>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="program-details">
+      <div class="program-inner-wrapper">
+        <section id="courses" class="separator-top">
+<!--             <h2>MicroMasters Program Details</h2>
+            <p>
+                <strong>How To Earn The MicroMasters Credential</strong>
+            </p>
+            <p>
+                <span>Complete and successfully earn a Verified Certificate in all 5 courses plus the Capstone Software Engineering Project course.</span>
+            </p>
+            <p>
+                <strong>Take Your Credential To The Next Level</strong>
+            </p>
+            <p>
+                <span>Learners who successfully earn the MicroMasters credential are eligible to apply for admission to the Master of Science (Computer Science) program at Curtin University.
+                If a learner applies for admission to the <a href="#">Master of Science (Computer Science) program at Curtin University</a>, and is accepted, the MicroMasters credential will count towards 25% (or 100 credits of the 400 credits) of the coursework required for graduation in the Curtin program.
+                </span>
+            </p>
+            <p>
+                Eligibility to be accepted into the Master program is subject to the Curtin University Admission Requirements being met.
+            </p> -->
+            <h2>Courses</h2>
+            <div class="js-discovery-card-list discovery-card-list one-click-purchase-enabled">
+            % for course in courses:
+            <%
+              if user_is_enrolled:
+                course_url = reverse('info', args=[unicode(course.id)])
+              else:
+                course_url = reverse('about_course', args=[unicode(course.id)])
+
+              if course.start:
+                  started = datetime.now(utc) > course.start
+              else:
+                  started = False
+            %>
+              <div role="group" class="enroll-card">
+                  <div class="img-wrapper">
+                  % if started:
+                      <a href="${reverse('info', args=[unicode(course.id)]) if user_is_enrolled else reverse('about_course', args=[unicode(course.id)])}">
+                          <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}">
+                      </a>
+                  % else:
+                      <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}">
+                  % endif
+                  </div>
+                  <div class="course-details">
+                    <div class="title"> 
+                        <strong>
+                          % if started:
+                              <a href="${course_url}">${course.display_name}</a>
+                          % else:
+                              ${course.display_name}
+                          % endif
+                        </strong>
+                    </div>
+                    <div class="subtitle">
+                      %if course.short_description:
+                        <p>${course.short_description}</p>
+                      %endif
+                    </div>
+                    % if started:
+                        <a href="${course_url}">View the ${course.display_name}</a>
+                    % endif
+                  </div>
+                  <div class="course-start">
+                    % if started:
+                      <strong><span>Started on ${course.start.date()}</span></strong>
+                    % else:
+                      <strong><span>Starts on ${course.start.date()}</span></strong>
+                    % endif
+                  </div>
+              </div>
+            % endfor
+            </div>
+        </section>
+        <section class="col-12 one-click-purchase">
+            <div class="start-program-btn">
+              <div role="group" aria-label="Program purchase and email options">
+                % if user_is_enrolled:
+                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+                % elif program_is_free_not_enroll:
+                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                % else:
+                  % if program.price <= 0:
+                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                  % else:
+                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
+                  % endif
+                % endif
+              </div>
+            </div>
+        </section>
+        % if len(program.instructors.select_related()):
+        <section id="instructors" class="separator-top">
+          <h2>Instructors</h2>
+            <ul class="clear-list list-instructors clearfix">
+            % for teacher in program.instructors.select_related():
+              <li class="list-instructor__item">
+                <a href="#">
+                  <img src="${teacher.profile_image.url}" alt="${teacher.name}" class="instructor-image">
+                  <p class="instructor-name">${teacher.name}</p>
+                </a>
+                <p class="instructor-position">
+                    ${teacher.designation}
+                    <span class="instructor-org">${teacher.institution.name}</span>
+                </p>
+              </li>
+            % endfor
+            </ul>
+        </section>
+        % endif
+        <section class="separator-top why-this-program">
+          <div class="view-certificate">
+            <div class="certificate">
+              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" class="img-link">
+                <img src="${static.url('images/certificate.png')}" alt="certificate">
+              </a>
+              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" target="_blank">View a Sample MicroMasters Program Certificate</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+% if program.introductory_video:
+    <section id="video-modal" class="modal home-page-video-modal video-modal">
+      <div class="inner-wrapper">
+        <iframe title="YouTube Video" width="640" height="360" src="${program.introductory_video.url}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </section>
+% endif

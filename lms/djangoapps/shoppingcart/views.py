@@ -27,7 +27,7 @@ from ipware.ip import get_ip
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys.edx.locator import CourseLocator
-
+from openedx.core.djangoapps import micro_masters
 from course_modes.models import CourseMode
 from courseware.courses import get_course_by_id
 from edxmako.shortcuts import render_to_response
@@ -43,7 +43,6 @@ from student.models import AlreadyEnrolledError, CourseEnrollment, CourseFullErr
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.date_utils import get_default_time_display
 from util.json_request import JsonResponse
-
 from .decorators import enforce_shopping_cart_enabled
 from .exceptions import (
     AlreadyEnrolledInCourseException,
@@ -75,8 +74,10 @@ from .processors import (
     process_postpay_callback,
     render_purchase_form_html
 )
+from openedx.core.djangoapps.micro_masters.models import *
 
 log = logging.getLogger("shoppingcart")
+
 AUDIT_LOG = logging.getLogger("audit")
 
 EVENT_NAME_USER_UPGRADED = 'edx.course.enrollment.upgrade.succeeded'
@@ -630,13 +631,13 @@ def donate(request):
             cart,
             callback_url=callback_url,
             extra_data=extra_data
-        ),
+        ),  
     })
 
     return HttpResponse(response_params, content_type="text/json")
 
 
-def _get_verify_flow_redirect(order):
+def _get_verify_flow_redirect(request,order):
     """Check if we're in the verification flow and redirect if necessary.
 
     Arguments:
@@ -648,29 +649,38 @@ def _get_verify_flow_redirect(order):
     """
     # See if the order contained any certificate items
     # If so, the user is coming from the payment/verification flow.
-    cert_items = CertificateItem.objects.filter(order=order)
+    
+    # import pdb;pdb.set_trace()
+    if order.__class__.__name__ == 'ProgramOrder':
+        attempting_upgrade = request.session.get('attempting_upgrade', False)
+        if attempting_upgrade:
+            request.session['attempting_upgrade'] = False
+        ProgramEnrollment.enroll(request.user, order.program.id)
+        # Otherwise, send the user to the receipt page
+        return HttpResponseRedirect(reverse('openedx.core.djangoapps.micro_masters.views.show_program_receipt', args=[order.id]))
+    else:    
+        cert_items = CertificateItem.objects.filter(order=order)
+        if cert_items.count() > 0:
+            # Currently, we allow the purchase of only one verified
+            # enrollment at a time; if there are more than one,
+            # this will choose the first.
+            if cert_items.count() > 1:
+                log.warning(
+                    u"More than one certificate item in order %s; "
+                    u"continuing with the payment/verification flow for "
+                    u"the first order item (course %s).",
+                    order.id, cert_items[0].course_id
+                )
 
-    if cert_items.count() > 0:
-        # Currently, we allow the purchase of only one verified
-        # enrollment at a time; if there are more than one,
-        # this will choose the first.
-        if cert_items.count() > 1:
-            log.warning(
-                u"More than one certificate item in order %s; "
-                u"continuing with the payment/verification flow for "
-                u"the first order item (course %s).",
-                order.id, cert_items[0].course_id
+            course_id = cert_items[0].course_id
+            url = reverse(
+                'verify_student_payment_confirmation',
+                kwargs={'course_id': unicode(course_id)}
             )
-
-        course_id = cert_items[0].course_id
-        url = reverse(
-            'verify_student_payment_confirmation',
-            kwargs={'course_id': unicode(course_id)}
-        )
-        # Add a query string param for the order ID
-        # This allows the view to query for the receipt information later.
-        url += '?payment-order-num={order_num}'.format(order_num=order.id)
-        return HttpResponseRedirect(url)
+            # Add a query string param for the order ID
+            # This allows the view to query for the receipt information later.
+            url += '?payment-order-num={order_num}'.format(order_num=order.id)
+            return HttpResponseRedirect(url)
 
 
 @csrf_exempt
@@ -686,12 +696,11 @@ def postpay_callback(request):
     returned.
     """
 
-    # import pdb;
-    # pdb.set_trace()
     
 
     # params = request.POST.dict()
-    params = {'payment_reference': request.session.get('p_id','')}
+    params = {'payment_reference': request.session.get('p_id',''),'program' : request.session.get('ip_customer',''),'reference_no':request.session.get('reference_no','')}
+    # import pdb;pdb.set_trace()
     result = process_postpay_callback(params)
 
     if result['success']:
@@ -712,7 +721,7 @@ def postpay_callback(request):
 
             request.session['attempting_upgrade'] = False
 
-        verify_flow_redirect = _get_verify_flow_redirect(result['order'])
+        verify_flow_redirect = _get_verify_flow_redirect(request,result['order'])
         if verify_flow_redirect is not None:
             return verify_flow_redirect
 
@@ -727,14 +736,20 @@ def postpay_callback(request):
 @require_http_methods(["GET", "POST"])
 @login_required
 @enforce_shopping_cart_enabled
-def billing_details(request):
+def billing_details(request,**kwargs):
     """
     This is the view for capturing additional billing details
     in case of the business purchase workflow.
     """
     user = request.user
-    cart = Order.get_cart_for_user(user)
-    cart_items = cart.orderitem_set.all().select_subclasses()
+    
+    if kwargs.get('programs'):
+        cart=ProgramOrder.get_or_create_order(user,kwargs.get('id'))
+        # cart = ProgramOrder.get_cart_for_user(user)
+        cart_items=[cart]
+    else:
+        cart = Order.get_cart_for_user(user)
+        cart_items = cart.orderitem_set.all().select_subclasses()
     # if cart.order_type != OrderTypes.BUSINESS:
     #     raise Http404('Page not found!')
 
@@ -776,7 +791,10 @@ def billing_details(request):
             reverse("shoppingcart.views.postpay_callback")
         )
         form_html = render_purchase_form_html(cart, callback_url=callback_url)
-        total_cost = cart.total_cost
+        if kwargs.get("programs"):
+            total_cost = cart.item_price
+        else:
+            total_cost = cart.total_cost
         context = {
             'parmas': parmas,
             'cart': cart,
@@ -789,33 +807,31 @@ def billing_details(request):
             'countries':json.dumps(list(countries)),
             'selected_country': request.user.profile.country.code or "SA",
         }
+        if kwargs.get('programs'):
+            context['programs'] = "true"
+        else:
+            context['programs'] = "false"
+
         return render_to_response("shoppingcart/billing_details.html", context)
     elif request.method == "POST":
+      
         company_name = request.POST.get("company_name", "")
         company_contact_name = request.POST.get("company_contact_name", "")
         company_contact_email = request.POST.get("company_contact_email", "")
         recipient_name = request.POST.get("recipient_name", "")
         recipient_email = request.POST.get("recipient_email", "")
         customer_reference_number = request.POST.get("customer_reference_number", "")
-
-        full_name=request.POST.get("cc_first_name").split(" ")
-        cc_first_name = full_name[0]
-        cc_last_name = full_name[1]
         country_code = request.POST.get("country_code", "")
-
-        full_name=request.POST.get("cc_full_name").split(" ")
+        full_name = request.POST.get("cc_full_name").split()
         cc_first_name = full_name[0]
         cc_last_name = full_name[1]
-       
         country = request.POST.get("country", "")
         country_code=request.POST.get("country_code", "")
-
         phone_number = request.POST.get("phone_number", "")
         billing_address = request.POST.get("billing_address", "")
         city = request.POST.get("city", "")
         postal_code = request.POST.get("postal_code", "11564")
         ip_customer = get_ip(request)
-
         user.first_name = cc_first_name
         user.last_name = cc_last_name
         if hasattr(user, 'profile'):
@@ -845,6 +861,7 @@ def billing_details(request):
             'response': _('success'),
             'is_course_enrollment_closed': is_any_course_expired
         })  # status code 200: OK by default
+
 
 
 def verify_for_closed_enrollment(user, cart=None):

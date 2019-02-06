@@ -31,7 +31,7 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
     padding-top: 0;
     padding-bottom: 0;
     line-height: 38px;
-    font-size: 24px;
+    font-size: 19px;
     background: none;
   }
 #header .nav > li >div> a {
@@ -156,8 +156,9 @@ text-decoration: none;
                       <li><a href="#">3rd level dropdown</a></li>
                     </ul>
                   </div> -->
-                    <!-- <li><a href="${reverse('programs-list')}">${_('Programs')}</a></li> -->
-                  % endif 
+                 % endif 
+                    <li><a href="${reverse('program_listing')}">${_('Programs')}</a></li>
+                 
                  
 
                 </ul>

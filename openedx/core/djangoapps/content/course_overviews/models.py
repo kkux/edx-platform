@@ -12,7 +12,7 @@ from django.db.models.fields import BooleanField, DateTimeField, DecimalField, T
 from django.db.utils import IntegrityError
 from django.template import defaultfilters
 
-from openedx.core.djangoapps.iimbx_programs.models import Courses
+from openedx.core.djangoapps.micro_masters.models import Courses
 # from openedx.core.djangoapps.iimbx_programs.models import Courses
 
 from ccx_keys.locator import CCXLocator

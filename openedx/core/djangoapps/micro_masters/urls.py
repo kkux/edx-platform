@@ -5,7 +5,8 @@ from .views import (
     use_code, reset_code_redemption,
     prorgam_user_certificate,
     program_info, program_enroll,
-    program_unenroll
+    program_unenroll,
+    program_listing
 )
 # from .program_reindex import index_programs_information, reindex_specific_program
 
@@ -18,7 +19,8 @@ urlpatterns = [
     url(r'^buy/(?P<program_id>[0-9]+)/$', program_buy, name='program_buy'),
     # response from payment gateway for programs
     url(r'^program_postpay_callback/$', program_postpay_callback),  # Both the ~accept and ~reject callback pages are handled here
-    url(r'^use_code/$', use_code),
+   
+    url(r'^program_listing/$', program_listing,name='program_listing'),
     url(r'^reset_code_redemption/$', reset_code_redemption),
 
     # for reindex all programs

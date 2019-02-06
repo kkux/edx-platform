@@ -1977,7 +1977,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djcelery',
-
+    'openedx.core.djangoapps.micro_masters',
+    # 'openedx.core.djangoapps.micro_masters'
     # Common views
     'openedx.core.djangoapps.common_views',
 

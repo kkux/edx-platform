@@ -121,6 +121,7 @@
          });
 
          $('#unenroll_form').on('ajax:complete', function(event, xhr) {
+            debugger;
              if (xhr.status === 200) {
                  location.href = urls.dashboard;
              } else if (xhr.status === 403) {
@@ -165,6 +166,7 @@
          });
 
          $('.action-unenroll').each(function(index) {
+            debugger;
              $(this).attr('id', 'unenroll-' + index);
             // a bit of a hack, but gets the unique selector for the modal trigger
              var trigger = '#' + $(this).attr('id');

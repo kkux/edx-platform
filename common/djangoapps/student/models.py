@@ -1259,6 +1259,7 @@ class CourseEnrollment(models.Model):
 
         Also emits relevant events for analytics purposes.
         """
+       
         if mode is None:
             mode = _default_course_mode(unicode(course_key))
         # All the server-side checks for whether a user is allowed to enroll.

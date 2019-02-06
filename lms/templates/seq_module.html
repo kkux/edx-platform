@@ -12,7 +12,7 @@
       </div>
     </div>
   % endif
-  <div class="sequence-nav">
+    <div class="sequence-nav">
     <button class="sequence-nav-button button-previous" aria-hidden="true">
       <span class="icon fa fa-chevron-prev" aria-hidden="true"></span>
       <span>${_('Previous')}</span>
@@ -21,6 +21,7 @@
       <ol id="sequence-list" role="tablist">
         % for idx, item in enumerate(items):
         <li>
+
         <button class="seq_${item['type']} inactive nav-item tab"
             role="tab"
             tabindex="-1"
@@ -48,13 +49,16 @@
   </div>
 
   <div class="sr-is-focusable" tabindex="-1"></div>
+sadfsf
 
   % for idx, item in enumerate(items):
+
   <div id="seq_contents_${idx}"
     aria-labelledby="tab_${idx}"
     aria-hidden="true"
     class="seq_contents tex2jax_ignore asciimath2jax_ignore">
-    ${item['content']}
+    <p>
+    ${item['content']|h}</p>
   </div>
   % endfor
   <div id="seq_content" role="tabpanel"></div>

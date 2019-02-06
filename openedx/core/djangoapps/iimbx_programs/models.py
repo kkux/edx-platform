@@ -126,7 +126,7 @@ class Program(TimeStampedModel):
 class ProgramEnrollment(TimeStampedModel):
     """Storing Program Enrollment"""
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="user_iimbx",on_delete=models.CASCADE)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=0)
 

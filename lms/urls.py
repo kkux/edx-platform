@@ -32,11 +32,13 @@ if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
 # Use urlpatterns formatted as within the Django docs with first parameter "stuck" to the open parenthesis
 urlpatterns = (
     '',
+   
+    url(r'^programs/', include('openedx.core.djangoapps.micro_masters.urls')),
 
-    url(r'^programs/',
-        include('openedx.core.djangoapps.iimbx_programs.urls')),
+    # url(r'^programs/',
+    #     include('openedx.core.djangoapps.iimbx_programs.urls')),
     url(r'^$', 'branding.views.index', name="root"),   # Main marketing page, or redirect to courseware
-    url(r'^programs-list$', programs_list, name="programs-list"),
+    # url(r'^programs-list$', programs_list, name="programs-list"),
 
     # url(r'^programs/',
         # include('openedx.core.djangoapps.iimbx_programs.urls')),

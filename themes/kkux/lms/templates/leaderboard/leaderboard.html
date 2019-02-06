@@ -1,0 +1,42 @@
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+%>
+
+<%block name="headextra">
+    <link rel="stylesheet" type="text/css" href="${static.url('leaderboard/css/style.css')}" />
+</%block>
+
+<div class="leaderboard">
+    <div class="leaderboard-header">
+        <h1>Points Leaders</h1>
+    </div>
+    <div class="users-profiles">
+        <ul>
+        % for leader in points_leaders:
+            <%  
+                user = leader['user']
+                points = int(leader['points']) if leader['points'] else '--'
+                profile_image_url = get_profile_image_urls_for_user(user)['medium']
+            %> 
+            <li class="member-profile">
+                <div class="profile-image-div display">
+                    <img class="profile-image" src="${profile_image_url}" alt="${user.username}">
+                </div>
+                <div class="username-div display">
+                        <p>${user.username}</p> 
+                        <p class="points">${points} Points</p>
+                </div>
+                <div class="rank-div display">
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                </div>
+            </li>
+        % endfor
+        % if not points_leaders:
+            <li class="member-profile">No points leader!! Be the first one.</li>
+        % endif
+        </ul>
+    </div>
+</div>

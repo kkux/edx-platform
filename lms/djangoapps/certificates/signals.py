@@ -2,12 +2,10 @@
 Signal handler for enabling/disabling self-generated certificates based on the course-pacing.
 """
 import logging
-
 from celery.task import task
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from opaque_keys.edx.keys import CourseKey
-
 from .config import waffle
 from certificates.models import \
     CertificateGenerationCourseSetting, \
