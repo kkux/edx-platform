@@ -80,37 +80,15 @@ def create_invoice(request, certy_cart=None):
     #     for expired_item in expired_cart_items:
     #         Order.remove_cart_item_from_order(expired_item, request.user)
     #     cart.update_order_type()
-    
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "I4e6UR09z4tuv1PjSQtFEBUGe7RX2wDKBRRwJRFiW9MraCL3sfJ6REM5ME3ObGyNypjhgZzd9mEjYqnrF7xwLkCxZFlalUXTjgaA"
-    service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
-    site_url = "http://kkux.org"
-    merchant_email = 'pbshah1326@gmail.com'
-    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
-    return_url = request.build_absolute_uri(
-        reverse("shoppingcart.views.postpay_callback")
-    )
-    url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
+    secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = "www.testing.com"
-    merchant_email = 'prachi.shah@ia.ooo'
-  
-    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
+    site_url = get_processor_config().get('SITE_URL', '')
+    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')    
     return_url = request.build_absolute_uri(
         reverse("shoppingcart.views.postpay_callback")
     )
-    # url_service ="http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL"
-    # secret_key =  "i1ZdBsg9c2l1gHoEkOXGoMEMbSNQd4Iw6IJIb0Sn2dpiVOXfCUV1GANSsBJFGrcNaVvlVnJYB8hwWeLy9HAQhnIKYrqETCr4yXpu"
-    # service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
-    # site_url = "http://kkux.org"
-    # merchant_email =  "kkux@kku.edu.sa"
-    # url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    # secret_key = get_processor_config().get('SECRET_KEY', '')
-    # service_key = get_processor_config().get('SERVICE_KEY', '')
-    # site_url = get_processor_config().get('SITE_URL', '')
-    # merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
-    # ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
     amount = "{0:0.2f}".format(total_cost)
     
     ip_merchant = ip_merchant
@@ -317,12 +295,12 @@ def _payment_accepted(params):
     """
     # import pdb;pdb.set_trace()
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
+    secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = "www.testing.com"
-    merchant_email = 'prachi.shah@ia.ooo'
-    
+    site_url = get_processor_config().get('SITE_URL', '')
+    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
     payment_reference = params.get('payment_reference', '')
+
     if not payment_reference:
         return HttpResponseRedirect(reverse("shoppingcart.views.show_cart"))
 

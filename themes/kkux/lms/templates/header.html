@@ -31,13 +31,13 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
     padding-top: 0;
     padding-bottom: 0;
     line-height: 38px;
-    font-size: 19px;
+    font-size: 20px;
     background: none;
   }
 #header .nav > li >div> a {
     position: relative;
     display: block;
-    padding: 10px 15px;
+    padding: 10px 8px;
 }
 #header .navbar-default .navbar-nav > li >div> a:hover{
 text-decoration: none;
@@ -132,11 +132,13 @@ text-decoration: none;
                         </li>
                     </ul>
                 % endif
-                
-                <ul class="nav navbar-nav">
+
+	 <ul class="nav navbar-nav">
                     <li><a href="${reverse('courses')}">${_('Skills')}</a></li>
+                    <li><a href="${reverse('program_listing')}">${_('Nanodegrees')}</a></li>
                     <li><a href="${reverse('about')}">${_('Why KKUx?')}</a></li>
-                    <li><a href="${reverse('contact')}">${_('Contact')}</a></li>
+                    <li><a href="https://blog.kkux.org">${_('Blog')}</a></li>
+                    <li><a href="${reverse('contact')}">${_('Contact Us')}</a></li>
                   % if request.user.is_staff:
                   <li>
                   <div class="dropdown">
@@ -149,19 +151,10 @@ text-decoration: none;
                     </ul>
                   </div>
                 </li>
-                   <!--  <div class="dropdown">
-                    <li class="followup"><a class="btn btn-primary dropdown-toggle"  data-toggle="dropdown">${_('FollowUp')}</a></li>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">3rd level dropdown</a></li>
-                      <li><a href="#">3rd level dropdown</a></li>
-                    </ul>
-                  </div> -->
-                 % endif 
-                    <li><a href="${reverse('program_listing')}">${_('Programs')}</a></li>
-                 
-                 
+		 % endif 
+	</ul>
 
-                </ul>
+                
                 % if request.user.is_authenticated():
                     <ul class="right-top hidden-menu header-rightbar clearfix">
                         <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>

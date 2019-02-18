@@ -131,7 +131,7 @@ class Institution(TimeStampedModel):
     name = models.CharField(max_length=200, unique=True)
     website_url = models.TextField(
         validators=[URLValidator()], blank=True, null=True)
-    logo = models.ImageField(max_length=200, upload_to=content_file_name)
+    logo = models.ImageField(max_length=200)
 
     def image_tag(self):
         return u'<img src="%s" width="50" height="50" />' % self.logo.url
@@ -157,7 +157,7 @@ class Instructor(TimeStampedModel):
     name = models.CharField(max_length=200)
     designation = models.CharField(max_length=200)
     profile_image = models.ImageField(
-        max_length=200, upload_to=content_file_name)
+        max_length=200)
     institution = models.ForeignKey(Institution)
 
     def image_tag(self):
@@ -714,8 +714,7 @@ class ProgramCertificateSignatories(TimeStampedModel):
         help_text='The organization that this signatory belongs to, as it should appear on certificates.'
     )
     signature_image = models.ImageField(
-        max_length=200,
-        upload_to=content_file_name,
+        max_length=200
     )
 
     def image_tag(self):

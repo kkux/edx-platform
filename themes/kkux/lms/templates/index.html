@@ -35,7 +35,68 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 <div class="page">
     <section class="section-banner">
       <div class="main-story">
-      
+         
+      % for data in slidderdata:
+     <% 
+                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+                arabic_image=data.arabic_image.url.split("/")[-1]
+                english_image=data.english_image.url.split("/")[-1]
+                arabic_image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key':arabic_image
+                        },
+                    
+                 )
+
+                english_image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key': english_image
+                        },
+                    
+                 )
+            %>      
+        <div>
+            <div class="story-slide">
+                % if LANGUAGE_CODE == 'ar':
+                <img src="${arabic_image_url}" class="img-responsive" alt="image">
+                % else:
+                <img src="${english_image_url}" class="img-responsive" alt="image">
+                % endif
+                <div class="story-slide-txt">
+                    <div class="container">
+                        <h5 class="story-slide-title">
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.title_in_arabic}
+                        % else:
+                            ${data.title_in_english}
+                        % endif
+                        </h5>
+                        <p class='story-description'>
+                        % if LANGUAGE_CODE == 'ar':
+                            ${data.description_in_arabic}
+                        % else:
+                            ${data.description_in_english}
+                        % endif
+                        </p>
+                        <div class="learn-more">
+                        % if  LANGUAGE_CODE == 'ar' and data.link_arabic != '':
+                            <a href="${data.link_arabic}">
+                                ${data.button_text_in_arabic}
+                        % elif data.link_english != '':
+                             <a href="${data.link_english}">
+                                ${data.button_text_in_english}
+                        % endif
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      % endfor           
         
       </div>
     </section>

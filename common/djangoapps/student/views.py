@@ -545,7 +545,7 @@ def complete_course_mode_info(course_id, enrollment, modes=None):
         mode_info['verified_bulk_sku'] = modes['verified'].bulk_sku
         # if there is an expiration date, find out how long from now it is
         if modes['verified'].expiration_datetime:
-            today = datetime.datetime.now(UTC).date()
+            today = datetime.now(UTC).date()
             mode_info['days_for_upsell'] = (modes['verified'].expiration_datetime.date() - today).days
 
     return mode_info
@@ -1274,7 +1274,7 @@ def change_enrollment(request, check_access=True):
     """
     # Get the user
     user = request.user
-    if len(request.POST.get("program_id")):
+    if len(request.POST.get("program_id",[])):
         user = request.user
         program_id = request.POST.get('program_id', '')
         try:
