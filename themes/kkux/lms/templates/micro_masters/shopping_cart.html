@@ -35,7 +35,7 @@ from openedx.core.lib.courses import course_image_url
           unit_cost = _(
             "{currency_symbol}{price}"
           ).format(
-            currency_symbol=currency_symbol,
+            currency_symbol=currency,
             price="{0:0.2f}".format(order.item_price)
           )
         %>
@@ -104,7 +104,7 @@ from openedx.core.lib.courses import course_image_url
                     ## Translators: currency_symbol is a symbol indicating type of currency, ex "$". currency_abbr is
                     ## an abbreviation for the currency, ex "USD". This string would look like this when all variables are in:
                     ## "$500.00 USD"
-                    ${_("{currency_symbol}{price}").format(currency_symbol=currency_symbol, price="{0:0.2f}".format(amount))}
+                    ${_("{currency_symbol}{price}").format(currency_symbol=currency, price="{0:0.2f}".format(amount))}
                   </b>
                 </span>
             % endif
@@ -231,7 +231,8 @@ from openedx.core.lib.courses import course_image_url
           return false;
        }
        event.preventDefault();
-       location.href = "${reverse('program-billing_details',kwargs={'programs':True,'id':1})}";
+       
+       location.href = "/shoppingcart/billing_details/True/" + String(${order.program.id})
    });
 
 

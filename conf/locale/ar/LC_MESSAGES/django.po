@@ -372,10 +372,7 @@ msgstr "التعليم المهني"
 msgid "Display Name"
 msgstr "اسم العرض"
 
-#: common/djangoapps/course_modes/models.py
-#: lms/templates/courseware/course_about.html
-msgid "Price"
-msgstr "السعر"
+
 
 #: common/djangoapps/course_modes/models.py
 msgid "Upgrade Deadline"
@@ -2546,7 +2543,7 @@ msgstr ""
 #: lms/templates/peer_grading/peer_grading_problem.html
 #: lms/templates/survey/survey.html
 #: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview-language-fragment.html
-#: openedx/core/djangoapps/theming/templates/theming/theming-admin-fragment.html
+#: openedx/core/djangoappstheming/templatesthemingtheming-admin-fragment.html
 #: themes/stanford-style/lms/templates/register-shib.html
 msgid "Submit"
 msgstr "إرسال"
@@ -7143,6 +7140,7 @@ msgstr "البريد الإلكتروني"
 
 #: lms/djangoapps/instructor/views/api.py
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py
+#: themes/kkux/lms/templates/micro_masters/program_about.html
 msgid "Language"
 msgstr "اللغة"
 
@@ -11239,22 +11237,22 @@ msgstr ""
 msgid "Enable course home page improvements."
 msgstr "فعّل ميزة تحسين الصفحة الرئيسية للمساق."
 
-#: openedx/core/djangoapps/theming/views.py
+#: openedx/core/djangoappstheming/views.py
 #, python-brace-format
 msgid "Site theme changed to {site_theme}"
 msgstr ""
 
-#: openedx/core/djangoapps/theming/views.py
+#: openedx/core/djangoappstheming/views.py
 #, python-brace-format
 msgid "Theme {site_theme} does not exist"
 msgstr ""
 
-#: openedx/core/djangoapps/theming/views.py
+#: openedx/core/djangoappstheming/views.py
 msgid "Site theme reverted to the default"
 msgstr ""
 
-#: openedx/core/djangoapps/theming/views.py
-#: openedx/core/djangoapps/theming/templates/theming/theming-admin-fragment.html
+#: openedx/core/djangoappstheming/views.py
+#: openedx/core/djangoappstheming/templatesthemingtheming-admin-fragment.html
 msgid "Theming Administration"
 msgstr ""
 
@@ -12523,6 +12521,8 @@ msgstr ""
 #: lms/templates/navigation/navbar-not-authenticated.html
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html
 #: themes/edx.org/lms/templates/header/navbar-authenticated.html
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+
 msgid "Courses"
 msgstr "المساقات"
 
@@ -12586,9 +12586,6 @@ msgstr "مثال: فاطمة_الفهري"
 msgid "Course End Date"
 msgstr "تاريخ انتهاء المساق"
 
-#: cms/templates/settings.html lms/templates/courseware/program_marketing.html
-msgid "Instructors"
-msgstr ""
 
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
 msgid "Requirements"
@@ -12609,7 +12606,7 @@ msgstr "عرض"
 #: cms/templates/maintenance/_force_publish_course.html
 #: lms/templates/problem.html lms/templates/shoppingcart/shopping_cart.html
 #: openedx/core/djangoapps/dark_lang/templates/dark_lang/preview-language-fragment.html
-#: openedx/core/djangoapps/theming/templates/theming/theming-admin-fragment.html
+#: openedx/core/djangoappstheming/templatesthemingtheming-admin-fragment.html
 msgid "Reset"
 msgstr "إعادة الضبط"
 
@@ -16108,12 +16105,11 @@ msgstr ""
 #: lms/templates/courseware/program_marketing.html
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/shopping_cart.html
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+
 msgid "View Courses"
 msgstr "عرض المساقات"
 
-#: lms/templates/courseware/program_marketing.html
-msgid "Meet the Instructors"
-msgstr ""
 
 #: lms/templates/courseware/program_marketing.html
 msgid "Frequently Asked Questions"
@@ -16132,16 +16128,16 @@ msgid "What You'll Learn"
 msgstr ""
 
 #: lms/templates/courseware/program_marketing.html
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+
 msgid "Average Length"
-msgstr ""
+msgstr "متوسط ​​المدة"
+
 
 #: lms/templates/courseware/program_marketing.html
 msgid "{weeks_to_complete} weeks per course"
 msgstr ""
 
-#: lms/templates/courseware/program_marketing.html
-msgid "Effort"
-msgstr ""
 
 #: lms/templates/courseware/program_marketing.html
 msgid ""
@@ -16149,9 +16145,6 @@ msgid ""
 "course"
 msgstr ""
 
-#: lms/templates/courseware/program_marketing.html
-msgid "Number of Courses"
-msgstr ""
 
 #: lms/templates/courseware/program_marketing.html
 msgid "{number_of_courses} courses in program"
@@ -20817,7 +20810,7 @@ msgstr ""
 msgid "e.g. en for English"
 msgstr ""
 
-#: openedx/core/djangoapps/theming/templates/theming/theming-admin-fragment.html
+#: openedx/core/djangoappstheming/templatesthemingtheming-admin-fragment.html
 msgid "Preview Theme"
 msgstr ""
 
@@ -25914,17 +25907,20 @@ msgstr "أُنشأت مراجعة جديدة: الدمج بين المراجعة
 
 
 
-#: /themes/kkux/lms/templates/header.html
+#: themes/kkux/lms/templates/header.html
 msgid "Why KKUx?"
 msgstr "لماذا KKUx ؟"
 
 msgid "Skills"
 msgstr "المهارات"
 
+msgid "FollowUp"
+msgstr "متابعة"
+
 msgid "Login"
 msgstr "الدخول"
 
-#: /themes/kkux/lms/templates/index.html
+#: themes/kkux/lms/templates/index.html
 
 msgid "Jan"
 msgstr "يناير"
@@ -26083,7 +26079,7 @@ msgid "You will experience an exciting business in the world of entrepreneurship
 msgstr "ستخوض تجربة مثيرة في عالم ريادة الأعمال وسيسهم هذا الكورس في إلهامك كصاحب عمل لإتخاذ الإجراءات اللازمة لتحقيق احلامك المهنية كما سيدفعك للأتجاه الصحيح لتحقيق نقل نوعية في اعمالك التجارية."
 
 
-#: /themes/kkux/lms/templates/footer.html
+#: themes/kkux/lms/templates/footer.html
 
 msgid "Mission"
 msgstr "الرؤية"
@@ -26131,3 +26127,44 @@ msgstr "رقم الهاتف"
 
 msgid "Postal Code"
 msgstr "الرمز البريدي"
+
+
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+msgid "Subject"
+msgstr "موضوع"
+
+msgid "Video Transcripts"
+msgstr "نسخ الفيديو"
+
+msgid "Pursue the Program"
+msgstr "تابع البرنامج"
+
+
+msgid "Instructors"
+msgstr "المدربين"
+
+msgid "Institution"
+msgstr "المدربين"
+
+
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+#: lms/templates/courseware/program_marketing.html
+
+
+msgid "Effort"
+msgstr "مجهود"
+
+#: themes/kkux/lms/templates/micro_masters/program_about.html
+#: common/djangoapps/course_modes/models.py
+#: lms/templates/courseware/course_about.html
+msgid "Price"
+msgstr "السعر"
+
+#programs
+
+msgid "Meet the Instructors"
+msgstr "تلبية المدربين"
+
+msgid "Number Of Courses"
+msgstr "عدد المقررات"
+

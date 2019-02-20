@@ -119,7 +119,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                     <span class="block-list__label">
                         <span aria-hidden="true" class="fa fa-clock-o fa-lg"></span>
-                        Average Length:
+                        ${_('Average Length')}:
                     </span>
                     <span class="block-list__desc">${program.average_length}</span>
                 </li>
@@ -128,7 +128,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tachometer fa-lg"></span>
-                    Effort:
+                    ${_('Effort')}:
                   </span>
                   <span class="block-list__desc">${program.effort}</span>
                 </li>
@@ -136,14 +136,14 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-book fa-lg"></span>
-                    Number Of Courses:
+                    ${_('Number Of Courses')}:
                   </span>
-                  <span class="block-list__desc">${len(program.courses.select_related())} Courses in Program</span>
+                  <span class="block-list__desc">${len(program.courses.select_related())} ${_('Courses in Program')}</span>
                 </li>
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-graduation-cap fa-lg"></span>
-                    Subject:
+                    ${_('Subject')}:
                   </span>
                   <span class="block-list__desc">
                     ${program.subject.name}
@@ -152,7 +152,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-university fa-lg"></span>
-                    Institution:
+                    ${_('Institution')}:
                   </span>
                   <span class="block-list__desc">
                     ${program.institution.name}
@@ -161,7 +161,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-comment-o fa-lg"></span>
-                    Language:
+                    ${_('Language')}:
                   </span>
 
                   <span class="block-list__desc">
@@ -171,7 +171,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-file-video-o fa-lg"></span>
-                    Video Transcripts:
+                    ${_('Video Transcripts')}:
                   </span>
                     <span class="block-list__desc">
                      ${program.video_transcripts.name}
@@ -180,7 +180,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tag fa-lg"></span>
-                    Price:
+                    ${_('Price')}:
                   </span>
                   <span class="block-list__desc">
                     % if program.price <= 0:
@@ -214,7 +214,7 @@ from openedx.core.djangolib.markup import HTML, Text
             <p>
                 Eligibility to be accepted into the Master program is subject to the Curtin University Admission Requirements being met.
             </p> -->
-            <h2>Courses</h2>
+            <h2>${_('Courses')}</h2>
             <div class="js-discovery-card-list discovery-card-list one-click-purchase-enabled">
             % for course in courses:
             <%
@@ -287,7 +287,7 @@ from openedx.core.djangolib.markup import HTML, Text
         </section>
         % if len(program.instructors.select_related()):
         <section id="instructors" class="separator-top">
-          <h2>Instructors</h2>
+          <h2>${_('Instructors')}</h2>
             <ul class="clear-list list-instructors clearfix">
             % for teacher in program.instructors.select_related():
 		<% 
