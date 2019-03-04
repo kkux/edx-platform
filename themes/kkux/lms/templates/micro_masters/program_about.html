@@ -5,7 +5,8 @@ from pytz import timezone, utc
 
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-
+from django.conf import settings
+import boto3
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
@@ -23,20 +24,43 @@ from openedx.core.djangolib.markup import HTML, Text
 </%block>
 
 <%block name="pagetitle">${program.name}</%block>
+    	<% 
+                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+                
+                image=program.banner_image.url.split("/")[-1]
+                image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key': image
+                        },
+                    
+                 )
+		org_image=program.institution.logo.url.split("/")[-1]
+		org_image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key':org_image
+                        },
 
+                 )
+
+    	 %>
 <style type="text/css">
 .course-info header.program-profile {
-  background-image: url("${program.banner_image.url if program.banner_image else static.url('images/banner-black-background.jpg')}");
+  background-image: url("${image_url  if program.banner_image else static.url('images/banner-black-background.jpg')}");
 }
-
 </style>
+
+
 <section class="course-info">
   <header class="program-profile banner">
     <div class="container">
       <div class="col-6 text">
         <div class="org-label">
           <div class="org-logo">
-            <img src="${program.institution.logo.url}" alt="org-logo">
+            <img src="${org_image_url}" alt="org-logo">
           </div>
         </div>
       </div>
@@ -51,6 +75,7 @@ from openedx.core.djangolib.markup import HTML, Text
         % endif
       </div>
       <div class="col-6 banner-text_buy_button">
+	
         <h1 id="program-title">${program.name}</h1>
         <p class="banner-description">${program.short_description}</p>
         <div class="start-program-btn">
@@ -63,7 +88,7 @@ from openedx.core.djangolib.markup import HTML, Text
               % if program.price <= 0:
                 <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
               % else:
-                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
+                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
               % endif
             % endif
           </div>
@@ -160,7 +185,7 @@ from openedx.core.djangolib.markup import HTML, Text
                     % if program.price <= 0:
                          Free
                     % else:
-                        ${currency[1]}${program.price}
+                        ${currency[0]}${program.price}
                     % endif
                   </span>
                 </li>
@@ -253,7 +278,7 @@ from openedx.core.djangolib.markup import HTML, Text
                   % if program.price <= 0:
                     <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
                   % else:
-                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
+                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
                   % endif
                 % endif
               </div>
@@ -264,23 +289,22 @@ from openedx.core.djangolib.markup import HTML, Text
           <h2>Instructors</h2>
             <ul class="clear-list list-instructors clearfix">
             % for teacher in program.instructors.select_related():
-            <% 
-                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+		<% 
+                	conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
 
-                image=teacher.banner_image.url.split("/")[-1]
+                	image=teacher.profile_image.url.split("/")[-1]
 
-                image_url = conn.generate_presigned_url(
-                     'get_object',
-                     Params = {
-                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            'Key': image
-                        },
-                 )
-            %>
-
+                	teacher_image_url = conn.generate_presigned_url(
+                     		'get_object',
+                     		Params = {
+                            	'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            	'Key': image
+                        	},
+                	 )
+            	%>
               <li class="list-instructor__item">
                 <a href="#">
-                  <img src="${teacher.profile_image.url}" alt="${teacher.name}" class="instructor-image">
+                  <img src="${teacher_image_url}" alt="${teacher.name}" class="instructor-image">
                   <p class="instructor-name">${teacher.name}</p>
                 </a>
                 <p class="instructor-position">

@@ -707,7 +707,7 @@ def generate_certificates(request):
                         canvas.setFillColor(HexColor('#8a8a8a'))
                         canvas.drawString(240, 280, u"في برنامجي الماهر ، اكملت جميع المتطلبات بنجاح")
                         canvas.setFillColor(HexColor('#6dabb6'))
-                        canvas.drawString(380, 250, program.name_in_arabic)
+                        canvas.drawString(380, 250, program.name_arabic)
                         canvas.setFont('Helvetica', 17)
                         canvas.drawString(380, 220,unicode(program.name))
                         canvas.setFillColor(HexColor('#8a8a8a'))

@@ -197,6 +197,7 @@ def increment_serial_number():
     return characters + '{0:05}'.format(digits)
 
 
+
 class Program(TimeStampedModel):
     """
     Model for storing programs.
@@ -239,7 +240,7 @@ class Program(TimeStampedModel):
     """
 
     name = models.CharField(max_length=200, unique=True,verbose_name = 'name in english')
-    name_in_arabic = models.CharField(max_length=200, unique=True)
+    name_arabic = models.CharField(max_length=200, unique=True,verbose_name = 'name in arabic')
     start = models.DateField(null=True)
     end = models.DateField(null=True, blank=True)
     short_description = models.TextField(
