@@ -31,11 +31,7 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
     padding-top: 0;
     padding-bottom: 0;
     line-height: 38px;
-<<<<<<< HEAD
     font-size: 21px;
-=======
-    font-size: 20px;
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
     background: none;
   }
 #header .nav > li >div> a {
@@ -136,8 +132,8 @@ text-decoration: none;
                         </li>
                     </ul>
                 % endif
-
-	 <ul class="nav navbar-nav">
+                
+                <ul class="nav navbar-nav">
                     <li><a href="${reverse('courses')}">${_('Skills')}</a></li>
                     <li><a href="${reverse('program_listing')}">${_('Nanodegrees')}</a></li>
                     <li><a href="${reverse('about')}">${_('Why KKUx?')}</a></li>
@@ -155,7 +151,6 @@ text-decoration: none;
                     </ul>
                   </div>
                 </li>
-<<<<<<< HEAD
                    <!--  <div class="dropdown">
                     <li class="followup"><a class="btn btn-primary dropdown-toggle"  data-toggle="dropdown">${_('FollowUp')}</a></li>
                     <ul class="dropdown-menu">
@@ -167,12 +162,8 @@ text-decoration: none;
                     
                  
                  
-=======
-		 % endif 
-	</ul>
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
 
-                
+                </ul>
                 % if request.user.is_authenticated():
                     <ul class="right-top hidden-menu header-rightbar clearfix">
                         <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a></li>

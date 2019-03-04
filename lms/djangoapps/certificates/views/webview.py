@@ -738,12 +738,12 @@ def generate_certificates(request):
                       
                         cert = open(cert_pdf,'rb')
                         with open(cert_pdf, 'r') as pdf:
-                            response = HttpResponse(pdf.read(),content_type='application/pdf')
-                            # conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
-                            # conn.upload_file(cert_pdf,"kkux-storage",'program-certificate/{}'.format(str(certificate.verify_uuid+ ".pdf")) )
+                            # response = HttpResponse(pdf.read(),content_type='application/pdf')
+                            conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
+                            conn.upload_file(cert_pdf,"kkux-storage",'program-certificate/{}'.format(str(certificate.verify_uuid+ ".pdf")) )
                             logging.info(" certificate generated")   
                             pdf.closed
-                            return response
+                            # return response
                         os.remove(cert_pdf)
                     except Exception as e:
                         logging.info(e)

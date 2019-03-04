@@ -12586,6 +12586,9 @@ msgstr "مثال: فاطمة_الفهري"
 msgid "Course End Date"
 msgstr "تاريخ انتهاء المساق"
 
+#: cms/templates/settings.html lms/templates/courseware/program_marketing.html
+msgid "Instructors"
+msgstr ""
 
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
 msgid "Requirements"
@@ -26139,27 +26142,15 @@ msgstr "نسخ الفيديو"
 msgid "Pursue the Program"
 msgstr "تابع البرنامج"
 
-<<<<<<< HEAD
 msgid "Meet the Instructors"
 msgstr "تلبية المدربين"
-=======
-
-msgid "Instructors"
-msgstr "المدربين"
-
-msgid "Institution"
-msgstr "المدربين"
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
 
 
 #: themes/kkux/lms/templates/micro_masters/program_about.html
 #: lms/templates/courseware/program_marketing.html
 
-<<<<<<< HEAD
 msgid "Number Of Courses"
 msgstr "عدد المقررات"
-=======
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
 
 msgid "Effort"
 msgstr "مجهود"
@@ -26168,17 +26159,4 @@ msgstr "مجهود"
 #: common/djangoapps/course_modes/models.py
 #: lms/templates/courseware/course_about.html
 msgid "Price"
-<<<<<<< HEAD
 msgstr "السعر"
-=======
-msgstr "السعر"
-
-#programs
-
-msgid "Meet the Instructors"
-msgstr "تلبية المدربين"
-
-msgid "Number Of Courses"
-msgstr "عدد المقررات"
-
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241

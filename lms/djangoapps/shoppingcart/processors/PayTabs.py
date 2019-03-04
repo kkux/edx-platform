@@ -66,8 +66,7 @@ def create_invoice(request, certy_cart=None):
     Create invoice at Paytabs end using KKUx wrapper.
     """
     user = request.user
-    if request.POST.get("course_id")
-    :
+    if request.POST.get("course_id"):
         cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
         program = False
         total_cost = cart.total_cost
@@ -81,11 +80,8 @@ def create_invoice(request, certy_cart=None):
     #     for expired_item in expired_cart_items:
     #         Order.remove_cart_item_from_order(expired_item, request.user)
     #     cart.update_order_type()
-<<<<<<< HEAD
     
 
-=======
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
     secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
@@ -95,7 +91,6 @@ def create_invoice(request, certy_cart=None):
     return_url = request.build_absolute_uri(
         reverse("shoppingcart.views.postpay_callback")
     )
-<<<<<<< HEAD
 
     # url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
     # secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
@@ -108,8 +103,6 @@ def create_invoice(request, certy_cart=None):
     #     reverse("shoppingcart.views.postpay_callback")
     # )
    
-=======
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
     amount = "{0:0.2f}".format(total_cost)
     
     ip_merchant = ip_merchant
@@ -315,12 +308,12 @@ def _payment_accepted(params):
     """
     # import pdb;pdb.set_trace()
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = get_processor_config().get('SECRET_KEY', '')
+    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = get_processor_config().get('SITE_URL', '')
-    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    site_url = "www.testing.com"
+    merchant_email = 'prachi.shah@ia.ooo'
+    
     payment_reference = params.get('payment_reference', '')
-
     if not payment_reference:
         return HttpResponseRedirect(reverse("shoppingcart.views.show_cart"))
 

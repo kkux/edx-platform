@@ -4,8 +4,8 @@ from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
 from django.conf import settings
 
 class indexslidder(models.Model):
-	config = settings.VERIFY_STUDENT['SOFTWARE_SECURE']        
-	url=config['STORAGE_KWARGS']['custom_domain']+"/"+settings.AWS_STORAGE_BUCKET_NAME
+	# config = settings.VERIFY_STUDENT['SOFTWARE_SECURE']        
+	# url=config['STORAGE_KWARGS']['custom_domain']+"/"+settings.AWS_STORAGE_BUCKET_NAME
         course = CourseKeyField(db_index=True, primary_key=True, max_length=255)
         title_in_english =  models.CharField(max_length=300)
         title_in_arabic =  models.CharField(max_length=300)

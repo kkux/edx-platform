@@ -741,15 +741,10 @@ def billing_details(request,**kwargs):
     This is the view for capturing additional billing details
     in case of the business purchase workflow.
     """
-    logging.info(kwargs)
     user = request.user
     if kwargs.get('programs'):
         program = Program.objects.get(id = kwargs.get('id'))
         cart=ProgramOrder.get_or_create_order(user,program)
-<<<<<<< HEAD
-=======
-        # cart = ProgramOrder.get_cart_for_user(user)
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
         cart_items=[cart]
     else:
         cart = Order.get_cart_for_user(user)

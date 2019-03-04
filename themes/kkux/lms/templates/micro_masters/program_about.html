@@ -5,8 +5,7 @@ from pytz import timezone, utc
 
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from django.conf import settings
-import boto3
+
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
@@ -24,32 +23,10 @@ from openedx.core.djangolib.markup import HTML, Text
 </%block>
 
 <%block name="pagetitle">${program.name}</%block>
-    	<% 
-                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
-                
-                image=program.banner_image.url.split("/")[-1]
-                image_url = conn.generate_presigned_url(
-                     'get_object',
-                     Params = {
-                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            'Key': image
-                        },
-                    
-                 )
-		org_image=program.institution.logo.url.split("/")[-1]
-		org_image_url = conn.generate_presigned_url(
-                     'get_object',
-                     Params = {
-                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            'Key':org_image
-                        },
 
-                 )
-
-    	 %>
 <style type="text/css">
 .course-info header.program-profile {
-  background-image: url("${image_url  if program.banner_image else static.url('images/banner-black-background.jpg')}");
+  background-image: url("${program.banner_image.url if program.banner_image else static.url('images/banner-black-background.jpg')}");
 }
 
 </style>
@@ -59,7 +36,7 @@ from openedx.core.djangolib.markup import HTML, Text
       <div class="col-6 text">
         <div class="org-label">
           <div class="org-logo">
-            <img src="${org_image_url}" alt="org-logo">
+            <img src="${program.institution.logo.url}" alt="org-logo">
           </div>
         </div>
       </div>
@@ -74,7 +51,6 @@ from openedx.core.djangolib.markup import HTML, Text
         % endif
       </div>
       <div class="col-6 banner-text_buy_button">
-	
         <h1 id="program-title">${program.name}</h1>
         <p class="banner-description">${program.short_description}</p>
         <div class="start-program-btn">
@@ -87,7 +63,7 @@ from openedx.core.djangolib.markup import HTML, Text
               % if program.price <= 0:
                 <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
               % else:
-                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
+                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
               % endif
             % endif
           </div>
@@ -117,7 +93,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                     <span class="block-list__label">
                         <span aria-hidden="true" class="fa fa-clock-o fa-lg"></span>
-                        ${_('Average Length')}:
+                        Average Length:
                     </span>
                     <span class="block-list__desc">${program.average_length}</span>
                 </li>
@@ -126,7 +102,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tachometer fa-lg"></span>
-                    ${_('Effort')}:
+                    Effort:
                   </span>
                   <span class="block-list__desc">${program.effort}</span>
                 </li>
@@ -134,14 +110,14 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-book fa-lg"></span>
-                    ${_('Number Of Courses')}:
+                    Number Of Courses:
                   </span>
-                  <span class="block-list__desc">${len(program.courses.select_related())} ${_('Courses in Program')}</span>
+                  <span class="block-list__desc">${len(program.courses.select_related())} Courses in Program</span>
                 </li>
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-graduation-cap fa-lg"></span>
-                    ${_('Subject')}:
+                    Subject:
                   </span>
                   <span class="block-list__desc">
                     ${program.subject.name}
@@ -150,7 +126,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-university fa-lg"></span>
-                    ${_('Institution')}:
+                    Institution:
                   </span>
                   <span class="block-list__desc">
                     ${program.institution.name}
@@ -159,7 +135,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-comment-o fa-lg"></span>
-                    ${_('Language')}:
+                    Language:
                   </span>
 
                   <span class="block-list__desc">
@@ -169,7 +145,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-file-video-o fa-lg"></span>
-                    ${_('Video Transcripts')}:
+                    Video Transcripts:
                   </span>
                     <span class="block-list__desc">
                      ${program.video_transcripts.name}
@@ -178,13 +154,13 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tag fa-lg"></span>
-                    ${_('Price')}:
+                    Price:
                   </span>
                   <span class="block-list__desc">
                     % if program.price <= 0:
                          Free
                     % else:
-                        ${currency[0]}${program.price}
+                        ${currency[1]}${program.price}
                     % endif
                   </span>
                 </li>
@@ -212,7 +188,7 @@ from openedx.core.djangolib.markup import HTML, Text
             <p>
                 Eligibility to be accepted into the Master program is subject to the Curtin University Admission Requirements being met.
             </p> -->
-            <h2>${_('Courses')}</h2>
+            <h2>Courses</h2>
             <div class="js-discovery-card-list discovery-card-list one-click-purchase-enabled">
             % for course in courses:
             <%
@@ -277,7 +253,7 @@ from openedx.core.djangolib.markup import HTML, Text
                   % if program.price <= 0:
                     <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
                   % else:
-                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
+                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
                   % endif
                 % endif
               </div>
@@ -285,10 +261,9 @@ from openedx.core.djangolib.markup import HTML, Text
         </section>
         % if len(program.instructors.select_related()):
         <section id="instructors" class="separator-top">
-          <h2>${_('Instructors')}</h2>
+          <h2>Instructors</h2>
             <ul class="clear-list list-instructors clearfix">
             % for teacher in program.instructors.select_related():
-<<<<<<< HEAD
             <% 
                 conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
 
@@ -303,24 +278,9 @@ from openedx.core.djangolib.markup import HTML, Text
                  )
             %>
 
-=======
-		<% 
-                	conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
-
-                	image=teacher.profile_image.url.split("/")[-1]
-
-                	teacher_image_url = conn.generate_presigned_url(
-                     		'get_object',
-                     		Params = {
-                            	'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            	'Key': image
-                        	},
-                	 )
-            	%>
->>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
               <li class="list-instructor__item">
                 <a href="#">
-                  <img src="${teacher_image_url}" alt="${teacher.name}" class="instructor-image">
+                  <img src="${teacher.profile_image.url}" alt="${teacher.name}" class="instructor-image">
                   <p class="instructor-name">${teacher.name}</p>
                 </a>
                 <p class="instructor-position">
