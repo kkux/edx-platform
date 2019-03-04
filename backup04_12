@@ -1,0 +1,1077 @@
+diff --git a/themes/kkux/lms/static/custom_css/lms-custom-ltr.css b/themes/kkux/lms/static/custom_css/lms-custom-ltr.css
+index 378377e..6a32575 100644
+--- a/themes/kkux/lms/static/custom_css/lms-custom-ltr.css
++++ b/themes/kkux/lms/static/custom_css/lms-custom-ltr.css
+@@ -218,3 +218,479 @@ h3.course-title a {
+     font-weight: 600 !important;
+     color: #BCD13D;
+ }
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.add-to-cart {
++    background: none;
++    border: none;
++    width: auto;
++    letter-spacing:normal;
++    margin-top: 15px;
++    border-top: 1px solid #ededed;
++    padding-top: 10px;
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
++    background: #91d3df;
++    box-shadow: none;
++    text-shadow: none;
++    border: none;
++    letter-spacing: normal;
++    transition: 0.4s all;
++    clear: both;
++    margin-top: 5px;
++    padding: 5px 15px;
++    width: auto;
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong:hover:not(:disabled) {
++    background: #5fbac7;
++}
++
++/* | Course Page */
++/* |-- Info Page */
++
++nav.wrapper-preview-menu {
++    background: none;
++}
++
++nav.wrapper-preview-menu .preview-actions {
++    border-left: 10px solid #BCD13D;
++    padding-left: 10px;
++}
++
++nav.wrapper-preview-menu .action-preview-label {
++    font-weight: 600;
++}
++
++nav.wrapper-preview-menu .action-preview-select {
++    border: none;
++    background: none;
++    color: #5fbac7;
++    font-weight: 600;
++    padding-left: 0;    
++}
++
++nav.wrapper-course-material .course-material {
++    border-top: 1px solid #ededed;
++    border-bottom: 1px solid #ededed;
++    margin-bottom: 10px;
++    padding-top: 0;
++    margin-top: 5px;
++}
++
++nav.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a.active {
++    color: #2d2d2d !important;
++    font-weight: bolder;
++}
++
++nav.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a:hover {
++    color: #2d2d2d !important;
++    border-bottom-color: #f1f1f1;
++}
++
++.wrapper-course-material .course-tabs li a, .wrapper-course-material .course-tabs li a:visited {
++    padding-top: 13px !important;
++}
++
++#main div.container div.home {
++    border: none;
++    box-shadow: none;
++    padding: 0 !important;
++    max-width: 1180px;
++    padding: 10px 0 !important;
++}
++
++#main div.container div.home .page-header-secondary {
++    background-color: #91d3df;
++    transition: all 0.4s;
++    margin-right: 0;
++    padding: 7px 15px;
++}
++
++#main div.container div.home .page-header-secondary:hover {
++    background-color: #549fa8;
++}
++
++#main div.container div.home .page-header-secondary a {
++    font-weight: bolder;
++}
++
++#main div.container div.info-wrapper {
++    border:none;
++    box-shadow: none;
++    background: none;
++}
++
++#main div.container div.info-wrapper section.updates {
++    border-top: 1px solid #ededed;
++    padding: 20px 10px 20px 0;
++}
++
++#main div.container div.info-wrapper section.updates h3.hd.hd-3 {
++    color: #92b13c;
++    font-weight:600;
++}
++
++#main div.container div.info-wrapper section.updates article.updates-article {
++    border: none;
++    border-top: 1px solid #ededed;
++    border-left: 5px solid #b6b6b6;
++    padding: 0;
++    padding-top: 5px;
++    padding-left: 10px;
++    border-radius: 0;
++    transition: 0.4s all;
++}
++
++#main div.container div.info-wrapper section.updates article.updates-article:hover {
++    border: none;
++    border-top: 1px solid #ededed;
++    border-left: 5px solid #92b13c;
++    border-radius: 0;
++}
++
++div.info-wrapper section.updates>ol>li .date, div.info-wrapper section.updates>ol article .date, div.info-wrapper section.updates section>li .date, div.info-wrapper section.updates section article .date, div.info-wrapper section.updates div>li .date, div.info-wrapper section.updates div article .date {
++    font-family: 'Cairo';
++    font-weight: bold;
++}
++
++.toggle-visibility-button {
++    font-family: 'Cairo' !important;
++    color: #545454 !important;
++    font-weight: bold !important;
++    border-radius: 0 !important;
++    transition: 0.4s all;
++}
++
++.toggle-visibility-button:hover {
++    color: #92b13c !important;
++}
++
++.toggle-visibility-button:active,
++.toggle-visibility-button:focus {
++    box-shadow: none !important;
++    outline: none;
++}
++
++#main div.container div.info-wrapper section.handouts {
++    border: 1px solid #ededed;
++    padding: 15px 10px;
++}
++
++#main div.container div.info-wrapper section.handouts h3.handouts-header {
++    font-family: 'Cairo' !important;
++    padding: 0;
++    color: #545454;
++    margin-bottom: 10px;
++    margin-top:10px;
++    border-bottom: 1px solid #ededed;
++    padding-bottom: 10px;
++}
++
++#main div.container div.info-wrapper section.handouts>div{
++    padding-bottom: 10px;
++}
++
++div.date-summary.date-summary-end-date p.description {
++    font-family: 'Cairo' !important;
++}
++
++button.toggle-visibility-button.show-older-updates {
++    background: #93D3DE;
++    border-radius: 5px !important;
++    box-shadow: none;
++    border: none;
++    color: white !important;
++    text-shadow: none;
++}
++
++
++
++/* Skills */
++
++ol.tabs.course-tabs {
++    padding-top: 0;
++}
++
++.window-wrap {
++    background: white;
++}
++
++.wrapper-course-material .course-tabs li a.active {
++    border-bottom-color: #93D3DE !important;
++}
++
++.content-wrapper .page-header {
++    border: none;
++}
++
++.content-wrapper .container {
++    border: none;
++}
++
++.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course {
++    background-color: #91d3df;
++    border: none;
++    transition: all 0.4s;
++    margin-right: 0;
++    padding: 7px 15px;
++    font-weight: bold;
++}
++
++.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course:hover {
++    background-color: #549fa8;
++}
++
++.page-header.has-secondary {
++    padding: 15px 0;
++}
++
++.page-content {
++    padding: 0px !important;
++}
++
++.page-content .layout{
++    margin: 0;
++    max-width: 100%;
++    border-top: 1px solid #ededed;
++    margin-top: 10px;
++    border-right: 1px solid #ededed;
++}
++
++main.layout-col.layout-col-b {
++    padding-top: 20px;
++    border-right: 1px solid #ededed;
++    margin: 0 !important;
++    padding-left: 10px;
++    padding-right: 10px;
++}
++
++aside.course-sidebar.layout-col.layout-col-a {
++    margin: 0 auto;
++    padding-left: 0;
++}
++
++
++aside.course-sidebar.layout-col.layout-col-a .section {
++    padding: 0;
++}
++
++aside.course-sidebar.layout-col.layout-col-a {
++    padding-top: 20px;
++}
++
++aside.course-sidebar.layout-col.layout-col-a h3.hd-6 {
++    border-bottom: 1px solid #ededed;
++    padding-bottom: 10px;
++    margin-bottom: 10px;
++    color: #545454;
++    font-weight: bold;
++}
++
++.date-summary, .date-summary .hd-6.hd {
++    font-size: 12px;
++}
++
++.date-summary {
++    margin-bottom: 5px;
++}
++
++.section-name {
++    margin: 0 !important;
++}
++
++.section-name h3 {
++    border-left: 10px solid #ededed;
++    padding-left: 10px;
++    transition: 0.4s all;
++    padding-bottom: 10px;
++    padding-top: 6px;
++}
++
++.section-name h3:hover {
++    border-left-color: #8fd3e0;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection {
++    border: none;
++    border-left: 1px solid #ededed;
++    border-radius: 0;
++    transition: 0.3s all;
++    margin-left: 9px;
++    margin-bottom: 0;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection:hover {
++    border: none;
++    border-left: 8px solid #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection a.outline-item {
++    padding-left: 20px;
++    color: #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection a.outline-item:hover {
++    background: #f9f9f9;
++    border-radius: 0;
++    color: #545454;
++}
++
++.content-wrapper .page-header .page-title {
++    color: #91d3df;
++    font-weight: bold;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection.current {
++    border-radius: 0;
++    border: none;
++    border-left: 5px solid #92b13c;
++    border-right: 5px solid #92b13c;
++    border-bottom: 1px solid #92b13c;
++    border-top: 1px solid #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection.current:hover {
++    border-right: 10px solid #92b13c;
++    border-left: 10px solid #92b13c;
++}
++
++.content-wrapper .page-header .page-title {
++    color: #91d3df;
++}
++
++
++.home .page-header-main .page-title {
++    color: #91d3df; 
++    font-family: 'Cairo';  
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
++    font-family: 'Cairo';
++}
++
++div.info-wrapper section.handouts, div.info-wrapper section.handouts .handouts-header, .date-summary-container .date-summary .description {
++    font-family: 'Cairo' !important;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline {
++    border-left: 3px solid #92b13c;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a {
++    color: #92b13c;
++    font-weight: bold;
++    border-left: 5px solid #ededed;
++    padding-left: 5px;
++    padding-right: 10px;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a:hover {
++    border-left: 7px solid #92b13c;
++    color: #545454;
++    background: #f9f9f9;
++}
++
++/* Login Register Form */
++
++input,
++select,
++h1,
++h2,
++h3,
++h4,
++button.forgot-password.field-link {
++    font-family: 'Cairo' !important;
++}
++
++div#login-and-registration-container {
++    padding: 0 40px;
++    border-bottom: 10px solid;
++    border-top: 10px solid;
++    border-right: 10px solid;
++    border-left: 10px solid;
++    border-color: #fcfcfc;
++    border-color: transparent;
++    margin-top: 20px;
++}
++
++div#login-and-registration-container .toggle-form {
++/*     background: #ededed2b; */
++    padding: 5px 0;
++    padding-left: 10px;
++    border-left: 5px solid #91d3df;
++}
++
++div#login-and-registration-container input,
++div#login-and-registration-container select,
++div#login-and-registration-container textarea {
++    border-color: transparent;
++    box-shadow: none;
++    outline: none;
++    margin: 10px 0;
++    margin-bottom: 3px;
++    border-bottom: 1px solid;
++    border-bottom-color: #bdd700;
++    padding-bottom: 5px;
++    padding-top: 5px;
++    color: #545454;
++    background: #fcfcfc;
++    height: auto;
++    transition: 0.2s all;
++}
++
++div#login-and-registration-container textarea {
++    height: 100px;
++}
++
++div#login-and-registration-container input:focus {
++    border-bottom: 3px solid #bdd700;
++}
++
++div#login-and-registration-container label {
++    font-weight: 400;
++}
++
++div#login-and-registration-container .supplemental-link {
++    margin-top: 0;
++}
++
++div#login-and-registration-container .supplemental-link a{
++    border-left: 7px solid #dadada;
++    color: #545454;
++/*     text-decoration: none; */
++    font-size: 12px;
++    font-weight: 400;
++    padding: 2px;
++    padding-bottom: 4px;
++    padding-left: 5px;
++    display: block;
++}
++
++div#login-and-registration-container .supplemental-link a:hover {
++    border-left: 10px solid #c7df29;
++    background: #fcfcfc;
++    text-decoration: none;
++    font-weight: bold;
++}
++
++div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button,
++div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button {
++   background: #bdd900;
++   border: none;
++   box-shadow: none;
++   border-radius: 0;
++   border-left: 5px solid #a2b725;
++   color: #ffffff;
++   font-weight: 400;
++   box-shadow: 0px 0px 5px 0px #bcdb0040;
++   transition: 0.2s all;
++}
++
++div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button:hover,
++div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button:hover {
++
++    border-left: 7px solid #a2b725;
++    box-shadow: 0px 0px 5px 0px #9db70285;
++}
++
+diff --git a/themes/kkux/lms/static/custom_css/lms-custom-rtl.css b/themes/kkux/lms/static/custom_css/lms-custom-rtl.css
+index 1b0a3ca..620d493 100644
+--- a/themes/kkux/lms/static/custom_css/lms-custom-rtl.css
++++ b/themes/kkux/lms/static/custom_css/lms-custom-rtl.css
+@@ -358,3 +358,549 @@ h3.course-title a {
+     font-weight: 600 !important;
+     color: #BCD13D;
+ }
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.add-to-cart {
++    background: none;
++    border: none;
++    width: auto;
++    letter-spacing:normal;
++    margin-top: 15px;
++    border-top: 1px solid #ededed;
++    padding-top: 10px;
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
++    background: #91d3df;
++    box-shadow: none;
++    text-shadow: none;
++    border: none;
++    letter-spacing: normal;
++    transition: 0.4s all;
++    clear: both;
++    margin-top: 5px;
++    padding: 5px 15px;
++    width: auto;
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong:hover:not(:disabled) {
++    background: #5fbac7;
++}
++
++/* | Course Page */
++/* |-- Info Page */
++
++nav.wrapper-preview-menu {
++    background: none;
++}
++
++nav.wrapper-preview-menu .preview-actions {
++    border-right: 10px solid #BCD13D;
++    padding-right: 10px;
++}
++
++nav.wrapper-preview-menu .action-preview-label {
++    font-weight: 600;
++}
++
++nav.wrapper-preview-menu .action-preview-select {
++    border: none;
++    background: none;
++    color: #5fbac7;
++    font-weight: 600;
++    padding-right: 0;    
++}
++
++nav.wrapper-course-material .course-material {
++    border-top: 1px solid #ededed;
++    border-bottom: 1px solid #ededed;
++    margin-bottom: 10px;
++    padding-top: 0;
++    margin-top: 5px;
++}
++
++nav.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a.active {
++    color: #2d2d2d !important;
++    font-weight: bolder;
++}
++
++nav.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a:hover {
++    color: #2d2d2d !important;
++    border-bottom-color: #f1f1f1;
++}
++
++.wrapper-course-material .course-tabs li a, .wrapper-course-material .course-tabs li a:visited {
++    padding-top: 13px !important;
++}
++
++#main div.container div.home {
++    border: none;
++    box-shadow: none;
++    padding: 0 !important;
++    max-width: 1180px;
++    padding: 10px 0 !important;
++}
++
++#main div.container div.home .page-header-secondary {
++    background-color: #91d3df;
++    transition: all 0.4s;
++    margin-left: 0;
++    padding: 7px 15px;
++}
++
++#main div.container div.home .page-header-secondary:hover {
++    background-color: #549fa8;
++}
++
++#main div.container div.home .page-header-secondary a {
++    font-weight: bolder;
++}
++
++#main div.container div.info-wrapper {
++    border:none;
++    box-shadow: none;
++    background: none;
++}
++
++#main div.container div.info-wrapper section.updates {
++    border-top: 1px solid #ededed;
++    padding: 20px 0 20px 10px;
++}
++
++#main div.container div.info-wrapper section.updates h3.hd.hd-3 {
++    color: #92b13c;
++    font-weight:600;
++}
++
++#main div.container div.info-wrapper section.updates article.updates-article {
++    border: none;
++    border-top: 1px solid #ededed;
++    border-right: 5px solid #b6b6b6;
++    padding: 0;
++    padding-top: 5px;
++    padding-right: 10px;
++    border-radius: 0;
++    transition: 0.4s all;
++}
++
++#main div.container div.info-wrapper section.updates article.updates-article:hover {
++    border: none;
++    border-top: 1px solid #ededed;
++    border-right: 5px solid #92b13c;
++    border-radius: 0;
++}
++
++div.info-wrapper section.updates>ol>li .date, div.info-wrapper section.updates>ol article .date, div.info-wrapper section.updates section>li .date, div.info-wrapper section.updates section article .date, div.info-wrapper section.updates div>li .date, div.info-wrapper section.updates div article .date {
++    background-position: right;
++    font-family: 'Cairo';
++    font-weight: bold;
++}
++
++.toggle-visibility-button {
++    font-family: 'Cairo' !important;
++    color: #545454 !important;
++    font-weight: bold !important;
++    border-radius: 0 !important;
++    transition: 0.4s all;
++}
++
++.toggle-visibility-button:hover {
++    color: #92b13c !important;
++}
++
++.toggle-visibility-button:active,
++.toggle-visibility-button:focus {
++    box-shadow: none !important;
++    outline: none;
++}
++
++#main div.container div.info-wrapper section.handouts {
++    border: 1px solid #ededed;
++    padding: 15px 10px;
++}
++
++#main div.container div.info-wrapper section.handouts h3.handouts-header {
++    font-family: 'Cairo' !important;
++    padding: 0;
++    color: #545454;
++    margin-bottom: 10px;
++    margin-top:10px;
++    border-bottom: 1px solid #ededed;
++    padding-bottom: 10px;
++}
++
++#main div.container div.info-wrapper section.handouts>div{
++    padding-bottom: 10px;
++}
++
++div.date-summary.date-summary-end-date p.description {
++    font-family: 'Cairo' !important;
++}
++
++button.toggle-visibility-button.show-older-updates {
++    background: #93D3DE;
++    border-radius: 5px !important;
++    box-shadow: none;
++    border: none;
++    color: white !important;
++    text-shadow: none;
++}
++
++
++/* Skills */
++
++ol.tabs.course-tabs {
++    padding-top: 0;
++}
++
++.window-wrap {
++    background: white;
++}
++
++.wrapper-course-material .course-tabs li a.active {
++    border-bottom-color: #93D3DE !important;
++}
++
++.content-wrapper .page-header {
++    border: none;
++}
++
++.content-wrapper .container {
++    border: none;
++}
++
++.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course {
++    background-color: #91d3df;
++    border: none;
++    transition: all 0.4s;
++    margin-left: 0;
++    padding: 7px 15px;
++    font-weight: bold;
++}
++
++.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course:hover {
++    background-color: #549fa8;
++}
++
++.page-header.has-secondary {
++    padding: 15px 0;
++}
++
++.page-content {
++    padding: 0px !important;
++}
++
++.page-content .layout{
++    margin: 0;
++    max-width: 100%;
++    border-top: 1px solid #ededed;
++    margin-top: 10px;
++    border-left: 1px solid #ededed;
++}
++
++main.layout-col.layout-col-b {
++    padding-top: 20px;
++    border-left: 1px solid #ededed;
++    margin: 0 !important;
++    padding-left: 10px;
++    padding-right: 10px;
++}
++
++aside.course-sidebar.layout-col.layout-col-a {
++    margin: 0 auto;
++    padding-right: 0;
++}
++
++
++aside.course-sidebar.layout-col.layout-col-a .section {
++    padding: 0;
++}
++
++aside.course-sidebar.layout-col.layout-col-a {
++    padding-top: 20px;
++}
++
++aside.course-sidebar.layout-col.layout-col-a h3.hd-6 {
++    border-bottom: 1px solid #ededed;
++    padding-bottom: 10px;
++    margin-bottom: 10px;
++    color: #545454;
++    font-weight: bold;
++}
++
++.date-summary, .date-summary .hd-6.hd {
++    font-size: 12px;
++}
++
++.date-summary {
++    margin-bottom: 5px;
++}
++
++.section-name {
++    margin: 0 !important;
++}
++
++.section-name h3 {
++    border-right: 10px solid #ededed;
++    padding-right: 10px;
++    transition: 0.4s all;
++    padding-bottom: 10px;
++    padding-top: 6px;
++}
++
++.section-name h3:hover {
++    border-right-color: #8fd3e0;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection {
++    border: none;
++    border-right: 1px solid #ededed;
++    border-radius: 0;
++    transition: 0.3s all;
++    margin-right: 9px;
++    margin-bottom: 0;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection:hover {
++    border: none;
++    border-right: 8px solid #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection a.outline-item {
++    padding-right: 20px;
++    color: #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection a.outline-item:hover {
++    background: #f9f9f9;
++    border-radius: 0;
++    color: #545454;
++}
++
++.content-wrapper .page-header .page-title {
++    color: #91d3df;
++    font-weight: bold;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection.current {
++    border-radius: 0;
++    border: none;
++    border-right: 5px solid #92b13c;
++    border-left: 5px solid #92b13c;
++    border-bottom: 1px solid #92b13c;
++    border-top: 1px solid #92b13c;
++}
++
++.course-outline .block-tree .section ol.outline-item .subsection.current:hover {
++    border-right: 10px solid #92b13c;
++    border-left: 10px solid #92b13c;
++}
++
++.content-wrapper .page-header .page-title {
++    color: #91d3df;
++}
++
++.resume-right span.icon.fa.fa-arrow-circle-right {
++    transform: rotate(180deg);
++}
++
++
++.home .page-header-main .page-title {
++    color: #91d3df; 
++    font-family: 'Cairo';  
++}
++
++.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
++    font-family: 'Cairo';
++}
++
++div.info-wrapper section.handouts, div.info-wrapper section.handouts .handouts-header, .date-summary-container .date-summary .description {
++    font-family: 'Cairo' !important;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline {
++    border-right: 3px solid #92b13c;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a {
++    color: #92b13c;
++    font-weight: bold;
++    border-right: 5px solid #ededed;
++    padding-right: 5px;
++    padding-left: 10px;
++    font-size: 12px;
++    padding-top: 4px;
++    padding-bottom: 4px;
++}
++
++.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a:hover {
++    border-right: 7px solid #92b13c;
++    color: #545454;
++    background: #f9f9f9;
++}
++
++
++/* Course Section */
++
++.course-wrapper {
++    border: none !important;
++    box-shadow: none !important;
++}
++
++.breadcrumbs {
++    background: #f9f9f9;
++    padding: 5px;
++    border-right: 11px solid #92b13c;
++}
++
++.course-wrapper main {
++    padding: 0;
++}
++
++button.sequence-nav-button {
++    border-radius: 0 !important;
++}
++
++span.fa.fa-fw.fa-bookmark.bookmark-icon.is-hidden {
++    display: none;
++}
++
++.xmodule_display.xmodule_VideoModule .video {
++    background: none;
++    border-radius: 0;
++}
++
++.xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .vcr .vidtime {
++    font-family: 'Cairo' !important;
++}
++
++.xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .control .icon.fa.fa-play {
++    transform: rotate(180deg);
++}
++
++button.sequence-nav-button.button-next {
++    border-left: 3px solid #c8c8c8 !important;
++    transition: 0.2s all;
++    color: #92b13c;
++}
++
++button.sequence-nav-button.button-next:hover {
++    border-bottom: 1px solid #c8c8c8 !important;
++    border-left: 8px solid #92b13c !important;
++    padding-top: 0 !important;
++}
++
++button.sequence-nav-button.button-previous {
++    border-right: 3px solid #c8c8c8 !important;
++    transition: 0.2s all;
++    color: #92b13c;
++}
++
++button.sequence-nav-button.button-previous:hover {
++    border-bottom: 1px solid #c8c8c8 !important;
++    border-right: 8px solid #92b13c !important;
++    padding-top: 0 !important;
++}
++
++/* Login Register Form */
++
++input,
++select,
++h1,
++h2,
++h3,
++h4,
++button.forgot-password.field-link {
++    font-family: 'Cairo' !important;
++}
++
++div#login-and-registration-container {
++    padding: 0 40px;
++    border-bottom: 10px solid;
++    border-top: 10px solid;
++    border-right: 10px solid;
++    border-left: 10px solid;
++    border-color: #fcfcfc;
++    border-color: transparent;
++    margin-top: 20px;
++}
++
++div#login-and-registration-container .toggle-form {
++/*     background: #ededed2b; */
++    padding: 5px 0;
++    padding-right: 10px;
++    border-right: 5px solid #91d3df;
++}
++
++div#login-and-registration-container input,
++div#login-and-registration-container select,
++div#login-and-registration-container textarea {
++    border-color: transparent;
++    box-shadow: none;
++    outline: none;
++    margin: 10px 0;
++    margin-bottom: 3px;
++    border-bottom: 1px solid;
++    border-bottom-color: #bdd700;
++    padding-bottom: 5px;
++    padding-top: 5px;
++    color: #545454;
++    background: #fcfcfc;
++    height: auto;
++    transition: 0.2s all;
++}
++
++div#login-and-registration-container textarea {
++    height: 100px;
++}
++
++div#login-and-registration-container input:focus {
++    border-bottom: 3px solid #bdd700;
++}
++
++div#login-and-registration-container label {
++    font-weight: 400;
++}
++
++div#login-and-registration-container .supplemental-link {
++    margin-top: 0;
++}
++
++div#login-and-registration-container .supplemental-link a{
++    border-right: 7px solid #dadada;
++    color: #545454;
++/*     text-decoration: none; */
++    font-size: 12px;
++    font-weight: 400;
++    padding: 2px;
++    padding-bottom: 4px;
++    padding-right: 5px;
++    display: block;
++}
++
++div#login-and-registration-container .supplemental-link a:hover {
++    border-right: 10px solid #c7df29;
++    background: #fcfcfc;
++    text-decoration: none;
++    font-weight: bold;
++}
++
++div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button,
++div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button {
++   background: #bdd900;
++   border: none;
++   box-shadow: none;
++   border-radius: 0;
++   border-right: 5px solid #a2b725;
++   color: #ffffff;
++   font-weight: 400;
++   box-shadow: 0px 0px 5px 0px #bcdb0040;
++   transition: 0.2s all;
++}
++
++div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button:hover,
++div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button:hover {
++
++    border-right: 7px solid #a2b725;
++    box-shadow: 0px 0px 5px 0px #9db70285;
++}
++
+diff --git a/themes/kkux/lms/templates/dashboard/_dashboard_course_listing.html b/themes/kkux/lms/templates/dashboard/_dashboard_course_listing.html
+index 85b6ce4..bc287ef 100644
+--- a/themes/kkux/lms/templates/dashboard/_dashboard_course_listing.html
++++ b/themes/kkux/lms/templates/dashboard/_dashboard_course_listing.html
+@@ -91,11 +91,17 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
+     </div>
+       <div class="wrapper-course-details">
+         <h3 class="course-title">
++          <%
++              if LANGUAGE_CODE == 'ar':
++                  course_display_name = course_overview.display_name_in_arabic
++              else:
++                  course_display_name = course_overview.display_name_with_default   
++          %>
+           % if show_courseware_link:
+             % if not is_course_blocked:
+-              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
++              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_display_name}</a>
+             % else:
+-              <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
++              <a class="disable-look" data-course-key="${enrollment.course_id}">${course_display_name}</a>
+             % endif
+           % else:
+             <span>${course_overview.display_name_with_default}</span>
+diff --git a/themes/kkux/lms/templates/index.html b/themes/kkux/lms/templates/index.html
+old mode 100644
+new mode 100755
+index 7ac7268..a8b062d
+--- a/themes/kkux/lms/templates/index.html
++++ b/themes/kkux/lms/templates/index.html
+@@ -84,7 +84,7 @@ from kkux.models import News
+             </div>  
+           </div>
+         </div>
+-        
++	
+       </div>
+     </section>
+     <section class="section video-section">

@@ -735,8 +735,12 @@ class ProgramCertificateSignatories(TimeStampedModel):
         help_text='The organization that this signatory belongs to, as it should appear on certificates.'
     )
     signature_image = models.ImageField(
+<<<<<<< HEAD
         max_length=200,
         
+=======
+        max_length=200
+>>>>>>> 88e48880e1a36f8cb8436d5cbaded9eb27b57241
     )
 
     def image_tag(self):
