@@ -69,7 +69,7 @@ html, button, input, select, textarea {font-family: 'Cairo-Regular';}
 #header .navbar-default .navbar-nav > li {list-style: none;}
 /*#header .navbar-default .navbar-nav > li {list-style: none; float: right;}*/
 /*#header .navbar-default .navbar-nav > li.active a {color: #93b045}*/
-#header .navbar-default .navbar-nav > li a {font-size: 24px; line-height: 38px; padding:0 11px; color: #878787; text-decoration: none; display: block; }
+#header .navbar-default .navbar-nav > li a {font-size: 21px; line-height: 38px; padding:0 11px; color: #878787; text-decoration: none; display: block; }
 #header .navbar-default .navbar-nav > li a:hover {color: #93b045}
 /*#header .navbar-header{ float: right; }*/
 /*#header .navbar-nav {float: left;}*/
@@ -118,7 +118,7 @@ ul.right-top {margin-right: 10px;}
 @media (min-width: 768px){
     #header .navbar-header {float: right;}
     #header .navbar-nav>li {float: right;}
-    #header .navbar-nav {float: right;padding-right: 5%;}
+    #header .navbar-nav {margin-left:1px;}
 }
 @media (max-width: 767px) {
     .navbar-brand {padding: 12px 0 12px 15px; }

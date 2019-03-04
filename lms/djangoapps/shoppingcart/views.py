@@ -742,10 +742,9 @@ def billing_details(request,**kwargs):
     in case of the business purchase workflow.
     """
     user = request.user
-    
     if kwargs.get('programs'):
-        cart=ProgramOrder.get_or_create_order(user,kwargs.get('id'))
-        # cart = ProgramOrder.get_cart_for_user(user)
+        program = Program.objects.get(id = kwargs.get('id'))
+        cart=ProgramOrder.get_or_create_order(user,program)
         cart_items=[cart]
     else:
         cart = Order.get_cart_for_user(user)
@@ -801,7 +800,7 @@ def billing_details(request,**kwargs):
             'shoppingcart_items': cart_items,
             'amount': total_cost,
             'form_html': form_html,
-            'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[1],
+            'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[0],
             'currency': settings.PAID_COURSE_REGISTRATION_CURRENCY[0],
             'site_name': configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME),
             'countries':json.dumps(list(countries)),

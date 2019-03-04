@@ -18,7 +18,6 @@ from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.features.enterprise_support.api import enterprise_enabled
-
 from openedx.core.djangoapps.iimbx_programs.views import programs_list
 
 # from openedx.core.djangoapps.iimbx_programs.views import programs_list
@@ -32,7 +31,9 @@ if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
 # Use urlpatterns formatted as within the Django docs with first parameter "stuck" to the open parenthesis
 urlpatterns = (
     '',
-   
+
+    url(r'^leaderboard$', 'leaderboard.views.show_leaderboard', name='leaderboard'),
+    
     url(r'^programs/', include('openedx.core.djangoapps.micro_masters.urls')),
 
     # url(r'^programs/',
@@ -704,6 +705,12 @@ urlpatterns += (
         'courseware.views.views.generate_user_cert',
         name='generate_user_cert',
     ),
+    url(
+        r'^programs/(?P<program_id>[^/]*)/generate_program_cert',
+        'courseware.views.views.generate_program_cert',
+        name='generate_program_cert',
+    ),
+    
 )
 
 # discussion forums live within courseware, so courseware must be enabled first
@@ -961,6 +968,7 @@ if settings.FEATURES.get('ENABLE_OAUTH2_PROVIDER'):
 urlpatterns += (
     url(r'^certificates/', include('certificates.urls', app_name="certificates", namespace="certificates")),
     url(r'^verify_certificates', 'certificates.views.verify_certificates', name="verify_certificates"),
+    url(r'^generate_certificates/', 'certificates.views.generate_certificates', name="generate_certificates"),
 
     # Backwards compatibility with XQueue, which uses URLs that are not prefixed with /certificates/
     url(r'^update_certificate$', 'certificates.views.update_certificate'),

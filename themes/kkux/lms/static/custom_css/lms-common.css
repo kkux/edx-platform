@@ -297,8 +297,8 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
 #header .collapse.in {display: block;}
 #header .navbar-nav {margin: 7.5px -15px;}
 #header .nav > li {position: relative;display: block;}
-#header .nav > li > a{position: relative;display: block;padding: 10px 15px;}
-#header ul.header-rightbar{padding-top: 21px;}
+#header .nav > li > a{position: relative;display: block;padding: 10px 9px;}
+#header ul.header-rightbar{padding-top: 21px;margin-left:0px}
 #header .header-rightbar >li {float: left;list-style-type: none;}
 #header .usermenu {position: relative;}
 /*#header ul.header-rightbar >li> a {line-height: 37px;padding: 10px 15px 12px;position: relative;display: block;text-decoration: none;}*/
@@ -384,7 +384,7 @@ form.search{margin-bottom: 22px;}
     #header .navbar {border-radius: 0px;}
     #header .navbar {position: relative;}
     #header .navbar-collapse.collapse {display: block !important;height: auto !important;padding-bottom: 0;overflow: visible !important;width: auto;border-top: 0;-webkit-box-shadow: none;box-shadow: none;padding-right: 0px;padding-left: 0px;}
-    #header .navbar-nav {float: left;margin: 0;width: auto;padding-top: 20px;padding-left: 5%;list-style: none;}
+    #header .navbar-nav {float: left;margin-left: 18px;width: auto;padding-top: 20px;list-style: none;}
     #header .navbar-nav > li {float: left;}
     #header .navbar-nav > li > a {padding-top: 0;padding-bottom: 0;line-height: 38px;font-size: 20px;background: none;}
     #header .navbar-header {float: left;}

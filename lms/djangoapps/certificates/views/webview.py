@@ -1,16 +1,29 @@
+# -*- coding: utf-8 -*-
 # pylint: disable=bad-continuation
 """
 Certificate HTML webview.
 """
+
 import pdfkit
 import os
 import logging
 import urllib
+import boto3
+from django.conf import settings
 from datetime import datetime
 import pytz
+from reportlab.lib.pagesizes import landscape, A4, letter
+from reportlab.lib.units import inch, cm
+from reportlab.lib.colors import HexColor
+from bidi.algorithm import get_display
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase.ttfonts import TTFont
+import arabic_reshaper
 from uuid import uuid4
 from django.views.decorators.csrf import csrf_exempt
-
+from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
@@ -20,8 +33,9 @@ from django.utils.translation import ugettext as _
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from django.shortcuts import render
-    
+from openedx.core.djangoapps.micro_masters.models import *
 from badges.events.course_complete import get_completion_badge
+from student.models import UserProfile
 from badges.utils import badges_enabled
 from certificates.api import (
     emit_certificate_event,
@@ -38,6 +52,8 @@ from certificates.models import (
     CertificateStatuses,
     GeneratedCertificate
 )
+from django.views.decorators.csrf import csrf_exempt
+from courseware.courses import get_course_by_id
 from courseware.access import has_access
 from edxmako.shortcuts import render_to_response
 from edxmako.template import Template
@@ -641,3 +657,99 @@ def verify_certificates(request):
             return render_to_response("certificates/certificate_verify.html",context)
         except:
             return render_to_response("certificates/certificate_verify.html")
+
+
+@csrf_exempt
+def generate_certificates(request):
+    
+    program_list = Program.objects.all()
+    if request.method == "POST":
+        
+        program = Program.objects.get(id=request.POST.get('program_id'))
+        enrolment_list = program.programenrollment_set.all()
+        course_list = program.courses.all()
+        for enrollment in enrolment_list:
+                from reportlab.pdfgen import canvas 
+                list_grade=[]
+                for course in course_list:
+
+                    course = get_course_by_id( course.course_key, depth=0)
+                    course_grade = CourseGradeFactory().create(enrollment.user, course)
+                    passed = course_grade.passed
+                    if passed:
+                        list_grade.append(passed)
+                if len(course_list) == len(list_grade):
+
+                    try:
+                        
+                        ProgramGeneratedCertificate.create_user_certificate(enrollment.user,program,issued=True)
+                        certificate = ProgramGeneratedCertificate.objects.get(program = program,user=enrollment.user,status="unavailable")
+                        user_obj = UserProfile.objects.get(user=enrollment.user.id)
+                        cert_pdf = "/tmp/certificate"+ certificate.verify_uuid + ".pdf"
+                        canvas = canvas.Canvas(cert_pdf, pagesize=landscape(A4))
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/main-bg.png'), 0, 0, mask="auto")
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/logo.png'), 320, 470, 170, 70, mask="auto")
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/left-logo.png'), 40, 495, 75, 50, mask="auto")
+                      
+                        pdfmetrics.registerFont(TTFont('Arabic-normal',os.path.join(os.path.dirname(os.path.abspath(__file__)),'KacstOne.ttf')))
+                        pdfmetrics.registerFont(TTFont('Helvetica',os.path.join(os.path.dirname(os.path.abspath(__file__)),'lvnm.ttf')))
+                        canvas.setFont('Arabic-normal', 17)
+                        canvas.drawString(270, 370, u"‫تشهد منصة جامعة الملك خالد")
+                        canvas.setFont('Helvetica', 17)
+                        canvas.drawString(495, 370, "KKUx")
+                        canvas.setFont('Arabic-normal', 17)
+                        canvas.drawString(540, 370, u"بأن")
+                        canvas.setFillColor(HexColor('#6dabb6'))                        
+                        canvas.drawString(380, 340, unicode(user_obj.name_in_arabic))
+                        canvas.setFont('Helvetica', 17)
+                        canvas.drawString(380, 310, unicode(request.user.first_name + ' ' + request.user.last_name)   )
+                        canvas.setFont('Arabic-normal', 17)
+                        canvas.setFillColor(HexColor('#8a8a8a'))
+                        canvas.drawString(240, 280, u"في برنامجي الماهر ، اكملت جميع المتطلبات بنجاح")
+                        canvas.setFillColor(HexColor('#6dabb6'))
+                        canvas.drawString(380, 250, program.name_in_arabic)
+                        canvas.setFont('Helvetica', 17)
+                        canvas.drawString(380, 220,unicode(program.name))
+                        canvas.setFillColor(HexColor('#8a8a8a'))
+                        canvas.setFont('Helvetica', 17)
+                        canvas.drawString(368, 190, unicode(certificate.created.date().strftime("%B %d,%Y")))
+                        canvas.setFillColor(HexColor('#96a900'))
+                        canvas.setFont('Arabic-normal', 14)
+                        canvas.drawString(575, 70, "‫الاحمري‬ ‫عبداالله‬ ‫فهد‬ .‫د‬")
+                        canvas.setFillColor(HexColor('#8a8a8a'))
+                        canvas.setFont('Arabic-normal', 14)
+                        canvas.drawString(575, 50, "‫الإلكتروني‬ ‫التعلم‬ ‫عميد‬")
+                        canvas.setFillColor(HexColor('#6dabb6'))
+                        canvas.setFont('Helvetica', 10)
+                        canvas.drawString(150, 130, "KKUx is part of King Khalid University where anyone")
+                        canvas.drawString(150, 115, "can find a professional online courses for the most ")
+                        canvas.drawString(150, 100, "important skills needed for future jobs. This ")
+                        canvas.drawString(150, 85, "certificate has granted after the participant has ")
+                        canvas.drawString(150, 70, "successfully completed the course requirements.")
+                        canvas.drawString(150, 50, arabic_reshaper.reshape("Candidate Serial Number: "))
+                        canvas.setFillColor(HexColor('#ff0000'))
+                        canvas.drawString(280, 50,certificate.candidate_serialno )
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/bottom-logo.png'), 60, 60, 75, 80, mask="auto")
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/stem-img.png'), 450, 70, 75, 70, mask="auto")
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/signature-img.png'), 625, 80, 100, 70, mask="auto")
+                        canvas.save()
+                        certificate.status = "generated"
+                        certificate.save()
+                      
+                        cert = open(cert_pdf,'rb')
+                        with open(cert_pdf, 'r') as pdf:
+                            response = HttpResponse(pdf.read(),content_type='application/pdf')
+                            # conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
+                            # conn.upload_file(cert_pdf,"kkux-storage",'program-certificate/{}'.format(str(certificate.verify_uuid+ ".pdf")) )
+                            logging.info(" certificate generated")   
+                            pdf.closed
+                            return response
+                        os.remove(cert_pdf)
+                    except Exception as e:
+                        logging.info(e)
+                    
+
+        
+ 
+           
+    return render_to_response("generate_certificate.html",{"program_list":program_list})

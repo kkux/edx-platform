@@ -16,6 +16,7 @@ def course_image_url(course, image_key='course_image'):
     """Try to look up the image url for the course.  If it's not found,
     log an error and return the dead link.
     image_key can be one of the three: 'course_image', 'hero_image', 'thumbnail_image' """
+  
     if course.static_asset_path:
         # If we are a static course with the image_key attribute
         # set different than the default, return that path so that

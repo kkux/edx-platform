@@ -233,3 +233,4 @@ def update_example_certificate(request):
 
     # Let the XQueue know that we handled the response
     return JsonResponse({'return_code': 0})
+

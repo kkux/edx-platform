@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Courseware views functions
 """
@@ -6,7 +7,6 @@ import logging
 import urllib
 from collections import OrderedDict, namedtuple
 from datetime import datetime, timedelta
-
 import analytics
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -33,7 +33,16 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from pytz import utc
 from rest_framework import status
 from web_fragments.fragment import Fragment
-
+from reportlab.lib.pagesizes import landscape, A4, letter
+from reportlab.lib.units import inch, cm
+from reportlab.lib.colors import HexColor
+from bidi.algorithm import get_display
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase.ttfonts import TTFont
+import arabic_reshaper
+import os.path
 import shoppingcart
 import survey.utils
 import survey.views
@@ -56,6 +65,9 @@ from courseware.courses import (
     sort_by_announcement,
     sort_by_start_date
 )
+import boto3
+from django.conf import settings
+from openedx.core.djangoapps.micro_masters.models import *
 from courseware.date_summary import VerifiedUpgradeDeadlineDate
 from courseware.masquerade import setup_masquerade
 from courseware.model_data import FieldDataCache
@@ -1336,7 +1348,7 @@ def is_course_passed(course, grade_summary=None, student=None, request=None):
 # Grades can potentially be written - if so, let grading manage the transaction.
 @transaction.non_atomic_requests
 @require_POST
-def generate_user_cert(request, course_id):
+def generate_user_cert(request, course_id,**args):
     """Start generating a new certificate for the user.
 
     Certificate generation is allowed if:
@@ -1393,6 +1405,19 @@ def generate_user_cert(request, course_id):
         _track_successful_certificate_generation(student.id, course.id)
         return HttpResponse()
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def generate_program_cert(request, program_id):
+    
+    program = Program.objects.get(id=program_id)
+    certificate = ProgramGeneratedCertificate.objects.get(program = program,user=request.user)
+    try:
+        conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
+        conn.Bucket("kkux-storage").download_file(str(certificate.verify_uuid)+".pdf")
+        return 
+    except:
+        return HttpResponseBadRequest(u'Could not create certificate')
 
 def _track_successful_certificate_generation(user_id, course_id):  # pylint: disable=invalid-name
     """

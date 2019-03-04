@@ -82,7 +82,6 @@ class XQueueCertInterface(object):
 
         # Get basic auth (username/password) for
         # xqueue connection if it's in the settings
-
         if settings.XQUEUE_INTERFACE.get('basic_auth') is not None:
             requests_auth = HTTPBasicAuth(
                 *settings.XQUEUE_INTERFACE['basic_auth'])
@@ -386,7 +385,6 @@ class XQueueCertInterface(object):
         if self.restricted.filter(user=student).exists():
             cert.status = status.restricted
             cert.save()
-
             LOGGER.info(
                 (
                     u"Student %s is in the embargoed country restricted "
@@ -416,6 +414,7 @@ class XQueueCertInterface(object):
 
         # Finally, generate the certificate and send it off.
         return self._generate_cert(cert, course, student, grade_contents, template_pdf, generate_pdf)
+
 
     def _generate_cert(self, cert, course, student, grade_contents, template_pdf, generate_pdf):
         """

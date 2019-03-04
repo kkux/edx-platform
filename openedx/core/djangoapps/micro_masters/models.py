@@ -131,7 +131,7 @@ class Institution(TimeStampedModel):
     name = models.CharField(max_length=200, unique=True)
     website_url = models.TextField(
         validators=[URLValidator()], blank=True, null=True)
-    logo = models.ImageField(max_length=200, upload_to=content_file_name)
+    logo = models.ImageField(max_length=200)
 
     def image_tag(self):
         return u'<img src="%s" width="50" height="50" />' % self.logo.url
@@ -157,7 +157,7 @@ class Instructor(TimeStampedModel):
     name = models.CharField(max_length=200)
     designation = models.CharField(max_length=200)
     profile_image = models.ImageField(
-        max_length=200, upload_to=content_file_name)
+        max_length=200)
     institution = models.ForeignKey(Institution)
 
     def image_tag(self):
@@ -175,6 +175,26 @@ class Instructor(TimeStampedModel):
 
     def __repr__(self):
         return self.__unicode__()
+
+def increment_serial_number():
+    last_data = ProgramGeneratedCertificate.objects.all().order_by('id').last()
+  
+    if not last_data:
+        return "AA00001"
+    last_serial_number = last_data.candidate_serialno
+    characters = last_serial_number[:2]
+    digits = int(last_serial_number[2:]) + 1
+    if digits > 99999:
+        second_char = characters[1]
+        if second_char == "Z" and digits > 99999:
+            first_char = chr(ord(characters[0]) + 1)
+            characters = first_char + "A"
+        else:
+            second_char = chr(ord(characters[1]) + 1)
+            characters = characters[:1] + second_char + characters[1 + 1:]
+        digits = 1
+
+    return characters + '{0:05}'.format(digits)
 
 
 class Program(TimeStampedModel):
@@ -218,7 +238,8 @@ class Program(TimeStampedModel):
     </section>
     """
 
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=True,verbose_name = 'name in english')
+    name_in_arabic = models.CharField(max_length=200, unique=True)
     start = models.DateField(null=True)
     end = models.DateField(null=True, blank=True)
     short_description = models.TextField(
@@ -232,13 +253,13 @@ class Program(TimeStampedModel):
         null=True
     )
     introductory_video = models.FileField(
-        upload_to=content_file_name,
+     
         blank=True,
         null=True
     )
     overview = models.TextField(null=True, blank=True, default=overview)
     sample_certificate_pdf = models.FileField(
-        upload_to=content_file_name,
+     
         blank=True,
         null=True
     )
@@ -274,7 +295,7 @@ class Program(TimeStampedModel):
         verbose_name_plural = 'Programs'
 
     def __unicode__(self):
-        return self.name
+        return str(self.name)
 
     def __repr__(self):
         return self.__unicode__()
@@ -605,7 +626,7 @@ class ProgramCoupon(TimeStampedModel):
     A user can get a discount offer on course if provide coupon code for programs
     """
     class Meta():
-        app_label = 'micro_masters'
+        app_label = 'micro_masters'   
         verbose_name = 'Program Coupon'
         verbose_name_plural = 'Program Coupons'
 
@@ -715,7 +736,7 @@ class ProgramCertificateSignatories(TimeStampedModel):
     )
     signature_image = models.ImageField(
         max_length=200,
-        upload_to=content_file_name,
+        
     )
 
     def image_tag(self):
@@ -741,8 +762,11 @@ class ProgramGeneratedCertificate(TimeStampedModel):
 
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=32, default='unavailable')
+    key = models.CharField(max_length=32, blank=True, default='')
     verify_uuid = models.CharField(max_length=32, blank=True, default='', db_index=True)
     issued = models.BooleanField(default=False)
+    candidate_serialno = models.CharField(max_length=8, default=increment_serial_number, db_index=True)
 
     def __unicode__(self):
         return self.program.name

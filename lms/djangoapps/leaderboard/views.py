@@ -2,13 +2,13 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from edxmako.shortcuts import render_to_response
-from .models import LeaderBoard
+from leaderboard.models import LeaderBoard
 
 
 @login_required
 def show_leaderboard(request):
     points_leaders = []
-
+    
     leaderboard = LeaderBoard.objects.all() \
         .exclude(points__isnull=True) \
         .exclude(points=0.0) \

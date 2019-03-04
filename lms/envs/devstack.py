@@ -12,7 +12,6 @@ MEDIA_URL = "/"
 
 ORA2_FILEUPLOAD_BACKEND = 'django'
 
-
 DEBUG = True
 USE_I18N = True
 DEFAULT_TEMPLATE_ENGINE['OPTIONS']['debug'] = True

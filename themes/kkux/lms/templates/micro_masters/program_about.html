@@ -30,8 +30,6 @@ from openedx.core.djangolib.markup import HTML, Text
 }
 
 </style>
-
-
 <section class="course-info">
   <header class="program-profile banner">
     <div class="container">
@@ -266,6 +264,20 @@ from openedx.core.djangolib.markup import HTML, Text
           <h2>Instructors</h2>
             <ul class="clear-list list-instructors clearfix">
             % for teacher in program.instructors.select_related():
+            <% 
+                conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+
+                image=teacher.banner_image.url.split("/")[-1]
+
+                image_url = conn.generate_presigned_url(
+                     'get_object',
+                     Params = {
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                            'Key': image
+                        },
+                 )
+            %>
+
               <li class="list-instructor__item">
                 <a href="#">
                   <img src="${teacher.profile_image.url}" alt="${teacher.name}" class="instructor-image">

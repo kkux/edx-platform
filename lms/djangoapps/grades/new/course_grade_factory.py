@@ -32,6 +32,7 @@ class CourseGradeFactory(object):
         At least one of course, collected_block_structure, course_structure,
         or course_key should be provided.
         """
+     
         course_data = CourseData(user, course, collected_block_structure, course_structure, course_key)
         try:
             course_grade, read_policy_hash = self._read(user, course_data)

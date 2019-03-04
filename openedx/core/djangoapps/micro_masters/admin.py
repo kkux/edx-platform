@@ -122,20 +122,20 @@ class ProgramOrderAdmin(admin.ModelAdmin):
 admin.site.register(ProgramOrder, ProgramOrderAdmin)
 
 
-class ProgramCertificateSignatoriesAdmin(admin.ModelAdmin):
-    list_display = ['name', 'title', 'institution', 'program', 'image_tag']
-    list_filter = ['institution__name', 'program__name']
-    search_fields = ['name', 'title']
+# class ProgramCertificateSignatoriesAdmin(admin.ModelAdmin):
+#     list_display = ['name', 'title', 'institution', 'program', 'image_tag']
+#     list_filter = ['institution__name', 'program__name']
+#     search_fields = ['name', 'title']
 
-    class Meta:
-        verbose_name = "Program Certificate Signatories"
-        verbose_name_plural = "Program Certificate Signatories"
+#     class Meta:
+#         verbose_name = "Program Certificate Signatories"
+#         verbose_name_plural = "Program Certificate Signatories"
 
-admin.site.register(ProgramCertificateSignatories, ProgramCertificateSignatoriesAdmin)
+# admin.site.register(ProgramCertificateSignatories, ProgramCertificateSignatoriesAdmin)
 
 
 class ProgramGeneratedCertificateAdmin(admin.ModelAdmin):
-    list_display = ['user', 'program', 'issued']
+    list_display = ['user', 'program', 'issued','candidate_serialno']
     list_filter = ['program', 'user', 'issued']
 
     class Meta:

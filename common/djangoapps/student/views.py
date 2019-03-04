@@ -545,7 +545,7 @@ def complete_course_mode_info(course_id, enrollment, modes=None):
         mode_info['verified_bulk_sku'] = modes['verified'].bulk_sku
         # if there is an expiration date, find out how long from now it is
         if modes['verified'].expiration_datetime:
-            today = datetime.datetime.now(UTC).date()
+            today = datetime.now(UTC).date()
             mode_info['days_for_upsell'] = (modes['verified'].expiration_datetime.date() - today).days
 
     return mode_info
@@ -804,7 +804,7 @@ def dashboard(request):
             user_already_has_certs_for=user_already_has_certs_for
         )
     )
-    
+
     block_courses = frozenset(
         enrollment.course_id for enrollment in course_enrollments
         if is_course_blocked(
@@ -872,6 +872,12 @@ def dashboard(request):
     user_program_certificates=[]
 
     for user_program_enrollment in user_program_enrollments:
+        try:    
+           
+            program_certificate = ProgramGeneratedCertificate.objects.get(program = user_program_enrollment.program,user = user)
+            user_program_certificates.append(program_certificate)
+        except Exception as e:
+            pass
         courses = []
         no_of_courses = len(user_program_enrollment.program.courses.select_related())
         program_grade = 0
@@ -879,6 +885,7 @@ def dashboard(request):
         course_in_progress = 0
         course_not_started = 0
         for course in user_program_enrollment.program.courses.select_related():
+           
             course_enroll = CourseEnrollment.get_enrollment(user, course.course_key)
             courses += [course_enroll]
             if course_enroll in course_enrollments:
@@ -923,7 +930,7 @@ def dashboard(request):
         programs.update({user_program_enrollment.program: courses})
 
         # get user certificate for program
-        user_program_certificates = ProgramGeneratedCertificate.objects.filter(user=user, issued=True)
+        
 
     context = {
         'enterprise_message': enterprise_message,
@@ -1274,7 +1281,7 @@ def change_enrollment(request, check_access=True):
     """
     # Get the user
     user = request.user
-    if len(request.POST.get("program_id")):
+    if len(request.POST.get("program_id",[])):
         user = request.user
         program_id = request.POST.get('program_id', '')
         try:

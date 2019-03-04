@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
   <section class="confirm-enrollment shopping-cart billing-details-view">
       <h3>${_('You can proceed to payment at any point in time. Any additional information you provide will be included in your receipt.')}</h3>
       <div class="billing-data">
-        <% import pdb;pdb.set_trace()%>
+     
         % if order_type == 'business':
           <div class="col-half">
             <h3>${_('Purchasing Organizational Details')}</h3>
@@ -100,21 +100,19 @@ from django.core.urlresolvers import reverse
 
 <script>
 $( document ).ready(function() {
-
-
     x = ${countries}
     for (var i =0; i < x.length; i++) {
        $("#country").append("<option value=" +x[i][0] + ">"+x[i][1]+"</option>")
     }
-$("#country").css("width","463px")
-$("#country").css("background","white")
-y = "${selected_country}"
-x=$('#country option[value=' + y +']')
-x.attr("selected","selected")
+    $("#country").css("width","463px")
+    $("#country").css("background","white")
+    y = "${selected_country}"
+    x=$('#country option[value=' + y +']')
+    x.attr("selected","selected")
 })
 
 
-  $(function() {
+$(function() {
     // $("#phone").intlTelInput("setNumber", "+917878787878");
     var phoneNumber = "${str(parmas.get('cc_phone_number', '')) + str(parmas.get('phone_number', ''))}"
     $("#phone").intlTelInput({

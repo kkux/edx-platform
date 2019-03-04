@@ -66,7 +66,8 @@ def create_invoice(request, certy_cart=None):
     Create invoice at Paytabs end using KKUx wrapper.
     """
     user = request.user
-    if request.POST =={}:
+    if request.POST.get("course_id")
+    :
         cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
         program = False
         total_cost = cart.total_cost
@@ -81,36 +82,28 @@ def create_invoice(request, certy_cart=None):
     #         Order.remove_cart_item_from_order(expired_item, request.user)
     #     cart.update_order_type()
     
+
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "I4e6UR09z4tuv1PjSQtFEBUGe7RX2wDKBRRwJRFiW9MraCL3sfJ6REM5ME3ObGyNypjhgZzd9mEjYqnrF7xwLkCxZFlalUXTjgaA"
-    service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
-    site_url = "http://kkux.org"
-    merchant_email = 'pbshah1326@gmail.com'
-    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
-    return_url = request.build_absolute_uri(
-        reverse("shoppingcart.views.postpay_callback")
-    )
-    url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
+    secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = "www.testing.com"
-    merchant_email = 'prachi.shah@ia.ooo'
-  
-    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
+    site_url = get_processor_config().get('SITE_URL', '')
+    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    ip_merchant = get_processor_config().get('IP_MERCHANT', '-')    
     return_url = request.build_absolute_uri(
         reverse("shoppingcart.views.postpay_callback")
     )
-    # url_service ="http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL"
-    # secret_key =  "i1ZdBsg9c2l1gHoEkOXGoMEMbSNQd4Iw6IJIb0Sn2dpiVOXfCUV1GANSsBJFGrcNaVvlVnJYB8hwWeLy9HAQhnIKYrqETCr4yXpu"
-    # service_key = "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^"
-    # site_url = "http://kkux.org"
-    # merchant_email =  "kkux@kku.edu.sa"
+
     # url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    # secret_key = get_processor_config().get('SECRET_KEY', '')
+    # secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
     # service_key = get_processor_config().get('SERVICE_KEY', '')
-    # site_url = get_processor_config().get('SITE_URL', '')
-    # merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
+    # site_url = "www.testing.com"
+    # merchant_email = 'prachi.shah@ia.ooo'
+  
     # ip_merchant = get_processor_config().get('IP_MERCHANT', '-')
+    # return_url = request.build_absolute_uri(
+    #     reverse("shoppingcart.views.postpay_callback")
+    # )
+   
     amount = "{0:0.2f}".format(total_cost)
     
     ip_merchant = ip_merchant
@@ -149,8 +142,8 @@ def create_invoice(request, certy_cart=None):
 
         if cart.user.first_name:
                 last_name = cart.user.last_name
-        elif  len(full_name)>1:
-                last_name=full_name[1]
+        elif  len(full_name)>2:
+                last_name=full_name[2]
         else:
                 last_name=cart.user.last_name
 
@@ -198,7 +191,6 @@ def create_invoice(request, certy_cart=None):
         KEY=service_key,
     )
     try:
-        # import pdb;pdb.set_trace()
         if not int(response.response_code) == 4012:
             error_html = _get_processor_exception_html()
             return render_to_response('shoppingcart/error.html', {'order': None,

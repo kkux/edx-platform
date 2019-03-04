@@ -69,7 +69,7 @@ def followup_update(request,update=None):
             if (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country): 
                 user_obj_list.append(user_obj)
     page = request.GET.get('page', 1)
-    paginator = Paginator(user_obj_list, 2)
+    paginator = Paginator(user_obj_list, 30)
     try:
         users_page = paginator.page(page)
     except PageNotAnInteger:

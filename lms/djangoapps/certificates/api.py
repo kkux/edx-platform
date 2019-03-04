@@ -5,12 +5,12 @@ Other Django apps should use the API functions defined in this module
 rather than importing Django models directly.
 """
 import logging
-
+import random
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
-
+from openedx.core.djangoapps.micro_masters.models import *
 from branding import api as branding_api
 from certificates.models import (
     CertificateGenerationConfiguration,
@@ -23,12 +23,17 @@ from certificates.models import (
     GeneratedCertificate,
     certificate_status_for_student
 )
+from capa.xqueue_interface import XQueueInterface, make_hashkey, make_xheader
+from courseware.courses import get_course_by_id
+from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
 from certificates.queue import XQueueCertInterface
 from eventtracking import tracker
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
 from util.organizations_helpers import get_course_organizations
 from xmodule.modulestore.django import modulestore
+from django.shortcuts import render
+from wkhtmltopdf.views import PDFTemplateResponse
 
 log = logging.getLogger("edx.certificate")
 MODES = GeneratedCertificate.MODES
@@ -177,6 +182,52 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
             'generation_mode': generation_mode
         })
     return cert.status
+
+
+def generate_program_certificates(request,student, program, insecure=False, generation_mode='batch',
+                               forced_grade=None):
+
+    xqueue = XQueueCertInterface()
+    if insecure:
+        xqueue.use_https = False
+    
+    # generate_pdf = not has_html_certificates_enabled(course_key, course)
+    cert = ProgramGeneratedCertificate.objects.get(user = student,program = program)
+
+    # If cert_status is not present in certificate valid_statuses (for example unverified) then
+    # add_cert returns None and raises AttributeError while accesing cert attributes.
+    if cert is None:
+        return
+
+    if CertificateStatuses.is_passing_status(cert.status):
+        emit_certificate_event('created', student, program, course, {
+            'user_id': student.id,
+            'program_id': unicode(program),
+            'certificate_id': cert.verify_uuid,
+        })
+    # return cert.status
+   
+    program_course_grade = []
+    for course in cert.program.courses.all():
+            course_data = get_course_by_id( course.course_key, depth=0)
+            course_grade = CourseGradeFactory().create(student, course_data)
+            passed = course_grade.passed
+            if passed:
+                program_course_grade.append({"grade":course_grade.percent,"course" :unicode(course_data.id)})
+
+    key = make_hashkey(random.random())
+    cert.key = key
+    contents = {
+            'action': 'create',
+            'username': student.username,
+            'program': str(cert.program),
+            'name': cert.program.name,
+            'grade': program_course_grade,
+            'template_pdf': "certificate-template-{id}-verified.pdf".format(id=cert.program.institution.name),
+
+        }
+    xqueue._send_to_xqueue(contents, key)
+  
 
 
 def regenerate_user_certificates(student, course_key, course=None,

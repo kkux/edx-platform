@@ -2050,6 +2050,7 @@ INSTALLED_APPS = (
     'openedx.core.djangoapps.oauth_dispatch.apps.OAuthDispatchAppConfig',
 
     'third_party_auth',
+    'wkhtmltopdf',
 
     # We don't use this directly (since we use OAuth2), but we need to install it anyway.
     # When a user is deleted, Django queries all tables with a FK to the auth_user table,
@@ -2215,7 +2216,7 @@ INSTALLED_APPS = (
 
     # Learner's dashboard
     'learner_dashboard',
-
+     'lms.djangoapps.leaderboard.apps.LeaderboardConfig',
     # Needed whether or not enabled, due to migrations
     'badges.apps.BadgesConfig',
 

@@ -6,11 +6,19 @@ import urllib
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from openedx.core.djangolib.markup import HTML, Text
-
+import boto3
+from django.conf import settings
 %>
 
 <%namespace name='static' file='../static_content.html'/>
 
+<style type="text/css">
+  
+#wrapper-program-actions{
+    width: 41.88%;
+}
+
+</style>
 <li class="course-item">
   <div class="course-container">
     <article class="course">
@@ -34,8 +42,25 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="wrapper-course-actions" id="wrapper-program-actions">
               <div class="course-actions">
                 <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="enter-course" data-course-key="5">${_('View Path')}<span class="sr">&nbsp;p name</span></a>
+                % if program_certificate:
+                  <%
 
-                  % if share_settings:
+                    verify_uuid = str(program_certificate.verify_uuid) + ".pdf"
+                    conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+                  
+                    arabic_image_url = conn.generate_presigned_url(
+                         'get_object',
+                         Params = {
+                                'Bucket':"kkux-storage" ,
+                                'Key':"program-certificate/"+str(program_certificate.verify_uuid) + ".pdf"
+                            },
+                        
+                     )
+                  %>             
+                <a href=${arabic_image_url} class="enter-course" data-course-key="5">Download Certificate</a>
+              % endif
+               
+              % if share_settings:
                     <%
                       share_url = urllib.quote_plus(request.build_absolute_uri(reverse('program_about', args=str(program.id))))
                       share_window_name = 'shareWindow'
@@ -94,29 +119,15 @@ from openedx.core.djangolib.markup import HTML, Text
 
                 </div>
             </div>
-
+          
            
           </div>
       </section>
-      <footer class="wrapper-messages-primary">
-        <ul class="messages-list">
-          % if program_certificate:
-            <div class="message message-status course-status-certavailable is-shown">
-              <p class="message-copy">Your final grade:
-              <span class="grade-value">${user_program_grade}%</span>.
-              </p>
-              <div class="wrapper-message-primary">
-                <ul class="actions actions-primary">
-                    <li class="action action-certificate">
-                    <a class="btn" href="${reverse('openedx.core.djangoapps.micro_masters.views.prorgam_user_certificate', kwargs={'certificate_uuid': program_certificate.verify_uuid})}" target="_blank" title="This link will open the certificate web view">
-                       View Certificate</a></li>
-                </ul>
-              </div>
-            </div>
-          % endif
+      </div>
+    </div>
 
-        </ul>
-      </footer>
+      
+
     </article>
   </div>
 </li>

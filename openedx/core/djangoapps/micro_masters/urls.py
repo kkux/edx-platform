@@ -6,7 +6,8 @@ from .views import (
     prorgam_user_certificate,
     program_info, program_enroll,
     program_unenroll,
-    program_listing
+    program_listing,
+    
 )
 # from .program_reindex import index_programs_information, reindex_specific_program
 
@@ -29,6 +30,8 @@ urlpatterns = [
     # url(r'^reindex-program/(?P<pk>[0-9]+)/$', reindex_specific_program, name='reindex-program'),
 
     # user program certificate
+  
+
     url(
         r'^certificates/(?P<certificate_uuid>[0-9a-f]{32})/$',
         prorgam_user_certificate,

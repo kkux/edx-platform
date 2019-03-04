@@ -1,0 +1,48 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+<%namespace name='static' file='static_content.html'/>
+<%inherit file="main.html" />
+<style type="text/css">
+	.button-program{
+		color: white !important;
+	}
+	th{
+		font-size: 17px;
+	}
+	.container{
+		width: 100px;
+	}
+</style>
+
+<div class="container">
+<table  class="table table-bordered">
+		  <thead><tr>
+		  	<th class ="col-md-2">Program</th>
+
+		    <th class ="col-md-3">Genrate certificate</th> 
+		</tr>
+		</thead>
+<tbody>
+%for program in program_list:
+<tr>
+	<td>
+	<!-- <div class ="col-md-4"> -->
+		<p><b>${program.name}</b></p>
+	<!-- </div> -->
+	</td>
+	<td>
+	<!-- <div class = "col-md-8 "> -->
+		<form action = ""  method="post">
+			<input type="hidden"  name = "program_id" value = ${program.id} >
+		<input type="submit"  class ="button-program" value = "Generate Certificate">
+		</form>
+	<!-- </div> -->
+</td>
+</tr>
+%endfor  
+</tbody>
+</table>
+</div>
