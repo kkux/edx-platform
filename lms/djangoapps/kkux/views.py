@@ -79,3 +79,13 @@ def followup_update(request,update=None):
 
    
     return render_to_response('followup_update.html', {'users_page':users_page,'update':update})
+
+
+
+def monshaat(request):
+    try:
+        from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+        courses = CourseOverview.objects.filter(course_category='monshaat')
+    except Exception:
+        courses = ''
+    return render_to_response('monshaat.html', {'courses':courses})

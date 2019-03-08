@@ -26160,3 +26160,11 @@ msgstr "مجهود"
 #: lms/templates/courseware/course_about.html
 msgid "Price"
 msgstr "السعر"
+
+#: themes/kkux/lms/templates/monshaat.html
+msgid "Munsha'at Courses"
+msgstr "منشآت المساقات"
+
+#: themes/kkux/lms/templates/monshaat.html
+msgid "There is no Munsha'at Category Courses."
+msgstr "لا توجد دورات من منشات."

@@ -11,10 +11,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='program',
             name='name_arabic',
-            field=models.CharField( unique=True, max_length=200,verbose_name="name in arabic"),
-            preserve_default=False,
+            field=models.CharField(unique=True, max_length=200, verbose_name=b'name in arabic'),
+        ),
+        migrations.AlterField(
+            model_name='programorder',
+            name='currency',
+            field=models.CharField(default=['usd', '$'], max_length=30, blank=True),
         ),
     ]
