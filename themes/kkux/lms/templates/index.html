@@ -135,6 +135,23 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
             <div class="row">
                 <div id="portfoliolist">
                 % for course in courses[:settings.HOMEPAGE_COURSE_MAX]:
+
+                    <%
+                    if course.enrollment_start is not None:
+                        enrollment_start = course.enrollment_start.strftime("%Y-%m-%d")
+                    else: 
+                        enrollment_start = ''
+                    if course.enrollment_end is not None:
+                        enrollment_end = course.enrollment_start.strftime("%Y-%m-%d")
+                    else: 
+                        enrollment_end = ''
+
+                    %>
+
+
+
+
+
                     <div class="col-md-4 col-sm-6 col-xs-12 portfolio all">
                         <div class="featured-block">
                             <a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">
@@ -152,9 +169,9 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
                                           <p>${course.short_description}</p>
                                         <ul>
                                             <li><span class="date-icon"><img src="${static.url('images/calendor-icon.png')}"></span>${course.start.strftime("%d %b %Y")}</li>
-                                            <li><span class="date-icon" style="display: none;">.. EN ${course.enrollment_start.strftime("%Y-%m-%d")} ${course.enrollment_end.strftime("%Y-%m-%d")}</li>
+                                            <li><span class="date-icon" style="display: none;">.. EN ${enrollment_start} ${enrollment_end}</li>
 
-                                            % if time_now.strftime("%Y-%m-%d") <= course.enrollment_end.strftime("%Y-%m-%d"):
+                                            % if time_now.strftime("%Y-%m-%d") <= enrollment_end:
                                                 <li><span class="date-icon" style="display: none;">in between 070 - ${time_now.strftime("%Y-%m-%d")} </li>
                                             % else:
                                                 <li><span class="date-icon" style="display: none;">No! 070 - ${time_now.strftime("%Y-%m-%d")} </li>

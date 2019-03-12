@@ -39,13 +39,103 @@ from django.core.urlresolvers import reverse
 .courses-container .courses .course .course-info .course-date{line-height:20.72px;padding:2px 15px;}
 .courses-container .courses .course:hover .cover-image:before,.courses-container .courses .course:focus .cover-image:before{transition:opacity 0.25s ease-out 0.25s;opacity:0.6;}
 .courses-container .courses .course:hover .cover-image .learn-more,.courses-container .courses .course:focus .cover-image .learn-more{transition:opacity 0.25s ease-out 0.25s;opacity:1;}
+[dir="ltr"] div.monshaat-page-ar {
+display: none;
+}
+[dir="ltr"] div.monshaat-page-en {
+display: flex;
+}
+div.monshaat-page-en .logo {
+width: 20%;
+}
+div.monshaat-page-en .details {
+flex: 1;
+}
+div.monshaat-page-en h1 {
+text-align: left;
+font-weight: 600;
+color: #0f7395;
+}
+div.monshaat-page-en p {
+color: #232323;
+}
+@media only screen and (max-width: 600px) {
+[dir="ltr"] div.monshaat-page-en {
+  flex-direction: column;
+}
+div.monshaat-page-en .logo {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+}
 
+[dir="rtl"] div.monshaat-page-en {
+  display: none;
+}
+[dir="rtl"] div.monshaat-page-ar {
+  display: flex;
+}
+div.monshaat-page-ar .logo {
+  width: 20%;
+}
+div.monshaat-page-ar .details {
+  flex: 1;
+}
+div.monshaat-page-ar h1 {
+  font-weight: 600;
+  color: #0f7395;
+}
+div.monshaat-page-ar p {
+  color: #232323;
+}
+@media only screen and (max-width: 600px) {
+  [dir="rtl"] div.monshaat-page-ar {
+    flex-direction: column;
+  }
+  div.monshaat-page-ar .logo {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
 </style>
 
 % if courses:
 	<section class="find-courses">
 	    <section class="courses-container">
-	    	<h1>${_("Munsha'at Courses")}</h1>
+	    	<div class="monshaat-page-ar">
+  <div class="logo">
+    <img src="https://www.monshaat.gov.sa/sites/all/themes/smea/images/monshaat_new_logo.svg" alt="monshaat logo" />
+  </div>
+
+  <div class="details">
+    <h1>الهيئة العامة للمنشآت الصغيرة والمتوسطة</h1>
+    <p>
+      تسعى الهيئة العامة للمنشآت الصغيرة والمتوسطة إلى بناء القدرات والمهارات للمنشآت ومنسوبيها، ومساعدة رواد الأعمال
+      على تطوير مهاراتهم وابتكاراتهم، من خلال برامج التمكين المختلفة، سواء التدريبية منها أو البرامج المكثفة الهادفة
+      للنمو "<a href="https://tomoh.sa/ar" target="_blank" rel="noopener noreferrer">طموح</a>". بالإضافة لبناء القدرات في القطاعات والتخصصات المهمة والواعدة مثل <a href="https://emtiyaz.monshaat.gov.sa/" target="_blank" rel="noopener noreferrer">الإمتياز التجاري</a> أو <a href="https://tomoh.sa/ar/about/5" target="_blank" rel="noopener noreferrer">التجارة
+          الإلكترونية</a>. ومن هنا تأتي هذه المبادرة لتوفير البرامج التدريبية المفتوحة لخدمة أكير عدد من منشآتنا ورواد أعمالنا.
+    </p>
+  </div>
+
+</div>
+
+<div class="monshaat-page-en">
+
+    <div class="logo">
+      <img src="https://www.monshaat.gov.sa/sites/all/themes/smea/images/monshaat_new_logo.svg" alt="monshaat logo" />
+    </div>
+  
+    <div class="details">
+      <h1>Small & Medium Enterprises General Authority</h1>
+      <p>
+        The General Authority for Small and Medium Enterprises seeks to build the capabilities and skills of the establishments and its employees, and to help the entrepreneurs to develop their skills and innovations through the various empowerment programs, both training and intensive programs aiming for growth "<a href="https://tomoh.sa/ar" target="_blank" rel="noopener noreferrer">Tomoh</a>". As well as capacity building in important and promising sectors and disciplines such as <a href="https://emtiyaz.monshaat.gov.sa/" target="_blank" rel="noopener noreferrer">commercial excellence</a> or <a href="https://tomoh.sa/ar/about/5" target="_blank" rel="noopener noreferrer">e-commerce</a>. This initiative is aimed at providing open training programs to serve a number of our facilities and entrepreneurs.
+      </p>
+    </div>
+  
+  </div>
+
 		    <div class="courses no-course-discovery" role="region" aria-label="List of Courses">
 		        <ul class="courses-listing">
 		        	% for course in courses:
