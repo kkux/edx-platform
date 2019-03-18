@@ -20,7 +20,7 @@
              fullName: null,
 
             // Image data for the user's face photo.
-            // faceImage: '',
+            faceImage: '',
 
             // Image data for the user's ID photo.
             // In the case of an in-course reverification, we won't
@@ -38,7 +38,7 @@
              var headers = {'X-CSRFToken': $.cookie('csrftoken')},
                  data = {};
 
-             // data.face_image = model.get('faceImage');
+             data.face_image = model.get('faceImage');
 
             // The ID photo is optional, since in-course reverification
             // re-uses the image from the initial verification attempt.

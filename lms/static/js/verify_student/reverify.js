@@ -24,6 +24,10 @@
      return new edx.verify_student.ReverifyView({
          errorModel: errorView.model,
          stepInfo: {
+             'face-photo-step': {
+                 platformName: el.data('platform-name'),
+                 captureSoundPath: el.data('capture-sound')
+             },
              'id-photo-step': {
                  platformName: el.data('platform-name'),
                  captureSoundPath: el.data('capture-sound')

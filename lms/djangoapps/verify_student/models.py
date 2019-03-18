@@ -908,9 +908,9 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
             "ExpectedName": self.name,
             "PhotoID": photo_id_url,
             "PhotoIDKey": photo_id_key,
-            "SendResponseTo": callback_url
-            #"UserPhoto": self.image_url("face"),
-            #"UserPhotoKey": self._encrypted_user_photo_key_str(),
+            "SendResponseTo": callback_url,
+            "UserPhoto": self.image_url("face"),
+            "UserPhotoKey": self._encrypted_user_photo_key_str(),
         }
         headers = {
             "Content-Type": "application/json",

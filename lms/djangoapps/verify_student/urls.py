@@ -56,7 +56,7 @@ urlpatterns = patterns(
         name="verify_student_verify_now",
         kwargs={
             'always_show_payment': True,
-            'current_step': views.PayAndVerifyView.ID_PHOTO_STEP,
+            'current_step': views.PayAndVerifyView.FACE_PHOTO_STEP,
             'message': views.PayAndVerifyView.VERIFY_NOW_MSG
         }
     ),

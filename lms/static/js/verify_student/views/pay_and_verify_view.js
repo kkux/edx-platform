@@ -19,6 +19,7 @@ var edx = edx || {};
         subviews: {},
 
         VERIFICATION_VIEW_NAMES: [
+            'face-photo-step',
             'id-photo-step',
             'review-photos-step'
         ],
@@ -53,6 +54,7 @@ var edx = edx || {};
                 'intro-step': edx.verify_student.IntroStepView,
                 'make-payment-step': edx.verify_student.MakePaymentStepView,
                 'payment-confirmation-step': edx.verify_student.PaymentConfirmationStepView,
+                'face-photo-step': edx.verify_student.FacePhotoStepView,
                 'id-photo-step': edx.verify_student.IDPhotoStepView,
                 'review-photos-step': edx.verify_student.ReviewPhotosStepView,
                 'enrollment-confirmation-step': edx.verify_student.EnrollmentConfirmationStepView

@@ -113,7 +113,7 @@ class PayAndVerifyView(View):
     INTRO_STEP = 'intro-step'
     MAKE_PAYMENT_STEP = 'make-payment-step'
     PAYMENT_CONFIRMATION_STEP = 'payment-confirmation-step'
-    # FACE_PHOTO_STEP = 'face-photo-step'
+    FACE_PHOTO_STEP = 'face-photo-step'
     ID_PHOTO_STEP = 'id-photo-step'
     REVIEW_PHOTOS_STEP = 'review-photos-step'
     ENROLLMENT_CONFIRMATION_STEP = 'enrollment-confirmation-step'
@@ -122,7 +122,7 @@ class PayAndVerifyView(View):
         INTRO_STEP,
         MAKE_PAYMENT_STEP,
         PAYMENT_CONFIRMATION_STEP,
-        # FACE_PHOTO_STEP,
+        FACE_PHOTO_STEP,
         ID_PHOTO_STEP,
         REVIEW_PHOTOS_STEP,
         ENROLLMENT_CONFIRMATION_STEP
@@ -134,7 +134,7 @@ class PayAndVerifyView(View):
     ]
 
     VERIFICATION_STEPS = [
-        # FACE_PHOTO_STEP,
+        FACE_PHOTO_STEP,
         ID_PHOTO_STEP,
         REVIEW_PHOTOS_STEP,
         ENROLLMENT_CONFIRMATION_STEP
@@ -142,14 +142,14 @@ class PayAndVerifyView(View):
 
     # These steps can be skipped using the ?skip-first-step GET param
     SKIP_STEPS = [
-        INTRO_STEP
+        INTRO_STEP,
     ]
 
     STEP_TITLES = {
         INTRO_STEP: ugettext_lazy("Intro"),
         MAKE_PAYMENT_STEP: ugettext_lazy("Make payment"),
         PAYMENT_CONFIRMATION_STEP: ugettext_lazy("Payment confirmation"),
-        # FACE_PHOTO_STEP: ugettext_lazy("Take photo"),
+        FACE_PHOTO_STEP: ugettext_lazy("Take photo"),
         ID_PHOTO_STEP: ugettext_lazy("Take a photo of your ID"),
         REVIEW_PHOTOS_STEP: ugettext_lazy("Review your info"),
         ENROLLMENT_CONFIRMATION_STEP: ugettext_lazy("Enrollment confirmation"),
@@ -184,8 +184,8 @@ class PayAndVerifyView(View):
     WEBCAM_REQ = "webcam-required"
 
     STEP_REQUIREMENTS = {
-        # ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ],
-        # FACE_PHOTO_STEP: [WEBCAM_REQ]
+        ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ],
+        FACE_PHOTO_STEP: [WEBCAM_REQ]
     }
 
     # Deadline types
@@ -889,6 +889,7 @@ class SubmitPhotosView(View):
 
     @method_decorator(login_required)
     @method_decorator(outer_atomic(read_committed=True))
+
     def post(self, request):
         """
         Submit photos for verification.
@@ -901,7 +902,7 @@ class SubmitPhotosView(View):
 
         POST Parameters:
 
-            # face_image (str): base64-encoded image data of the user's face.
+            face_image (str): base64-encoded image data of the user's face.
             photo_id_image (str): base64-encoded image data of the user's photo ID.
             full_name (str): The user's full name, if the user is requesting a name change as well.
             course_key (str): Identifier for the course, if initiated from a checkpoint.
@@ -926,9 +927,8 @@ class SubmitPhotosView(View):
         # Retrieve the image data
         # Validation ensures that we'll have a face image, but we may not have
         # a photo ID image if this is a reverification.
-        photo_id_image, response = self._decode_image_data(
-            params.get("photo_id_image")
-        )
+        face_image, photo_id_image, response = self._decode_image_data(
+            params["face_image"], params.get("photo_id_image"))
 
         # If we have a photo_id we do not want use the initial verification image.
         if photo_id_image is not None:
@@ -938,7 +938,7 @@ class SubmitPhotosView(View):
             return response
 
         # Submit the attempt
-        attempt = self._submit_attempt(request.user, photo_id_image, initial_verification)
+        attempt = self._submit_attempt(request.user, photo_id_image, None)
 
         self._fire_event(request.user, "edx.bi.verify.submitted", {"category": "verification"})
         self._send_confirmation_email(request.user)
@@ -960,7 +960,7 @@ class SubmitPhotosView(View):
         params = {
             param_name: request.POST[param_name]
             for param_name in [
-                # "face_image",
+                "face_image",
                 "photo_id_image",
                 "course_key",
                 "full_name"
@@ -987,9 +987,9 @@ class SubmitPhotosView(View):
             )
 
         # The face image is always required.
-        #if "face_image" not in params:
-        #    msg = _("Missing required parameter face_image")
-        #    return None, HttpResponseBadRequest(msg)
+        if "face_image" not in params:
+           msg = _("Missing required parameter face_image")
+           return None, HttpResponseBadRequest(msg)
 
         # If provided, parse the course key and checkpoint location
         if "course_key" in params:
@@ -1022,7 +1022,7 @@ class SubmitPhotosView(View):
             ).format(min_length=NAME_MIN_LENGTH)
             return HttpResponseBadRequest(msg)
 
-    def _decode_image_data(self, photo_id_data=None):
+    def _decode_image_data(self, face_data, photo_id_data=None):
         """
         Decode image data sent with the request.
 
@@ -1038,7 +1038,7 @@ class SubmitPhotosView(View):
         """
         try:
             # Decode face image data (used for both an initial and re-verification)
-            # face_image = decode_image_data(face_data)
+            face_image = decode_image_data(face_data)
 
             # Decode the photo ID image data if it's provided
             photo_id_image = (
@@ -1046,13 +1046,13 @@ class SubmitPhotosView(View):
                 if photo_id_data is not None else None
             )
 
-            return photo_id_image, None
+            return face_image, photo_id_image, None
 
         except InvalidImageData:
             msg = _("Image data is not valid.")
             return None, None, HttpResponseBadRequest(msg)
 
-    def _submit_attempt(self, user, photo_id_image=None, initial_verification=None):
+    def _submit_attempt(self, user, face_image, photo_id_image=None, initial_verification=None):
         """
         Submit a verification attempt.
 
@@ -1067,7 +1067,7 @@ class SubmitPhotosView(View):
         attempt = SoftwareSecurePhotoVerification(user=user)
 
         # We will always have face image data, so upload the face image
-        # attempt.upload_face_image(face_image)
+        attempt.upload_face_image(face_image)
 
         # If an ID photo wasn't submitted, re-use the ID photo from the initial attempt.
         # Earlier validation rules ensure that at least one of these is available.

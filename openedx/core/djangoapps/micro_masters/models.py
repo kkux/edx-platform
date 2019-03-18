@@ -393,7 +393,7 @@ class ProgramOrder(TimeStampedModel):
             cart_order = cls.objects.filter(user=user, status='initiate').order_by('-id')[:1].get()
         except ObjectDoesNotExist:
             # if nothing exists in the database, create a new cart
-           pass
+           cart_order, _created = cls.objects.get_or_create(user=user, status='cart')
         return cart_order
 
     @classmethod
