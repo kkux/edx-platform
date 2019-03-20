@@ -81,7 +81,6 @@ def create_invoice(request, certy_cart=None):
     #         Order.remove_cart_item_from_order(expired_item, request.user)
     #     cart.update_order_type()
     
-
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
     secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
@@ -198,7 +197,6 @@ def create_invoice(request, certy_cart=None):
             request.session['p_id'] = str(response.p_id)
             request.session['ip_customer'] = ip_customer
             request.session['reference_no'] = str(cart.id)
-
             return str(response.payment_url) if certy_cart else HttpResponseRedirect(str(response.payment_url))
     except:
         error_html = _get_processor_exception_html()
@@ -230,7 +228,6 @@ def process_postpay_callback(params):
     """
 
     try:
-        # import pdb;pdb.set_trace()
         result = _payment_accepted(params)
         params = result.get('processor_reply')
         if result['accepted']:
@@ -306,12 +303,11 @@ def _payment_accepted(params):
         Wrong amount or currency: The user did not pay the correct amount.
 
     """
-    # import pdb;pdb.set_trace()
     url_service = get_processor_config().get('WSDL_SERVICE_URL', '')
-    secret_key = "DJjuvuGJCOFTcTnWDvJKpBwq2ndmIJelsyPX2wHFkmyxgWtTrdDROahRxudfdsAG1qD4WkJhHiOYehRGvvxjFPadjotwR3cStQWq"
+    secret_key = get_processor_config().get('SECRET_KEY', '')
     service_key = get_processor_config().get('SERVICE_KEY', '')
-    site_url = "www.testing.com"
-    merchant_email = 'prachi.shah@ia.ooo'
+    site_url = get_processor_config().get('SITE_URL', '')
+    merchant_email = get_processor_config().get('MERCHANT_EMAIL', '')
     
     payment_reference = params.get('payment_reference', '')
     if not payment_reference:
@@ -342,7 +338,6 @@ def _payment_accepted(params):
             'result': result,
         })
         try:
-            # import pdb;pdb.set_trace()
             if params['program'] =='program':
                 order = ProgramOrder.objects.get(id=order_id)
                 total_cost = order.item_price

@@ -263,6 +263,10 @@ body.view-in-course .content-wrapper{padding-bottom: 25px;}
     color:black !important;
     font-weight: 400 !important;
 }
+.verification-process.step-requirements .list-reqs .req .placeholder-art .id-photo {
+    width: 20px !important;
+    padding: 0px 15px 0px 0px !important;
+}
 
 /*header css start*/
 #header, #footer{font-family: 'Cairo-Regular'}

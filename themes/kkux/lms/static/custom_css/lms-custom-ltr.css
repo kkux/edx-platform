@@ -733,9 +733,7 @@ div#login-and-registration-container button.action.action-primary.action-update.
 /* CSS for course verification form */
 
 
-.verification-process * {
-  font-family: 'Cairo' !important;
-}
+
 
 .verification-process .shopping-cart .billing-data .col-half {
   background: none;

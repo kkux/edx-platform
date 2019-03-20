@@ -955,9 +955,7 @@ div#login-and-registration-container button.action.action-primary.action-update.
     box-shadow: 0px 0px 5px 0px #9db70285;
 }
 
-.verification-process * {
-    font-family: 'Cairo' !important;
-}
+
 
 .verification-process .shopping-cart .billing-data .col-half {
     background: none;
