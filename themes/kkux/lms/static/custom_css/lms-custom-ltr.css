@@ -794,3 +794,42 @@ div#login-and-registration-container button.action.action-primary.action-update.
 .verification-process .payment-buttons .purchase .product-info .price {
   color: #9bb946;
 }
+.message.message-upsell.has-actions.is-shown {
+    margin: 15px 10px 10px 10px !important;
+    border-left: 10px solid #f3f3f3;
+    padding-left: 1em !important;
+}
+
+.action-upgrade-container {
+    border-left: 1em solid #94d2dc;
+    padding-left: 0.5em;
+}
+
+.action-upgrade-container a {
+    color: #3d8692;
+}
+
+.action-upgrade-container a:hover {
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.progress-status {
+    display: none;
+}
+
+ol.tabs.course-tabs {
+    padding-bottom: 0;
+}
+
+.course-outline .block-tree .section .section-name h3 {
+    font-size: 1.6rem;
+}
+
+span.subsection-title {
+    font-weight: 600;
+}
+
+.content-wrapper .page-header .page-title {
+    font-size: 2.5rem;
+}

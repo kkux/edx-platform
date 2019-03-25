@@ -88,17 +88,32 @@ from student.helpers import (
       % endif
     </div>
       <div class="wrapper-course-details">
-        <h3 class="course-title">
-          % if show_courseware_link:
-            % if not is_course_blocked:
-              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
-            % else:
-              <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
-            % endif
-          % else:
-            <span>${course_overview.display_name_with_default}</span>
-          % endif
-        </h3>
+        % if context.get('LANGUAGE_CODE') == 'ar':
+            <h3 class="course-title">
+              % if show_courseware_link:
+                % if not is_course_blocked:
+                  <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_in_arabic}</a>
+                % else:
+                  <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_in_arabic}</a>
+                % endif
+              % else:
+                <span>${course_overview.display_name_in_arabic}</span>
+              % endif
+            </h3>
+        % else:
+            <h3 class="course-title">
+              % if show_courseware_link:
+                % if not is_course_blocked:
+                  <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
+                % else:
+                  <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
+                % endif
+              % else:
+                <span>${course_overview.display_name_with_default}</span>
+              % endif
+            </h3>
+        % endif
+
         <div class="course-info">
           <div class="progress-status">
             % if not user_course_grade.get('points', 0.0):
