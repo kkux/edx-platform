@@ -113,18 +113,16 @@ class PayAndVerifyView(View):
     INTRO_STEP = 'intro-step'
     MAKE_PAYMENT_STEP = 'make-payment-step'
     PAYMENT_CONFIRMATION_STEP = 'payment-confirmation-step'
-    FACE_PHOTO_STEP = 'face-photo-step'
     ID_PHOTO_STEP = 'id-photo-step'
     REVIEW_PHOTOS_STEP = 'review-photos-step'
     ENROLLMENT_CONFIRMATION_STEP = 'enrollment-confirmation-step'
 
     ALL_STEPS = [
         INTRO_STEP,
-        MAKE_PAYMENT_STEP,
-        PAYMENT_CONFIRMATION_STEP,
-        FACE_PHOTO_STEP,
         ID_PHOTO_STEP,
         REVIEW_PHOTOS_STEP,
+        MAKE_PAYMENT_STEP,
+        PAYMENT_CONFIRMATION_STEP,
         ENROLLMENT_CONFIRMATION_STEP
     ]
 
@@ -134,7 +132,6 @@ class PayAndVerifyView(View):
     ]
 
     VERIFICATION_STEPS = [
-        FACE_PHOTO_STEP,
         ID_PHOTO_STEP,
         REVIEW_PHOTOS_STEP,
         ENROLLMENT_CONFIRMATION_STEP
@@ -149,7 +146,6 @@ class PayAndVerifyView(View):
         INTRO_STEP: ugettext_lazy("Intro"),
         MAKE_PAYMENT_STEP: ugettext_lazy("Make payment"),
         PAYMENT_CONFIRMATION_STEP: ugettext_lazy("Payment confirmation"),
-        FACE_PHOTO_STEP: ugettext_lazy("Take photo"),
         ID_PHOTO_STEP: ugettext_lazy("Take a photo of your ID"),
         REVIEW_PHOTOS_STEP: ugettext_lazy("Review your info"),
         ENROLLMENT_CONFIRMATION_STEP: ugettext_lazy("Enrollment confirmation"),
@@ -184,8 +180,7 @@ class PayAndVerifyView(View):
     WEBCAM_REQ = "webcam-required"
 
     STEP_REQUIREMENTS = {
-        ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ],
-        FACE_PHOTO_STEP: [WEBCAM_REQ]
+        ID_PHOTO_STEP: [PHOTO_ID_REQ, WEBCAM_REQ]
     }
 
     # Deadline types
@@ -927,8 +922,8 @@ class SubmitPhotosView(View):
         # Retrieve the image data
         # Validation ensures that we'll have a face image, but we may not have
         # a photo ID image if this is a reverification.
-        face_image, photo_id_image, response = self._decode_image_data(
-            params["face_image"], params.get("photo_id_image"))
+        photo_id_image, response = self._decode_image_data(
+            params.get("photo_id_image"))
 
         # If we have a photo_id we do not want use the initial verification image.
         if photo_id_image is not None:
@@ -1022,7 +1017,7 @@ class SubmitPhotosView(View):
             ).format(min_length=NAME_MIN_LENGTH)
             return HttpResponseBadRequest(msg)
 
-    def _decode_image_data(self, face_data, photo_id_data=None):
+    def _decode_image_data(self, photo_id_data=None):
         """
         Decode image data sent with the request.
 
@@ -1037,16 +1032,13 @@ class SubmitPhotosView(View):
 
         """
         try:
-            # Decode face image data (used for both an initial and re-verification)
-            face_image = decode_image_data(face_data)
-
             # Decode the photo ID image data if it's provided
             photo_id_image = (
                 decode_image_data(photo_id_data)
                 if photo_id_data is not None else None
             )
 
-            return face_image, photo_id_image, None
+            return photo_id_image, None
 
         except InvalidImageData:
             msg = _("Image data is not valid.")

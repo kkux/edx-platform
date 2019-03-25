@@ -132,7 +132,6 @@ def create_invoice(request, certy_cart=None):
                 products_per_title += ' || ' + cart_item.line_desc
     # Paymnet gateway only allow 175 characters
     products_per_title = products_per_title[:175]
-
     if hasattr(user, 'profile'):
         full_name = cart.user.profile.name
         full_name = full_name.split(' ')
@@ -143,7 +142,7 @@ def create_invoice(request, certy_cart=None):
         elif  len(full_name)>1:
                 last_name=full_name[-1]
         else:
-                last_name=cart.user.last_name
+                last_name=cart.user.last_name if cart.user.last_name else "Undefine"
 
         mailing_address = cart.user.profile.country_code
         city = cart.user.profile.city
@@ -151,7 +150,7 @@ def create_invoice(request, certy_cart=None):
         phone_number = cart.user.profile.phone_number
     else:
         first_name = cart.user.first_name
-        last_name = cart.user.last_name 
+        last_name = cart.user.last_name if cart.user.last_name else "Undefine"
         mailing_address = ''
         city = ''
         country_code = ''
