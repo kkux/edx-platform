@@ -56,6 +56,16 @@ from student.helpers import (
   % else:
     <% mode_class = '' %>
   % endif
+
+<%
+  if context.get('LANGUAGE_CODE') == 'ar':
+    course_name = course_overview.display_name_in_arabic if course_overview.display_name_in_arabic else course_overview.display_name_with_default
+  else:
+    course_name = course_overview.display_name_with_default
+%>
+
+
+
 <div class="course-container">
 <article class="course${mode_class}">
   <% course_target = reverse('info', args=[unicode(course_overview.id)]) %>
@@ -88,31 +98,18 @@ from student.helpers import (
       % endif
     </div>
       <div class="wrapper-course-details">
-        % if context.get('LANGUAGE_CODE') == 'ar':
-            <h3 class="course-title">
-              % if show_courseware_link:
-                % if not is_course_blocked:
-                  <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_in_arabic}</a>
-                % else:
-                  <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_in_arabic}</a>
-                % endif
-              % else:
-                <span>${course_overview.display_name_in_arabic}</span>
-              % endif
-            </h3>
-        % else:
-            <h3 class="course-title">
-              % if show_courseware_link:
-                % if not is_course_blocked:
-                  <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
-                % else:
-                  <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
-                % endif
-              % else:
-                <span>${course_overview.display_name_with_default}</span>
-              % endif
-            </h3>
-        % endif
+
+        <h3 class="course-title">
+          % if show_courseware_link:
+            % if not is_course_blocked:
+              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_name}</a>
+            % else:
+              <a class="disable-look" data-course-key="${enrollment.course_id}">${course_name}</a>
+            % endif
+          % else:
+            <span>${course_name}</span>
+          % endif
+        </h3>
 
         <div class="course-info">
           <div class="progress-status">
@@ -171,15 +168,15 @@ from student.helpers import (
             % if show_courseware_link:
               % if course_overview.has_ended():
                 % if not is_course_blocked:
-                  <a href="${course_target}" class="enter-course archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
+                  <a href="${course_target}" class="enter-course archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_name}</span></a>
                 % else:
-                  <a class="enter-course-blocked archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
+                  <a class="enter-course-blocked archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_name}</span></a>
                 % endif
               % else:
                 % if not is_course_blocked:
-                  <a href="${course_target}" class="enter-course" data-course-key="${enrollment.course_id}">${_('View Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
+                  <a href="${course_target}" class="enter-course" data-course-key="${enrollment.course_id}">${_('View Course')}<span class="sr">&nbsp;${course_name}</span></a>
                 % else:
-                  <a class="enter-course-blocked" data-course-key="${enrollment.course_id}">${_('View Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
+                  <a class="enter-course-blocked" data-course-key="${enrollment.course_id}">${_('View Course')}<span class="sr">&nbsp;${course_name}</span></a>
                 % endif
               % endif
 
@@ -234,7 +231,7 @@ from student.helpers import (
               <button type="button" class="action action-more" id="actions-dropdown-link-${dashboard_index}" aria-haspopup="true" aria-expanded="false" aria-controls="actions-dropdown-${dashboard_index}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}">
                 <span class="sr">${_('Course options for')}</span>
                 <span class="sr">&nbsp;
-                  ${course_overview.display_name_with_default}
+                  ${course_name}
                 </span>
                 <span class="fa fa-cog" aria-hidden="true"></span>
               </button>
@@ -379,17 +376,7 @@ from student.helpers import (
                   <b class="message-copy-bold">
                     ${_("Pursue a {cert_name_long} to highlight the knowledge and skills you gain in this course.").format(cert_name_long=cert_name_long)}
                   </b><br>
-                    ${Text(_("It's official. It's easily shareable. "
-                        "It's a proven motivator to complete the course. {line_break}"
-                        "{link_start}Learn more about the verified {cert_name_long}{link_end}.")).format(
-                          line_break=HTML('<br>'),
-                          link_start=HTML('<a href="{}" class="verified-info" data-course-key="{}">').format(
-                            marketing_link('WHAT_IS_VERIFIED_CERT'),
-                            enrollment.course_id
-                          ),
-                          link_end=HTML('</a>'),
-                          cert_name_long=cert_name_long
-                        )}
+                    ${Text(_("It's official. It's easily shareable."))}
                 </p>
                 <div class="action-upgrade-container">
                   % if use_ecommerce_payment_flow and course_mode_info['verified_sku']:
@@ -400,7 +387,7 @@ from student.helpers import (
                       <span class="action-upgrade-icon" aria-hidden="true"></span>
                     <span class="wrapper-copy">
                       <span class="copy" id="upgrade-to-verified">${_("Upgrade to Verified")}</span>
-                        <span class="sr">&nbsp;${_(course_overview.display_name_with_default)}</span>
+                        <span class="sr">&nbsp;${_(course_name)}</span>
                     </span>
                   </a>
                 </div>

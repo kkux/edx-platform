@@ -559,3 +559,9 @@ form.search{margin-bottom: 22px;}
     
     width :400px !important;
 }
+
+.view-progress .progress {
+     height: 48px !important; 
+     margin-bottom: 0px !important; 
+     background-color: inherit !important;
+}

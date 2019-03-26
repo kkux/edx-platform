@@ -66,6 +66,7 @@ def create_invoice(request, certy_cart=None):
     Create invoice at Paytabs end using KKUx wrapper.
     """
     user = request.user
+    user_last_name = user.last_name if user.last_name else "Undefine"
     if request.POST.get("course_id"):
         cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
         program = False
@@ -138,11 +139,11 @@ def create_invoice(request, certy_cart=None):
         first_name = cart.user.first_name if cart.user.first_name else full_name[0]
         logging.info(full_name)
         if cart.user.first_name:
-                last_name = cart.user.last_name
+                last_name = cart.user.last_name if cart.user.last_name else user_last_name
         elif  len(full_name)>1:
-                last_name=full_name[-1]
+                last_name=full_name[-1] if full_name[-1] else user_last_name
         else:
-                last_name=cart.user.last_name if cart.user.last_name else "Undefine"
+                last_name=cart.user.last_name if cart.user.last_name else user_last_name
 
         mailing_address = cart.user.profile.country_code
         city = cart.user.profile.city
@@ -150,7 +151,7 @@ def create_invoice(request, certy_cart=None):
         phone_number = cart.user.profile.phone_number
     else:
         first_name = cart.user.first_name
-        last_name = cart.user.last_name if cart.user.last_name else "Undefine"
+        last_name = cart.user.last_name if cart.user.last_name else user_last_name
         mailing_address = ''
         city = ''
         country_code = ''
@@ -187,6 +188,7 @@ def create_invoice(request, certy_cart=None):
         reference_no=str(cart.id),
         KEY=service_key,
     )
+    log.info(response)
     try:
         if not int(response.response_code) == 4012:
             error_html = _get_processor_exception_html()
