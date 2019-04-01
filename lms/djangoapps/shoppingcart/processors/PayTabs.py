@@ -67,14 +67,15 @@ def create_invoice(request, certy_cart=None):
     """
     user = request.user
     user_last_name = user.last_name if user.last_name else "Undefine"
-    if request.POST.get("course_id"):
-        cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
-        program = False
-        total_cost = cart.total_cost
-    else:
+    if 'programs' in request.POST:
         cart = ProgramOrder.get_cart_for_user(user)
         total_cost = cart.item_price
         program = True
+    else:
+        cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
+        program = False
+        total_cost = cart.total_cost
+
     # is_any_course_expired, expired_cart_items, expired_cart_item_names, valid_cart_item_tuples = \
     #     verify_for_closed_enrollment(user, cart)
     # if is_any_course_expired:

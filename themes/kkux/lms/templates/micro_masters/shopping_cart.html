@@ -231,7 +231,7 @@ from openedx.core.lib.courses import course_image_url
           return false;
        }
        event.preventDefault();
-       location.href = "/shoppingcart/billing_details/True/" + String(${order.program.id})
+       location.href = "${reverse('program-billing_details', args=['True',str(order.program.id)])}"
        
    });
 

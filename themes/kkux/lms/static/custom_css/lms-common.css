@@ -561,7 +561,11 @@ form.search{margin-bottom: 22px;}
 }
 
 .view-progress .progress {
-     height: 48px !important; 
+     height: 56px !important; 
      margin-bottom: 0px !important; 
      background-color: inherit !important;
+}
+/* for shopping_cart billing_details */
+.shopping-cart .col-two {
+    padding-left: 18px !important;
 }

@@ -375,7 +375,7 @@ def cert_generation_enabled(course_key):
 
     """
     return (
-        CertificateGenerationConfiguration.current().enabled and
+        CertificateGenerationConfiguration.current().enabled or
         CertificateGenerationCourseSetting.is_enabled_for_course(course_key)
     )
 
