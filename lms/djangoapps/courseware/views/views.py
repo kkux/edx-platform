@@ -832,6 +832,7 @@ def course_about(request, course_id):
             'pre_requisite_courses': pre_requisite_courses,
             'course_image_urls': overview.image_urls,
             'reviews_fragment_view': reviews_fragment_view,
+            'modes':modes
         }
 
         return render_to_response('courseware/course_about.html', context)

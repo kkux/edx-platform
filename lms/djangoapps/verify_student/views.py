@@ -17,7 +17,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.http import Http404, HttpResponse, HttpResponseBadRequest
+from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
@@ -53,6 +53,31 @@ from util.json_request import JsonResponse
 from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger(__name__)
+
+@csrf_exempt
+def upload_image(request,course_id):
+    try:
+        if request.FILES.get('upload-image'):
+            image = request.FILES.get('upload-image')
+            if image.size < 5000000:
+                if image.content_type == 'image/png' or image.content_type == 'image/jpeg':
+                    attempt = SoftwareSecurePhotoVerification(user=request.user)
+                    # face_image = decode_image_data(image.read())
+                    # We will always have face image data, so upload the face image
+                    attempt.upload_photo_id_image(image.read())
+                    initial_verification = None
+                    attempt.mark_ready()
+                    attempt.submit(copy_id_photo_from=initial_verification)
+                    return JsonResponse(status=200)
+                else:
+                    return JsonResponse(status=403)
+            else:
+                return JsonResponse(status=402)
+        else:
+            return JsonResponse(status=401)
+    except Exception as error:
+        log.info('Sorry, Error occured while Uploading you image. Please try again.')
+        return JsonResponse(status=400)
 
 
 class PayAndVerifyView(View):
@@ -931,7 +956,6 @@ class SubmitPhotosView(View):
 
         if response is not None:
             return response
-
         # Submit the attempt
         attempt = self._submit_attempt(request.user, photo_id_image, None)
 
@@ -1044,7 +1068,7 @@ class SubmitPhotosView(View):
             msg = _("Image data is not valid.")
             return None, None, HttpResponseBadRequest(msg)
 
-    def _submit_attempt(self, user, face_image, photo_id_image=None, initial_verification=None):
+    def _submit_attempt(self, user, photo_id_image, initial_verification=None):
         """
         Submit a verification attempt.
 
@@ -1059,7 +1083,7 @@ class SubmitPhotosView(View):
         attempt = SoftwareSecurePhotoVerification(user=user)
 
         # We will always have face image data, so upload the face image
-        attempt.upload_face_image(face_image)
+        # attempt.upload_face_image(face_image)
 
         # If an ID photo wasn't submitted, re-use the ID photo from the initial attempt.
         # Earlier validation rules ensure that at least one of these is available.
@@ -1249,3 +1273,6 @@ class ReverifyView(View):
                 "status": status
             }
             return render_to_response("verify_student/reverify_not_allowed.html", context)
+
+
+

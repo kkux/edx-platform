@@ -2,10 +2,21 @@
   <div class="idphoto view">
     <h3 class="title"><%- gettext( "Take a Photo of Your ID" ) %></h3>
     <div class="instruction">
+      <p><%- gettext("Upload Your Photo ID.") %></p>
+      <p><%- gettext("Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB.") %></p>
+    </div>
+  <form name="upload_img" enctype="multipart/form-data" id="upload_img">
+    <input type="file"  id="upload-image" name="upload-image"></input>
+    <button id="upload_image" type="button" class="upload_submit">Save and Upload</button>
+  </form>
+    <p id="errro_msg"><p>
+    <hr>
+    <h4 style="display:none;"> Or </h4>  
+    <hr>
+    <div class="instruction" style="display:none;" >
       <p><%- gettext("Use your webcam to take a photo of your ID") %></p>
     </div>
-
-    <div class="wrapper-task">
+    <div class="wrapper-task" style="display:none;">
       <div id="idcam" class="task cam"></div>
 
       <div class="wrapper-help">
@@ -14,7 +25,7 @@
 
           <h4 class="title"><%- gettext( "Tips on taking a successful photo" ) %></h4>
 
-          <div class="copy">
+          <div class="copy" style="display:none;" >
             <ul class="list-help">
               <li class="help-item"><%- gettext( "Ensure that you can see your photo and read your name" ) %></li>
               <li class="help-item"><%- gettext( "Make sure your ID is well-lit" ) %></li>
@@ -47,8 +58,7 @@
     </div>
 
     <% if ( nextStepTitle ) { %>
-    <nav class="nav-wizard" id="face_next_button_nav">
-      <button id="next_step_button" class="next action-primary right" disabled title="Next">
+      <button id="next_step_button" style="display:none;" class="next action-primary right" disabled title="Next">
         <%- _.sprintf(
           gettext( "Next: %(nextStepTitle)s" ),
           { nextStepTitle: nextStepTitle }
@@ -58,3 +68,45 @@
     <% } %>
   </div>
 </div>
+
+<script>
+$('#upload_image').click(function()
+{   
+    $(this).prop('disabled', true);
+    var pageURL = $(location).attr("href");
+    var course_key = pageURL.split('/')[5]
+    var form = new FormData(document.getElementById('upload_img'));
+    //append files
+    var file = document.getElementById('upload-image').files[0];
+    if (file) {   
+        form.append('upload-image', file);
+    }
+    $.ajax({
+        type: "POST",
+        url: "/verify_student/upload_image/"+course_key+'/',
+        data: form,             
+        cache: false,
+        contentType: false, //must, tell jQuery not to process the data
+        processData: false,
+        //data: $("#upload_img").serialize(),
+        success: function(data)
+        { 
+          location.href = "/verify_student/upgrade/"+course_key+'/'
+        },
+       error:function(jqXHR, textStatus, errorThrown) {
+          $('#upload_image').prop('disabled', false);
+          var msg = '';
+          if (jqXHR.status === 400) {
+              msg = 'Sorry, error occured while uploading you image. Please try again.';
+          } else if (jqXHR.status === 401) {
+              msg = 'Please upload your photo of your ID.';
+          } else if (jqXHR.status === 403) {
+              msg = 'Please upload valid format your photo ID.';
+          } else if (jqXHR.status === 402) {
+              msg = 'Upload photo ID size must be less than 5MB.';
+          } 
+          $('#errro_msg').html(msg);
+          }
+    });
+});
+</script>

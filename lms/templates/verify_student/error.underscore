@@ -1,4 +1,4 @@
-<div id="error" class="wrapper-msg wrapper-msg-activate">
+<div id="error" class="wrapper-msg wrapper-msg-activate" style="display:none;">
   <div class=" msg msg-activate">
     <span class="msg-icon icon fa fa-exclamation-triangle" aria-hidden="true"></span>
     <div class="msg-content">

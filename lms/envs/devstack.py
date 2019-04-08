@@ -117,7 +117,7 @@ PIPELINE_SASS_ARGUMENTS = '--debug-info'
 
 ########################### VERIFIED CERTIFICATES #################################
 
-FEATURES['AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'] = True
+FEATURES['AUTOMATIC_VERIFY_STUDENT_IDENTITY_FOR_TESTING'] = False
 FEATURES['ENABLE_PAYMENT_FAKE'] = False
 
 CC_PROCESSOR_NAME = 'PayTabs'
@@ -131,9 +131,9 @@ CC_PROCESSOR = {
     "PayTabs": {
             "WSDL_SERVICE_URL": "http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL",
             "SERVICE_KEY": "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^",
-            "SECRET_KEY": "i1ZdBsg9c2l1gHoEkOXGoMEMbSNQd4Iw6IJIb0Sn2dpiVOXfCUV1GANSsBJFGrcNaVvlVnJYB8hwWeLy9HAQhnIKYrqETCr4yXpu",
-            "MERCHANT_EMAIL": "kkux@kku.edu.sa",
-            "SITE_URL": "http://kkux.org"
+            "SECRET_KEY": "FCOPu0Xgw8xWAmT2WMcK6qcxPU52N30sFPiaQgqmoXjZkc1gYd14EeCt9IwWLxpqmIAdY1zmZSmj5nA3AB8fPKJYsfVeMlE93fm1",
+            "MERCHANT_EMAIL": "keyur.rathod@drcsystems.com",
+            "SITE_URL": "www.testing.com"
         }, 
         
 }
@@ -207,9 +207,19 @@ FEATURES['ENABLE_SOFTWARE_SECURE_FAKE'] = True
 
 # Setting for the testing of Software Secure Result Callback
 VERIFY_STUDENT["SOFTWARE_SECURE"] = {
-    "API_ACCESS_KEY": "BBBBBBBBBBBBBBBBBBBB",
-    "API_SECRET_KEY": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "RSA_PUBLIC_KEY": "-----BEGIN RSA PUBLIC KEY-----\nMIGMAoGEAMA2Fy7MZpr6pb9sKoSI/DkbML4QocVSBSicR6NHYyRP3fxyZg+0o5i2\n/CE/gZ++c4x2zrf5HHRKoY1rzvPZXRG9hTsMW0HxyarGCoiWnO/4nmqH7fbtSkjB\nRJBjI6V35cpBxEdAWrt3CxvhsNwYSuFusPuiVnOgBWQQrUI7Schj0mUZAgMBAAE=\n-----END RSA PUBLIC KEY-----\n", 
+    "STORAGE_CLASS": "storages.backends.s3boto.S3BotoStorage", 
+    "STORAGE_KWARGS": {
+        "custom_domain": "kkux-storage.s3.amazonaws.com",
+        "bucket": "kkux-storage", 
+        "default_acl": "private", 
+        "gzip": True, 
+        "location": "identity_verification", 
+        "querystring_auth": True, 
+        "querystring_expire": 300
 }
+}
+
 DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH = "verify_student_disable_account_activation_requirement"
 
 # Skip enrollment start date filtering

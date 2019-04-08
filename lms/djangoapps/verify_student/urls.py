@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls import patterns, url
 
 from lms.djangoapps.verify_student import views
+from lms.djangoapps.verify_student.views import upload_image 
 
 urlpatterns = patterns(
     '',
@@ -104,6 +105,14 @@ urlpatterns = patterns(
         views.ReverifyView.as_view(),
         name="verify_student_reverify"
     ),
+
+    url(
+        r'^upload_image/{course}/$'.format(course=settings.COURSE_ID_PATTERN),
+        upload_image,
+        name="upload_image"
+    ),
+
+
 )
 
 # Fake response page for incourse reverification ( software secure )
