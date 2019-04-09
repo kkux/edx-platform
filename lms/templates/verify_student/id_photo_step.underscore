@@ -100,7 +100,7 @@ $('#upload_image').click(function()
               msg = 'Sorry, error occured while uploading you image. Please try again.';
           } else if (jqXHR.status === 403) {
               msg = 'Please upload your photo of your ID.';
-          } else if (jqXHR.status === 402) {
+          } else if (jqXHR.status === 402 || jqXHR.status ===413) {
               msg = 'Please upload valid format your photo ID.';
           } else if (jqXHR.status === 401 || jqXHR.status ===413) {
               msg = 'Upload photo ID size must be less than 5MB.';
