@@ -59,8 +59,8 @@ def upload_image(request,course_id):
     try:
         if request.FILES.get('upload-image'):
             image = request.FILES.get('upload-image')
-            if image.size < 5000000:
-                if image.content_type == 'image/png' or image.content_type == 'image/jpeg':
+            if image.content_type == 'image/png' or image.content_type == 'image/jpeg':
+                if image.size < 5000000:
                     attempt = SoftwareSecurePhotoVerification(user=request.user)
                     # face_image = decode_image_data(image.read())
                     # We will always have face image data, so upload the face image
@@ -70,14 +70,14 @@ def upload_image(request,course_id):
                     attempt.submit(copy_id_photo_from=initial_verification)
                     return JsonResponse(status=200)
                 else:
-                    return JsonResponse(status=403)
+                    return JsonResponse(status=401)
             else:
                 return JsonResponse(status=402)
         else:
-            return JsonResponse(status=401)
+            return JsonResponse(status=403)
     except Exception as error:
         log.info('Sorry, Error occured while Uploading you image. Please try again.')
-        return JsonResponse(status=400)
+        return JsonResponse(status=404)
 
 
 class PayAndVerifyView(View):

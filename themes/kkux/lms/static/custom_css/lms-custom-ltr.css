@@ -833,3 +833,270 @@ span.subsection-title {
 .content-wrapper .page-header .page-title {
     font-size: 2.5rem;
 }
+
+/* ======== Discussion Styling ========== */
+
+/* Side menu */
+
+.forum-nav-browse-menu-wrapper {
+  background: #fff;
+}
+
+.forum-nav {
+  border: none;
+  padding: 0 4rem 0 0;
+}
+
+/* Nav Filter */
+
+.forum-nav-browse-filter {
+  background: #fbfbfb;
+  padding: 0;
+}
+
+.forum-nav-browse-filter-input {
+  font-size: 1.5rem !important;
+  font-weight: 400;
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 0 !important;
+  border-left: 5px solid #ddd;
+  background: transparent;
+  transition: all 0.4s;
+}
+
+.forum-nav-browse-filter-input:focus {
+  outline: none;
+  border-left-color: #93d3de;
+}
+
+.forum-nav-browse-filter .icon {
+  color: #bfbfbf;
+}
+
+.forum-nav-browse-filter label {
+  width: 100%;
+}
+
+
+/* Nav menu */
+
+.forum-nav-browse-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #454545;
+  transition: all 0.2s;
+}
+
+.forum-nav-browse-title:hover {
+  color: #92b03b;
+  border-left: 5px solid #ededed;
+}
+
+.forum-nav-browse-submenu li .forum-nav-browse-title {
+  font-weight: 500;
+}
+
+/* Refinery */
+.forum-nav-refine-bar {
+  font-size: 1.1rem;
+  border-radius: 0;
+  padding: 1rem 0.5rem;
+}
+
+span.forum-nav-thread-title {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.forum-nav-thread-list .thread-preview-body {
+  font-size: 1rem;
+}
+
+/* Main Content */
+.view-discussion-home h2.home-title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.forum-content .label {
+  font-size: 1.5rem;
+  color: #92b03b;
+  text-align: left;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.view-discussion-home .home-header {
+  margin-bottom: 3rem;
+}
+
+.view-discussion-home section {
+  border: none;
+}
+
+/* Discussion Home Help Table */
+
+table.home-helpgrid * {
+  font-size: 1.1rem;
+}
+
+.view-discussion-home .helpgrid-row .row-title {
+  font-family: 'Cairo';
+  font-size: 1.2rem;
+}
+
+/* Post Details */
+
+.discussion-post .post-header-content .post-title {
+  font-size: 3rem;
+}
+
+.discussion .action-button .action-label, .discussion .actions-dropdown .action-list-item, .view-discussion-home .label, .view-discussion-home .home-description, .view-discussion-home .home-stats .stats-grouping .profile-stat, .discussion-article .posted-details, .discussion-comment .response-body, .discussion-post .post-context, .discussion .post-actions-list, .discussion .response-actions-list, .discussion .comment-actions-list {
+  font-size: 1.2rem;
+  font-family: 'Cairo';
+}
+
+.content-wrapper .page-header .page-description, .discussion-response .response-body, .discussion-post .post-body {
+  font-size: 1.5rem;
+  font-family: 'Cairo';
+}
+
+.wmd-preview-label {
+  font-size: 1.5rem;
+  font-family: 'Cairo';
+  font-weight: 200;
+  border-left: 5px solid #cacaca;
+  color: #8c8c8c;
+  background: #ececec;
+  padding-bottom: 5px;
+  padding-left: 7px;
+}
+
+.wmd-input {
+  border-radius: 0;
+  border-bottom: none;
+}
+
+.wmd-preview-container {
+  border-radius: 0;
+}
+
+.discussion .btn.discussion-submit-post, .discussion-module .btn.discussion-submit-post {
+  border: none;
+  border-left: 5px solid #92b03b;
+  border-radius: 0;
+  background: #f9f9f9;
+  font-family: 'Cairo';
+  font-weight: bold;
+  color: #92b03b;
+  font-size: 1.7rem;
+  padding: 0.7rem 3rem;
+}
+
+.discussion-article .posted-details .username, .has-breadcrumbs .breadcrumbs .all-topics {
+  font-family: 'Cairo';
+}
+
+button.btn.btn-small.new-post-btn:hover {
+  color: #768e34;
+  border-left-color: #768e34;
+}
+
+button.btn.btn-small.new-post-btn {
+  border-radius: 0;
+  display: block;
+  padding: 0 2rem;
+  font-family: 'Cairo';
+  font-weight: 700;
+  border: none;
+  border-left: 5px solid #93b045;
+  background: #f9f9f9;
+}
+
+button.btn.btn-small.search-button {
+  border-radius: 0;
+  font-family: 'Cairo';
+  background: #93b045;
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.discussion main.layout-col.layout-col-b {
+  border: none;
+  padding: 0;
+}
+
+button.btn.btn-small.add-response-btn {
+  border-radius: 0;
+  font-family: 'Cairo';
+  font-weight: 600;
+}
+
+.add-response {
+  padding: 0 !important;
+}
+
+.response-count {
+  font-family: 'Cairo';
+  font-size: 1.3rem;
+}
+
+.discussion-post .post-header-content {
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-context {
+  background: #f9f9f9;
+  padding: 0.7rem;
+  padding-left: 1.5rem;
+  border-left: 5px solid #efefef;
+}
+
+header.response-header .response-header-content {
+  border-left: 5px solid #efefef;
+  padding-left: 0.5rem;
+}
+
+header.response-header .response-header-content a {
+  font-size: 1.3rem !important;
+  font-weight: 600;
+}
+
+.discussion .responses .forum-response {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.discussion .comments .comment-form .wmd-input {
+  font-family: 'Cairo';
+  font-size: 1.2rem;
+}
+
+button.btn-brand.discussion-submit-comment.control-button {
+  border-radius: 0;
+  font-family: 'Cairo';
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Create new post */
+
+.forum-new-post-form .post-field .field-label .field-label-text {
+  font-size: 1.4rem;
+  border-left: 5px solid #92b03b;
+  padding: 0.5rem;
+  margin: 1rem 0 0.1rem 0;
+  display: inline-block;
+}
+
+forum-new-post-form .post-field .field-help {
+  color: #979797;
+  font-weight: 100;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}

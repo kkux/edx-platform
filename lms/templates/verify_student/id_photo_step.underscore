@@ -2,12 +2,12 @@
   <div class="idphoto view">
     <h3 class="title"><%- gettext( "Take a Photo of Your ID" ) %></h3>
     <div class="instruction">
-      <p><%- gettext("Upload Your Photo ID.") %></p>
-      <p><%- gettext("Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB.") %></p>
+      <p><%- gettext( "Upload Your Photo ID" ) %></p>
+      <p><%- gettext( "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB" ) %></p>
     </div>
   <form name="upload_img" enctype="multipart/form-data" id="upload_img">
     <input type="file"  id="upload-image" name="upload-image"></input>
-    <button id="upload_image" type="button" class="upload_submit">Save and Upload</button>
+    <button id="upload_image" type="button" class="upload_submit"><%- gettext("Save and Upload") %></button>
   </form>
     <p id="errro_msg"><p>
     <hr>
@@ -96,13 +96,13 @@ $('#upload_image').click(function()
        error:function(jqXHR, textStatus, errorThrown) {
           $('#upload_image').prop('disabled', false);
           var msg = '';
-          if (jqXHR.status === 400) {
+          if (jqXHR.status === 404) {
               msg = 'Sorry, error occured while uploading you image. Please try again.';
-          } else if (jqXHR.status === 401) {
-              msg = 'Please upload your photo of your ID.';
           } else if (jqXHR.status === 403) {
-              msg = 'Please upload valid format your photo ID.';
+              msg = 'Please upload your photo of your ID.';
           } else if (jqXHR.status === 402) {
+              msg = 'Please upload valid format your photo ID.';
+          } else if (jqXHR.status === 401 || jqXHR.status ===413) {
               msg = 'Upload photo ID size must be less than 5MB.';
           } 
           $('#errro_msg').html(msg);

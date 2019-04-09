@@ -9456,3 +9456,17 @@ msgstr "الاسم الأخير"
 
 msgid "First Name"
 msgstr "الاسم الأول"
+
+
+#: lms/templates/verify_student/id_photo_step.underscore
+msgid "Upload Your Photo ID"
+msgstr "قم بتحميل معرف صورتك"
+
+#: lms/templates/verify_student/id_photo_step.underscore
+msgid "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB"
+msgstr "ملاحظات: يجب أن تكون الصورة بتنسيق (.PNG أو .JPG) وأن يكون حجم الصورة أقل من 5 ميجابايت"
+
+#: lms/templates/verify_student/id_photo_step.underscore
+msgid "Save and Upload"
+msgstr "حفظ وتحميل"
+
