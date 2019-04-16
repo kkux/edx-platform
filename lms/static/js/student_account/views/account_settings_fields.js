@@ -364,9 +364,9 @@
                   if (jqXHR.status === 401) {
                     msg = 'Please enter valid English words.';
                     $("#u-field-message-name").html(msg);
-                    $("#field-input-name_in_arabic").css("border", "2px solid red");
+                    $("#field-input-name").css("border", "2px solid red");
                     $("html, body").animate({
-                        scrollTop: $("#field-input-email").offset().top - 500
+                        scrollTop: $("#field-input-name").offset().top - 500
                     });
                   } else if (jqXHR.status === 402) {
                     msg = 'Please enter valid Arabic words.';
@@ -377,6 +377,14 @@
                     });
                   } else if (jqXHR.status === 403) {
                     msg = 'Please enter valid email address.';
+                    $("#u-field-message-email").html(msg);
+                    $("#field-input-email").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 500
+                    });
+                  } 
+                  else if (jqXHR.status === 404) {
+                    msg = 'An account with this e-mail already exists.';
                     $("#u-field-message-email").html(msg);
                     $("#field-input-email").css("border", "2px solid red");
                     $("html, body").animate({

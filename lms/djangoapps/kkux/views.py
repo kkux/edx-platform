@@ -8,7 +8,7 @@ from edxmako.shortcuts import render_to_response
 
 from .models import Subscribers
 from kkux.tasks import send_subcription_activation_mail
-
+from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -110,22 +110,21 @@ def student_data(request):
      # {u'language_proficiencies': [{u'code': u'km'}]}
     ad = AlphabetDetector()
     if not ad.only_alphabet_chars(request.POST.get('name'), "LATIN"):
-        response = JsonResponse({'status':'false','message':'Please enter valid English words.'}, status=401)
-        return response 
+        return JsonResponse(status=401)
     update_1['name'] = request.POST.get('name')
 
     if not ad.only_alphabet_chars(request.POST.get('name_in_arabic'), 'ARABIC'):
-        response = JsonResponse({'status':'false','message':'Please enter valid Arabic words.'}, status=402)
-        return response 
+        return JsonResponse(status=402) 
     update_1['name_in_arabic'] = request.POST.get('name_in_arabic')
- 
 
     if request.POST.get('email') and old_email != request.POST.get('email'):
+        if User.objects.filter(email=request.POST.get('email')).count() != 0:
+            return JsonResponse(status=404)
         try:
             validate_email(request.POST.get('email'))
             update_1['email'] = request.POST.get('email')
         except ValidationError:
-            response = JsonResponse({'status':'false','message':'Enter valid email address.'}, status=403)
+            response = JsonResponse(status=403)
             return response
         update_1['email'] = request.POST.get('email')
     # student_views.validate_new_email(existing_user, new_email)
