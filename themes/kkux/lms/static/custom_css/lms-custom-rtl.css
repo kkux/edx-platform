@@ -1339,3 +1339,8 @@ forum-new-post-form .post-field .field-help {
   font-size: 1rem;
   margin-bottom: 14px;
 }
+
+.checkbox .confirm_text {
+    width: 100%;
+    margin-right: 40px !important;
+}

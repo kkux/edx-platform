@@ -128,21 +128,6 @@ def update_account_settings(requesting_user, update, username=None):
     """
   
     field_errors = {}
-    # First Install this this library "pip install alphabet-detector"
-    # Added By Kava HD
-    from alphabet_detector import AlphabetDetector
-    ad = AlphabetDetector()
-    if update.get("name"):
-        if not ad.only_alphabet_chars(update.get("name"), "LATIN"):
-            field_errors["name"]={"developer_message":"Enter Valid English Words.",
-            "user_message":"Enter Valid English Words."}
-
-    if update.get("name_in_arabic"):
-        if not ad.only_alphabet_chars(update.get("name_in_arabic"), 'ARABIC'):
-            field_errors["name_in_arabic"]={"developer_message":"Enter Valid Arabic Words.",
-            "user_message":"Enter Valid Arabic Words."}
-
-
 
     if username is None:
         username = requesting_user.username

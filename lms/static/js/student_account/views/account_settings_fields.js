@@ -9,6 +9,7 @@
         'text!templates/fields/field_text_account.underscore',
         'text!templates/fields/field_readonly_account.underscore',
         'text!templates/fields/field_link_account.underscore',
+        'text!templates/fields/checkbox.underscore',
         'text!templates/fields/field_dropdown_account.underscore',
         'text!templates/fields/field_social_link_account.underscore',
         'text!templates/fields/field_order_history.underscore',
@@ -20,6 +21,7 @@
         field_text_account_template,
         field_readonly_account_template,
         field_link_account_template,
+        checkbox,
         field_dropdown_account_template,
         field_social_link_template,
         field_order_history_template,
@@ -205,6 +207,189 @@
                     );
                 }
             }),
+
+
+
+
+            checkboxButton: FieldViews.LinkFieldView.extend({
+                fieldType: 'checkbox',
+                fieldTemplate: checkbox,
+
+            }),
+
+
+            SubmitButton: FieldViews.LinkFieldView.extend({
+                fieldType: 'button',
+                fieldTemplate: field_link_account_template,
+                events: {
+                    'click button': 'linkClicked'
+                },
+                initialize: function(options) {
+                    this.options = _.extend({}, options);
+                    this._super(options);
+                    _.bindAll(this, 'resetPassword');
+                },
+                linkClicked: function(event) {
+                    event.preventDefault();
+                    this.resetPassword(event);
+                },
+                resetPassword: function() {
+                var tracker = false;
+                var name_in_arabic = $("#field-input-name_in_arabic").val();
+                if ( name_in_arabic == "") {
+                    $("#field-input-name_in_arabic").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-name_in_arabic").offset().top - 200
+                    });
+                    $("#u-field-message-name_in_arabic").html("Please enter full name in arabic.");
+                    var tracker = true;
+                }
+                var gender = $("#u-field-select-gender").val();
+                if ( gender != "m"  && gender != "f")  {
+                    $("#u-field-select-gender").css("border", "2px solid red");
+                    $("#u-field-message-gender").html("Please select gender.");
+                    var tracker = true;
+                }
+                
+                var email = $("#field-input-email").val();
+                if ( email == "") {
+                    $("#field-input-email").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 101
+                    });
+                    $("#u-field-message-email").html("Please enter email.");
+                    var tracker = true;
+
+                }
+
+                var name = $("#field-input-name").val();
+                if ( name == "") {
+                    $("#field-input-name").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-name").offset().top - 500
+                    });
+                    $("#u-field-message-name").html("Please enter name.");
+                    var tracker = true;
+                }
+
+                var country = $("#u-field-select-country").val();
+                if ( country == "") {
+                    $("#u-field-select-country").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#u-field-select-country").offset().top - 101
+                    });
+                    $("#u-field-message-country").html("Please select your country.");
+                    var tracker = true;
+                }
+
+
+                var pre_language = $("#u-field-select-language_proficiencies").val();
+                if ( pre_language == "") {
+                    $("#u-field-select-language_proficiencies").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 101
+                    }); 
+                    $("#u-field-message-language_proficiencies").html("Please select your language.");
+                    var tracker = true;
+                }
+
+                var language = $("#u-field-select-pref-lang").val();
+                if ( language == "") {
+                    $("#u-field-select-pref-lang").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 101
+                    });
+                    $("#u-field-message-pref-lang").html("Please select your language.");
+                    var tracker = true;
+                }
+                var time_zone = $("#u-field-select-time_zone").val();
+                /*if ( time_zone == "") {
+                    $("#u-field-select-time_zone").css("border", "2px solid red");
+                    $("#u-field-message-time_zone").html("Please select your time zone.");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 101
+                    });
+                    var tracker = true;
+
+                }*/
+
+                var education = $("#u-field-select-level_of_education").val();
+                if (education == ""){
+                    $("#u-field-select-level_of_education").css("border", "2px solid red");
+                    $("#u-field-message-level_of_education").html("Please select your education qualifications.");
+                    var tracker = true;
+                }
+                var year = $("#u-field-select-year_of_birth").val();
+                if (year == ""){
+                    $("#u-field-select-year_of_birth").css("border", "2px solid red");
+                    $("#u-field-message-year_of_birth").html("Please select your year of birth.");
+                    var tracker = true;
+                }
+                var checkbox_val = document.getElementById("checkbox_confirm").checked
+                    if ( checkbox_val === false){
+                        $("#u-field-message-submit_button").html("Please select checkbox.");
+                        $(".checkbox").css('color','red');
+                        return;
+                    }
+                if (tracker === true)
+                {
+                    return;
+
+                }
+                var data = {'name_in_arabic':name_in_arabic,
+                            'gender':gender,
+                            'email':email,
+                            'name':name,
+                            'country':country,
+                            'language':language,
+                            'time_zone':time_zone,
+                            'education':education,
+                            'year':year,
+                            'pre_language':pre_language                               
+                            };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/student_data',
+                    data: data,
+                    success: function() {
+                        $("#u-field-message-submit_button").html("Save Successfully.");
+                        setTimeout(function(){
+                            location.reload(true);
+                        }, 2000);
+                    },
+                error:function(jqXHR, textStatus, errorThrown) {
+                  $('#upload_image').prop('disabled', false);
+                  var msg = '';
+                  if (jqXHR.status === 401) {
+                    msg = 'Please enter valid English words.';
+                    $("#u-field-message-name").html(msg);
+                    $("#field-input-name_in_arabic").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 500
+                    });
+                  } else if (jqXHR.status === 402) {
+                    msg = 'Please enter valid Arabic words.';
+                    $("#u-field-message-name_in_arabic").html(msg);
+                    $("#field-input-name_in_arabic").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-name_in_arabic").offset().top - 500
+                    });
+                  } else if (jqXHR.status === 403) {
+                    msg = 'Please enter valid email address.';
+                    $("#u-field-message-email").html(msg);
+                    $("#field-input-email").css("border", "2px solid red");
+                    $("html, body").animate({
+                        scrollTop: $("#field-input-email").offset().top - 500
+                    });
+                  } 
+                  }
+                });
+            },
+        }),
+
+
+
             LanguageProficienciesFieldView: FieldViews.DropdownFieldView.extend({
                 fieldTemplate: field_dropdown_account_template,
                 modelValue: function() {

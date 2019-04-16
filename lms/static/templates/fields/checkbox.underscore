@@ -1,0 +1,8 @@
+<div class="u-field-value field checkbox ">
+<input type="checkbox" name="checkbox" id = "checkbox_confirm"> 
+<p class="confirm_text">Please check your data and you are responsible of any errors.</p> 
+</div>
+<span class="u-field-message" id="u-field-message-<%- id %>">
+    <span class="u-field-message-notification" aria-live="polite"></span>
+    <span class="u-field-message-help" id="u-field-message-help-<%- id %>"> <%- message %></span>
+</span>

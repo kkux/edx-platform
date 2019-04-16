@@ -722,3 +722,14 @@ form.search{margin-bottom: 22px;}
     text-align: center;
     text-decoration: none;
     border-bottom: 4px solid
+}
+.checkbox input
+{
+    width: 10% !important;
+    margin-left: 5px !important;
+}
+.checkbox .confirm_text
+{
+    margin-left: 40px;
+    width: 100%;
+}

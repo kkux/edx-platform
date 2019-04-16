@@ -1011,6 +1011,7 @@ urlpatterns += (
     url(r'subsciption/activation/(?P<activation_code>[^/]+)/', 'kkux.views.activate', name='subscribe_activate'),
     url(r'followup_update/(?P<update>[^/]+)/', 'kkux.views.followup_update', name='followup_update'),
     url(r'monshaat', 'kkux.views.monshaat', name='monshaat'),
+    url(r'student_data', 'kkux.views.student_data', name='student_data'),
 
 )
 

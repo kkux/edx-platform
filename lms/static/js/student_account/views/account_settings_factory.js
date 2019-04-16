@@ -44,7 +44,7 @@
                             gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'),  // eslint-disable-line max-len
                             {platform_name: platformName}
                         ),
-                        persistChanges: true
+                        persistChanges: false
                     })
                 };
             } else {
@@ -85,7 +85,7 @@
                                 helpMessage: gettext(
                                     'The name that is used for ID verification and appears on your certificates. Other learners never see your full name. Make sure to enter your name exactly as it appears on your government-issued photo ID, including any non-Roman characters.'  // eslint-disable-line max-len
                                 ),
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },                        {
                             view: new AccountSettingsFieldViews.TextFieldView({
@@ -95,7 +95,7 @@
                                 helpMessage: gettext(
                                     'The name that is used for ID verification and appears on your certificates. Other learners never see your full name. Make sure to enter your name exactly as it appears on your government-issued photo ID, including any non-Roman characters.'  // eslint-disable-line max-len
                                 ),
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         emailFieldView,
@@ -127,7 +127,7 @@
                                     {platform_name: platformName}
                                 ),
                                 options: fieldsData.language.options,
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         {
@@ -137,7 +137,7 @@
                                 title: gettext('Country or Region'),
                                 valueAttribute: 'country',
                                 options: fieldsData.country.options,
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         {
@@ -152,7 +152,7 @@
                                     selectOptions: fieldsData.time_zone.options,
                                     nullValueOptionLabel: gettext('Default (Local Time Zone)')
                                 }],
-                                persistChanges: true
+                                persistChanges: false
                             })
                         }
 
@@ -168,7 +168,7 @@
                                 title: gettext('Education Completed'),
                                 valueAttribute: 'level_of_education',
                                 options: fieldsData.level_of_education.options,
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         {
@@ -177,7 +177,7 @@
                                 title: gettext('Gender'),
                                 valueAttribute: 'gender',
                                 options: fieldsData.gender.options,
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         {
@@ -186,7 +186,7 @@
                                 title: gettext('Year of Birth'),
                                 valueAttribute: 'year_of_birth',
                                 options: fieldsData.year_of_birth.options,
-                                persistChanges: true
+                                persistChanges: false
                             })
                         },
                         {
@@ -195,9 +195,27 @@
                                 title: gettext('Preferred Language'),
                                 valueAttribute: 'language_proficiencies',
                                 options: fieldsData.preferred_language.options,
-                                persistChanges: true
+                                persistChanges: false
+                            })
+                        },
+
+                        {
+                            view: new AccountSettingsFieldViews.checkboxButton({
+                                model: userAccountModel,
+                                valueAttribute: 'checkbox'
+                            })
+                        },
+
+                        {
+                            view: new AccountSettingsFieldViews.SubmitButton({
+                                model: userAccountModel,
+                                screenReaderTitle: gettext('Submit'),
+                                valueAttribute: 'submit_button',
+                                helpMessage: gettext('If you change Email ID then , please check your mails.'),
+                                linkTitle: gettext('Submit')
                             })
                         }
+
                     ]
                 }
             ];

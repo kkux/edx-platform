@@ -12,7 +12,10 @@ from kkux.tasks import send_subcription_activation_mail
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from openedx.core.djangoapps.user_api.accounts.api import update_account_settings
+from openedx.core.djangoapps.user_api.preferences.api import update_user_preferences
+from django.core.validators import ValidationError, validate_email
+from alphabet_detector import AlphabetDetector
 
 
 EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
@@ -89,3 +92,47 @@ def monshaat(request):
     except Exception:
         courses = ''
     return render_to_response('monshaat.html', {'courses':courses})
+
+
+def student_data(request):
+    """
+    Added by kava hd
+    this function handle Account page student data and vallidate that data.
+    save into student datebase.
+    """
+    old_email = request.user.email
+    update_1 = {'gender':request.POST.get('gender'),
+                'country': request.POST.get('country'),
+                'level_of_education':request.POST.get('education'),
+                'year_of_birth':request.POST.get('year'),
+                'language_proficiencies':[{'code':request.POST.get('pre_language')}]
+        }
+     # {u'language_proficiencies': [{u'code': u'km'}]}
+    ad = AlphabetDetector()
+    if not ad.only_alphabet_chars(request.POST.get('name'), "LATIN"):
+        response = JsonResponse({'status':'false','message':'Please enter valid English words.'}, status=401)
+        return response 
+    update_1['name'] = request.POST.get('name')
+
+    if not ad.only_alphabet_chars(request.POST.get('name_in_arabic'), 'ARABIC'):
+        response = JsonResponse({'status':'false','message':'Please enter valid Arabic words.'}, status=402)
+        return response 
+    update_1['name_in_arabic'] = request.POST.get('name_in_arabic')
+ 
+
+    if request.POST.get('email') and old_email != request.POST.get('email'):
+        try:
+            validate_email(request.POST.get('email'))
+            update_1['email'] = request.POST.get('email')
+        except ValidationError:
+            response = JsonResponse({'status':'false','message':'Enter valid email address.'}, status=403)
+            return response
+        update_1['email'] = request.POST.get('email')
+    # student_views.validate_new_email(existing_user, new_email)
+    update_account_settings(request.user,update_1)
+    update_2 = {'time_zone':request.POST.get('time_zone') if request.POST.get('time_zone') else None , 'pref-lang':request.POST.get('language') }
+    if request.POST.get('time_zone'):
+        update_2['time_zone'] = request.POST.get('time_zone')
+    update_user_preferences(request.user,update_2)
+    return JsonResponse(status=200)
+
