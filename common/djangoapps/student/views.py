@@ -1027,7 +1027,6 @@ def _create_recent_enrollment_message(course_enrollments, course_modes):  # pyli
         None if there are no recently enrolled courses.
 
     """
-    # import pdb;pdb.set_trace()
     recently_enrolled_courses = _get_recently_enrolled_courses(course_enrollments)
 
     if recently_enrolled_courses:
@@ -1058,7 +1057,6 @@ def _get_recently_enrolled_courses(course_enrollments):
     Returns:
         list[CourseEnrollment]: A list of recent course enrollments.
     """
-    # import pdb;pdb.set_trace()
     seconds = DashboardConfiguration.current().recent_enrollment_time_delta
     time_delta = (datetime.now(UTC) - timedelta(seconds=seconds))
     return [

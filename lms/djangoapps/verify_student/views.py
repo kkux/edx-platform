@@ -80,6 +80,30 @@ def upload_image(request,course_id):
         return JsonResponse(status=404)
 
 
+@csrf_exempt
+def reupload_image(request):
+    try:
+        if request.FILES.get('upload-image'):
+            image = request.FILES.get('upload-image')
+            if image.content_type == 'image/png' or image.content_type == 'image/jpeg':
+                if image.size < 5000000:
+                    initial_verification = None
+                    attempt = SoftwareSecurePhotoVerification.objects.filter(user=request.user)                 
+                    attempt[0].upload_photo_id_image(image.read())
+                    attempt[0].submit(copy_id_photo_from=initial_verification)
+                    return JsonResponse(status=200)
+                else:
+                    return JsonResponse(status=401)
+            else:
+                return JsonResponse(status=402)
+        else:
+            return JsonResponse(status=403)
+    except Exception as error:
+        log.info('Sorry, Error occured while Uploading you image. Please try again.')
+        return JsonResponse(status=404)
+
+
+
 class PayAndVerifyView(View):
     """
     View for the "verify and pay" flow.

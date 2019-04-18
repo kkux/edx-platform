@@ -733,3 +733,6 @@ form.search{margin-bottom: 22px;}
     margin-left: 40px;
     width: 100%;
 }
+.view-profile .profile-image-field .image-wrapper .upload-button-input {
+    top: 0px !important;
+}

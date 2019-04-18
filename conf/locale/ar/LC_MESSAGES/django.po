@@ -26168,3 +26168,20 @@ msgstr "منشآت المساقات"
 #: themes/kkux/lms/templates/monshaat.html
 msgid "There is no Munsha'at Category Courses."
 msgstr "لا توجد دورات من منشات."
+
+#: themes/kkux/lms/templates/dashboard/_dashboard_course_progress_listing.html
+msgid "Current Verification photo ID Reject by KKUX Administration"
+msgstr "معرّف صورة التحقق الحالي مرفوض من قبل إدارة KKUX"
+
+#: themes/kkux/lms/templates/dashboard/_dashboard_course_progress_listing.html
+msgid "Your verification submission was not accepted. To receive a verified certificate, you must submit a new photo of your government-issued photo ID before the verification deadline for your course."
+msgstr "لم يتم قبول تقديم التحقق. لتلقي شهادة تم التحقق منها ، يجب عليك تقديم صورة جديدة لمعرف الصورة الذي أصدرته الحكومة قبل الموعد النهائي للتحقق من دورتك الدراسية."
+
+
+#: themes/kkux/lms/templates/verify_student/reverify.html
+msgid "Please Re-Upload Your Photo ID"
+msgstr "يرجى إعادة تحميل معرف صورتك"
+
+#: themes/kkux/lms/templates/verify_student/reverify.html
+msgid "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB."
+msgstr "ملاحظات: يجب أن تكون الصورة بتنسيق (.PNG أو .JPG) وأن يكون حجم الصورة أقل من 5 ميجابايت."

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls import patterns, url
 
 from lms.djangoapps.verify_student import views
-from lms.djangoapps.verify_student.views import upload_image 
+from lms.djangoapps.verify_student.views import upload_image, reupload_image
 
 urlpatterns = patterns(
     '',
@@ -110,6 +110,11 @@ urlpatterns = patterns(
         r'^upload_image/{course}/$'.format(course=settings.COURSE_ID_PATTERN),
         upload_image,
         name="upload_image"
+    ),
+    url(
+        r'^reupload_image/$',
+        reupload_image,
+        name="reupload_image"
     ),
 
 

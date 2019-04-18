@@ -324,6 +324,19 @@ from student.helpers import (
             </div>
           </div>
         </div>
+
+    % if verification_status['status'] == 'must_reupload':
+        <li class="status status-verification is-denied">
+              <span class="title status-title">${_("Current Verification photo ID Reject by KKUX Administration")}</span>
+              <p class="status-note">
+          ${_("Your verification submission was not accepted. To receive a verified certificate, you must submit a new photo of your government-issued photo ID before the verification deadline for your course.")}
+
+              </p>
+          <div class="btn-reverify">
+              <a href="${reverse('verify_student_reverify')}" class="action action-reverify">${_("Resubmit Verification")}</a>
+          </div>
+
+      % else:
         % if verification_status.get('status') in [VERIFY_STATUS_NEED_TO_VERIFY, VERIFY_STATUS_SUBMITTED, VERIFY_STATUS_RESUBMITTED, VERIFY_STATUS_APPROVED, VERIFY_STATUS_NEED_TO_REVERIFY] and not is_course_blocked:
         <div class="message message-status wrapper-message-primary is-shown">
           % if verification_status['status'] == VERIFY_STATUS_NEED_TO_VERIFY:
@@ -367,6 +380,7 @@ from student.helpers import (
           % endif
         </div>
         % endif   
+      % endif
 
         % if course_mode_info['show_upsell'] and not is_course_blocked:
           <div class="message message-upsell has-actions is-shown">

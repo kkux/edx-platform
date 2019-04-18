@@ -211,7 +211,7 @@
                                 model: userAccountModel,
                                 screenReaderTitle: gettext('Submit'),
                                 valueAttribute: 'submit_button',
-                                helpMessage: gettext('If you change Email ID then , please check your mails.'),
+                                helpMessage: gettext('Note : If you change Email ID then , please check your mails after submit button you have received mail on new email.'),
                                 linkTitle: gettext('Submit')
                             })
                         }

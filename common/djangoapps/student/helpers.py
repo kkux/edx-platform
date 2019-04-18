@@ -96,7 +96,6 @@ def check_verify_status_by_course(user, course_enrollments):
     course_deadlines = VerificationDeadline.deadlines_for_courses(enrolled_course_keys)
 
     recent_verification_datetime = None
-
     for enrollment in course_enrollments:
 
         # If the user hasn't enrolled as verified, then the course
@@ -122,6 +121,7 @@ def check_verify_status_by_course(user, course_enrollments):
 
             # Check whether the user was approved or is awaiting approval
             if relevant_verification is not None:
+
                 if relevant_verification.status == "approved":
                     if verification_expiring_soon:
                         status = VERIFY_STATUS_NEED_TO_REVERIFY
@@ -132,7 +132,8 @@ def check_verify_status_by_course(user, course_enrollments):
                         status = VERIFY_STATUS_RESUBMITTED
                     else:
                         status = VERIFY_STATUS_SUBMITTED
-
+                elif relevant_verification.status == "must_retry" or relevant_verification.status == "denied":
+                    status = 'must_reupload'
             # If the user didn't submit at all, then tell them they need to verify
             # If the deadline has already passed, then tell them they missed it.
             # If they submitted but something went wrong (error or denied),

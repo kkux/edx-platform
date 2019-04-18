@@ -686,7 +686,7 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
         buff = ContentFile(img_data)
         self._storage.save(path, buff)
 
-    @status_before_must_be("created")
+
     def upload_photo_id_image(self, img_data):
         """
         Upload an the user's photo ID image. `img_data` should be a raw
@@ -722,7 +722,7 @@ class SoftwareSecurePhotoVerification(PhotoVerification):
         self.photo_id_key = rsa_encrypted_aes_key.encode('base64')
         self.save()
 
-    @status_before_must_be("must_retry", "ready", "submitted")
+    @status_before_must_be("must_retry", "ready", "submitted","denied")
     def submit(self, copy_id_photo_from=None):
         """
         Submit our verification attempt to Software Secure for validation. This
