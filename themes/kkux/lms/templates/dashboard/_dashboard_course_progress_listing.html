@@ -324,7 +324,7 @@ from student.helpers import (
             </div>
           </div>
         </div>
-
+  % if verification_status.get('status'):
     % if verification_status['status'] == 'must_reupload':
         <li class="status status-verification is-denied">
               <span class="title status-title">${_("Current Verification photo ID Reject by KKUX Administration")}</span>
@@ -381,6 +381,7 @@ from student.helpers import (
         </div>
         % endif   
       % endif
+    % endif
 
         % if course_mode_info['show_upsell'] and not is_course_blocked:
           <div class="message message-upsell has-actions is-shown">
