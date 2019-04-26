@@ -374,6 +374,12 @@ def cert_generation_enabled(course_key):
             for the course.
 
     """
+    cert_obj = CertificateGenerationCourseSetting.objects.filter(course_key=course_key)
+    if cert_obj.exists():
+        return (
+            CertificateGenerationConfiguration.current().enabled and
+            CertificateGenerationCourseSetting.is_enabled_for_course(course_key)
+        )
     return (
         CertificateGenerationConfiguration.current().enabled or
         CertificateGenerationCourseSetting.is_enabled_for_course(course_key)
