@@ -49,7 +49,14 @@ class UserDataMiddleware(object):
         try:
             user_obj = UserProfile.objects.get(user=user.id)
             if user_obj.force_to_update == True:
-                if request.path != '/account/settings' and request.path != '/api/user/v1/accounts/'+ str(user.username) and request.path != '/api/user/v1/preferences/'+str(user.username) and request.path !='/user_api/v1/preferences/time_zones/' and request.path !='/event' and request.path != '/user_api/v1/preferences/time_zones/?country_code='+ str(user_obj.country.code):
+                block_url = ['/account/settings','/api/user/v1/accounts/'+ str(user.username),
+                            '/api/user/v1/preferences/'+str(user.username),
+                            '/user_api/v1/preferences/time_zones/',
+                            '/event',
+                            '/user_api/v1/preferences/time_zones/?country_code='+ str(user_obj.country.code),
+                            '/student_data'
+                            ]
+                if request.path not in block_url:
                     if not (user_obj.user.email and user_obj.name and user_obj.name_in_arabic and user_obj.gender and user_obj.country):
                         msg = _(
                             'Your account has been disabled. Please Update Your Details.'
