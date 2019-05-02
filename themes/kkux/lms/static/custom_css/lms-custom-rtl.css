@@ -1038,6 +1038,12 @@ div#login-and-registration-container button.action.action-primary.action-update.
     padding-right: 1em !important;
 }
 
+.course-info .message.message-upsell.has-actions.is-shown {
+    margin: 18px 10px 30px 10px !important;
+    border-right: 10px solid #f3f3f3;
+    padding-right: 1em !important;
+}
+
 .action-upgrade-container {
     border-right: 1em solid #94d2dc;
     padding-right: 0.5em;

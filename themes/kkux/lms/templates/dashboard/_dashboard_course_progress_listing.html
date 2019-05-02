@@ -326,14 +326,25 @@ from student.helpers import (
         </div>
   % if verification_status.get('status'):
     % if verification_status['status'] == 'must_reupload':
-        <li class="status status-verification is-denied">
-              <span class="title status-title">${_("Current Verification photo ID Reject by KKUX Administration")}</span>
-              <p class="status-note">
-          ${_("Your verification submission was not accepted. To receive a verified certificate, you must submit a new photo of your government-issued photo ID before the verification deadline for your course.")}
+          <div class="message message-upsell has-actions is-shown">
 
-              </p>
-          <div class="btn-reverify">
-              <a href="${reverse('verify_student_reverify')}" class="action action-reverify">${_("Resubmit Verification")}</a>
+            <div class="wrapper-extended">
+                <p class="message-copy" align="justify">
+                  <b class="message-copy-bold">
+                    ${_("Current Verification photo ID Reject by KKUX Administration.")}
+                  </b><br>
+                    ${_("Please Re-upload your Photo ID.")}
+                </p>
+                <div class="action-upgrade-container">
+                    <a class="action action-upgrade" href="${reverse('verify_student_reverify')}">
+                    <span class="action-upgrade-icon" aria-hidden="true"></span>
+                    <span class="wrapper-copy">
+                      <span class="copy" id="upgrade-to-verified">${_("Resubmit Verification")}</span>
+                        <span class="sr">&nbsp;${_(course_name)}</span>
+                    </span>
+                  </a>
+                </div>
+            </div>
           </div>
 
       % else:

@@ -26185,3 +26185,7 @@ msgstr "يرجى إعادة تحميل معرف صورتك"
 #: themes/kkux/lms/templates/verify_student/reverify.html
 msgid "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB."
 msgstr "ملاحظات: يجب أن تكون الصورة بتنسيق (.PNG أو .JPG) وأن يكون حجم الصورة أقل من 5 ميجابايت."
+
+#: themes/kkux/lms/templates/courseware/progress.html
+msgid "Current Verification photo ID Reject by KKUX Administration."
+msgstr "معرّف صورة التحقق الحالي مرفوض من قبل إدارة KKUX."

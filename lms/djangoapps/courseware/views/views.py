@@ -83,7 +83,7 @@ from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, Redirect
 from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.instructor.enrollment import uses_shib
 from lms.djangoapps.instructor.views.api import require_global_staff
-from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
+from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification ,VerificationDeadline
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.credit.api import (
@@ -940,7 +940,18 @@ def _progress(request, course_key, student_id):
     # checking certificate generation configuration
     enrollment_mode, is_active = CourseEnrollment.enrollment_mode_for_user(student, course_key)
 
+    from student.helpers import check_verify_status_by_course
+    verifications = SoftwareSecurePhotoVerification.objects.filter(user=student)
+    enrolled_course_keys = [course.id]
+    course_deadlines = VerificationDeadline.deadlines_for_courses(enrolled_course_keys)
+    deadline = course_deadlines.get(course.id)
+    relevant_verification = SoftwareSecurePhotoVerification.verification_for_datetime(deadline, verifications)
+    if relevant_verification:
+        user_status = relevant_verification.status
+    else:
+        user_status = ''
     context = {
+        'user_status':user_status,
         'course': course,
         'courseware_summary': courseware_summary,
         'studio_url': studio_url,

@@ -800,6 +800,13 @@ div#login-and-registration-container button.action.action-primary.action-update.
     padding-left: 1em !important;
 }
 
+.course-info .message.message-upsell.has-actions.is-shown {
+    margin: 15px 10px 25px 10px !important;
+    border-left: 10px solid #f3f3f3;
+    padding-left: 1em !important;
+}
+
+
 .action-upgrade-container {
     border-left: 1em solid #94d2dc;
     padding-left: 0.5em;
