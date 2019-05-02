@@ -61,10 +61,13 @@ from django.utils.http import urlquote_plus
                             <div class="message message-upsell has-actions is-shown">
                                 <div class="wrapper-extended">
                                     <p class="message-copy" align="justify">
-                                        <b class="message-copy-bold">
+                                        <b class="message-copy-bold" style="font-weight: 700; font-size: 17px;">
                                             ${_("Certificate unavailable")}
                                         </b><br>
-                                        ${_("Current Verification photo ID Reject by KKUX Administration.")}
+                                        <b style="font-weight: 600;">
+                                            ${_("Current Verification photo ID Reject by KKUX Administration.")}
+                                        </b><br>
+                                        ${_("Please Re-upload your Photo ID.")} 
                                     </p>
                                     <div class="action-upgrade-container">
                                         <a class="action action-upgrade" href="${reverse('verify_student_reverify')}">

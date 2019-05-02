@@ -26174,9 +26174,11 @@ msgid "Current Verification photo ID Reject by KKUX Administration"
 msgstr "معرّف صورة التحقق الحالي مرفوض من قبل إدارة KKUX"
 
 #: themes/kkux/lms/templates/dashboard/_dashboard_course_progress_listing.html
-msgid "Your verification submission was not accepted. To receive a verified certificate, you must submit a new photo of your government-issued photo ID before the verification deadline for your course."
-msgstr "لم يتم قبول تقديم التحقق. لتلقي شهادة تم التحقق منها ، يجب عليك تقديم صورة جديدة لمعرف الصورة الذي أصدرته الحكومة قبل الموعد النهائي للتحقق من دورتك الدراسية."
+msgid "It's official. It's easily shareable."
+msgstr "إنه رسمي. انها قابلة للمشاركة بسهولة."
 
+msgid "Please Re-upload your Photo ID."
+msgstr "يرجى إعادة تحميل معرف الصورة الخاص بك."
 
 #: themes/kkux/lms/templates/verify_student/reverify.html
 msgid "Please Re-Upload Your Photo ID"
@@ -26189,3 +26191,6 @@ msgstr "ملاحظات: يجب أن تكون الصورة بتنسيق (.PNG أ�
 #: themes/kkux/lms/templates/courseware/progress.html
 msgid "Current Verification photo ID Reject by KKUX Administration."
 msgstr "معرّف صورة التحقق الحالي مرفوض من قبل إدارة KKUX."
+
+msgid "You will see a message on your dashboard when the verification process is complete and get certificate."
+msgstr "سترى رسالة على لوحة القيادة عند اكتمال عملية التحقق والحصول على شهادة"
