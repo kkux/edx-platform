@@ -81,14 +81,14 @@ from openedx.core.djangolib.markup import HTML, Text
         <div class="start-program-btn">
           <div role="group" aria-label="Program purchase and email options">
             % if user_is_enrolled:
-              <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+              <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
             % elif program_is_free_not_enroll:
-              <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+              <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
             % else:
               % if program.price <= 0:
-                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
               % else:
-                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
+                <a href="${reverse('program_buy', kwargs=dict(program_id=program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
               % endif
             % endif
           </div>
@@ -271,14 +271,14 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="start-program-btn">
               <div role="group" aria-label="Program purchase and email options">
                 % if user_is_enrolled:
-                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+                  <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
                 % elif program_is_free_not_enroll:
-                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                  <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
                 % else:
                   % if program.price <= 0:
-                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
-                  % else:
-                    <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
+                    <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                  % else: 
+                    <a href="${reverse('program_buy', kwargs=dict(program_id=program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
                   % endif
                 % endif
               </div>
