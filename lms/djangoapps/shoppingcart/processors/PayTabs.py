@@ -158,7 +158,10 @@ def create_invoice(request, certy_cart=None):
         country_code = ''
         phone_number = ''
         postal_code = ''
-
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)): 
+        ssl._create_default_https_context = ssl._create_unverified_context
     client = Client(url_service)
     client.set_options(port='MarketServiceSoap')
     response = client.service.CreateInvoice(

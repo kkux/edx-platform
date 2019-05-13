@@ -18,7 +18,31 @@ from django.core.urlresolvers import reverse
   <link rel="stylesheet" type="text/css" href="${static.url('css/program_info.css')}">
  
 </%block>
+<style type="text/css">
+.pie-title-center 
+{
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  margin-left: 10px;
+}
 
+.pie-value
+{
+  display: block;
+  position: absolute;
+  font-size: 14px;
+  height: 40px;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -22px;
+  line-height: 40px;
+}
+canvas {
+  height: 35px!important;
+}
+</style>
 <%block name="js_extra">
   <!--
    <script src="${static.url('js/course_info.js')}"></script> 
@@ -55,21 +79,25 @@ from django.core.urlresolvers import reverse
                         started = datetime.now(utc) > course.start
                     else:
                         started = False
-                  %>
+                    user_progress = course_grades.get(course.id).get('points', 0.0)
+                    user_progress = int(user_progress) if user_progress ==100.0 else user_progress
+                  %> 
                   <li id="${course.id}" class="lighttext">
                       <div class="type_icon">
                         <!-- <i class="fa fa-file" aria-hidden="true"></i> -->
                       </div>
 
                         % if course_grades.get(course.id)['course_states']['completed']:
-                          <div class="dot-icon"><img src="${static.url('images/green-dots.png')}" alt=""></div>
+                          <div class="dot-icon"><p>
+                          ${user_progress} % completed</p></div>
                         % elif course_grades.get(course.id)['course_states']['in_progress']:
-                          <div class="dot-icon"><img src="${static.url('images/orange-dots.png')}" alt=""></div>
+                          <div class="dot-icon"><p>${user_progress} % completed
+                          </p></div>
                         % else:
                           % if started:
-                            <div class="dot-icon"><img src="${static.url('images/red-dot.png')}" alt=""></div>
+                            <div class="dot-icon">No progress yet.</div>
                           % else:
-                            <div class="dot-icon"><img src="${static.url('images/gray-dots.png')}" alt=""></div>
+                            <div class="dot-icon">Not startrd yet.</div>
                           % endif
                         % endif
 
@@ -88,59 +116,41 @@ from django.core.urlresolvers import reverse
 
       <div class="right-block">
         <div class="blocks-right">
-            <div class="taskname">
-                <ul>
-                    <li><img src="${static.url('images/green-dots.png')}" alt=""> Finished</li>
-                      <li><img src="${static.url('images/orange-dots.png')}" alt=""> In-Progress</li>
-                      <li><img src="${static.url('images/red-dot.png')}" alt=""> Not Started</li>
-                      <li><img src="${static.url('images/gray-dots.png')}" alt=""> Upcoming</li>
-                  </ul>
-              </div>
-
-              <div class="progress">
-                <div id="rotator" class="progress-pie-chart" data-percent="0">
-                  <div class="ppc-progress">
-                    <div class="ppc-progress-fill"></div>
-                  </div>
-                  <div class="ppc-percents">
-                    <div class="pcc-percents-wrapper">
-                      <span>%</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="title">Progress</div>
-              </div>
-
-              <div class="course-block">
-                <ul>
-                    <li><em class="fa fa-calendar"></em> Starts: <span>${program.start}</span></li>
-                    % if program.subject.name:
-                      <li><em class="fa fa-graduation-cap fa-lg"></em> Subject: <span>${program.subject.name}</span></li>
-                    % endif
-                    <li><em class="fa fa-university fa-lg"></em> Institution: <span>${program.institution.name}</span></li>
-                    <li><em class="fa fa-book fa-lg"></em> Number Of Courses: <span>${len(program.courses.select_related())}</span></li>
-                </ul>
-              </div>
+          <%
+            if c_progress:
+              c_progress = c_progress / total_courses
+          %>
+          <h4 style="float: left;">Program Average Progress:</h4>
+          <div id="demo-pie-1" class="pie-title-center" data-percent="${c_progress}"> 
+            <span class="pie-value"></span> 
           </div>
+          <div class="course-block">
+            <ul>
+                <li><em class="fa fa-calendar"></em> Starts: <span>${program.start}</span></li>
+                % if program.subject.name:
+                  <li><em class="fa fa-graduation-cap fa-lg"></em> Subject: <span>${program.subject.name}</span></li>
+                % endif
+                <li><em class="fa fa-university fa-lg"></em> Institution: <span>${program.institution.name}</span></li>
+                <li><em class="fa fa-book fa-lg"></em> Number Of Courses: <span>${len(program.courses.select_related())}</span></li>
+            </ul>
+          </div>
+        </div>
       </div>
   </div>
 </main>
 
-<%
-  if c_progress:
-    c_progress = c_progress / total_courses
-%>
 <script type="text/javascript">
-  $("#rotator").attr("data-percent","${c_progress}")
-  $(function(){
-    var $ppc = $('#rotator'),
-    percent = parseInt($ppc.data('percent')),
-    deg = 360*percent/100;
-  if (percent > 50) {
-    $ppc.addClass('gt-50');
-  }
-  $("#rotator").find('.ppc-progress-fill').css('transform','rotate('+ deg +'deg)');
-  $("#rotator").find('.ppc-percents span').html(percent+'%');
-  });
-
+    $(document).ready(function () {
+        $('#demo-pie-1').pieChart({
+            barColor: '#68b828',
+            trackColor: '#eee',
+            lineCap: 'round',
+            lineWidth: 8,
+            onStep: function (from, to, percent) {
+                $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+            }
+        });
+    });
 </script>
+
+<script type="text/javascript" src="${static.url('js/pie-chart.js')}"></script>

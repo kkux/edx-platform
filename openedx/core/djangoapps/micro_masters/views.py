@@ -24,6 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _, ugettext_noop
 
 from edxmako.shortcuts import render_to_response, render_to_string
+from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
 from xmodule.modulestore.django import ModuleI18nService
 from shoppingcart.processors.exceptions import *
 from microsite_configuration import microsite
@@ -1070,20 +1071,20 @@ def program_info(request, program_id):
     courses = []
     for course in user_program.program.courses.select_related():
         try:
-            course_grade = LeaderBoard.objects.get(student=user, course_id=course.course_key)
+            course_grade = CourseGradeFactory().create(user, get_course_by_id(course.course_key))
             course_grades.update({
                 course.course_key: {
-                    'points': course_grade.points,
-                    'pass': course_grade.has_passed,
+                    'points': course_grade.percent*100,
+                    'pass': course_grade.passed,
                 }
             })
-            if course_grade.points and course_grade.has_passed:
+            if course_grade.percent and course_grade.passed:
                 course_grades.get(course.course_key)['course_states'] = {
                     'completed': True,
                     'in_progress': False,
                     'not_started': False
                 }
-            elif course_grade.points:
+            elif course_grade.percent:
                 course_grades.get(course.course_key)['course_states'] = {
                     'completed': False,
                     'in_progress': True,
