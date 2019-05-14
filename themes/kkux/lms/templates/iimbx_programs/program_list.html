@@ -20,31 +20,28 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
       <section class="courses-container">
-       
-
         <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
           <ul class="courses-listing">
             %for course in programs:
             <li class="courses-listing-item">
-     <% 
+              <% 
                 conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
-                
-                image=course.banner_image.url.split("/")[-1]
-              
-                image_url = conn.generate_presigned_url(
-                     'get_object',
-                     Params = {
-                            'Bucket': "kkux-storage" ,
-                            'Key': image
-                        },
-                    
-                 )
-            %>                 
+                if course.banner_image:
+                  image=course.banner_image.url.split("/")[-1]
+
+                  image_url = conn.generate_presigned_url(
+                       'get_object',
+                       Params = {
+                              'Bucket': "kkux-storage" ,
+                              'Key': image
+                          },
+                   )
+              %>                 
               <article class="course" id="${course.id}" role="region" aria-label="${course.name}">
                 <a href="${reverse('program_about', kwargs=dict(program_id=course.id))}">
                   <header class="course-image">
                     <div class="cover-image">
-                      <img src="${image_url}" alt="${course.name} " />
+                      <img src="${image_url if course.banner_image else static.url('images/banner-black-background.jpg')}" alt="${course.name} " />
                       <div class="learn-more" aria-hidden="true">${_("LEARN MORE")}</div>
                     </div>
                   </header>
@@ -65,7 +62,6 @@
               <%static:require_module_async module_name="js/dateutil_factory" class_name="DateUtilFactory">
                   DateUtilFactory.transform(iterationKey=".localized_datetime");
               </%static:require_module_async>
-
             </li>
             %endfor
           </ul>

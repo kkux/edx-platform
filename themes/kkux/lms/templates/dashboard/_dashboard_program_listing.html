@@ -17,6 +17,21 @@ from django.conf import settings
     width: 41.88%;
 }
 </style>
+<% 
+  conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+  if program.banner_image:
+    image=program.banner_image.url.split("/")[-1]
+
+    image_url = conn.generate_presigned_url(
+         'get_object',
+         Params = {
+                'Bucket': "kkux-storage" ,
+                'Key': image
+            },
+        
+     )
+
+%>   
 <li class="course-item">
   <div class="course-container">
     <article class="course">
@@ -24,7 +39,7 @@ from django.conf import settings
         <h2 class="hd hd-2 sr" id="details-heading">${_('Program details')}</h2>
         <div class="wrapper-course-image" aria-hidden="true">
           <a href="${reverse('program_info', kwargs={'program_id': program.id})}" data-course-key="${program.id}" class="cover">
-            <img src="${program.banner_image.url if program.banner_image else static.url('images/banner-black-background.jpg')}" class="course-image program-image" alt="${program.name}" />
+            <img src="${image_url if program.banner_image else static.url('images/banner-black-background.jpg')}" class="course-image program-image" alt="${program.name}" />
           </a>
         </div>
           <div class="wrapper-course-details">

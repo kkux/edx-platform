@@ -26,16 +26,16 @@ from openedx.core.djangolib.markup import HTML, Text
 <%block name="pagetitle">${program.name}</%block>
     	<% 
                 conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
-                
-                image=program.banner_image.url.split("/")[-1]
-                image_url = conn.generate_presigned_url(
-                     'get_object',
-                     Params = {
-                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            'Key': image
-                        },
-                    
-                 )
+                if program.banner_image:
+                  image=program.banner_image.url.split("/")[-1]
+                  image_url = conn.generate_presigned_url(
+                       'get_object',
+                       Params = {
+                              'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                              'Key': image
+                          },
+                      
+                   )
 		org_image=program.institution.logo.url.split("/")[-1]
 		org_image_url = conn.generate_presigned_url(
                      'get_object',
@@ -49,7 +49,7 @@ from openedx.core.djangolib.markup import HTML, Text
     	 %>
 <style type="text/css">
 .course-info header.program-profile {
-  background-image: url("${image_url  if program.banner_image else static.url('images/banner-black-background.jpg')}");
+  background-image: url("${image_url if program.banner_image else static.url('images/banner-black-background.jpg')}");
 }
 </style>
 

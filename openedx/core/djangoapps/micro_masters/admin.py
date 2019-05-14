@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.forms import SelectMultiple, Textarea
 from django.db import models
-
+from student.models import CourseEnrollment
+from opaque_keys.edx.keys import CourseKey
 from .models import (
     Subject, Language,
     Institution, Instructor,
@@ -84,6 +85,15 @@ class ProgramEnrollmentAdmin(admin.ModelAdmin):
     list_display = ['user', 'program', 'is_active']
     list_filter = ['is_active']
     search_fields = ['program__name', 'user__username']
+
+    def save_model(self, request, obj, form, change):
+        try:
+            for course in obj.program.courses.values():
+                CourseEnrollment.enroll(obj.user, CourseKey.from_string(course.get('course_key')))
+        except Exception:
+            pass
+        return super(ProgramEnrollmentAdmin, self).save_model(request, obj, form, change)
+
 
     class Meta:
         verbose_name = "Program Enrollment"
