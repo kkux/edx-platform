@@ -89,15 +89,15 @@ canvas {
 
                         % if course_grades.get(course.id)['course_states']['completed']:
                           <div class="dot-icon"><p>
-                          ${user_progress} % completed</p></div>
+                          ${user_progress} % ${_('completed')}</p></div>
                         % elif course_grades.get(course.id)['course_states']['in_progress']:
-                          <div class="dot-icon"><p>${user_progress} % completed
+                          <div class="dot-icon"><p>${user_progress} % ${_('completed')}
                           </p></div>
                         % else:
                           % if started:
-                            <div class="dot-icon">No progress yet.</div>
+                            <div class="dot-icon">${_('No progress yet.')}</div>
                           % else:
-                            <div class="dot-icon">Not startrd yet.</div>
+                            <div class="dot-icon">${_('Not started yet.')}</div>
                           % endif
                         % endif
 
@@ -120,18 +120,18 @@ canvas {
             if c_progress:
               c_progress = c_progress / total_courses
           %>
-          <h4 style="float: left;">Program Average Progress:</h4>
+          <h4 style="float: left;">${_('Program Average Progress:')}</h4>
           <div id="demo-pie-1" class="pie-title-center" data-percent="${c_progress}"> 
             <span class="pie-value"></span> 
           </div>
           <div class="course-block">
             <ul>
-                <li><em class="fa fa-calendar"></em> Starts: <span>${program.start}</span></li>
+                <li><em class="fa fa-calendar"></em> ${_('Starts:')} <span>${program.start}</span></li>
                 % if program.subject.name:
-                  <li><em class="fa fa-graduation-cap fa-lg"></em> Subject: <span>${program.subject.name}</span></li>
+                  <li><em class="fa fa-graduation-cap fa-lg"></em> ${_('Subject:')} <span>${program.subject.name}</span></li>
                 % endif
-                <li><em class="fa fa-university fa-lg"></em> Institution: <span>${program.institution.name}</span></li>
-                <li><em class="fa fa-book fa-lg"></em> Number Of Courses: <span>${len(program.courses.select_related())}</span></li>
+                <li><em class="fa fa-university fa-lg"></em> ${_('Institution:')} <span>${program.institution.name}</span></li>
+                <li><em class="fa fa-book fa-lg"></em> ${_('Number Of Courses:')} <span>${len(program.courses.select_related())}</span></li>
             </ul>
           </div>
         </div>

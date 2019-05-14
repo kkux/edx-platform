@@ -26194,3 +26194,28 @@ msgstr "معرّف صورة التحقق الحالي مرفوض من قبل إ�
 
 msgid "You will see a message on your dashboard when the verification process is complete and get certificate."
 msgstr "سترى رسالة على لوحة القيادة عند اكتمال عملية التحقق والحصول على شهادة"
+
+#: themes/kkux/lms/templates/micro_masters/program_info.html
+msgid "completed"
+msgstr "منجز"
+
+msgid "No progress yet."
+msgstr "لا تقدم حتى الان."
+
+msgid "Not started yet."
+msgstr "لم تبدأ بعد."
+
+msgid "Subject:"
+msgstr "موضوع:"
+
+msgid "Institution:"
+msgstr "المعهد:"
+
+msgid "Number Of Courses:"
+msgstr "عدد الدورات:"
+
+msgid "Starts:"
+msgstr "يبدأ:"
+
+msgid "Program Average Progress:"
+msgstr "تقدم متوسط ​​البرنامج:"

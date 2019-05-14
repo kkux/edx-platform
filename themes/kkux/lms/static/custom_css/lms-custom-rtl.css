@@ -1350,3 +1350,6 @@ forum-new-post-form .post-field .field-help {
     width: 100%;
     margin-right: 40px !important;
 }
+.blocks .listing ul li .dot-icon {
+    left: 60px!important;
+}
