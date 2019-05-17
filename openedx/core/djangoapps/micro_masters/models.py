@@ -39,6 +39,9 @@ ORDER_STATUSES = (
     # The user is selecting what he/she wants to purchase.
     ('initiate', 'initiate'),
 
+    # user paying for program
+    ('paying', 'paying'),
+
     # The user has successfully purchased the items in the order.
     ('purchased', 'purchased'),
 
@@ -298,7 +301,7 @@ class Program(TimeStampedModel):
         verbose_name_plural = 'Programs'
 
     def __unicode__(self):
-        return str(self.name)
+        return self.name
 
     def __repr__(self):
         return self.__unicode__()
@@ -395,7 +398,7 @@ class ProgramOrder(TimeStampedModel):
             cart_order = cls.objects.filter(user=user, status='initiate').order_by('-id')[:1].get()
         except ObjectDoesNotExist:
             # if nothing exists in the database, create a new cart
-           cart_order, _created = cls.objects.get_or_create(user=user, status='cart')
+           cart_order, _created = cls.objects.get_or_create(user=user, status='initiate')
         return cart_order
 
     @classmethod
@@ -563,6 +566,16 @@ class ProgramOrder(TimeStampedModel):
             # the confirmation email.
             log.exception(
                 'Error occurred while sending payment confirmation email')
+
+
+    def has_items(self, item_type=None):
+        """
+        Does the cart have any items in it?
+        If an item_type is passed in then we check to see if there are any items of that class type
+        """
+        return False
+
+
 
 
 class ProgramEnrollment(TimeStampedModel):

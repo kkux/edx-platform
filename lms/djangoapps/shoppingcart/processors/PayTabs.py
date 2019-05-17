@@ -67,8 +67,12 @@ def create_invoice(request, certy_cart=None):
     """
     user = request.user
     user_last_name = user.last_name if user.last_name else "Undefine"
-    if 'programs' in request.POST:
-        cart = ProgramOrder.get_cart_for_user(user)
+    if request.POST.get('programs'):
+        cart = ProgramOrder.objects.filter(user=user,program_id=request.POST.get('programs'))
+        if not cart.exists():
+            cart = ProgramOrder.objects.get_or_create(user=user, program_id=request.POST.get('programs'), status='initiate')
+        else:
+            cart =cart[0]
         total_cost = cart.item_price
         program = True
     else:

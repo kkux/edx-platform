@@ -700,7 +700,6 @@ def postpay_callback(request):
 
     # params = request.POST.dict()
     params = {'payment_reference': request.session.get('p_id',''),'program' : request.session.get('ip_customer',''),'reference_no':request.session.get('reference_no','')}
-    # import pdb;pdb.set_trace()
     result = process_postpay_callback(params)
 
     if result['success']:
@@ -744,7 +743,11 @@ def billing_details(request,**kwargs):
     user = request.user
     if kwargs.get('programs'):
         program = Program.objects.get(id = kwargs.get('id'))
-        cart=ProgramOrder.get_or_create_order(user,program)
+        cart = ProgramOrder.objects.filter(user=user,program=program)
+        if not cart.exists():
+            cart = ProgramOrder.get_or_create_order(user, program)
+        else:
+            cart =cart[0]
         cart_items=[cart]
     else:
         cart = Order.get_cart_for_user(user)
@@ -808,6 +811,7 @@ def billing_details(request,**kwargs):
         }
         if kwargs.get('programs'):
             context['programs'] = "true"
+            context['program_id'] = program.id
         else:
             context['programs'] = "false"
 

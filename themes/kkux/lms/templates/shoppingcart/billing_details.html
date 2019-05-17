@@ -9,7 +9,6 @@ from django.core.urlresolvers import reverse
 <%block name="confirmation_highlight"></%block>
 <link rel="stylesheet" href="${static.url('custom_css/intlTelInput.css')}">
 <link rel="stylesheet" href="${static.url('custom_css/countrySelect.css')}">
-
 <%block name="custom_content">
 <div class="container">
 
@@ -139,7 +138,7 @@ $(function() {
       var payment_form = $(this).parent('form');
       programs = ${programs}
       if (programs == true){
-      payment_form.prepend("<input type='hidden' name='programs'></input> ")
+      payment_form.prepend("<input type='hidden' name='programs' value=${context.get('program_id')}></input> ")
    }
       var recipient_email = $('input[name="recipient_email"]').val();
       var company_contact_email =  $('input[name="company_contact_email"]').val();

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#-- coding: utf-8 --
 """ Django admin pages for student app """
 from config_models.admin import ConfigurationModelAdmin
 from django import forms
@@ -234,8 +236,14 @@ class UserAdmin(BaseUserAdmin):
         urls = super(UserAdmin, self).get_urls()
         my_urls = [
             url(r"^export/$", export, name='export'),
+            url(r"^export_alluser/$", export_alluser, name='export_alluser'),
+            url(r"^export_all_subscribers/$", export_all_subscribers, name='export_all_subscribers'),
         ]
         return my_urls + urls
+
+
+
+
 
 @staff_member_required
 def export(request):
@@ -248,6 +256,78 @@ def export(request):
     except Exception:
         pass
     return JsonResponse({'success': 'success'})
+
+@staff_member_required
+def export_alluser(request):
+    from student.models import UserProfile
+    from django.conf import settings
+    import csv
+    import boto3
+    import os
+    try:
+        user_obj = UserProfile.objects.all()
+        users_csv = "/tmp/kkux_users.csv"
+        csvData = [['Name English', 'Name Arabic', 'Mobile number', 'Email']]
+        for user in user_obj:
+            temp=[]
+            temp.append(user.name.encode('utf-8') if user.name else user.user.username)
+            temp.append(user.name_in_arabic.encode('utf-8') if user.name_in_arabic else "None")
+            temp.append(user.phone_number if user.phone_number else "None")
+            temp.append(user.user.email if user.user.email else "None")
+            csvData.append(temp)
+        with open(users_csv, 'w') as csvFile:
+            writer = csv.writer(csvFile)
+            writer.writerows(csvData)
+        csvFile.close()
+
+        with open(users_csv, 'r') as csv:
+            # response = HttpResponse(pdf.read(),content_type='application/pdf')
+            conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
+            conn.upload_file(users_csv,"kkux-storage",'user_data/users_csv.csv') 
+            csv.closed
+            # return response
+        os.remove(users_csv)
+        csv_url = conn.generate_presigned_url('get_object',Params = {'Bucket':"kkux-storage",'Key':"user_data/users_csv.csv"},)
+    except Exception:
+        pass
+    return JsonResponse({"success": "success","csv_url":csv_url})
+
+
+@staff_member_required
+def export_all_subscribers(request):
+    from django.conf import settings
+    from kkux.models import Subscribers
+    import csv
+    import boto3
+    import os
+    try:
+        user_mails = Subscribers.objects.all()
+        subscribers_csv = "/tmp/subscribers.csv"
+        csvData = [['Email']]
+        for user in user_mails:
+            temp=[]
+            temp.append(user.email if user.email else "None")
+            csvData.append(temp)
+        with open(subscribers_csv, 'w') as csvFile:
+            writer = csv.writer(csvFile)
+            writer.writerows(csvData)
+        csvFile.close()
+
+        with open(subscribers_csv, 'r') as csv:
+            # response = HttpResponse(pdf.read(),content_type='application/pdf')
+            conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)  
+            conn.upload_file(subscribers_csv,"kkux-storage",'user_data/subscribers.csv') 
+            csv.closed
+            # return response
+        os.remove(subscribers_csv)
+        csv_url = conn.generate_presigned_url('get_object',Params = {'Bucket':"kkux-storage",'Key':"user_data/subscribers.csv"},)
+    except Exception:
+        pass
+    return JsonResponse({"success": "success","csv_url":csv_url})
+
+
+
+
 
 @admin.register(UserAttribute)
 class UserAttributeAdmin(admin.ModelAdmin):

@@ -4,13 +4,21 @@
   {{ block.super }}
     <style type="text/css">
     	.notification{display: none;}
+        .report_text{display: none;}
+        .f_notification{display: none;}
+        #wait{text-align: center; display: none;}
   	</style>
 {% endblock %}
 {% block object-tools-items %}
 {% if request.user.is_superuser %}
     <li>
-        <a href="javascript:;" id="export_request" class="btn btn-high btn-success">Force To Update All Student</a>
+        <a href="javascript:;" id="export_alluser" class="btn btn-high btn-success">Export All Student</a>
     <li>
+    <li>
+        <a href="javascript:;" id="export_all_subscribers" class="btn btn-high btn-success">Export KKUx news letter subscribers.</a>
+    <li>    <li>
+        <a href="javascript:;" id="export_request" class="btn btn-high btn-success">Force To Update All Student</a>
+    <li>        
 {{ block.super }}
 {% endif %}
 {% endblock %}
@@ -26,8 +34,40 @@
                 data: {},
                 url: "export/",
                 success: function(response) {
-                   	$(".notification").css("display", "block")
+                    $(".f_notification").css("display", "block")
                     console.log("All Students ForceToUpdate Enable Successfully.")               
+                },
+                error: function(response){
+                    console.log(response)
+                }
+            });
+        });
+        $("#export_alluser").click(function() {
+            $(".notification").css("display", "block")
+            $.ajax({
+                type: "GET",
+                data: {},
+                url: "export_alluser/",
+                success: function(response) {
+                    $(".report_text").css("display", "block")
+                    $("#wait").css("display", "none")
+                    $(".download_report").html("<a class='download-report' href='" + response.csv_url + "'><b>" + "Students Data" + "</b></a>")              
+                },
+                error: function(response){
+                    console.log(response)
+                }
+            });
+        });
+        $("#export_all_subscribers").click(function() {
+            $(".notification").css("display", "block")
+            $.ajax({
+                type: "GET",
+                data: {},
+                url: "export_all_subscribers/",
+                success: function(response) {
+                    $(".report_text").css("display", "block")
+                $("#wait").css("display", "none")
+                $(".download_report_subscribers").html("<a class='download_report_subscribers' href='" + response.csv_url + "'><b>" + "Subscribers Users Data" + "</b></a>")      
                 },
                 error: function(response){
                     console.log(response)
@@ -43,7 +83,26 @@
 {{ block.super }} 
     <div class="notification">
         <ul class="messagelist">
-          <li id="success">All Students ForceToUpdate Enable.</li>
+          <li class="success">Export request report is in process. Please wait to download report.</li>
         </ul>
+    </div>
+    <div class="f_notification">
+        <ul class="messagelist">
+          <li id="forceTo_update_success">All Students ForceToUpdate Enable.</li>
+        </ul>
+    </div>
+    
+
+{% endblock %}
+
+
+{{% block content %}
+    {{ block.super }}
+    <h2 class="report_text">Downloaded Report</h2>
+    <div id="wait">
+        <img src="{% static 'images/ajax-loader.gif' %}">
+    </div>
+    <div class="download_report_subscribers"></div>
+    <div class="download_report">
     </div>
 {% endblock %}
