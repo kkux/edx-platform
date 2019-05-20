@@ -272,7 +272,7 @@ def export_alluser(request):
             temp=[]
             temp.append(user.name.encode('utf-8') if user.name else user.user.username)
             temp.append(user.name_in_arabic.encode('utf-8') if user.name_in_arabic else "None")
-            temp.append(user.phone_number if user.phone_number else "None")
+            temp.append(user.phone_number.encode('utf-8') if user.phone_number else "None")
             temp.append(user.user.email if user.user.email else "None")
             csvData.append(temp)
         with open(users_csv, 'w') as csvFile:

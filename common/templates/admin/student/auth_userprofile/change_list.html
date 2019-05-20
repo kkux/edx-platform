@@ -15,7 +15,7 @@
         <a href="javascript:;" id="export_alluser" class="btn btn-high btn-success">Export All Student</a>
     <li>
     <li>
-        <a href="javascript:;" id="export_all_subscribers" class="btn btn-high btn-success">Export KKUx news letter subscribers.</a>
+        <a href="javascript:;" id="export_all_subscribers" class="btn btn-high btn-success">Export KKUx news letter all subscribers.</a>
     <li>    <li>
         <a href="javascript:;" id="export_request" class="btn btn-high btn-success">Force To Update All Student</a>
     <li>        
@@ -44,12 +44,14 @@
         });
         $("#export_alluser").click(function() {
             $(".notification").css("display", "block")
+            $("#wait").css("display", "block")
+            $(".report_text").css("display", "block")
+            $('html, body').animate({scrollTop:$(document).height()}, "slow");
             $.ajax({
                 type: "GET",
                 data: {},
                 url: "export_alluser/",
                 success: function(response) {
-                    $(".report_text").css("display", "block")
                     $("#wait").css("display", "none")
                     $(".download_report").html("<a class='download-report' href='" + response.csv_url + "'><b>" + "Students Data" + "</b></a>")              
                 },
@@ -60,14 +62,16 @@
         });
         $("#export_all_subscribers").click(function() {
             $(".notification").css("display", "block")
+            $("#wait").css("display", "block")
+            $(".report_text").css("display", "block")
+            $('html, body').animate({scrollTop:$(document).height()}, "slow");
             $.ajax({
                 type: "GET",
                 data: {},
                 url: "export_all_subscribers/",
                 success: function(response) {
-                    $(".report_text").css("display", "block")
                 $("#wait").css("display", "none")
-                $(".download_report_subscribers").html("<a class='download_report_subscribers' href='" + response.csv_url + "'><b>" + "Subscribers Users Data" + "</b></a>")      
+                $(".download_report_subscribers").html("<a class='download_report_subscribers' href='" + response.csv_url + "'><b>" + "Subscribers Students Data" + "</b></a>")      
                 },
                 error: function(response){
                     console.log(response)
