@@ -16,10 +16,46 @@ from django.core.urlresolvers import reverse
   
   
   <link rel="stylesheet" type="text/css" href="${static.url('css/program_info.css')}">
-  <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
  
 </%block>
+<style>
+.meter {
+    height: 15px;
+    position: relative;
+    background: transparent;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    width: 50%;
+    top: 35px;
+    left: 55%;
+}
 
+.blocks-right h4 
+{
+  font-size: 15px;
+  margin-top: 15px;
+  float: left;
+}
+.program_progress {
+    color: #bdd402;
+    position: relative;
+    left: 46%;
+}
+.meter > span 
+{
+    display: block;
+    background-color: #bdd402;
+    border-radius: 25px;
+    height: 13px;
+}
+.program_progress_block
+{
+    position: relative;
+    top: -18px;
+}
+
+
+  </style>
 <%block name="js_extra">
   <!--
    <script src="${static.url('js/course_info.js')}"></script> 
@@ -110,22 +146,14 @@ else:
             if c_progress:
               c_progress = c_progress / total_courses
           %>
-          % if c_progress == 0.0:
-            <div class="program_progress_1">
-              <span class="program_progress_score">${c_progress}%</span>
-              <div class="w3-light-grey">
-                <div class="w3-container w3-green w3-center" style="width:${c_progress}%"></div>
-              </div>
-              <h4>${_('Program Progress')}</h4>
-          % else:
-            <div class="program_progress">
-              <span class="program_progress_score">${c_progress}%</span>
-              <div class="w3-light-grey">
-                <div class="w3-container w3-green w3-center" style="width:${c_progress}%"></div>
-              </div>
-              <h4>${_('Program Progress')}</h4>
-          % endif
+          <h4 style="color: #94d3d9">${_('Program Progress')}</h4>
+          <div class="program_progress_block">
+            <div class="program_progress"><h4>${c_progress}%</h4></div>
+            <div class="meter">
+              <span style="width: ${c_progress}%"></span>
+            </div>
           </div>
+         
           <div class="course-block">
             <ul>
                 <li>
@@ -152,12 +180,6 @@ else:
       </div>
   </div>
 </main>
-<ul class="skill-list">
-  
-
-
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#demo-pie-1').pieChart({
@@ -172,4 +194,3 @@ else:
     });
 </script>
 
-<script type="text/javascript" src="${static.url('js/pie-chart.js')}"></script>

@@ -1131,14 +1131,12 @@ forum-new-post-form .post-field .field-help {
     margin-bottom: 10px !important;
     margin-top: 10px !important;
 }
-.program_progress h4 {
-    font-size: 15px;
-    color: #94d3d9;
-    padding-top: 3px;
-}
 .course-block ul li {
     padding: 14px 0 ! important;
 }
 .course-block .course_data {
     float: left;
+}
+.course-block {
+    margin-top: 30px !important;
 }

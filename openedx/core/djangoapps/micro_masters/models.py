@@ -653,8 +653,8 @@ class ProgramCoupon(TimeStampedModel):
     is_active = models.BooleanField(default=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
 
-    def __unicode__(self):
-        return "[Coupon] code: {} program: {}".format(self.code, self.program.name)
+    # def __unicode__(self):
+    #     return u"[Coupon] code: {} program: {}".format(self.code.encode("utf-8"), self.program.name.encode("utf-8"))
 
     @property
     def display_expiry_date(self):
