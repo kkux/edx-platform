@@ -1107,3 +1107,38 @@ forum-new-post-form .post-field .field-help {
   font-size: 1rem;
   margin-bottom: 14px;
 }
+
+.shopping-cart .discount .code-text span {
+    margin-right: 10px !important;
+}
+
+.blocks .listing ul li .dot-icon {
+    position: absolute;
+    left: 0px!important;
+}
+.blocks .listing ul li {
+    padding: 0px 0 0px 20px !important;
+    position: relative;
+}
+.blocks h6 {
+    color:#94d3d9;
+    margin: 0 0 0 0;
+    padding: 0 0 12px 0px;
+    position: relative;
+    font-size: 18px;
+}
+.prgramming_listing_hr {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+}
+.program_progress h4 {
+    font-size: 15px;
+    color: #94d3d9;
+    padding-top: 3px;
+}
+.course-block ul li {
+    padding: 14px 0 ! important;
+}
+.course-block .course_data {
+    float: left;
+}

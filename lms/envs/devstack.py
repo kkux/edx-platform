@@ -129,7 +129,7 @@ CC_PROCESSOR = {
         "PROFILE_ID": 'edx',
     },
     "PayTabs": {
-            "WSDL_SERVICE_URL": "http://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL",
+            "WSDL_SERVICE_URL": "https://kkuservices.kku.edu.sa/MyKkuServices/MarketService.asmx?WSDL",
             "SERVICE_KEY": "@#$d*H%^5D#@4)+@!^#TEHGD%#^THRH#%@^HGRH%$^",
             "SECRET_KEY": "FCOPu0Xgw8xWAmT2WMcK6qcxPU52N30sFPiaQgqmoXjZkc1gYd14EeCt9IwWLxpqmIAdY1zmZSmj5nA3AB8fPKJYsfVeMlE93fm1",
             "MERCHANT_EMAIL": "keyur.rathod@drcsystems.com",

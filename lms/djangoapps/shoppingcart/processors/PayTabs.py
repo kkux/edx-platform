@@ -68,12 +68,15 @@ def create_invoice(request, certy_cart=None):
     user = request.user
     user_last_name = user.last_name if user.last_name else "Undefine"
     if request.POST.get('programs'):
-        cart = ProgramOrder.objects.filter(user=user,program_id=request.POST.get('programs'))
+        cart = ProgramOrder.objects.filter(user=user,program_id=request.POST.get('programs'),status='initiate')
         if not cart.exists():
             cart = ProgramOrder.objects.get_or_create(user=user, program_id=request.POST.get('programs'), status='initiate')
         else:
             cart =cart[0]
-        total_cost = cart.item_price
+        if cart.discount_applied:
+            total_cost = Decimal(cart.discounted_price)
+        else:
+            total_cost = cart.item_price
         program = True
     else:
         cart = certy_cart if certy_cart else Order.get_cart_for_user(user)
@@ -107,9 +110,7 @@ def create_invoice(request, certy_cart=None):
     # return_url = request.build_absolute_uri(
     #     reverse("shoppingcart.views.postpay_callback")
     # )
-   
     amount = "{0:0.2f}".format(total_cost)
-    
     ip_merchant = ip_merchant
 
     try:
@@ -121,7 +122,7 @@ def create_invoice(request, certy_cart=None):
     products_per_title = ''
     if program:
         quantity = 1
-        unit_price = cart.item_price
+        unit_price = amount
         products_per_title = cart.item_name
         ip_customer = 'program'
     else:
@@ -321,7 +322,6 @@ def _payment_accepted(params):
     payment_reference = params.get('payment_reference', '')
     if not payment_reference:
         return HttpResponseRedirect(reverse("shoppingcart.views.show_cart"))
-
     client = Client(url_service)
     client.set_options(port='MarketServiceSoap')
     response = client.service.VerifyPayment(
@@ -349,7 +349,10 @@ def _payment_accepted(params):
         try:
             if params['program'] =='program':
                 order = ProgramOrder.objects.get(id=order_id)
-                total_cost = order.item_price
+                if order.discount_applied:
+                    total_cost = Decimal(order.discounted_price)
+                else:
+                    total_cost = order.item_price
             else:
                 order = Order.objects.get(id=order_id)
                 total_cost = order.total_cost

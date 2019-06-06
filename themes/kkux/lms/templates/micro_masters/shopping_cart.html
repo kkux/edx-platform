@@ -172,35 +172,35 @@ from openedx.core.lib.courses import course_image_url
       });
     });
 
-   // $('#submit-code').click(function(event){
-   //    event.preventDefault();
-   //    var post_url = "";
-   //    if($('#input_code').val() == "") {
-   //      showErrorMsgs('Must enter a valid code','code');
-   //      return;
-   //    }
-   //    $.post(post_url,{
-   //                "code" :  $('#input_code').val(),
-   //                "order_id": $('#order-id').val()
-   //            }
-   //    )
-   //    .success(function(data) {
-   //      if (data.coupon_code_applied) {
-   //        location.reload(true); // Reload the page if the coupon code was applied.
-   //      }
-   //      else {
-   //        // Redirect to the redemption URL if the Registration code was applied.
-   //        location.href = data.redemption_url;
-   //      }
-   //    })
-   //    .error(function(data,status) {
-   //                if(status=="parsererror"){
-   //                     location.reload(true);
-   //                }else{
-   //                      showErrorMsgs(data.responseText, 'code')
-   //                    }
-   //            })
-   // });
+   $('#submit-code').click(function(event){
+      event.preventDefault();
+      var post_url = "${reverse('openedx.core.djangoapps.micro_masters.views.use_code')}";
+      if($('#input_code').val() == "") {
+        showErrorMsgs('Must enter a valid code','code');
+        return;
+      }
+      $.post(post_url,{
+                  "code" :  $('#input_code').val(),
+                  "order_id": $('#order-id').val()
+              }
+      )
+      .success(function(data) {
+        if (data.coupon_code_applied) {
+          location.reload(true); // Reload the page if the coupon code was applied.
+        }
+        else {
+          // Redirect to the redemption URL if the Registration code was applied.
+          location.href = data.redemption_url;
+        }
+      })
+      .error(function(data,status) {
+                  if(status=="parsererror"){
+                       location.reload(true);
+                  }else{
+                        showErrorMsgs(data.responseText, 'code')
+                      }
+              })
+   });
 
    $('#submit-reset-redemption').click(function(event){
        event.preventDefault();
@@ -224,7 +224,6 @@ from openedx.core.lib.courses import course_image_url
        // check if there is code exists in the inout_code field
        // before going to billing details page
        // if exists then trigger click event of the apply code button
-       debugger;
        var code = $('div.code-input input#input_code').val();
        if (typeof(code) != 'undefined' && code != ''){
           $('div.code-input #submit-code').trigger('click');

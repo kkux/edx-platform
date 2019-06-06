@@ -23,6 +23,7 @@ urlpatterns = [
    
     url(r'^program_listing/$', program_listing,name='program_listing'),
     url(r'^reset_code_redemption/$', reset_code_redemption),
+    url(r'^use_code/$',use_code ,name='use_code'),
 
     # for reindex all programs
     # url(r'^reindex-all-programs/$', index_programs_information, name='reindex-all-programs'),

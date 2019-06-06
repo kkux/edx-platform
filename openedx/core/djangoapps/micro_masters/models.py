@@ -85,7 +85,7 @@ class Courses(TimeStampedModel):
             )
 
     def __unicode__(self):
-        return self.name
+        return str(self.course_key)
 
     def __repr__(self):
         return self.__unicode__()

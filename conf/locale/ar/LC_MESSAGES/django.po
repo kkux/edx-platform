@@ -26217,5 +26217,5 @@ msgstr "عدد الدورات:"
 msgid "Starts:"
 msgstr "يبدأ:"
 
-msgid "Program Average Progress:"
-msgstr "تقدم متوسط ​​البرنامج:"
+msgid "Program Progress"
+msgstr "تقدم متوسط ​​البرنامج"

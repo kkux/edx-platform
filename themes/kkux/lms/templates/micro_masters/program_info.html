@@ -2,7 +2,7 @@
 <%!
 from datetime import datetime
 from pytz import timezone, utc
-
+from django.utils.translation import ungettext
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 %>
@@ -16,33 +16,10 @@ from django.core.urlresolvers import reverse
   
   
   <link rel="stylesheet" type="text/css" href="${static.url('css/program_info.css')}">
+  <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
  
 </%block>
-<style type="text/css">
-.pie-title-center 
-{
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  margin-left: 10px;
-}
 
-.pie-value
-{
-  display: block;
-  position: absolute;
-  font-size: 14px;
-  height: 40px;
-  top: 50%;
-  left: 0;
-  right: 0;
-  margin-top: -22px;
-  line-height: 40px;
-}
-canvas {
-  height: 35px!important;
-}
-</style>
 <%block name="js_extra">
   <!--
    <script src="${static.url('js/course_info.js')}"></script> 
@@ -50,17 +27,21 @@ canvas {
 </%block>
 
 <%block name="pagetitle">${program.name}</%block>
-
 <%
     total_courses = len(program.courses.select_related())
     c_progress = 0
 %>
-
+<%
+if context.get('LANGUAGE_CODE') == 'ar':
+  program_name = program.name_arabic if program.name_arabic else program.name
+else:
+  program_name = program.name
+%> 
 <main id="main" aria-label="Content" tabindex="-1">
   <div id="wrapper">
     <div class="courseware-container">
       <div class="course_title">
-        <h1>${program.name}</h1>
+        <h1>${program_name}</h1>
       </div>
       <div class="heading-bar">
         <ul id="tabSet" class="scroll_tabs_theme_dark">
@@ -69,7 +50,7 @@ canvas {
 
       <div class="left-block" id="${program.name}_${program.id}">
         <div class="blocks">
-          <h6>${program.name}</h6>
+          <h6>${program_name}</h6>
             <div class="listing">
               <ul>
                   % for index, course in enumerate(program_courses):
@@ -81,6 +62,12 @@ canvas {
                         started = False
                     user_progress = course_grades.get(course.id).get('points', 0.0)
                     user_progress = int(user_progress) if user_progress ==100.0 else user_progress
+                  %>
+                  <%
+                    if context.get('LANGUAGE_CODE') == 'ar':
+                      course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default
+                    else:
+                      course_name = course.display_name_with_default
                   %> 
                   <li id="${course.id}" class="lighttext">
                       <div class="type_icon">
@@ -88,25 +75,28 @@ canvas {
                       </div>
 
                         % if course_grades.get(course.id)['course_states']['completed']:
-                          <div class="dot-icon"><p>
-                          ${user_progress} % ${_('completed')}</p></div>
+                         <div class="dot-icon"><span class="dot green_dot"></span></div>
+                         <div class="course_progress_status" style="color: #bdd402;">${_("Completed")}</div>
                         % elif course_grades.get(course.id)['course_states']['in_progress']:
-                          <div class="dot-icon"><p>${user_progress} % ${_('completed')}
-                          </p></div>
+                          <div class="dot-icon"><span class="dot orange_dot"></span></div>
+                          <div class="course_progress_status" style="color: orange;">${_("In progress.")}</div>
                         % else:
                           % if started:
-                            <div class="dot-icon">${_('No progress yet.')}</div>
+                            <div class="dot-icon"><span class="dot red_dot"></span></div>
+                            <div class="course_progress_status" style="color: red;">${_('No progress yet.')}</div>
                           % else:
-                            <div class="dot-icon">${_('Not started yet.')}</div>
+                            <div class="dot-icon"><span class="dot grey_dot"></span></div>
+                            <div class="course_progress_status" style="color: grey;">${_('Not started yet.')}</div>
                           % endif
                         % endif
 
                         % if started:
-                          <a href="${reverse('info', args=[unicode(course.id)])}">${course.display_name}</a>
+                          <a href="${reverse('info', args=[unicode(course.id)])}" class="program_course_name">${course_name}</a>
                         % else:
-                          ${course.display_name}
+                          ${course_name}
                         % endif
                   </li>
+                  <hr class="prgramming_listing_hr">
                   % endfor
                 </ul>
             </div>
@@ -120,24 +110,53 @@ canvas {
             if c_progress:
               c_progress = c_progress / total_courses
           %>
-          <h4 style="float: left;">${_('Program Average Progress:')}</h4>
-          <div id="demo-pie-1" class="pie-title-center" data-percent="${c_progress}"> 
-            <span class="pie-value"></span> 
+          % if c_progress == 0.0:
+            <div class="program_progress_1">
+              <span class="program_progress_score">${c_progress}%</span>
+              <div class="w3-light-grey">
+                <div class="w3-container w3-green w3-center" style="width:${c_progress}%"></div>
+              </div>
+              <h4>${_('Program Progress')}</h4>
+          % else:
+            <div class="program_progress">
+              <span class="program_progress_score">${c_progress}%</span>
+              <div class="w3-light-grey">
+                <div class="w3-container w3-green w3-center" style="width:${c_progress}%"></div>
+              </div>
+              <h4>${_('Program Progress')}</h4>
+          % endif
           </div>
           <div class="course-block">
             <ul>
-                <li><em class="fa fa-calendar"></em> ${_('Starts:')} <span>${program.start}</span></li>
+                <li>
+                  <span class="course_data">${_('Starts:')} </span> 
+                  <span class="course_data_value">${program.start}</span>
+                </li>
                 % if program.subject.name:
-                  <li><em class="fa fa-graduation-cap fa-lg"></em> ${_('Subject:')} <span>${program.subject.name}</span></li>
+                  <li> 
+                    <span class="course_data">${_('Subject:')} </span> 
+                    <span class="course_data_value">${program.subject.name}</span>
+                  </li>
                 % endif
-                <li><em class="fa fa-university fa-lg"></em> ${_('Institution:')} <span>${program.institution.name}</span></li>
-                <li><em class="fa fa-book fa-lg"></em> ${_('Number Of Courses:')} <span>${len(program.courses.select_related())}</span></li>
+                <li>  
+                  <span class="course_data"> ${_('Institution:')} </span> 
+                  <span class="course_data_value">${program.institution.name}</span>
+                </li>
+                <li>  
+                  <span class="course_data"> ${_('Number Of Courses:')} </span>
+                  <span class="course_data_value">${len(program.courses.select_related())}</span>
+                </li>
             </ul>
           </div>
         </div>
       </div>
   </div>
 </main>
+<ul class="skill-list">
+  
+
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {

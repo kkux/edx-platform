@@ -42,9 +42,15 @@ from django.conf import settings
             <img src="${image_url if program.banner_image else static.url('images/banner-black-background.jpg')}" class="course-image program-image" alt="${program.name}" />
           </a>
         </div>
+        <%
+          if context.get('LANGUAGE_CODE') == 'ar':
+            program_name = program.name_arabic if program.name_arabic else program.name
+          else:
+            program_name = program.name
+        %> 
           <div class="wrapper-course-details">
             <h3 class="course-title">
-                <a data-course-key="${program.id}" href="${reverse('program_info', kwargs={'program_id': program.id})}">${program.name}</a>
+                <a data-course-key="${program.id}" href="${reverse('program_info', kwargs={'program_id': program.id})}">${program_name}</a>
             </h3>
             <div class="program-info">
               <span class="info-date-block localized-datetime">Started - ${program.start}</span>

@@ -650,7 +650,6 @@ def _get_verify_flow_redirect(request,order):
     # See if the order contained any certificate items
     # If so, the user is coming from the payment/verification flow.
     
-    # import pdb;pdb.set_trace()
     if order.__class__.__name__ == 'ProgramOrder':
         attempting_upgrade = request.session.get('attempting_upgrade', False)
         if attempting_upgrade:
@@ -743,7 +742,7 @@ def billing_details(request,**kwargs):
     user = request.user
     if kwargs.get('programs'):
         program = Program.objects.get(id = kwargs.get('id'))
-        cart = ProgramOrder.objects.filter(user=user,program=program)
+        cart = ProgramOrder.objects.filter(user=user,program=program,status='initiate')
         if not cart.exists():
             cart = ProgramOrder.get_or_create_order(user, program)
         else:
@@ -784,17 +783,16 @@ def billing_details(request,**kwargs):
             'postal_code': postal_code,
             'email': cart.user.email,
         }
-
-        # import pdb;
-        # pdb.set_trace()
         
-
         callback_url = request.build_absolute_uri(
             reverse("shoppingcart.views.postpay_callback")
         )
         form_html = render_purchase_form_html(cart, callback_url=callback_url)
         if kwargs.get("programs"):
-            total_cost = cart.item_price
+            if cart.discount_applied:
+                total_cost = cart.discounted_price
+            else:
+                total_cost = cart.item_price
         else:
             total_cost = cart.total_cost
         context = {

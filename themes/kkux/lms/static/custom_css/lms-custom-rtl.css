@@ -1350,6 +1350,70 @@ forum-new-post-form .post-field .field-help {
     width: 100%;
     margin-right: 40px !important;
 }
+/*.blocks .listing ul li .dot-icon {
+    right: 0px !important;
+}*/
+.shopping-cart .discount .code-text span {
+    margin-left: 20px !important;
+}
+.blocks .listing ul li {
+    padding: 10px 20px 10px 35px !important;
+    position: relative;
+}
+.course_progress_status {
+    float: left !important; 
+}
+.left-block 
+{
+    width: 606px;
+    float: right !important;
+}
+.right-block {
+    width: 345px;
+    margin-left: 0px !important; 
+    float: left;
+}
+.blocks h6 {
+    color: #94d3d9;
+    margin: 0 0 0 0;
+    padding: 0 0 12px 0px;
+    position: relative;
+    font-size: 18px;
+}
+.prgramming_listing_hr
+{
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+/*.program_progress
+{
+    margin-right: 111px;
+}*/
 .blocks .listing ul li .dot-icon {
-    left: 60px!important;
+    position: absolute;
+    left: 550px !important;
+}
+/*.course_data{padding: 5px}
+.course_data_value{padding: 5px}*/
+.course-block ul li span 
+{
+    float: none !important;
+
+}
+.w3-light-grey {
+    width: 50%;
+    border-radius: 12px;
+    height: 15px;
+    margin-top: 3px !important;
+    float: left;
+}
+span.program_progress_score {
+    float: left;
+    width: 100%;
+    text-align: left;
+    margin-left: 10px;
+    color: #bdd402;
+}
+.course-block ul li {
+    padding: 5px 0 !important;
 }
