@@ -26219,3 +26219,10 @@ msgstr "يبدأ:"
 
 msgid "Program Progress"
 msgstr "تقدم متوسط ​​البرنامج"
+
+msgid "In progress."
+msgstr "في تقدم."
+
+#: themes/kkux/lms/templates/user_dropdown.html
+msgid "Generate Certificate"
+msgstr "توليد شهادة"

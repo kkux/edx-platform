@@ -180,17 +180,5 @@ else:
       </div>
   </div>
 </main>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#demo-pie-1').pieChart({
-            barColor: '#68b828',
-            trackColor: '#eee',
-            lineCap: 'round',
-            lineWidth: 8,
-            onStep: function (from, to, percent) {
-                $(this.element).find('.pie-value').text(Math.round(percent) + '%');
-            }
-        });
-    });
-</script>
+
 
