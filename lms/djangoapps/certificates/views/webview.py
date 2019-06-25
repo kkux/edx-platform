@@ -687,39 +687,73 @@ def generate_certificates(request):
                         user_obj = UserProfile.objects.get(user=enrollment.user.id)
                         cert_pdf = "/tmp/certificate"+ certificate.verify_uuid + ".pdf"
                         canvas = canvas.Canvas(cert_pdf, pagesize=landscape(A4))
-                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/main-bg.png'), 0, 0, mask="auto")
+                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/bg_1.png'), 0, 0,mask="auto")
                         canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/logo.png'), 320, 470, 170, 70, mask="auto")
-                        canvas.drawImage(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images/left-logo.png'), 40, 495, 75, 50, mask="auto")
                       
                         pdfmetrics.registerFont(TTFont('Arabic-normal',os.path.join(os.path.dirname(os.path.abspath(__file__)),'KacstOne.ttf')))
                         pdfmetrics.registerFont(TTFont('Helvetica',os.path.join(os.path.dirname(os.path.abspath(__file__)),'lvnm.ttf')))
-                        canvas.setFont('Arabic-normal', 17)
-                        canvas.drawString(270, 370, u"‫تشهد منصة جامعة الملك خالد")
-                        canvas.setFont('Helvetica', 17)
-                        canvas.drawString(495, 370, "KKUx")
-                        canvas.setFont('Arabic-normal', 17)
-                        canvas.drawString(540, 370, u"بأن")
-                        canvas.setFillColor(HexColor('#6dabb6'))                        
-                        canvas.drawString(380, 340, unicode(user_obj.name_in_arabic))
-                        canvas.setFont('Helvetica', 17)
-                        canvas.drawString(380, 310, unicode(request.user.first_name + ' ' + request.user.last_name)   )
+                        
                         canvas.setFont('Arabic-normal', 17)
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.drawString(240, 280, u"في برنامجي الماهر ، اكملت جميع المتطلبات بنجاح")
+                        canvas.drawString(270, 430, u"في جامعة الملك خالد:")
+                        canvas.setFont('Helvetica', 17)
+                        canvas.setFillColor(HexColor('#8a8a8a'))
+                        canvas.drawString(435, 428, "KKUx")
+                        canvas.setFillColor(HexColor('#8a8a8a'))
+                        canvas.setFont('Arabic-normal', 17)
+                        canvas.drawString(480, 428, u"مشاهدة منصة")
+                        canvas.setFillColor(HexColor('#6dabb6')) 
+
+                        from reportlab.pdfbase.pdfmetrics import stringWidth
+                        width = landscape(A4)[0]
+
+                        canvas.setFont('Arabic-normal', 22)
+                        string_len = stringWidth(unicode(user_obj.name_in_arabic),'Arabic-normal', 22)
+                        canvas.drawString(((width-string_len)/2), 390, unicode(user_obj.name_in_arabic))
+
+
+
+                        canvas.setFont('Helvetica', 22)
+                        if user_obj.user.get_full_name():
+                            name = user_obj.user.get_full_name()
+                        else:
+                            name = user_obj.user.username
+                        string_len = stringWidth(unicode(name),'Helvetica', 22)
+                        canvas.drawString(((width-string_len)/2), 350,name)
+                        
+                        canvas.setFont('Arabic-normal', 17)
+                        canvas.setFillColor(HexColor('#9c9c9c'))
+                        string_len = stringWidth(u"أتم بنجاح جميع متطلبات البرنامج",'Arabic-normal', 17)
+                        canvas.drawString(((width-string_len)/2), 315, u"أتم بنجاح جميع متطلبات البرنامج")
+
                         canvas.setFillColor(HexColor('#6dabb6'))
-                        canvas.drawString(380, 250, program.name_arabic)
-                        canvas.setFont('Helvetica', 17)
-                        canvas.drawString(380, 220,unicode(program.name))
+                        canvas.setFont('Arabic-normal', 22)
+                        string_len = stringWidth(program.name_arabic,'Arabic-normal', 22)
+                        canvas.drawString(((width-string_len)/2), 275, program.name_arabic)
+                        
+                        canvas.setFont('Helvetica', 20)
+                        string_len = stringWidth(unicode(program.name),'Helvetica', 20)
+                        canvas.drawString(((width-string_len)/2), 245,unicode(program.name))
+
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.setFont('Helvetica', 17)
-                        canvas.drawString(368, 190, unicode(certificate.created.date().strftime("%B %d,%Y")))
+                        canvas.setFont('Arabic-normal', 17)
+                        string_len = stringWidth(u"بواقع ٣٠ ساعة تدريبية إلكترونية لمدة ستة أسابيع",'Arabic-normal', 17)
+                        canvas.drawString(((width-string_len)/2), 210, u"بواقع ٣٠ ساعة تدريبية إلكترونية لمدة ستة أسابيع")
+
+
+                        canvas.setFont('Helvetica', 15)
+                        if program.start and program.end:
+                            text = str(program.start.strftime( "%d %B")) + '-' + str(program.end.strftime("%d %B %Y"))
+                            canvas.drawString(348, 185, unicode(text))
+                        else:
+                            canvas.drawString(368, 185, unicode(program.start.strftime("%d %B %Y")))
                         canvas.setFillColor(HexColor('#96a900'))
                         canvas.setFont('Arabic-normal', 14)
                         canvas.drawString(575, 70, "‫الاحمري‬ ‫عبداالله‬ ‫فهد‬ .‫د‬")
                         canvas.setFillColor(HexColor('#8a8a8a'))
                         canvas.setFont('Arabic-normal', 14)
                         canvas.drawString(575, 50, "‫الإلكتروني‬ ‫التعلم‬ ‫عميد‬")
-                        canvas.setFillColor(HexColor('#6dabb6'))
+                        canvas.setFillColor(HexColor('#8a8a8a'))
                         canvas.setFont('Helvetica', 10)
                         canvas.drawString(150, 130, "KKUx is part of King Khalid University where anyone")
                         canvas.drawString(150, 115, "can find a professional online courses for the most ")
