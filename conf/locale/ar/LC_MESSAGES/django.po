@@ -7144,6 +7144,16 @@ msgstr "البريد الإلكتروني"
 msgid "Language"
 msgstr "اللغة"
 
+msgid "View the Program"
+msgstr "عرض البرنامج"
+
+msgid "Enroll the Program"
+msgstr "تسجيل البرنامج"
+
+msgid "View a Sample MicroMasters Program Certificate"
+msgstr "عرض نموذج شهادة برنامج MicroMasters"
+
+
 #: lms/djangoapps/instructor/views/api.py
 msgid "Location"
 msgstr "الموقع"
@@ -12586,9 +12596,6 @@ msgstr "مثال: فاطمة_الفهري"
 msgid "Course End Date"
 msgstr "تاريخ انتهاء المساق"
 
-#: cms/templates/settings.html lms/templates/courseware/program_marketing.html
-msgid "Instructors"
-msgstr ""
 
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
 msgid "Requirements"
@@ -26139,11 +26146,15 @@ msgstr "موضوع"
 msgid "Video Transcripts"
 msgstr "نسخ الفيديو"
 
-msgid "Pursue the Program"
-msgstr "تابع البرنامج"
-
 msgid "Meet the Instructors"
 msgstr "تلبية المدربين"
+
+msgid "Pursue the Program ({currency_symbol}{program_price})"
+msgstr "({currency_symbol}{program_price}) تلبية المدربين"
+
+msgid "Instructors"
+msgstr "المدربين"
+
 
 
 #: themes/kkux/lms/templates/micro_masters/program_about.html

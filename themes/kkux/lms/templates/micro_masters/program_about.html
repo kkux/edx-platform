@@ -57,13 +57,6 @@ from openedx.core.djangolib.markup import HTML, Text
 <section class="course-info">
   <header class="program-profile banner">
     <div class="container">
-      <div class="col-6 text">
-        <div class="org-label">
-          <div class="org-logo">
-            <img src="${org_image_url}" alt="org-logo">
-          </div>
-        </div>
-      </div>
       <div class="col-6 video-wrapper">
         % if program.introductory_video:
         <a href="#video-modal" class="media" rel="leanModal">
@@ -75,18 +68,23 @@ from openedx.core.djangolib.markup import HTML, Text
         % endif
       </div>
       <div class="col-6 banner-text_buy_button">
-	
-        <h1 id="program-title">${program.name}</h1>
-        <p class="banner-description">${program.short_description}</p>
+          <%
+            if context.get('LANGUAGE_CODE') == 'ar':
+              program_name = program.name_arabic if program.name_arabic else program.name
+            else:
+              program_name = program.name
+          %>    
+          <h1 id="program-title">${program_name}</h1>
+          <p class="banner-description">${program.short_description}</p>
         <div class="start-program-btn">
           <div role="group" aria-label="Program purchase and email options">
             % if user_is_enrolled:
-              <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+              <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("View the Program")}</a>
             % elif program_is_free_not_enroll:
-              <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+              <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("Enroll the Program")}</a>
             % else:
               % if program.price <= 0:
-                <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("Enroll the Program")}</a>
               % else:
                 <a href="${reverse('program_buy', kwargs=dict(program_id=program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
               % endif
@@ -99,9 +97,9 @@ from openedx.core.djangolib.markup import HTML, Text
   </header>
   <div class="page-nav">
       <ul>
-        <li class="${'col-4' if len(program.instructors.select_related()) else 'col-8'}"><a href="#courses">View Courses</a></li>
+        <li class="${'col-4' if len(program.instructors.select_related()) else 'col-8'}"><a href="#courses">${_("View Courses")}</a></li>
         % if len(program.instructors.select_related()):
-          <li class="col-4"><a href="#instructors">Meet the Instructors</a></li>
+          <li class="col-4"><a href="#instructors">${_("Meet the Instructors")}</a></li>
         % endif
       </ul>
   </div>
@@ -118,7 +116,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                     <span class="block-list__label">
                         <span aria-hidden="true" class="fa fa-clock-o fa-lg"></span>
-                        Average Length:
+                        ${_("Average Length")}:
                     </span>
                     <span class="block-list__desc">${program.average_length}</span>
                 </li>
@@ -127,7 +125,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tachometer fa-lg"></span>
-                    Effort:
+                    ${_("Effort")}:
                   </span>
                   <span class="block-list__desc">${program.effort}</span>
                 </li>
@@ -135,14 +133,14 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-book fa-lg"></span>
-                    Number Of Courses:
+                    ${_("Number Of Courses")}:
                   </span>
                   <span class="block-list__desc">${len(program.courses.select_related())} Courses in Program</span>
                 </li>
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-graduation-cap fa-lg"></span>
-                    Subject:
+                    ${_("Subject:")}
                   </span>
                   <span class="block-list__desc">
                     ${program.subject.name}
@@ -151,7 +149,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-university fa-lg"></span>
-                    Institution:
+                    ${_("Institution:")}
                   </span>
                   <span class="block-list__desc">
                     ${program.institution.name}
@@ -160,7 +158,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-comment-o fa-lg"></span>
-                    Language:
+                    ${_("Language")}:
                   </span>
 
                   <span class="block-list__desc">
@@ -170,7 +168,7 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-file-video-o fa-lg"></span>
-                    Video Transcripts:
+                    ${_("Video Transcripts")}:
                   </span>
                     <span class="block-list__desc">
                      ${program.video_transcripts.name}
@@ -179,11 +177,11 @@ from openedx.core.djangolib.markup import HTML, Text
                 <li class="important-dates-item">
                   <span class="block-list__label">
                     <span aria-hidden="true" class="fa fa-tag fa-lg"></span>
-                    Price:
+                    ${_("Price")}:
                   </span>
                   <span class="block-list__desc">
                     % if program.price <= 0:
-                         Free
+                         ${("Free")}
                     % else:
                         ${currency[0]}${program.price}
                     % endif
@@ -213,7 +211,7 @@ from openedx.core.djangolib.markup import HTML, Text
             <p>
                 Eligibility to be accepted into the Master program is subject to the Curtin University Admission Requirements being met.
             </p> -->
-            <h2>Courses</h2>
+            <h2>${_("Courses")}</h2>
             <div class="js-discovery-card-list discovery-card-list one-click-purchase-enabled">
             % for course in courses:
             <%
@@ -238,22 +236,31 @@ from openedx.core.djangolib.markup import HTML, Text
                   % endif
                   </div>
                   <div class="course-details">
+                    <%
+                      if context.get('LANGUAGE_CODE') == 'ar':
+                        course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name
+                        course_des = course.short_description_in_arabic if course.short_description_in_arabic else course.short_description
+                      else:
+                        course_name = course.display_name
+                        course_des = course.short_description
+                    %>   
+
                     <div class="title"> 
                         <strong>
                           % if started:
-                              <a href="${course_url}">${course.display_name}</a>
+                              <a href="${course_url}">${course_name}</a>
                           % else:
-                              ${course.display_name}
+                              ${course_name}
                           % endif
                         </strong>
                     </div>
                     <div class="subtitle">
-                      %if course.short_description:
-                        <p>${course.short_description}</p>
+                      %if course_des:
+                        <p>${course_des}</p>
                       %endif
                     </div>
                     % if started:
-                        <a href="${course_url}">View the ${course.display_name}</a>
+                        <a href="${course_url}">View the ${course_name}</a>
                     % endif
                   </div>
                   <div class="course-start">
@@ -271,12 +278,12 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="start-program-btn">
               <div role="group" aria-label="Program purchase and email options">
                 % if user_is_enrolled:
-                  <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
+                  <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("View the Program")}</a>
                 % elif program_is_free_not_enroll:
-                  <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                  <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("Enroll the Program")}</a>
                 % else:
                   % if program.price <= 0:
-                    <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Enroll the Program</a>
+                    <a href="${reverse('program_enroll', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">${_("Enroll the Program")}</a>
                   % else: 
                     <a href="${reverse('program_buy', kwargs=dict(program_id=program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[0]) | h}</a>
                   % endif
@@ -285,36 +292,36 @@ from openedx.core.djangolib.markup import HTML, Text
             </div>
         </section>
         % if len(program.instructors.select_related()):
-        <section id="instructors" class="separator-top">
-          <h2>Instructors</h2>
-            <ul class="clear-list list-instructors clearfix">
-            % for teacher in program.instructors.select_related():
-		<% 
-                	conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+          <section id="instructors" class="separator-top">
+            <h2>${_("Instructors")}</h2>
+              <ul class="clear-list list-instructors clearfix">
+              % for teacher in program.instructors.select_related():
+  		          <% 
+                  	conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
 
-                	image=teacher.profile_image.url.split("/")[-1]
+                  	image=teacher.profile_image.url.split("/")[-1]
 
-                	teacher_image_url = conn.generate_presigned_url(
-                     		'get_object',
-                     		Params = {
-                            	'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
-                            	'Key': image
-                        	},
-                	 )
-            	%>
-              <li class="list-instructor__item">
-                <a href="#">
-                  <img src="${teacher_image_url}" alt="${teacher.name}" class="instructor-image">
-                  <p class="instructor-name">${teacher.name}</p>
-                </a>
-                <p class="instructor-position">
-                    ${teacher.designation}
-                    <span class="instructor-org">${teacher.institution.name}</span>
-                </p>
-              </li>
-            % endfor
-            </ul>
-        </section>
+                  	teacher_image_url = conn.generate_presigned_url(
+                       		'get_object',
+                       		Params = {
+                              	'Bucket': settings.AWS_STORAGE_BUCKET_NAME ,
+                              	'Key': image
+                          	},
+                  	 )
+              	%>
+                <li class="list-instructor__item">
+                  <a href="#">
+                    <img src="${teacher_image_url}" alt="${teacher.name}" class="instructor-image">
+                    <p class="instructor-name">${teacher.name}</p>
+                  </a>
+                  <p class="instructor-position">
+                      ${teacher.designation}
+                      <span class="instructor-org">${teacher.institution.name}</span>
+                  </p>
+                </li>
+              % endfor
+              </ul>
+          </section>
         % endif
         <section class="separator-top why-this-program">
           <div class="view-certificate">
@@ -322,7 +329,8 @@ from openedx.core.djangolib.markup import HTML, Text
               <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" class="img-link">
                 <img src="${static.url('images/certificate.png')}" alt="certificate">
               </a>
-              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" target="_blank">View a Sample MicroMasters Program Certificate</a>
+              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" target="_blank">
+              ${_("View a Sample MicroMasters Program Certificate")}</a>
             </div>
           </div>
         </section>

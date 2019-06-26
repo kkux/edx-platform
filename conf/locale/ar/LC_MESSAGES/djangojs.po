@@ -9459,8 +9459,8 @@ msgstr "الاسم الأول"
 
 
 #: lms/templates/verify_student/id_photo_step.underscore
-msgid "Upload Your Photo ID"
-msgstr "قم بتحميل معرف صورتك"
+msgid "Upload a clear picture of your ID card"
+msgstr "قم برفع صورة واضحة لبطاقة الهوية الشخصية الخاصة بك"
 
 #: lms/templates/verify_student/id_photo_step.underscore
 msgid "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB"

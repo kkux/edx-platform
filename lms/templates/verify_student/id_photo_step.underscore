@@ -2,7 +2,7 @@
   <div class="idphoto view">
     <h3 class="title"><%- gettext( "Take a Photo of Your ID" ) %></h3>
     <div class="instruction">
-      <p><%- gettext( "Upload Your Photo ID" ) %></p>
+      <p><%- gettext( "Upload a clear picture of your ID card" ) %></p>
       <p><%- gettext( "Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB" ) %></p>
     </div>
   <form name="upload_img" enctype="multipart/form-data" id="upload_img">

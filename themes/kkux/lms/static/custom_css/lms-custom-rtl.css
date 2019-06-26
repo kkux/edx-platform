@@ -1426,3 +1426,26 @@ forum-new-post-form .post-field .field-help {
     left: 0% !important;
     float: left;
 }
+.discovery-card-list .enroll-card .img-wrapper 
+{
+    float: right !important;
+}
+.discovery-card-list .enroll-card .course-details 
+{
+    float: right !important;
+}
+.discovery-card-list.one-click-purchase-enabled .course-start {
+    text-align: left !important;
+}
+.program-profile .col-6 h1 
+{
+    text-align: right !important;
+}
+.program-profile .video-wrapper 
+{
+    float: left !important;
+}
+.program-profile .banner-text_buy_button 
+{
+    float: right !important;
+}
