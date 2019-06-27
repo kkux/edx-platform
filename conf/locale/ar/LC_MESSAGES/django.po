@@ -7151,7 +7151,7 @@ msgid "Enroll the Program"
 msgstr "تسجيل البرنامج"
 
 msgid "View a Sample MicroMasters Program Certificate"
-msgstr "عرض نموذج شهادة برنامج MicroMasters"
+msgstr "عرض نموذج لشهادة البرنامج"
 
 
 #: lms/djangoapps/instructor/views/api.py
@@ -26147,10 +26147,10 @@ msgid "Video Transcripts"
 msgstr "نسخ الفيديو"
 
 msgid "Meet the Instructors"
-msgstr "تلبية المدربين"
+msgstr "المدربين"
 
 msgid "Pursue the Program ({currency_symbol}{program_price})"
-msgstr "({currency_symbol}{program_price}) تلبية المدربين"
+msgstr "({currency_symbol}{program_price}) التسجيل في البرنامج"
 
 msgid "Instructors"
 msgstr "المدربين"

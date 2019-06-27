@@ -323,13 +323,20 @@ from openedx.core.djangolib.markup import HTML, Text
               </ul>
           </section>
         % endif
+        <%
+          if program.sample_certificate_pdf:
+            conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+            pdf_url = conn.generate_presigned_url('get_object', Params = { 'Bucket': "kkux-storage" ,'Key': program.sample_certificate_pdf.name },)
+          else:
+            pdf_url = "#"  
+        %>
         <section class="separator-top why-this-program">
           <div class="view-certificate">
             <div class="certificate">
-              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" class="img-link">
+              <a href="${pdf_url}" class="img-link">
                 <img src="${static.url('images/certificate.png')}" alt="certificate">
               </a>
-              <a href="${program.sample_certificate_pdf.url if program.sample_certificate_pdf else static.url('images/certificate.png')}" target="_blank">
+              <a href="${pdf_url}" target="_blank">
               ${_("View a Sample MicroMasters Program Certificate")}</a>
             </div>
           </div>
