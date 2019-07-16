@@ -481,7 +481,6 @@ def process_postpay_callback(params):
 
     """
     try:
-        # import pdb;pdb.set_trace()
         valid_params = verify_signatures(params)
         result = _payment_accepted(
             valid_params['req_reference_number'],
@@ -573,7 +572,6 @@ def show_program_receipt(request, ordernum):
     Displays a receipt for a particular order.
     404 if order is not yet purchased or request.user != order.user
     """
-    # import pdb;pdb.set_trace()
     try:
         order = ProgramOrder.objects.get(id=ordernum)
     except ProgramOrder.DoesNotExist:
@@ -645,6 +643,7 @@ def program_about(request, program_id):
             program_is_free_not_enroll = True
 
     context = {}
+    courses.sort(key=lambda item: item.start)
     currency = settings.PAID_COURSE_REGISTRATION_CURRENCY
     context['currency'] = currency
     context['program'] = program
@@ -741,7 +740,6 @@ def render_purchase_form_html(cart, callback_url=None, extra_data=None):
 @csrf_exempt
 @login_required
 def program_buy(request, program_id):
-    # import pdb;pdb.set_trace()
     user = request.user
     try:
         program = Program.objects.get(pk=program_id)
@@ -1114,7 +1112,7 @@ def program_info(request, program_id):
             courses += [CourseOverview.get_from_id(course.course_key)]
         except Exception, e:
             courses = courses
-
+    courses.sort(key=lambda item: item.start)
     context['program_courses'] = courses
     context['program'] = user_program.program
     context['course_grades'] = course_grades

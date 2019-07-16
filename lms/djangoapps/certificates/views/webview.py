@@ -661,7 +661,7 @@ def verify_certificates(request):
 
 @csrf_exempt
 def generate_certificates(request):
-    
+    import arabic_reshaper
     program_list = Program.objects.all()
     if request.method == "POST":
         
@@ -692,26 +692,33 @@ def generate_certificates(request):
                       
                         pdfmetrics.registerFont(TTFont('Arabic-normal',os.path.join(os.path.dirname(os.path.abspath(__file__)),'KacstOne.ttf')))
                         pdfmetrics.registerFont(TTFont('Helvetica',os.path.join(os.path.dirname(os.path.abspath(__file__)),'lvnm.ttf')))
+                        pdfmetrics.registerFont(TTFont('GESSTwoBold',os.path.join(os.path.dirname(os.path.abspath(__file__)),'GE-SS-Two-Bold.ttf')))
                         
-                        canvas.setFont('Arabic-normal', 17)
+                        canvas.setFont('GESSTwoBold', 17)
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.drawString(270, 430, u"في جامعة الملك خالد:")
-                        canvas.setFont('Helvetica', 17)
+                        # canvas.drawString(270, 430, u"في جامعة الملك خالد:")
+                        ar1 = arabic_reshaper.reshape(u"بجامعة الملك خالد بأن:")
+                        ar1 = get_display(ar1)
+                        canvas.drawString(245, 430, ar1)
+                        canvas.setFont('Helvetica-Bold', 17)
                         canvas.setFillColor(HexColor('#8a8a8a'))
                         canvas.drawString(435, 428, "KKUx")
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.setFont('Arabic-normal', 17)
-                        canvas.drawString(480, 428, u"مشاهدة منصة")
+                        canvas.setFont('GESSTwoBold', 17)
+                        # canvas.drawString(480, 428, u"مشاهدة منصة")
+                        ar2 = arabic_reshaper.reshape(u"تشهد منصة")
+                        ar2 = get_display(ar2)
+                        canvas.drawString(485, 428, ar2)
                         canvas.setFillColor(HexColor('#6dabb6')) 
 
                         from reportlab.pdfbase.pdfmetrics import stringWidth
                         width = landscape(A4)[0]
 
-                        canvas.setFont('Arabic-normal', 22)
-                        string_len = stringWidth(unicode(user_obj.name_in_arabic),'Arabic-normal', 22)
-                        canvas.drawString(((width-string_len)/2), 390, unicode(user_obj.name_in_arabic))
-
-
+                        ar2 = arabic_reshaper.reshape(unicode(user_obj.name_in_arabic))
+                        ar2 = get_display(ar2)
+                        canvas.setFont('GESSTwoBold', 22)
+                        string_len = stringWidth(ar2,'GESSTwoBold', 22)
+                        canvas.drawString(((width-string_len)/2), 390, ar2)
 
                         canvas.setFont('Helvetica', 22)
                         if user_obj.user.get_full_name():
@@ -721,25 +728,30 @@ def generate_certificates(request):
                         string_len = stringWidth(unicode(name),'Helvetica', 22)
                         canvas.drawString(((width-string_len)/2), 350,name)
                         
-                        canvas.setFont('Arabic-normal', 17)
+                        canvas.setFont('GESSTwoBold', 17)
                         canvas.setFillColor(HexColor('#9c9c9c'))
-                        string_len = stringWidth(u"أتم بنجاح جميع متطلبات البرنامج",'Arabic-normal', 17)
-                        canvas.drawString(((width-string_len)/2), 315, u"أتم بنجاح جميع متطلبات البرنامج")
+                        ar3 = arabic_reshaper.reshape(u"أتم بنجاح جميع متطلبات البرنامج")
+                        ar3 = get_display(ar3)
+                        string_len = stringWidth(ar3,'GESSTwoBold', 17)
+                        canvas.drawString(((width-string_len)/2), 315, ar3)
 
                         canvas.setFillColor(HexColor('#6dabb6'))
-                        canvas.setFont('Arabic-normal', 22)
-                        string_len = stringWidth(program.name_arabic,'Arabic-normal', 22)
-                        canvas.drawString(((width-string_len)/2), 275, program.name_arabic)
+                        canvas.setFont('GESSTwoBold', 22)
+                        ar4 = arabic_reshaper.reshape(unicode(program.name_arabic))
+                        ar4 = get_display(ar4)
+                        string_len = stringWidth(ar4,'GESSTwoBold', 22)
+                        canvas.drawString(((width-string_len)/2), 275, ar4)
                         
                         canvas.setFont('Helvetica', 20)
                         string_len = stringWidth(unicode(program.name),'Helvetica', 20)
                         canvas.drawString(((width-string_len)/2), 245,unicode(program.name))
 
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.setFont('Arabic-normal', 17)
-                        string_len = stringWidth(u"بواقع ٣٠ ساعة تدريبية إلكترونية لمدة ستة أسابيع",'Arabic-normal', 17)
-                        canvas.drawString(((width-string_len)/2), 210, u"بواقع ٣٠ ساعة تدريبية إلكترونية لمدة ستة أسابيع")
-
+                        canvas.setFont('GESSTwoBold', 17)
+                        ar4 = arabic_reshaper.reshape(u"بواقع ٣٠ ساعة تدريبية إلكترونية لمدة ستة أسابيع")
+                        ar4 = get_display(ar4)
+                        string_len = stringWidth(ar4,'GESSTwoBold', 17)
+                        canvas.drawString(((width-string_len)/2), 210, ar4)
 
                         canvas.setFont('Helvetica', 15)
                         if program.start and program.end:
@@ -748,11 +760,15 @@ def generate_certificates(request):
                         else:
                             canvas.drawString(368, 185, unicode(program.start.strftime("%d %B %Y")))
                         canvas.setFillColor(HexColor('#96a900'))
-                        canvas.setFont('Arabic-normal', 14)
-                        canvas.drawString(575, 70, "‫الاحمري‬ ‫عبداالله‬ ‫فهد‬ .‫د‬")
+                        canvas.setFont('GESSTwoBold', 14)
+                        ar4 = arabic_reshaper.reshape(u"‫الاحمري‬ ‫عبداالله‬ ‫فهد‬ .‫د‬")
+                        ar4 = get_display(ar4)
+                        canvas.drawString(575, 70, ar4)
                         canvas.setFillColor(HexColor('#8a8a8a'))
-                        canvas.setFont('Arabic-normal', 14)
-                        canvas.drawString(575, 50, "‫الإلكتروني‬ ‫التعلم‬ ‫عميد‬")
+                        canvas.setFont('GESSTwoBold', 14)
+                        ar4 = arabic_reshaper.reshape(u"‫الإلكتروني‬ ‫التعلم‬ ‫عميد‬")
+                        ar4 = get_display(ar4)
+                        canvas.drawString(575, 50, ar4)
                         canvas.setFillColor(HexColor('#8a8a8a'))
                         canvas.setFont('Helvetica', 10)
                         canvas.drawString(150, 130, "KKUx is part of King Khalid University where anyone")
