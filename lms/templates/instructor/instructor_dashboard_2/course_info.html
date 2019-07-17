@@ -38,6 +38,40 @@ from openedx.core.djangolib.markup import HTML, Text
       %endif
   </div>
   <hr>
+
+  <h4 class="hd hd-4">${_("Unenrollment Information")}</h4>
+  <div class="enrollment-wrapper">
+    %if settings.FEATURES.get('DISPLAY_ANALYTICS_ENROLLMENTS'):
+      ## Translators: 'track' refers to the enrollment type ('honor', 'verified', or 'audit')
+      <% modes = section_data['unenrollment_count'] %>
+        <table>
+            <caption class="tip">${_("Number of enrollees (admins, staff, and students) by track")}</caption>
+            <tr>
+                <th scope="row">${_("Verified")}</th><td>${modes['verified']}</td>
+            </tr>
+            <tr>
+                <th scope="row">${_("Audit")}</th><td>${modes['audit']}</td>
+            </tr>
+            <tr>
+                <th scope="row">${_("Honor")}</th><td>${modes['honor']}</td>
+            </tr>
+            <tr>
+                <th scope="row">${_("Professional")}</th><td>${modes['professional'] + modes['no-id-professional']}</td>
+            </tr>
+            <tr style="color:green;border-top:1px solid #000">
+                <th scope="row" style="padding-top:10px;">
+                    <strong>${_("Total")}</strong>
+                </th>
+                <td style="padding-top:10px;">
+                    <strong>${modes['total']}</strong>
+                </td>
+            </tr>
+        </table>
+      %elif section_data.get('enrollment_message'):
+        <p>${section_data['enrollment_message']}</p>
+      %endif
+  </div>
+  <hr>
 %endif
 
 <div class="basic-wrapper">

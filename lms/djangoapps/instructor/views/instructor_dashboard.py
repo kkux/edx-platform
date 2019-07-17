@@ -451,6 +451,7 @@ def _section_course_info(course, access):
 
     if settings.FEATURES.get('DISPLAY_ANALYTICS_ENROLLMENTS'):
         section_data['enrollment_count'] = CourseEnrollment.objects.enrollment_counts(course_key)
+        section_data['unenrollment_count'] = CourseEnrollment.objects.unenrollment_counts(course_key)
 
     if show_analytics_dashboard_message(course_key):
         #  dashboard_link is already made safe in _get_dashboard_link

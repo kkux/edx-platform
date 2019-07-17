@@ -963,6 +963,23 @@ class CourseEnrollmentManager(models.Manager):
         enroll_dict['total'] = total
         return enroll_dict
 
+    def unenrollment_counts(self, course_id):
+        """
+        Returns a dictionary that stores the total enrollment count for a course, as well as the
+        enrollment count for each individual mode.
+        """
+        # Unfortunately, Django's "group by"-style queries look super-awkward
+        query = use_read_replica_if_available(
+            super(CourseEnrollmentManager, self).get_queryset().filter(course_id=course_id, is_active=False).values(
+                'mode').order_by().annotate(Count('mode')))
+        total = 0
+        enroll_dict = defaultdict(int)
+        for item in query:
+            enroll_dict[item['mode']] = item['mode__count']
+            total += item['mode__count']
+        enroll_dict['total'] = total
+        return enroll_dict
+
     def enrolled_and_dropped_out_users(self, course_id):
         """Return a queryset of Users in the course."""
         return User.objects.filter(
