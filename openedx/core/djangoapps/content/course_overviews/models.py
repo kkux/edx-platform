@@ -109,6 +109,7 @@ class CourseOverview(TimeStampedModel):
 
     display_name_in_arabic = TextField(null=True)
     short_description_in_arabic = TextField(null=True)
+    number_of_hours = TextField(null=True, blank=True)
 
     # Added by Mahendra Chaudhari
     course_category = TextField(null=True)
@@ -206,6 +207,7 @@ class CourseOverview(TimeStampedModel):
         course_overview.course_category = course.course_category
         course_overview.display_name_in_arabic = course.display_name_in_arabic
         course_overview.short_description_in_arabic = CourseDetails.fetch_about_attribute(course.id, 'short_description_in_arabic')
+        course_overview.number_of_hours = CourseDetails.fetch_about_attribute(course.id, 'number_of_hours')
 
         return course_overview
 

@@ -59,6 +59,7 @@ class CourseMetadata(object):
         'show_correctness',
         'chrome',
         'default_tab',
+        'number_of_hours',
     ]
 
     @classmethod

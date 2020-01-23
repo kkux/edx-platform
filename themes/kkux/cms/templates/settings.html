@@ -249,6 +249,13 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <span class="tip tip-stacked timezone">${_("(UTC)")}</span>
               </div>
             </li>
+	    <li class="field-group" id="number-hours">
+                <div class="field time" id="number-of-hours">
+                    <label for="number_of_hours">${_("Number of Hours")}</label>
+                    <input type="text" id="number_of_hours"/>
+                    <span class="tip tip-stacked timezone">${_("(UTC)")}</span>
+                </div>
+           </li>
           </ol>
 
           % if not about_page_editable:

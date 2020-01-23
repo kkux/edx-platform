@@ -519,6 +519,14 @@ urlpatterns += (
     ),
 
     url(
+        r'^courses/{}/get_unenrolled_students$'.format(
+            settings.COURSE_ID_PATTERN,
+        ),
+        'lms.djangoapps.instructor.views.instructor_dashboard.get_unenrolled_students',
+        name='get_unenrolled_students',
+    ),
+
+    url(
         r'^courses/{}/'.format(
             settings.COURSE_ID_PATTERN,
         ),

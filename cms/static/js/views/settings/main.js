@@ -35,6 +35,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.$el.find('#course-number').val(this.model.get('course_id'));
                    this.$el.find('#course-name').val(this.model.get('run'));
                    this.$el.find('.set-date').datepicker({'dateFormat': 'm/d/yy'});
+                   this.$el.find("#number_of_hours").val(this.model.get('number_of_hours'));
 
         // Avoid showing broken image on mistyped/nonexistent image
                    this.$el.find('img').error(function() {
@@ -83,6 +84,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    DateUtils.setupDatePicker('end_date', this);
                    DateUtils.setupDatePicker('enrollment_start', this);
                    DateUtils.setupDatePicker('enrollment_end', this);
+
+                   this.$el.find('#' + this.fieldToSelectorMap['number_of_hours']).val(this.model.get('number_of_hours'));
 
                    this.$el.find('#' + this.fieldToSelectorMap['overview']).val(this.model.get('overview'));
                    this.codeMirrorize(null, $('#course-overview')[0]);
@@ -184,7 +187,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'add_course_learning_info': 'add-course-learning-info',
                    'add_course_instructor_info': 'add-course-instructor-info',
                    'course_learning_info': 'course-learning-info',
-                   'short_description_in_arabic': 'course-short-description-ar'
+                   'short_description_in_arabic': 'course-short-description-ar',
+                   'number_of_hours': 'number_of_hours',
                },
 
                addLearningFields: function() {
@@ -311,6 +315,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-subtitle':
                    case 'course-duration':
                    case 'course-description':
+	           case 'number_of_hours':
                    // Added by Mahendra Chaudhari
                    case 'course_category':
                    case 'course-short-description':

@@ -26115,8 +26115,8 @@ msgstr "التعلم المفتوح"
 msgid "Open CourseWare"
 msgstr "المقررات المفتوحة "
 
-msgid "Olomna"
-msgstr "علومنا "
+msgid "Tazamun"
+msgstr "تزامن"
 
 msgid "Tamkeen"
 msgstr "تمكين للتدريب"

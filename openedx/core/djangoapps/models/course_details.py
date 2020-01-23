@@ -33,6 +33,7 @@ ABOUT_ATTRIBUTES = [
     'entrance_exam_minimum_score_pct',
     'course_category',
     'short_description_in_arabic',
+    'number_of_hours',
 ]
 
 
@@ -78,6 +79,7 @@ class CourseDetails(object):
         self.self_paced = None
         self.learning_info = []
         self.instructor_info = []
+	self.number_of_hours = ""
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):

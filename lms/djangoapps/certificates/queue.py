@@ -442,11 +442,21 @@ class XQueueCertInterface(object):
 
         cert.save()
 
+        try:
+            from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+            course = CourseOverview.objects.get(id=course.id)
+            course_arabic_name = course.display_name_in_arabic
+            course_number_hourse = course.number_of_hours
+        except:
+            course_arabic_name = ""
+            course_number_hourse = ""
+
         if generate_pdf:
             try:
                 contents.update({
                     'name_in_arabic': student.profile.name_in_arabic,
-                    'course_name_in_arabic': course.display_name_in_arabic if course.display_name_in_arabic else "",
+                    'course_name_in_arabic': course_arabic_name or "",
+                    'number_of_hours': course_number_hourse or "",
                     'certificate_date_issued': '{month} {day}, {year}'.format(
                         month=cert.modified_date.strftime("%B"),
                         day=cert.modified_date.day,
