@@ -31,7 +31,8 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 entrance_exam_enabled: '',
                 entrance_exam_minimum_score_pct: '50',
                 learning_info: [],
-                instructor_info: {}
+                instructor_info: {},
+                number_of_hours: null,
             },
 
             validate: function(newattrs) {

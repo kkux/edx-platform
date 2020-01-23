@@ -450,6 +450,8 @@ def _render_certificate_template(request, context, course, user_certificate):
         'encoding': "UTF-8",
 
     }
+    log.info("######################")
+    log.info("context")
     html_content = render_to_response("certificates/certificate_format.html", context)
     content = html_content.content.replace('/static', str(settings.LMS_ROOT_URL) + '/static')
     content = content.replace('/asset', str(settings.LMS_ROOT_URL) + '/asset')

@@ -269,6 +269,9 @@ class CourseFields(object):
         display_name=_("Course Display Name in Arabic"),
         scope=Scope.settings
     )
+
+    number_of_hours = String(display_name=("Number of Hours"),help=_("Number of Hours"),default='',scope=Scope.settings)
+
     course_edit_method = String(
         display_name=_("Course Editor"),
         help=_('Enter the method by which this course is edited ("XML" or "Studio").'),

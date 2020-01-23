@@ -23,7 +23,7 @@ from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
-
+from opaque_keys.edx.keys import CourseKey
 from bulk_email.models import BulkEmailFlag
 from certificates import api as certs_api
 from certificates.models import (
@@ -777,3 +777,10 @@ def is_ecommerce_course(course_key):
     """
     sku_count = len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku])
     return sku_count > 0
+
+
+def get_unenrolled_students(request, course_id):
+    course_id = CourseKey.from_string(course_id)
+    return render_to_response(
+        'instructor/instructor_dashboard_2/get_unenrolled_students.html', 
+        {'course_id':course_id})

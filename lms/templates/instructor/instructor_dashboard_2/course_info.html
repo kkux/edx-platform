@@ -45,7 +45,7 @@ from openedx.core.djangolib.markup import HTML, Text
       ## Translators: 'track' refers to the enrollment type ('honor', 'verified', or 'audit')
       <% modes = section_data['unenrollment_count'] %>
         <table>
-            <caption class="tip">${_("Number of enrollees (admins, staff, and students) by track")}</caption>
+            <caption class="tip">${_("Number of unenrollees (admins, staff, and students) by track")}</caption>
             <tr>
                 <th scope="row">${_("Verified")}</th><td>${modes['verified']}</td>
             </tr>
@@ -71,6 +71,7 @@ from openedx.core.djangolib.markup import HTML, Text
         <p>${section_data['enrollment_message']}</p>
       %endif
   </div>
+  <a href="get_unenrolled_students" class="btn btn-brand" style="color:black;">Get Unenrolled Students</a>
   <hr>
 %endif
 
