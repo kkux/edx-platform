@@ -7,6 +7,7 @@ from .views import (
     program_info, program_enroll,
     program_unenroll,
     program_listing,
+    get_site_courses,
     
 )
 # from .program_reindex import index_programs_information, reindex_specific_program
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^program_listing/$', program_listing,name='program_listing'),
     url(r'^reset_code_redemption/$', reset_code_redemption),
     url(r'^use_code/$',use_code ,name='use_code'),
+    url(r'^get_site_courses/$', get_site_courses,name='get_site_courses'),
 
     # for reindex all programs
     # url(r'^reindex-all-programs/$', index_programs_information, name='reindex-all-programs'),

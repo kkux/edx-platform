@@ -68,7 +68,7 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'average_length', 'effort']
     list_filter = ['language__name', 'subject__name', 'institution__name']
     search_fields = ['name']
-    filter_horizontal = ('courses',)
+    # filter_horizontal = ('courses',)
     formfield_overrides = {
         models.ManyToManyField: {'widget': SelectMultiple(attrs={'size': '10'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 25, 'cols': 100})},

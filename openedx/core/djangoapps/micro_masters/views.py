@@ -35,7 +35,7 @@ from .models import (
     Program, ProgramEnrollment,
     ProgramOrder, ProgramCoupon,
     ProgramCouponRedemption, ProgramGeneratedCertificate,
-    ProgramCertificateSignatories
+    ProgramCertificateSignatories, Courses
 )
 from shoppingcart.exceptions import (
     MultipleCouponsNotAllowedException, InvalidCartItem,
@@ -64,7 +64,10 @@ from courseware.courses import (
     get_course_with_access,
     get_permission_for_course_about)
 from courseware.views.views import get_cosmetic_display_price
-
+from django.contrib.sites.models import Site
+from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
+from util.json_request import JsonResponse
+from opaque_keys.edx.keys import CourseKey
 
 # Start before payment_method
 
@@ -1119,5 +1122,30 @@ def program_info(request, program_id):
     return render_to_response('micro_masters/program_info.html', context)
 
 def program_listing(request):
-    programs = Program.objects.all()
+    programs = []
+    http_host = request.META.get('HTTP_HOST', False)
+    try:
+        site = Site.objects.get(domain=http_host)
+        programs = Program.objects.filter(sites=site)
+    except Site.DoesNotExist:
+        log.exception('Site {} does not exist. Please add site in '.format(http_host))
     return render_to_response('iimbx_programs/program_list.html', {"programs":programs})
+
+@csrf_exempt
+def get_site_courses(request):
+    qs = CourseOverview.objects.all()
+    try:
+        site = Site.objects.get(id=int(request.POST.get('site')))
+        site_config = SiteConfiguration.objects.get(site=site)
+        organization = dict(site_config.values).get("course_org_filter", False)
+        if organization and qs:
+            course_overviews_ids = qs.filter(org=organization)
+            course_keys = [CourseKey.from_string(str(i)) for i in course_overviews_ids]
+            courses = Courses.objects.filter(course_key__in=course_keys)
+            course_ids =[{"id":i.id, 'course':str(i.course_key)} for i in courses]
+            return JsonResponse({'data': course_ids}, status=200)
+        return JsonResponse({'data': {}}, status=400)
+        # if organization:
+            # course_ids = list(CourseOverview.objects.filter(org=organization).values_list('id', flat=True))
+    except:
+        return JsonResponse({'data': {}}, status=400)

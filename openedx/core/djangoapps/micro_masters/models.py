@@ -17,6 +17,7 @@ from boto.exception import BotoServerError
 from decimal import Decimal
 from datetime import datetime,timedelta
 from django.core.exceptions import ValidationError
+from django.contrib.sites.models import Site
 from django.db import models
 from django.core.mail.message import EmailMessage
 from django.conf import settings
@@ -32,6 +33,7 @@ from shoppingcart.pdf import PDFInvoice
 from shoppingcart.exceptions import MultipleCouponsNotAllowedException
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 
 log = logging.getLogger("micro_masters")
 
@@ -294,6 +296,7 @@ class Program(TimeStampedModel):
         blank=True
     )
     courses = models.ManyToManyField(Courses)
+    sites = models.ForeignKey(Site, related_name='program_sites', null=True, blank=True)
 
     class Meta:
         app_label = 'micro_masters'
