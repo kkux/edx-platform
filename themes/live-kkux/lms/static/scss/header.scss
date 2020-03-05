@@ -33,6 +33,10 @@ ul {
 .header-top .login-details {
   float: left;
 }
+.header-top .login-details li .dropdown-menu li {
+  margin: 0;
+
+}
 
 .header-top .login-details .search-btn button {
   background-color: rgba(17, 51, 70, 0.2);
@@ -50,7 +54,7 @@ ul {
 }
 
 .header-top .login-details li {
-  float: left;
+  float: right;
   position: relative;
   margin-right: 15px;
 }
@@ -61,9 +65,9 @@ ul {
   display: none;
 }
 .header-top .login-details .slide-serch .form-control {
-  height: calc(1.5em + 0.75rem + 2px);
+  height: 38px;
   padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -77,6 +81,14 @@ ul {
   outline: none;
   box-shadow: none;
   text-align: left;
+  -webkit-box-sizing: border-box;
+}
+.header-top .login-details li .search-btn {
+    padding: 5px 0px;
+}
+
+.header-top .login-details li.usermenu a {
+    padding: 7px 0px;
 }
 
 .header-top .login-details .slide-serch .btn {
@@ -121,6 +133,7 @@ ul {
   font-size: 19px;
   padding: 10px 0px;
   display: inline-block;
+  background: transparent;
 }
 
 .header-top,
@@ -147,10 +160,6 @@ ul {
   padding: 1px 26px;
 }
 
-.None .header-top .login-details li a {
-  padding: 1px 0px;
-}
-
 .header-top .login-details .registration-btn a:hover {
   background-color: #ffffff;
   color: #163c52;
@@ -158,8 +167,33 @@ ul {
 
 .header-top .login-details li a:hover {
   color: #163c52;
+  border: 0;
 }
 
+.header-top .login-details li  .dropdown-menu li  {
+  width: 100% 
+}
+.header-top .login-details li  .dropdown-menu li a {
+  width: 100%;
+  display: block;
+  clear: both;
+  font-weight: 400;
+  line-height: 1;
+  color: #333;
+  white-space: nowrap;
+  width: auto;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.header-top .login-details  .usermenu>a:hover {
+  background: transparent;
+}
+
+.header-top .login-details .usermenu .user-name{
+ display: inline-block;
+}
 /* Header css end */
 
 .kkux-programs .header {
