@@ -1,0 +1,151 @@
+
+body {margin: 0px; }
+.vision {float: left; padding-right: 36px; padding-left: 0px; }
+ul.right-top {float: left; margin: 0 40px 0 0; }
+ul.right-top li {float: right; }
+ul.right-top:after  {left: auto; right: -60px; }
+.navbar-nav > li {list-style: none; }
+.navbar-nav > li.active a {color: #93b045}
+.navbar-nav > li a {font-size: 24px; line-height: 38px; padding:0 15px; color: #aea9ae; text-decoration: none; display: block; }
+.navbar-nav > li a:hover {color: #93b045}
+.navbar {border-bottom: solid 1px #e1e1e1; }
+.section-banner .text-block h1 {font-size: 48px; font-weight: normal; }
+.section-banner .text-block {left: auto; right: 0px; }
+.text-center {text-align: center; }
+.footer .fot-col {float: right !important; }
+.navbar-default .navbar-toggle .icon-bar {background: #fff;}
+.upcoming-skills label i {margin-left: 10px; margin-right: 0px;}
+.our-partners .slick-next:before{background: url(/static/kkux/images/prev.png)no-repeat top center !important;}
+.our-partners .slick-prev:before{background: url(/static/kkux/images/next.png)no-repeat top center !important;}
+
+/*======RTL CSS========*/
+
+
+#navbar .navbar-nav,
+#navbar .navbar-nav > li,.skills-details span.date-icon {float:left;}
+.newsform input[type=email] {border-bottom-left-radius: 0px;border-top-left-radius: 0px;border-bottom-right-radius: 99px;border-top-right-radius: 99px;}
+.newsform button{float:left;border-bottom-left-radius: 99px;border-top-left-radius: 99px;border-bottom-right-radius: 0px;border-top-right-radius: 0px;}
+.skills-details span.date-icon{float:right;padding-left:10px;}
+div.navbar-header,
+.skills-details ul li {float: right;}
+input {
+	outline: none;
+}
+.skills-details,
+.footer,.search input[type=search],
+.direction,
+form.newsform input[type=email]{direction: rtl;}
+.main-story .story-slide .story-slide-txt ,
+.skills-details{text-align: right;}
+.video-section .video{float: right;}
+.video-section .btn-action button{margin-top: 26px;float:right;}
+
+.caption{
+    margin-top: -60px;
+    margin-left: -165px;
+}
+
+.certificate-half .caption{
+    margin-left: -93px;
+    margin-top: -34px;
+} 
+form.newsform button {
+     border-bottom-left-radius: 99px;
+    border-top-left-radius: 99px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+form.newsform input[type="email"] {
+    font-size: 18.1px;
+    float: left;
+    width: calc(100% - 172px);
+    min-height: 60px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 99px;
+    border-top-right-radius: 99px;
+    direction: rtl;
+    color: rgb(140, 148, 148);
+    border-width: 1px 1px 1px 0px;
+    border-style: solid solid solid;
+    border-color: rgb(196, 224, 228) rgb(196, 224, 228) rgb(196, 224, 228);
+    border-image: initial;
+    background: rgb(255, 255, 255);
+    padding: 10px 18px;
+    border-left: 0px;
+     outline: none;
+}
+#portfoliolist .portfolio {float: right;}
+.skill-tab li:first-child a {margin-right: 0px;}
+.skill-tab li:last-child a {color: #3e3e3e;margin: 10px 24px 10px 0px;text-decoration: none;position: relative;}
+.skill-tab li a:after {content: "";height: 16px;width: 1px;background: #92b23e;top: 13px;left: -20px;right: initial;position: absolute;}
+.section.kku-gains .certi-image{float:right;}
+@media (min-width: 1200px){
+/*    .video-content{padding:100px 55px 0px 0px;}*/
+}
+@media(min-width:768px){
+   .gains-list .earn-title{margin-top: 20px;}
+}
+
+@media (max-width: 767px){
+    .certificate-half .caption {
+        margin-left: -79px;
+        margin-top: -34px;
+    }
+    .caption {margin-top: -47px;margin-left: -105px;}
+    .footer .fot-logo,.followers.text-right {
+        text-align: right;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+@media (min-width: 992px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main-story .slick-dots{
+        text-align: right;
+    }
+    .video-section .col-md-7{
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+    .kku-rector-slider-1 {
+        float: right;
+    }
+}
+
+

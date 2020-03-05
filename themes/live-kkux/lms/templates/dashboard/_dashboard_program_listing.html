@@ -1,0 +1,139 @@
+<%page args="user, program, share_settings, program_certificate, dashboard_index, platform_name, program_course_state, user_program_grade"/>
+
+<%!
+
+import urllib
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML, Text
+import boto3
+from django.conf import settings
+%>
+
+<%namespace name='static' file='../static_content.html'/>
+
+<style type="text/css">
+#wrapper-program-actions{
+    width: 41.88%;
+}
+</style>
+<% 
+  conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+  if program.banner_image:
+    image=program.banner_image.url.split("/")[-1]
+
+    image_url = conn.generate_presigned_url(
+         'get_object',
+         Params = {
+                'Bucket': "kkux-storage" ,
+                'Key': image
+            },
+        
+     )
+
+%>   
+<li class="course-item">
+  <div class="course-container">
+    <article class="course">
+      <section class="details" aria-labelledby="details-heading">
+        <h2 class="hd hd-2 sr" id="details-heading">${_('Program details')}</h2>
+        <div class="wrapper-course-image" aria-hidden="true">
+          <a href="${reverse('program_info', kwargs={'program_id': program.id})}" data-course-key="${program.id}" class="cover">
+            <img src="${image_url if program.banner_image else static.url('images/banner-black-background.jpg')}" class="course-image program-image" alt="${program.name}" />
+          </a>
+        </div>
+        <%
+          if context.get('LANGUAGE_CODE') == 'ar':
+            program_name = program.name_arabic if program.name_arabic else program.name
+          else:
+            program_name = program.name
+        %> 
+          <div class="wrapper-course-details">
+            <h3 class="course-title">
+                <a data-course-key="${program.id}" href="${reverse('program_info', kwargs={'program_id': program.id})}">${program_name}</a>
+            </h3>
+            <div class="program-info">
+              <span class="info-date-block localized-datetime">Started - ${program.start}</span>
+            </div>
+            <div class="wrapper-course-actions" id="wrapper-program-actions">
+              <div class="course-actions">
+                <a href="${reverse('program_info', kwargs={'program_id': program.id})}" class="enter-course" data-course-key="5">${_('View Path')}<span class="sr">&nbsp;p name</span></a>
+                % if program_certificate:
+                  <%
+
+                    verify_uuid = str(program_certificate.verify_uuid) + ".pdf"
+                    conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+                  
+                    arabic_image_url = conn.generate_presigned_url(
+                         'get_object',
+                         Params = {
+                                'Bucket':"kkux-storage" ,
+                                'Key':"program-certificate/"+str(program_certificate.verify_uuid) + ".pdf"
+                            },
+                        
+                     )
+                  %>             
+                  <a href=${arabic_image_url} class="enter-course" data-course-key="5">Download Certificate</a>
+                % endif
+                % if share_settings:
+                      <%
+                        share_url = urllib.quote_plus(request.build_absolute_uri(reverse('program_about', kwargs=dict(program_id=program.id))))
+                        share_window_name = 'shareWindow'
+                        share_window_config = 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=640, height=480'
+                      %>
+                      % if share_url and share_settings.get('DASHBOARD_FACEBOOK', False):
+                        <% facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=' + share_url %>
+                          <a
+                            data-tooltip="${_('Share on Facebook')}"
+                            class="action action-facebook"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            href="${facebook_url}"
+                            target="_blank"
+                            title="${_('Share on Facebook')}"
+                            onclick="window.open('${facebook_url}', '${share_window_name}', '${share_window_config}'); return false;">
+                            <span class="sr">${_('Facebook')}</span>
+                            <span class="fa fa-facebook" aria-hidden="true"></span>
+                          </a>
+                      % endif
+                      % if share_url and share_settings.get('DASHBOARD_TWITTER', False):
+                        <% share_text_default = _("I'm learning on {platform_name}:").format(platform_name=settings.PLATFORM_NAME) %>
+                        <% share_text = urllib.quote_plus(share_settings.get('DASHBOARD_TWITTER_TEXT', share_text_default)) %>
+                        <% twitter_url = 'https://twitter.com/intent/tweet?text=' + share_text + '%20' + share_url %>
+                          <a
+                            data-tooltip="${_('Share on Twitter')}"
+                            class="action action-twitter"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            href="${twitter_url}"
+                            target="_blank"
+                            title="${_('Share on Twitter')}"
+                            onclick="window.open('${twitter_url}', '${share_window_name}', '${share_window_config}'); return false;">
+                            <span class="sr">${_('Twitter')}</span>
+                            <span class="fa fa-twitter" aria-hidden="true"></span>
+                          </a>
+                      % endif
+                    % endif
+                %if program.price < 0:
+                  <div class="setting-link wrapper-action-more" data-course-key="">
+                    <button class="action action-more" type="button" id="actions-dropdown-link-path-${dashboard_index}" aria-haspopup="true" aria-expanded="false" aria-controls="actions-dropdown-path-${dashboard_index}" data-course-number="course number" data-course-name="course name" data-dashboard-index="path-${dashboard_index}">
+
+                        <span class="fa fa-cog" aria-hidden="true"></span>
+                    </button>
+                      <div class="actions-dropdown" id="actions-dropdown-path-${dashboard_index}" tabindex="-1">
+                          <ul class="actions-dropdown-list" id="actions-dropdown-list-path-${dashboard_index}" aria-label="${_('Available Actions')}" role="menu">
+                            <li class="actions-item" id="actions-item-unenroll-path-${dashboard_index}">
+                              <a href="#unenroll-program-modal" class="unenroll-modal-click" data-program-id="${program.id}" rel="leanModal" >${_("Unenroll")}</a>
+                            </li>
+                          </ul>
+                      </div>
+                    </div>
+                %endif
+              </div>
+            </div>
+          </div>
+      </section>
+    </article>
+  </div>
+</li>
+

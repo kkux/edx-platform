@@ -1,0 +1,1142 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo:300,400,600,700');
+
+/* Edit */
+
+header.course-profile {
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #ededed;
+}
+
+.navbar-default {
+    border:none !important;
+}
+
+p,
+a,
+h1, h2, h3, h4, h5, h6, h7,
+.heading-group h1
+{
+    font-family: "Cairo";
+    font-weight:200;
+}
+
+.content-wrapper .course-info {
+    margin: 0 !important;
+}
+
+.course-info header.course-profile .intro-inner-wrapper {
+    border: none;
+    box-shadow: none;
+    margin-top: 40px;
+}
+
+.heading-group{
+    border-bottom: none !important;
+    margin:0 !important;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .media .hero {
+    border: none;
+}
+
+#course-about section h2 {
+    font-family: "Cairo";
+    border-left: 10px solid #BAD32B;
+    border-right: none;
+    padding-left: 10px;
+    padding-right: none;
+    color: #121212;
+    font-weight: 600;
+}
+
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart {
+    background: #94D2DC;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    font-weight: 600;
+    padding: 0.5em 0.2em;
+    font-family: 'Cairo' !important;
+    letter-spacing: 0;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart:hover:not(:disabled) {
+    background: #5fbac7;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+p, h4 {
+    font-family: 'Cairo' !important;
+}
+
+.footer{
+    background: #93d3de;
+}
+
+ul.right-top li a {
+    font-family: 'Cairo' !important;
+}
+
+ul.right-top li a:hover {
+    border: 1px solid #73a049 !important;
+}
+
+a.btn.sign_min {
+    border: 1px solid #73a049 !important;
+}
+
+a.btn.sign_min:hover {
+    background-color: #73a049 !important;
+}
+
+.course-sidebar .course-summary header {
+    border-bottom: 2px solid #808080;
+    margin: 0 10px 15px 10px;
+}
+
+.course-sidebar .course-summary header::after {
+        height: 0;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta span.add-to-cart {
+  background: none;
+  border: none;
+  width: auto;
+  letter-spacing: normal;
+  font-weight: 400;
+  border-left: 1em solid #ededed;
+  padding-left: 0.5em;
+  color: #9E9E9E;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong,
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta .register {
+  background: #91d3de;
+  box-shadow: none;
+  border: none;
+  letter-spacing: normal;
+  text-shadow: none;
+  display: block;
+  clear:both;
+  width: auto;
+  padding: 0.4em 2em;
+  margin-top: 0.5em;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong:hover {
+  background: #549fa8 !important;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+
+/* My Coures Page */
+/*added by prachi shah*/
+.dashboard .my-courses {
+
+    float:left;
+
+    margin: 0 auto;
+}
+
+.dashboard .my-courses .wrapper-header-courses .header-courses {
+    padding-left: 0;
+    font-family: 'Cairo';
+    font-weight: 600;
+    border-left: 10px solid #BCD32B;
+    padding-left: 10px;
+    color: #585858;
+}
+
+.dashboard .my-courses .wrapper-header-courses {
+    border-bottom-color: #BCD32B;
+}
+
+.dashboard .my-courses .listing-courses .course-item .course-container {
+    border: none;
+    border-bottom: 3px solid #9d9d9d;
+    border-radius: 0;
+}
+
+.message.message-upsell.has-actions.is-shown {
+    padding: 0 !important;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade-container {
+    display: block;
+    margin: 0;
+    float:none;
+    padding: 0;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade {
+    position:inherit;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    padding-top: 5px;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade span{
+    font-family: 'Cairo';
+    color: #bcd32b;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade .action-upgrade-icon {
+    display: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-image {
+    float: right;
+    margin-right: 0;
+    margin-top: 10px;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses .course .details .wrapper-course-image a.fade-cover {
+    border: none;
+}
+
+a,
+p,
+span {
+    font-family: 'Cairo' !important;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome !important;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:hover, .verification-process .action-primary:hover, .verification-process .action-confirm:hover, .verification-process .carousel .wrapper-task .controls .control.approved .action:hover, .verification-process.step-select-track .register-choice-certificate .action-select input:hover, .wrapper-msg .has-actions .nav-actions .action-primary:hover, .wrapper-msg .has-actions .msg-actions .action-primary:hover, .dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:active, .verification-process .action-primary:active, .verification-process .action-confirm:active, .verification-process .carousel .wrapper-task .controls .control.approved .action:active, .verification-process.step-select-track .register-choice-certificate .action-select input:active, .wrapper-msg .has-actions .nav-actions .action-primary:active, .wrapper-msg .has-actions .msg-actions .action-primary:active, .dashboard .my-courses .course .wrapper-messages-primary .message.message-upsell .action-upgrade:focus, .verification-process .action-primary:focus, .verification-process .action-confirm:focus, .verification-process .carousel .wrapper-task .controls .control.approved .action:focus, .verification-process.step-select-track .register-choice-certificate .action-select input:focus, .wrapper-msg .has-actions .nav-actions .action-primary:focus, .wrapper-msg .has-actions .msg-actions .action-primary:focus {
+    background: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-actions {
+    float: none;
+    width: auto;
+}
+
+.dashboard .my-courses .course .details .course-info {
+    width: auto;
+    float: none;
+}
+
+.dashboard .my-courses .course .details .wrapper-course-actions .course-actions {display: flex;}
+
+.dashboard .my-courses .course .details .enter-course, .dashboard .my-courses .course .details .enter-course.archived {
+    background: #94D2DC;
+    color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.dashboard .my-courses .course .details .enter-course:hover {
+    background: #5fbac7;
+    border: none;
+}
+
+.dashboard .my-courses .course {
+    margin: 0;
+    padding: 10px 0;
+}
+
+h3.course-title a {
+    font-weight: 600 !important;
+    color: #BCD13D;
+}
+
+.user-info ul .order-history {
+  border-top: 4px solid #BCD13D !important;
+  border-right: 1px solid #b1b2b4;
+  border-left: 1px solid #b1b2b4;
+  border-bottom: none !important;
+  padding: 1em 0.8em;
+  margin-bottom: 0 !important;
+}
+
+.user-info ul .order-history span {
+  border-bottom: 1px dotted #efefef;
+  padding-bottom: 0.2em;
+}
+
+.user-info ul .order-history span.title {
+  color: #545454;
+  letter-spacing: normal;
+  font-weight: bold;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 0.3em;
+}
+
+.status-verification.is-accepted {
+  border-top: 1px solid #b1b2b4 !important;
+}
+
+/* | Course Page */
+/* |-- Info Page */
+
+nav.wrapper-preview-menu {
+    background: none;
+}
+
+nav.wrapper-preview-menu .preview-actions {
+    border-left: 10px solid #BCD13D;
+    padding-left: 10px;
+}
+
+nav.wrapper-preview-menu .action-preview-label {
+    font-weight: 600;
+}
+
+nav.wrapper-preview-menu .action-preview-select {
+    border: none;
+    background: none;
+    color: #5fbac7;
+    font-weight: 600;
+    padding-left: 0;    
+}
+
+nav.info.wrapper-course-material .course-material {
+    border-top: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+    margin-bottom: 10px;
+    padding-top: 0;
+    margin-top: 5px;
+}
+
+nav.info.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a.active {
+    color: #2d2d2d !important;
+    font-weight: bolder;
+}
+
+nav.info.wrapper-course-material .course-material ol.tabs.course-tabs li.tab a:hover {
+    color: #2d2d2d !important;
+    border-bottom-color: #f1f1f1;
+}
+
+.wrapper-course-material .course-tabs li a, .wrapper-course-material .course-tabs li a:visited {
+    padding-top: 13px !important;
+}
+
+#main div.container div.home {
+    border: none;
+    box-shadow: none;
+    padding: 0 !important;
+    max-width: 1180px;
+    padding: 10px 0 !important;
+}
+
+#main div.container div.home .page-header-secondary {
+    background-color: #91d3df;
+    transition: all 0.4s;
+    margin-right: 0;
+    padding: 7px 15px;
+}
+
+#main div.container div.home .page-header-secondary:hover {
+    background-color: #549fa8;
+}
+
+#main div.container div.home .page-header-secondary a {
+    font-weight: bolder;
+}
+
+#main div.container div.info-wrapper {
+    border:none;
+    box-shadow: none;
+    background: none;
+}
+
+#main div.container div.info-wrapper section.updates {
+    border-top: 1px solid #ededed;
+    padding: 20px 10px 20px 0;
+}
+
+#main div.container div.info-wrapper section.updates h3.hd.hd-3 {
+    color: #92b13c;
+    font-weight:600;
+}
+
+#main div.container div.info-wrapper section.updates article.updates-article {
+    border: none;
+    border-top: 1px solid #ededed;
+    border-left: 5px solid #b6b6b6;
+    padding: 0;
+    padding-top: 5px;
+    padding-left: 10px;
+    border-radius: 0;
+    transition: 0.4s all;
+}
+
+#main div.container div.info-wrapper section.updates article.updates-article:hover {
+    border: none;
+    border-top: 1px solid #ededed;
+    border-left: 5px solid #92b13c;
+    border-radius: 0;
+}
+
+div.info-wrapper section.updates>ol>li .date, div.info-wrapper section.updates>ol article .date, div.info-wrapper section.updates section>li .date, div.info-wrapper section.updates section article .date, div.info-wrapper section.updates div>li .date, div.info-wrapper section.updates div article .date {
+    font-family: 'Cairo';
+    font-weight: bold;
+}
+
+.toggle-visibility-button {
+    font-family: 'Cairo' !important;
+    color: #545454 !important;
+    font-weight: bold !important;
+    border-radius: 0 !important;
+    transition: 0.4s all;
+}
+
+.toggle-visibility-button:hover {
+    color: #92b13c !important;
+}
+
+.toggle-visibility-button:active,
+.toggle-visibility-button:focus {
+    box-shadow: none !important;
+    outline: none;
+}
+
+#main div.container div.info-wrapper section.handouts {
+    border: 1px solid #ededed;
+    padding: 15px 10px;
+}
+
+#main div.container div.info-wrapper section.handouts h3.handouts-header {
+    font-family: 'Cairo' !important;
+    padding: 0;
+    color: #545454;
+    margin-bottom: 10px;
+    margin-top:10px;
+    border-bottom: 1px solid #ededed;
+    padding-bottom: 10px;
+}
+
+#main div.container div.info-wrapper section.handouts>div{
+    padding-bottom: 10px;
+}
+
+div.date-summary.date-summary-end-date p.description {
+    font-family: 'Cairo' !important;
+}
+
+button.toggle-visibility-button.show-older-updates {
+    background: #93D3DE;
+    border-radius: 5px !important;
+    box-shadow: none;
+    border: none;
+    color: white !important;
+    text-shadow: none;
+}
+
+
+/* Skills */
+
+ol.tabs.course-tabs {
+    padding-top: 0;
+}
+
+.window-wrap {
+    background: white;
+}
+
+.wrapper-course-material .course-tabs li a.active {
+    border-bottom-color: #93D3DE !important;
+}
+
+.content-wrapper .page-header {
+    border: none;
+}
+
+.content-wrapper .container {
+    border: none;
+}
+
+.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course {
+    background-color: #91d3df;
+    border: none;
+    transition: all 0.4s;
+    margin-right: 0;
+    padding: 7px 15px;
+    font-weight: bold;
+}
+
+.content-wrapper .page-header.has-secondary .page-header-secondary .form-actions .action-resume-course:hover {
+    background-color: #549fa8;
+}
+
+.page-header.has-secondary {
+    padding: 15px 0;
+}
+
+.page-content {
+    padding: 0px !important;
+}
+
+.page-content .layout{
+    margin: 0;
+    max-width: 100%;
+    border-top: 1px solid #ededed;
+    margin-top: 10px;
+    border-right: 1px solid #ededed;
+}
+
+main.layout-col.layout-col-b {
+    padding-top: 20px;
+    border-right: 1px solid #ededed;
+    margin: 0 !important;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+aside.course-sidebar.layout-col.layout-col-a {
+    margin: 0 auto;
+    padding-left: 0;
+}
+
+
+aside.course-sidebar.layout-col.layout-col-a .section {
+    padding: 0;
+}
+
+aside.course-sidebar.layout-col.layout-col-a {
+    padding-top: 20px;
+}
+
+aside.course-sidebar.layout-col.layout-col-a h3.hd-6 {
+    border-bottom: 1px solid #ededed;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    color: #545454;
+    font-weight: bold;
+}
+
+.date-summary, .date-summary .hd-6.hd {
+    font-size: 12px;
+}
+
+.date-summary {
+    margin-bottom: 5px;
+}
+
+.section-name {
+    margin: 0 !important;
+}
+
+.section-name h3 {
+    border-left: 10px solid #ededed;
+    padding-left: 10px;
+    transition: 0.4s all;
+    padding-bottom: 10px;
+    padding-top: 6px;
+}
+
+.section-name h3:hover {
+    border-left-color: #8fd3e0;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection {
+    border: none;
+    border-left: 1px solid #ededed;
+    border-radius: 0;
+    transition: 0.3s all;
+    margin-left: 9px;
+    margin-bottom: 0;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection:hover {
+    border: none;
+    border-left: 8px solid #92b13c;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection a.outline-item {
+    padding-left: 20px;
+    color: #92b13c;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection a.outline-item:hover {
+    background: #f9f9f9;
+    border-radius: 0;
+    color: #545454;
+}
+
+.content-wrapper .page-header .page-title {
+    color: #91d3df;
+    font-weight: bold;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection.current {
+    border-radius: 0;
+    border: none;
+    border-left: 5px solid #92b13c;
+    border-right: 5px solid #92b13c;
+    border-bottom: 1px solid #92b13c;
+    border-top: 1px solid #92b13c;
+}
+
+.course-outline .block-tree .section ol.outline-item .subsection.current:hover {
+    border-right: 10px solid #92b13c;
+    border-left: 10px solid #92b13c;
+}
+
+.content-wrapper .page-header .page-title {
+    color: #91d3df;
+}
+
+.home .page-header-main .page-title {
+    color: #91d3df;
+    font-family: 'Cairo';
+}
+
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
+    font-family: 'Cairo';
+}
+
+div.info-wrapper section.handouts, div.info-wrapper section.handouts .handouts-header, .date-summary-container .date-summary .description {
+    font-family: 'Cairo' !important;
+}
+
+.date-summary-container .date-summary-verified-upgrade-deadline {
+    border-left: 3px solid #92b13c;
+}
+
+.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a {
+    color: #92b13c;
+    font-weight: bold;
+    border-left: 5px solid #ededed;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.date-summary-container .date-summary-verified-upgrade-deadline span.date-summary-link a:hover {
+    border-left: 7px solid #92b13c;
+    color: #545454;
+    background: #f9f9f9;
+}
+
+/* Login Register Form */
+
+input,
+select,
+h1,
+h2,
+h3,
+h4,
+button.forgot-password.field-link {
+    font-family: 'Cairo' !important;
+}
+
+div#login-and-registration-container {
+    padding: 0 40px;
+    border-bottom: 10px solid;
+    border-top: 10px solid;
+    border-right: 10px solid;
+    border-left: 10px solid;
+    border-color: #fcfcfc;
+    border-color: transparent;
+    margin-top: 20px;
+}
+
+div#login-and-registration-container .toggle-form {
+/*     background: #ededed2b; */
+    padding: 5px 0;
+    padding-left: 10px;
+    border-left: 5px solid #91d3df;
+}
+
+div#login-and-registration-container input,
+div#login-and-registration-container select,
+div#login-and-registration-container textarea {
+    border-color: transparent;
+    box-shadow: none;
+    outline: none;
+    margin: 10px 0;
+    margin-bottom: 3px;
+    border-bottom: 1px solid;
+    border-bottom-color: #bdd700;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: #545454;
+    background: #fcfcfc;
+    height: auto;
+    transition: 0.2s all;
+}
+
+div#login-and-registration-container textarea {
+    height: 100px;
+}
+
+div#login-and-registration-container input:focus {
+    border-bottom: 3px solid #bdd700;
+}
+
+div#login-and-registration-container label {
+    font-weight: 400;
+}
+
+div#login-and-registration-container .supplemental-link {
+    margin-top: 0;
+}
+
+div#login-and-registration-container .supplemental-link a{
+    border-left: 7px solid #dadada;
+    color: #545454;
+/*     text-decoration: none; */
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+    display: block;
+}
+
+div#login-and-registration-container .supplemental-link a:hover {
+    border-left: 10px solid #c7df29;
+    background: #fcfcfc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button,
+div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button {
+   background: #bdd900;
+   border: none;
+   box-shadow: none;
+   border-radius: 0;
+   border-left: 5px solid #a2b725;
+   color: #ffffff;
+   font-weight: 400;
+   box-shadow: 0px 0px 5px 0px #bcdb0040;
+   transition: 0.2s all;
+}
+
+div#login-and-registration-container button.action.action-primary.action-update.js-login.login-button:hover,
+div#login-and-registration-container button.action.action-primary.action-update.js-register.register-button:hover {
+
+    border-left: 7px solid #a2b725;
+    box-shadow: 0px 0px 5px 0px #9db70285;
+}
+
+
+/* CSS for course verification form */
+
+
+
+
+.verification-process .shopping-cart .billing-data .col-half {
+  background: none;
+  border-left: 5px solid #91d3df;
+  border-radius: 0;
+  min-height:auto;
+}
+
+.verification-process section.confirm-enrollment.shopping-cart.billing-details-view>h3{
+  display: none;
+}
+
+.verification-process .shopping-cart .billing-data .col-half .data-group input{
+  border: none;
+  box-shadow: none;
+  border-left: 2px solid #BDBDBD;
+  border-radius: 0;
+  background: #fafafa;
+}
+
+.verification-process select#country {
+  width: 100% !important;
+  border: none;
+  border-left: 2px solid #BDBDBD;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.verification-process .nav-wizard {
+  box-shadow: none;
+  background: #F5F5F5 !important;
+  border-radius:0;
+  border-top: 2px solid #BDBDBD;
+
+}
+
+.verification-process .action-primary {
+  background: #bed700;
+  box-shadow: none;
+  border-radius:0;
+  border-left: 5px solid #9cb84e !important;
+  font-weight: 600;
+  color: white !important;
+  transition: 0.4s all;
+}
+
+.verification-process .action-primary:hover {
+  border-left: 7px solid #859e3e !important;
+  background: #adc303;
+}
+
+.verification-process .payment-buttons .purchase .product-info,
+.verification-process .payment-buttons .purchase .product-info .product-name {
+  font-weight: 400;
+  color: #545454;
+}
+
+.verification-process .payment-buttons .purchase .product-info .price {
+  color: #9bb946;
+}
+.message.message-upsell.has-actions.is-shown {
+    margin: 15px 10px 10px 10px !important;
+    border-left: 10px solid #f3f3f3;
+    padding-left: 1em !important;
+}
+
+.course-info .message.message-upsell.has-actions.is-shown {
+    margin: 15px 10px 25px 10px !important;
+    border-left: 10px solid #f3f3f3;
+    padding-left: 1em !important;
+}
+
+
+.action-upgrade-container {
+    border-left: 1em solid #94d2dc;
+    padding-left: 0.5em;
+}
+
+.action-upgrade-container a {
+    color: #3d8692;
+}
+
+.action-upgrade-container a:hover {
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.progress-status {
+    display: none;
+}
+
+ol.tabs.course-tabs {
+    padding-bottom: 0;
+}
+
+.course-outline .block-tree .section .section-name h3 {
+    font-size: 1.6rem;
+}
+
+span.subsection-title {
+    font-weight: 600;
+}
+
+.content-wrapper .page-header .page-title {
+    font-size: 2.5rem;
+}
+
+/* ======== Discussion Styling ========== */
+
+/* Side menu */
+
+.forum-nav-browse-menu-wrapper {
+  background: #fff;
+}
+
+.forum-nav {
+  border: none;
+  padding: 0 4rem 0 0;
+}
+
+/* Nav Filter */
+
+.forum-nav-browse-filter {
+  background: #fbfbfb;
+  padding: 0;
+}
+
+.forum-nav-browse-filter-input {
+  font-size: 1.5rem !important;
+  font-weight: 400;
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 0 !important;
+  border-left: 5px solid #ddd;
+  background: transparent;
+  transition: all 0.4s;
+}
+
+.forum-nav-browse-filter-input:focus {
+  outline: none;
+  border-left-color: #93d3de;
+}
+
+.forum-nav-browse-filter .icon {
+  color: #bfbfbf;
+}
+
+.forum-nav-browse-filter label {
+  width: 100%;
+}
+
+
+/* Nav menu */
+
+.forum-nav-browse-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #454545;
+  transition: all 0.2s;
+}
+
+.forum-nav-browse-title:hover {
+  color: #92b03b;
+  border-left: 5px solid #ededed;
+}
+
+.forum-nav-browse-submenu li .forum-nav-browse-title {
+  font-weight: 500;
+}
+
+/* Refinery */
+.forum-nav-refine-bar {
+  font-size: 1.1rem;
+  border-radius: 0;
+  padding: 1rem 0.5rem;
+}
+
+span.forum-nav-thread-title {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.forum-nav-thread-list .thread-preview-body {
+  font-size: 1rem;
+}
+
+/* Main Content */
+.view-discussion-home h2.home-title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.forum-content .label {
+  font-size: 1.5rem;
+  color: #92b03b;
+  text-align: left;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.view-discussion-home .home-header {
+  margin-bottom: 3rem;
+}
+
+.view-discussion-home section {
+  border: none;
+}
+
+/* Discussion Home Help Table */
+
+table.home-helpgrid * {
+  font-size: 1.1rem;
+}
+
+.view-discussion-home .helpgrid-row .row-title {
+  font-family: 'Cairo';
+  font-size: 1.2rem;
+}
+
+/* Post Details */
+
+.discussion-post .post-header-content .post-title {
+  font-size: 3rem;
+}
+
+.discussion .action-button .action-label, .discussion .actions-dropdown .action-list-item, .view-discussion-home .label, .view-discussion-home .home-description, .view-discussion-home .home-stats .stats-grouping .profile-stat, .discussion-article .posted-details, .discussion-comment .response-body, .discussion-post .post-context, .discussion .post-actions-list, .discussion .response-actions-list, .discussion .comment-actions-list {
+  font-size: 1.2rem;
+  font-family: 'Cairo';
+}
+
+.content-wrapper .page-header .page-description, .discussion-response .response-body, .discussion-post .post-body {
+  font-size: 1.5rem;
+  font-family: 'Cairo';
+}
+
+.wmd-preview-label {
+  font-size: 1.5rem;
+  font-family: 'Cairo';
+  font-weight: 200;
+  border-left: 5px solid #cacaca;
+  color: #8c8c8c;
+  background: #ececec;
+  padding-bottom: 5px;
+  padding-left: 7px;
+}
+
+.wmd-input {
+  border-radius: 0;
+  border-bottom: none;
+}
+
+.wmd-preview-container {
+  border-radius: 0;
+}
+
+.discussion .btn.discussion-submit-post, .discussion-module .btn.discussion-submit-post {
+  border: none;
+  border-left: 5px solid #92b03b;
+  border-radius: 0;
+  background: #f9f9f9;
+  font-family: 'Cairo';
+  font-weight: bold;
+  color: #92b03b;
+  font-size: 1.7rem;
+  padding: 0.7rem 3rem;
+}
+
+.discussion-article .posted-details .username, .has-breadcrumbs .breadcrumbs .all-topics {
+  font-family: 'Cairo';
+}
+
+button.btn.btn-small.new-post-btn:hover {
+  color: #768e34;
+  border-left-color: #768e34;
+}
+
+button.btn.btn-small.new-post-btn {
+  border-radius: 0;
+  display: block;
+  padding: 0 2rem;
+  font-family: 'Cairo';
+  font-weight: 700;
+  border: none;
+  border-left: 5px solid #93b045;
+  background: #f9f9f9;
+}
+
+button.btn.btn-small.search-button {
+  border-radius: 0;
+  font-family: 'Cairo';
+  background: #93b045;
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.discussion main.layout-col.layout-col-b {
+  border: none;
+  padding: 0;
+}
+
+button.btn.btn-small.add-response-btn {
+  border-radius: 0;
+  font-family: 'Cairo';
+  font-weight: 600;
+}
+
+.add-response {
+  padding: 0 !important;
+}
+
+.response-count {
+  font-family: 'Cairo';
+  font-size: 1.3rem;
+}
+
+.discussion-post .post-header-content {
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-context {
+  background: #f9f9f9;
+  padding: 0.7rem;
+  padding-left: 1.5rem;
+  border-left: 5px solid #efefef;
+}
+
+header.response-header .response-header-content {
+  border-left: 5px solid #efefef;
+  padding-left: 0.5rem;
+}
+
+header.response-header .response-header-content a {
+  font-size: 1.3rem !important;
+  font-weight: 600;
+}
+
+.discussion .responses .forum-response {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.discussion .comments .comment-form .wmd-input {
+  font-family: 'Cairo';
+  font-size: 1.2rem;
+}
+
+button.btn-brand.discussion-submit-comment.control-button {
+  border-radius: 0;
+  font-family: 'Cairo';
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Create new post */
+
+.forum-new-post-form .post-field .field-label .field-label-text {
+  font-size: 1.4rem;
+  border-left: 5px solid #92b03b;
+  padding: 0.5rem;
+  margin: 1rem 0 0.1rem 0;
+  display: inline-block;
+}
+
+forum-new-post-form .post-field .field-help {
+  color: #979797;
+  font-weight: 100;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.shopping-cart .discount .code-text span {
+    margin-right: 10px !important;
+}
+
+.blocks .listing ul li .dot-icon {
+    position: absolute;
+    left: 0px!important;
+}
+.blocks .listing ul li {
+    padding: 0px 0 0px 20px !important;
+    position: relative;
+}
+.blocks h6 {
+    color:#94d3d9;
+    margin: 0 0 0 0;
+    padding: 0 0 12px 0px;
+    position: relative;
+    font-size: 18px;
+}
+.prgramming_listing_hr {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+}
+.course-block ul li {
+    padding: 14px 0 ! important;
+}
+.course-block .course_data {
+    float: left;
+}
+.course-block {
+    margin-top: 30px !important;
+}

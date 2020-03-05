@@ -174,9 +174,12 @@ class InvoiceAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['user', 'status',]
+    search_fields = ['user__username']
 
 admin.site.register(PaidCourseRegistrationAnnotation)
 admin.site.register(Coupon, SoftDeleteCouponAdmin)
 admin.site.register(DonationConfiguration)
 admin.site.register(Invoice, InvoiceAdmin)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)

@@ -1,0 +1,501 @@
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+<%inherit file="main.html" />
+
+<%!
+import json
+import boto3
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _, LANGUAGE_SESSION_KEY
+from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+
+%>
+
+<%block name="css">
+    <link rel="stylesheet" href="${static.url('css/slick-theme.css')}" type="text/css"><!-- font-awesome.min css -->
+    <link rel="stylesheet" href="${static.url('css/custom.css')}" type="text/css" /><!-- style css -->
+    % if LANGUAGE_CODE=='en': 
+      <link rel="stylesheet" href="${static.url('css/en-custom.css')}" type="text/css" /><!-- style css -->
+    % endif
+    <link rel="stylesheet" href="${static.url('css/slick.css')}" type="text/css"  /><!-- slick css -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900&display=swap" rel="stylesheet"/>
+</%block>
+<style type="text/css">
+  .hidden{display: none;}
+</style>
+<section class="banner">
+  <header class="header">
+    <div class="gn-container">
+      <div class="header-top">
+        <div class="login-details">
+          <ul>
+            <li>
+              <div class="search-btn">
+                <button>
+                  <img src="${static.url('images/search.png')}" alt="search" />
+                </button>
+              </div>
+              <div class="slide-serch">
+                <form class="form-inline" method="get" action="${reverse('courses')}">
+                  <input
+                    class="form-control"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button class="btn" type="submit">
+                    <img src="${static.url('images/g-btn.png')}" alt="search" />
+                  </button>
+                </form>
+              </div>
+            </li>
+            <li>
+              <div class="login-btn"><a href="/login">${_("Login")}</a></div>
+            </li>
+            <li>
+              <div class="registration-btn"><a href="/register">${_("Register")}</a></div>
+            </li>
+            <li><a href="javascript:void(0);" class="language-btn btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a>
+            </li>
+
+            % if header_language_selector_is_enabled():
+              <% languages = released_languages() %>
+              % if len(languages) > 1:
+                <ol class="user language_dropdown hidden">
+                  <li class="primary">
+                    <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                      <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                      <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                      <label><span class="sr">${_("Choose Language")}</span>
+                        <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
+                          % for language in languages:
+                            % if language[0] == LANGUAGE_CODE:
+                              <option value="${language[0]}" selected="selected">${language[1]}</option>
+                            % else:
+                              <option value="${language[0]}" >${language[1]}</option>
+                            % endif
+                          % endfor
+                        </select>
+                      </label>
+                    </form>
+                  </li>
+                </ol>
+              % endif
+            % endif  
+          </ul>
+        </div>
+        <div class="gn-logo">
+          <a href="#"><img src="${static.url('images/logo.png')}" alt="logo"/></a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="banner_main">
+    <div class="gn-container">
+      <div class="gn-grid-2">
+        <div class="banner-content">
+          <h3>أهلاً بكم في منصة مهارات المستقبل</h3>
+          <div class="banner-links">
+            <ul>
+              <li><a href="/courses">${_("Courses")}</a></li>
+              <li><a href="${reverse('program_listing')}">${_("Programs")}</a></li>
+              <li><a href="">KKUx أكاديمي</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="gn-grid-2">
+        <div class="banner-img">
+          <img src="${static.url('images/banner-img.png')}" alt="banner" />
+          <div class="video-play" onclick="lightbox_open();">
+            <img src="${static.url('images/play.png')}" alt="Play" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="banner-icons">
+  <div class="gn-container">
+    <ul>
+      <li>
+        <div class="relate-icon">
+          <img src="${static.url('images/icon_1.png')}" alt="icon" />
+        </div>
+        <h3>احصل على شهادة معتمدة</h3>
+      </li>
+      <li>
+        <div class="relate-icon">
+          <img src="${static.url('images/icon_2.png')}" alt="icon" />
+        </div>
+        <h3>جهز نفسك للمستقبل</h3>
+      </li>
+      <li>
+        <div class="relate-icon">
+          <img src="${static.url('images/icon_3.png')}" alt="icon" />
+        </div>
+        <h3>تعلم مهارات نوعية جديدة</h3>
+      </li>
+    </ul>
+  </div>
+</section>
+<section class="latest-programs">
+  <div class="gn-container">
+    <h2 class="gn-title">${_("Latest Programs")}</h2>
+    <div class="gn-subtitle">
+      قد يكون التصميم طريقة لتصور الأفكار وحل المشكلات ولكنه أيضا طريقة
+      بحثية أصبح ينتهجها الكثير من المصممين والباحثين وذلك لإنتاج بحوث ذات
+      جودة عالية او تصاميم فريدة ونوعية ذات طابع ابداعي
+    </div>
+    <div class="latest-p-slider">
+
+      % for program in programs:
+        <% 
+          conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+          if program.banner_image:
+            image=program.banner_image.url.split("/")[-1]
+
+            image_url = conn.generate_presigned_url(
+                 'get_object',
+                 Params = {
+                        'Bucket': "kkux-storage" ,
+                        'Key': image
+                    },
+             )
+        %>
+        <%
+          if context.get('LANGUAGE_CODE') == 'ar':
+            program_name = program.name_arabic if program.name_arabic else program.name
+          else:
+            program_name = program.name
+        %>  
+
+        <div class="grid">
+          <div class="item">
+            <div class="slider-img">
+              <img src="${image_url if program.banner_image else static.url('images/banner-black-background.jpg')}" alt="${program_name}" />
+            </div>
+            <div class="slider-content">
+              <h3><a href="${reverse('program_info', kwargs={'program_id': program.id})}">${program_name}</a></h3>
+              <p>${program.short_description}</p>
+              <div class="slider-bottom">
+                <div class="calendar">
+                  <div class="calender-icon">
+                    <img src="${static.url('images/calendar.png')}" alt="calendar" />
+                  </div>
+                  <div class="calendar-title">${program.start.strftime("%d %B %Y") if program.start else "None"} </div>
+                </div>
+                <div class="files">
+                  <div class="files-icon">
+                    <img src="${static.url('images/file.png')}" alt="file" />
+                  </div>
+                  <div class="file-title">${len(program.courses.values())} ${_("Course")}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      % endfor
+    </div>
+  </div>
+</section>
+<section class="latest-category">
+  <div class="gn-container">
+    <h2 class="gn-title">${_("Design")}</h2>
+    <div class="gn-subtitle">
+      قد يكون التصميم طريقة لتصور الأفكار وحل المشكلات ولكنه أيضا طريقة
+      بحثية أصبح ينتهجها الكثير من المصممين والباحثين وذلك لإنتاج بحوث ذات
+      جودة عالية او تصاميم فريدة ونوعية ذات طابع ابداعي
+    </div>
+    <div class="latest-c-box">
+      <div class="gn-row">
+        % for course in design_courses:
+          <%
+            if context.get('LANGUAGE_CODE') == 'ar':
+              course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default
+            else:
+              course_name = course.display_name_with_default
+          %> 
+          <div class="gn-grid-3">
+            <div class="gn-box">
+              <div class="gn-box-img">
+                <img src="${course.course_image_url}" alt="logo" />
+              </div>
+              <div class="gn-box-title"><a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">${course_name}</a></div>
+              <div class="gn-box-calender">
+                <div class="gn-cale-main">
+                  <div class="gn-cale-icon">
+                    <img src="${static.url('images/calendar.png')}" alt="logo" />
+                  </div>
+                  % if course.start:
+                    <div class="gn-cale-title">
+                      ${course.start.strftime("%d %B %Y")}
+                    </div>
+                  % endif
+                </div>
+              </div>
+            </div>
+          </div>
+        % endfor
+      </div>
+    </div>
+    <div class="all-skills"><a href="/courses">${_("See all Courses")}</a></div>
+  </div>
+</section>
+<section class="latest-category">
+  <div class="gn-container">
+    <h2 class="gn-title">${_("Technology")}</h2>
+    <div class="gn-subtitle">
+      قد يكون التصميم طريقة لتصور الأفكار وحل المشكلات ولكنه أيضا طريقة
+      بحثية أصبح ينتهجها الكثير من المصممين والباحثين وذلك لإنتاج بحوث ذات
+      جودة عالية او تصاميم فريدة ونوعية ذات طابع ابداعي
+    </div>
+    <div class="latest-c-box">
+      <div class="gn-row">
+        % for course in technology_courses:
+          <div class="gn-grid-3">
+            <%
+              if context.get('LANGUAGE_CODE') == 'ar':
+                course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default
+              else:
+                course_name = course.display_name_with_default
+            %> 
+            <div class="gn-box">
+              <div class="gn-box-img">
+                <img src="${course.course_image_url}" alt="logo" />
+              </div>
+              <div class="gn-box-title"><a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">${course_name}</a></div>
+              <div class="gn-box-calender">
+                <div class="gn-cale-main">
+                  <div class="gn-cale-icon">
+                    <img src="${static.url('images/calendar.png')}" alt="logo" />
+                  </div>
+                  % if course.start:
+                    <div class="gn-cale-title">
+                      ${course.start.strftime("%d %B %Y")}
+                    </div>
+                  % endif
+                </div>
+              </div>
+            </div>
+          </div>
+        % endfor
+      </div>
+    </div>
+    <div class="all-skills"><a href="/courses">${_("See all Courses")}</a></div>
+  </div>
+</section>
+<section class="latest-category">
+  <div class="gn-container">
+    <h2 class="gn-title">${_("Business")}</h2>
+    <div class="gn-subtitle">
+      قد يكون التصميم طريقة لتصور الأفكار وحل المشكلات ولكنه أيضا طريقة
+      بحثية أصبح ينتهجها الكثير من المصممين والباحثين وذلك لإنتاج بحوث ذات
+      جودة عالية او تصاميم فريدة ونوعية ذات طابع ابداعي
+    </div>
+    <div class="latest-c-box">
+      <div class="gn-row">
+        % for course in business_courses:
+          <div class="gn-grid-3">
+            <%
+              if context.get('LANGUAGE_CODE') == 'ar':
+                course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default
+              else:
+                course_name = course.display_name_with_default
+            %> 
+            <div class="gn-box">
+              <div class="gn-box-img">
+                <img src="${course.course_image_url}" alt="logo" />
+              </div>
+              <div class="gn-box-title"><a href="${reverse('about_course', args=[course.id.to_deprecated_string()])}">${course_name}</a></div>
+              <div class="gn-box-calender">
+                <div class="gn-cale-main">
+                  <div class="gn-cale-icon">
+                    <img src="${static.url('images/calendar.png')}" alt="logo" />
+                  </div>
+                  % if course.start:
+                    <div class="gn-cale-title">
+                      ${course.start.strftime("%d %B %Y")}
+                    </div>
+                  % endif
+                </div>
+              </div>
+            </div>
+          </div>
+        % endfor
+      </div>
+    </div>
+    <div class="all-skills"><a href="/courses">${_("See all Courses")}</a></div>
+  </div>
+</section>
+<section class="said-about-kkux">
+  <div class="gn-container">
+    <div class="about-kkux-slider">
+      % for user in testimonials:
+        <%
+          if context.get('LANGUAGE_CODE') == 'ar':
+            user_name = user.name
+            review = user.review
+            designation = user.designation
+          else:
+            user_name = user.name_arabic
+            review = user.review_arabic
+            designation = user.designation_arabic
+        %> 
+        <div class="item">
+          <div class="item-left">
+            <div class="author-img">
+              <img src="${user.profile_image.url}" alt="" />
+            </div>
+          </div>
+          <div class="item-right">
+            <h2 class="gn-title">قالوا عن KKUx</h2>
+            <div class="gn-subtitle">
+              ${review}
+            </div>
+            <div class="author-title">
+              ${user_name}
+            </div>
+            <div class="author-name">
+              ${designation}
+            </div>
+          </div>
+        </div>
+      % endfor
+    </div>
+  </div>
+</section>
+<section class="success-partner">
+  <div class="gn-container">
+    <div class="success-partner-wrapeer">
+      <div class="success-partner-title">
+        <h2 class="gn-title">شركاء النجاح</h2>
+      </div>
+      <div class="success-part-slider">
+        <div class="item">
+          <div class="compony-logo">
+            <a href="#"><img src="${static.url('images/sli_1.png')}" alt="logo"/></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="compony-logo">
+            <a href="#"><img src="${static.url('images/sli_2.png')}" alt="logo"/></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="compony-logo">
+            <a href="#"><img src="${static.url('images/sli_3.png')}" alt="logo"/></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="compony-logo">
+            <a href="#"><img src="${static.url('images/sli_4.png')}" alt="logo"/></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="compony-logo">
+            <a href="#"><img src="${static.url('images/sli_2.png')}" alt="logo"/></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="news-letter">
+  <div class="gn-container">
+    <div class="news-latter-icon">
+      <img src="${static.url('images/news-latter.png')}" alt="" />
+    </div>
+    <h2 class="gn-title">اشترك في قائمة KKUx البريدية</h2>
+    <div class="gn-subtitle">
+      فور التحاقك بالقائمة البريدية فسوف يصلك بريد الكتروني بكل ما هو جديد
+      في KKUx
+    </div>
+    <div class="gn-search">
+      <div class="input-search">
+        <input type="email" id="id_mail"placeholder="${_('Your email address')}" />
+        <button class="newsform-button search2">${_('Subscribe')}</button>
+      </div>
+      <div class="newsform">
+          <p class="success hidden">${_("You have been subscribed")}</p>
+          <p class="error hidden">${_("Please enter a valid email address")}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="light">
+  <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
+  <video id="VisaChipCardVideo" width="600" controls>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+</div>
+<div id="fade" onClick="lightbox_close();"></div>
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('js/jquery-3.4.1.min.js')}"></script>
+  <script type="text/javascript" src="${static.url('js/slick.min.js')}"></script>
+  % if LANGUAGE_CODE=='en': 
+    <script type="text/javascript" src="${static.url('js/en-custom.js')}"></script>
+  % else:
+    <script type="text/javascript" src="${static.url('js/custom.js')}"></script>
+  % endif
+  
+  <script type="text/javascript">
+  $( document ).ready(function() {
+    $(".newsform-button").click(function(){ 
+      var emailId = $("#id_mail").val();
+      var $success = $(".newsform .success");
+      var $error = $(".newsform .error");
+      $success.addClass("hidden");
+      $error.addClass("hidden");
+      $.ajax({
+        url: '/subscribe/',
+        method: 'POST',
+        data: {email_id: emailId},
+        success: function(message){
+          $(".newsform .success").html(message.message)
+          $(".newsform .success").removeClass("hidden")
+        }
+      });
+    });    
+
+    $("a#language-btn.language-btn" ).click(function() {
+      $('#settings-language-value').val($('#settings-language-value option:not(:selected)').val()).trigger('change');
+    });
+  });
+  </script>
+  <script type="text/javascript">
+    window.document.onkeydown = function(e) {
+      if (!e) {
+        e = event;
+      }
+      if (e.keyCode == 27) {
+        lightbox_close();
+      }
+    }
+
+    function lightbox_open() {
+      var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+      window.scrollTo(0, 0);
+      document.getElementById('light').style.display = 'block';
+      document.getElementById('fade').style.display = 'block';
+      lightBoxVideo.play();
+    }
+
+    function lightbox_close() {
+      var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+      document.getElementById('light').style.display = 'none';
+      document.getElementById('fade').style.display = 'none';
+      lightBoxVideo.pause();
+    }
+  </script>
+</%block>

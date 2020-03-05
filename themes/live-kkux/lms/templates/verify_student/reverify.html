@@ -1,0 +1,96 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+%>
+<%namespace name='static' file='../static_content.html'/>
+
+<%inherit file="../main.html" />
+<%block name="bodyclass">register verification-process step-requirements</%block>
+
+<%block name="pagetitle">${_("Re-Verification")}</%block>
+
+<!-- <%block name="header_extras">
+    % for template_name in ["webcam_photo", "image_input", "error", "face_photo_step", "id_photo_step", "review_photos_step", "reverify_success_step"]:
+        <script type="text/template" id="${template_name}-tpl">
+            <%static:include path="verify_student/${template_name}.underscore" />
+        </script>
+    % endfor
+</%block> -->
+<%block name="js_extra">
+  <script src="${static.url('js/src/tooltip_manager.js')}"></script>
+  <%static:js group='reverify'/>
+</%block>
+
+<%block name="content">
+## Top-level wrapper for errors
+## JavaScript views may append to this wrapper
+<div id="error-container" style="display: none;"></div>
+
+<div class="container">
+  <section class="reupload_image">
+    <h4>${_('Please Re-Upload Your Photo ID')}</h3>
+    <p>
+      ${_('Notes:  Image must be in (.PNG or .JPG) format and Image size must be in less than 5MB.')}
+    </p>
+    <form name="upload_img" enctype="multipart/form-data" id="upload_img">
+      <input type="file"  id="upload-image" name="upload-image"></input>
+      <button id="upload_image" type="button" class="upload_submit">Save and Upload</button>
+    </form>
+    <p id="errro_msg"><p>
+  </section>
+  <section class="wrapper carousel">
+  ## Container for the reverification view.
+  ## The Backbone view renders itself into this <div>.
+  ## The server can pass information to the Backbone view
+  ## by including the information as "data-*" attributes
+  ## of this </div>.
+  <div id="reverify-container" class="reverify"
+    data-full-name='${user_full_name}'
+    data-platform-name='${platform_name}'
+    data-capture-sound='${capture_sound}'
+  ></div>
+  </section>
+</div>
+
+<script>
+
+$('#upload_image').click(function()
+{   
+    $(this).prop('disabled', true);
+    debugger
+    var form = new FormData(document.getElementById('upload_img'));
+    //append files
+    var file = document.getElementById('upload-image').files[0];
+    if (file) {   
+        form.append('upload-image', file);
+    }
+    $.ajax({
+        type: "POST",
+        url: "/verify_student/reupload_image/",
+        data: form,             
+        cache: false,
+        contentType: false, //must, tell jQuery not to process the data
+        processData: false,
+        //data: $("#upload_img").serialize(),
+        success: function(data)
+        { 
+          location.href = "/dashboard"
+        },
+       error:function(jqXHR, textStatus, errorThrown) {
+          $('#upload_image').prop('disabled', false);
+          var msg = '';
+          if (jqXHR.status === 404) {
+              msg = 'Sorry, error occured while uploading you image. Please try again.';
+          } else if (jqXHR.status === 403) {
+              msg = 'Please upload your photo of your ID.';
+          } else if (jqXHR.status === 401 || jqXHR.status ===413) {
+              msg = 'Upload photo ID size must be less than 5MB.';              
+          } else if (jqXHR.status === 402 || jqXHR.status ===413) {
+              msg = 'Please upload valid format your photo ID.';
+          } 
+          $('#errro_msg').html(msg);
+          }
+    });
+});
+</script>
+</%block>

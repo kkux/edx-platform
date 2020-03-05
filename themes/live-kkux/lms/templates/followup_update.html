@@ -1,0 +1,109 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+%>
+<%namespace name='static' file='static_content.html'/>
+<style type="text/css">
+/*	table, th, td {
+	  border: 1px solid black;
+	  text-align: center;
+	}
+	<style>*/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  margin-left: 17px;
+  width: 97% !important;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-right: 1px solid #dccbcb94;
+}
+.pagination {
+	margin-top: 5%;
+	margin-left: 1%;
+  display: inline-block;
+  width:80%;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #93d3de;
+  color: white;
+}
+.pagination a:hover:not(.active,.disabled) {background-color: #ddd;}
+
+h1{
+  font-size: 25px !important;
+  margin-bottom: 30px;
+  color:#878787;
+  text-decoration: underline;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+</style>
+<%inherit file="main.html" />
+<!-- <a class="button1">Updated Profile</a>
+<a class="button1">Not Updated Profile</a> -->
+% if users_page:
+  % if update =='True':
+	<h1>${_("Below Students have updated their Profile")}</h1>
+	%else:
+  <h1>${_("Below Students have not updated their Profile")}</h1>
+  % endif 
+		<table style="width:99%">
+		  <tr>
+		    <th>Username</th>
+		    <th>Fullname In English</th> 
+		    <th>Fullname In Arabic</th>
+		    <th>Country</th>
+		    <th>Email</th>
+		    <th>Gender</th>
+		  </tr>
+		  % for user in users_page:
+		  <tr>
+		    <td>${user.user.username}</td>
+		    <td>${user.name}</td>
+		    <td>${user.name_in_arabic}</td>
+		    <td>${user.country}</td>
+		    <td>${user.user.email}</td>
+		    <td>${user.gender}</td>
+		  </tr>
+		  % endfor
+	</table>
+	
+% else:
+	<h1>${_('All Students Profile are Updated.')}</h1>
+% endif
+
+% if users_page.has_other_pages:
+  <div class="pagination">
+    %if users_page.has_previous: 
+     <a href="?page=${ users_page.previous_page_number }">&laquo;</a>
+    % else:
+      <div class="disabled"><span>&laquo;</span></div>
+    % endif 
+    % for i in users_page.paginator.page_range :
+      	%if users_page.number == i :
+       <a class="active">${ i } </a>
+      % else:
+      <a href="?page=${ i }">${ i }</a>
+      % endif 
+    % endfor 
+    % if users_page.has_next:
+     <a href="?page=${ users_page.next_page_number }">&raquo;</a>
+    % else :
+      <div class="disabled"><span>&raquo;</span></div>
+    % endif
+  </div>
+% endif

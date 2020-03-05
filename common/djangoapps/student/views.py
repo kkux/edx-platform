@@ -67,6 +67,7 @@ from course_modes.models import CourseMode
 from courseware.access import has_access
 from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
 from django_comment_common.models import assign_role
+from django.contrib.sites.models import Site
 from edxmako.shortcuts import render_to_response, render_to_string
 from eventtracking import tracker
 from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=import-error
@@ -134,6 +135,11 @@ from util.json_request import JsonResponse
 from util.milestones_helpers import get_pre_requisite_courses_not_completed
 from util.password_policy_validators import validate_password_strength
 from xmodule.modulestore.django import modulestore
+
+from openedx.core.djangoapps.micro_masters.models import Program
+from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
+from kkux.models import Testimonial
+
 
 log = logging.getLogger("edx.student")
 AUDIT_LOG = logging.getLogger("audit")
@@ -214,6 +220,34 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     context['enrollments'] = enrollments
     context['banner_image_courses'] = banner_image_courses
+    try:
+        http_host = request.META.get('HTTP_HOST', False)
+        site = Site.objects.get(domain=http_host)
+        programs = Program.objects.filter(sites=site).order_by('-id')[:3]
+    except:
+        log.exception('Site {} does not exist. Please add site in '.format(http_host))
+        programs = []
+    context['programs'] = programs
+
+    qs = CourseOverview.objects.all()
+    try:
+        http_host = request.META.get('HTTP_HOST', False)
+        site = Site.objects.get(domain=http_host)
+        site_config = SiteConfiguration.objects.get(site=site)
+        organization = dict(site_config.values).get("course_org_filter", False)
+        course_overviews = qs.filter(org=organization)
+        design_courses = course_overviews.filter(course_category="Design").order_by('-id')[:3]
+        technology_courses = course_overviews.filter(course_category="Technology").order_by('-id')[:3]
+        business_courses = course_overviews.filter(course_category="Business").order_by('-id')[:3]
+    except:
+        design_courses = []
+        technology_courses = []
+        business_courses = []
+
+    context['design_courses'] = design_courses
+    context['technology_courses'] = technology_courses
+    context['business_courses'] = business_courses
+    context['testimonials'] = Testimonial.objects.all()
 
     return render_to_response('index.html', context)
 
@@ -866,6 +900,22 @@ def dashboard(request):
     valid_verification_statuses = ['approved', 'must_reverify', 'pending', 'expired']
     display_sidebar_on_dashboard = len(order_history_list) or verification_status in valid_verification_statuses
     user_program_enrollments = ProgramEnrollment.objects.filter(user=user, is_active=True)
+
+    try:
+        http_host = request.META.get('HTTP_HOST', False)
+        site = Site.objects.get(domain=http_host)
+        new_programs = []
+        log.info(site)
+        for program in user_program_enrollments:
+            log.info(program.program.sites)
+            log.info(program.program.sites == site)
+            if program.program.sites == site:
+                new_programs.append(program)
+        user_program_enrollments = new_programs
+    except:
+        log.exception('Site {} does not exist. Please add site in '.format(http_host))
+        pass
+
     programs = {}
     program_grades = {}
     program_course_states = {}

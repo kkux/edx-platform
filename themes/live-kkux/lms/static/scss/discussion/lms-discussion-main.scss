@@ -1,0 +1,6 @@
+// Import the original styles from edx-platform.
+@import 'lms/static/sass/discussion/lms-discussion-main';
+
+// Custom Scss for colors cannot be overriden.
+@import 'custom';
+

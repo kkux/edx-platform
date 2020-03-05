@@ -1,7 +1,8 @@
 from django.db import models
 
 from model_utils.models import TimeStampedModel
-
+from django.utils.translation import ugettext_lazy as _
+from .validations import image_validations
 
 class Language(TimeStampedModel):
     name = models.CharField(max_length=50, default='English')
@@ -87,3 +88,23 @@ class Subscribers(TimeStampedModel):
             }
         except cls.DoesNotExist:
             return None
+
+
+class Testimonial(TimeStampedModel):
+    """
+    User Testimonials model
+    """
+    name = models.CharField(_('User Name'), max_length=100,blank=False, null=False)
+    designation = models.CharField(_('Designation'), max_length=50,blank=False, null=False)
+    review = models.TextField(_('Review'), max_length=255, help_text="Max Limit is 255 Characters",blank=False, null=False)
+    name_arabic = models.CharField(_('User Name In Arabic'), max_length=100,blank=False, null=False)
+    designation_arabic = models.CharField(_('Designation In Arabic'), max_length=50,blank=False, null=False)
+    review_arabic = models.TextField(_('Review In Arabic'), max_length=255, help_text="Max Limit is 255 Characters",blank=False, null=False)
+    profile_image = models.ImageField(_('User Image'), upload_to="testimonial/profile_image", validators=[image_validations], blank=False, null=False)
+
+    class Meta(object):
+        verbose_name = 'Testimonial'
+        verbose_name_plural = 'Testimonials'
+
+    def __unicode__(self):
+        return self.name

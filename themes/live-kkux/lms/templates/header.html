@@ -1,0 +1,181 @@
+## mako
+<%page expression_filter="h" args="online_help_token"/>
+<%namespace name='static' file='static_content.html'/>
+<%namespace file='main.html' import="login_query"/>
+<% 
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _, LANGUAGE_SESSION_KEY
+
+from django.conf import settings
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.markup import HTML, Text
+
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+
+%>
+<%page expression_filter="h" args="online_help_token"/>
+<%block name="css">
+    <link rel="stylesheet" href="${static.url('css/header.css')}" type="text/css"><!-- font-awesome.min css -->
+    % if LANGUAGE_CODE=='en': 
+      <link rel="stylesheet" href="${static.url('css/en-custom.css')}" type="text/css" /><!-- style css -->
+    % endif
+</%block>
+<div class="kkux-programs">
+  <header class="header">
+    <div class="gn-container">
+      <div class="header-top">
+        <div class="login-details">
+          <ul>
+            % if header_language_selector_is_enabled():
+              <% languages = released_languages() %>
+              % if len(languages) > 1:
+                <ol class="user language_dropdown hidden">
+                  <li class="primary">
+                    <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                      <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                      % if user.is_authenticated():
+                        <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+                      % else:
+                        <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+                      % endif
+                      <label><span class="sr">${_("Choose Language")}</span>
+                        <select class="input select language-selector" id="settings-language-value" name="language" hidden="true">
+                          % for language in languages:
+                            % if language[0] == LANGUAGE_CODE:
+                              <option value="${language[0]}" selected="selected">${language[1]}</option>
+                            % else:
+                              <option value="${language[0]}" >${language[1]}</option>
+                            % endif
+                          % endfor
+                        </select>
+                      </label>
+                    </form>
+                  </li>
+                </ol>
+              % endif
+            % endif  
+
+            % if request.user.is_authenticated():
+                <li>
+                  <a href="/courses">${_("Skills")}</a>
+                </li>
+                <li>
+                  <a href="${reverse('program_listing')}">${_("Programs")}</a>
+                </li>
+                <li>
+                  <a href="${reverse('about')}">${_("Why KKUx?")}</a>
+                </li>
+                <li>
+                  <a href="https://blog.kkux.org/">${_("Blog")}</a>
+                </li>
+                <li>
+                  <a href="${reverse('conatct')}">${_("Contact")}</a>
+                </li>
+                % if request.user.is_staff:
+                    <li>
+                    <div class="dropdown">
+                      <a class="dropdown-toggle"  data-toggle="dropdown">${_('FollowUp')}
+                      <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+
+                        <li><a href="${reverse('followup_update',kwargs={'update':'True'})}">updated settings</a></li>
+                        <li><a href="${reverse('followup_update',kwargs={'update':'False'})}">Not Updated settings</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                % endif
+              <li>
+                <a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a>
+              </li>
+              <li>
+                <div class="search-btn">
+                  <button>
+                    <img src="${static.url('images/search.png')}" alt="search" />
+                  </button>
+                </div>
+                <div class="slide-serch">
+                  <form class="form-inline">
+                    <input
+                      class="form-control"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <button class="btn" type="submit">
+                      <img src="${static.url('images/g-btn.png')}" alt="search" />
+                    </button>
+                  </form>
+                </div>
+             </li>
+              <%include file="user_dropdown.html"/>
+            % else:
+              <li><a href="javascript:void(0);" class="language-btn" id="language-btn">${('ع' if LANGUAGE_CODE=='en' else 'En')}</a>
+              </li>
+              <li>
+                <div class="login-btn"><a href="/login">${_("Login")}</a></div>
+              </li>
+              <li>
+                <div class="registration-btn"><a href="/register">${_("Register")}</a></div>
+              </li>
+              <li>
+                <div class="search-btn">
+                  <button>
+                    <img src="${static.url('images/search.png')}" alt="search" />
+                  </button>
+                </div>
+                <div class="slide-serch">
+                  <form class="form-inline" method="get" action="${reverse('courses')}">
+                    <input
+                      class="form-control"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <button class="btn" type="submit">
+                      <img src="${static.url('images/g-btn.png')}" alt="search" />
+                    </button>
+                  </form>
+                </div>
+              </li>
+            % endif
+          </ul>
+        </div>
+        <div class="gn-logo">
+          <a href="/dashboard"><img src="${static.url('images/logo.png')}" alt="logo"/></a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<%block name="js_extra">
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $( "a#language-btn.language-btn" ).click(function() {
+      $('#settings-language-value').val($('#settings-language-value option:not(:selected)').val()).trigger('change');
+    });
+
+  $(document).ready(function() {
+    $(' .login-details .search-btn ').click(function() {
+      if (
+        $(this)
+          .next()
+          .is(':visible')
+      ) {
+        $(this)
+          .next()
+          .slideUp();
+      } else {
+        $(this)
+          .next()
+          .slideDown();
+      }
+    });
+  });
+
+  });
+</script>
+</%block>

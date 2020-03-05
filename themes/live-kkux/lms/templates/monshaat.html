@@ -1,0 +1,178 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+<%namespace name='static' file='static_content.html'/>
+
+<%inherit file="main.html" />
+<style type="text/css">
+
+
+.courses-container .courses .course .course-info .course-title{font-size:18px;}
+.courses-container .courses .course .course-info .course-organization,.courses-container .courses .course .course-info .course-code,.courses-container .courses .course .course-info .course-date{font-size:14px;}
+.find-courses .courses{padding:40px 0 15px;}
+.find-courses .courses:after{content:"";display:table;clear:both;}
+.find-courses .courses .course{background:#f5f5f5;border:1px solid #bebebe;border-radius:2px;box-sizing:border-box;box-shadow:0 1px 10px 0 rgba(0,0,0,0.15),inset 0 0 0 1px rgba(255,255,255,0.9);margin-bottom:30px;position:relative;width:100%;transition:all 0.15s linear 0s;}
+.find-courses .courses .course a{position:relative;display:block;}
+.find-courses .courses .course a:hover,.find-courses .courses .course a:focus{text-decoration:none;}
+.find-courses .courses .course:hover,.find-courses .courses .course:focus{background:#f5f5f5;border-color:#bebebe;box-shadow:0 1px 4px 0 rgba(0,121,188,0.4);}
+.find-courses .courses-container{padding:40px 10px 0 10px;}
+.find-courses .courses-container .courses .courses-listing .courses-listing-item{width:100%;box-sizing:border-box;margin:15px 0 30px 0;max-height:360px;}
+.find-courses .courses-container .courses.no-course-discovery{float:left;display:block;margin-right:2.35765%;width:100%;}
+.find-courses .courses-container .courses.no-course-discovery:last-child{margin-right:0;}
+.courses-container{max-width:1200px;margin-left:auto;margin-right:auto;}
+.courses-container .courses{display:block;float:left;width:100%;}
+.courses-container .courses .courses-listing .courses-listing-item{margin:0 0 30px 0;max-height:360px;}
+.courses-container .courses .course{box-sizing:border-box;transition:all 0.125s linear 0s;position:relative;border-bottom:3px solid #93b045;box-shadow:0 1px 10px 0 rgba(0,0,0,0.125),inset 0 0 0 1px rgba(255,255,255,0.75);background:#f5f5f5;width:100%;}
+.courses-container .courses .course .course-image .cover-image{height:160px;overflow:hidden;}
+
+.courses-container .courses .course .course-image .cover-image img{width:100%;height:auto;}
+.courses-container .courses .course .course-image .cover-image .learn-more{left:calc(50% - 100px);box-sizing:border-box;position:absolute;top:55px;padding:0 20px;width:200px;height:50px;border-color:#93b045;border-radius:3px;background:#93b045;color:#fff;line-height:50px;text-align:center;opacity:0;text-transform:none;}
+.courses-container .courses .course .course-info{height:200px;font-family:"Levenim MT";}
+.courses-container .courses .course .course-info h2{font-family:"Levenim MT";}
+.courses-container .courses .course .course-info .course-organization,.courses-container .courses .course .course-info .course-code,.courses-container .courses .course .course-info .course-date{color:#474747;}
+.courses-container .courses .course .course-info .course-organization,.courses-container .courses .course .course-info .course-code,.courses-container .courses .course .course-info .course-title{display:block;text-transform:none;}
+.courses-container .courses .course .course-info .course-organization{line-height:16.28px;padding:10px 15px 2px 15px;}
+.courses-container .courses .course .course-info .course-code{line-height:23.68px;padding:0 15px;}
+.courses-container .courses .course .course-info .course-title{line-height:23.68px;margin:5px 0 35px 0;padding:0 15px;height:72px;color:#93b045;}
+.courses-container .courses .course .course-info .course-date{line-height:20.72px;padding:2px 15px;}
+.courses-container .courses .course:hover .cover-image:before,.courses-container .courses .course:focus .cover-image:before{transition:opacity 0.25s ease-out 0.25s;opacity:0.6;}
+.courses-container .courses .course:hover .cover-image .learn-more,.courses-container .courses .course:focus .cover-image .learn-more{transition:opacity 0.25s ease-out 0.25s;opacity:1;}
+[dir="ltr"] div.monshaat-page-ar {
+display: none;
+}
+[dir="ltr"] div.monshaat-page-en {
+display: flex;
+}
+div.monshaat-page-en .logo {
+width: 20%;
+}
+div.monshaat-page-en .details {
+flex: 1;
+}
+div.monshaat-page-en h1 {
+text-align: left;
+font-weight: 600;
+color: #0f7395;
+}
+div.monshaat-page-en p {
+color: #232323;
+}
+@media only screen and (max-width: 600px) {
+[dir="ltr"] div.monshaat-page-en {
+  flex-direction: column;
+}
+div.monshaat-page-en .logo {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+}
+
+[dir="rtl"] div.monshaat-page-en {
+  display: none;
+}
+[dir="rtl"] div.monshaat-page-ar {
+  display: flex;
+}
+div.monshaat-page-ar .logo {
+  width: 20%;
+}
+div.monshaat-page-ar .details {
+  flex: 1;
+}
+div.monshaat-page-ar h1 {
+  font-weight: 600;
+  color: #0f7395;
+}
+div.monshaat-page-ar p {
+  color: #232323;
+}
+@media only screen and (max-width: 600px) {
+  [dir="rtl"] div.monshaat-page-ar {
+    flex-direction: column;
+  }
+  div.monshaat-page-ar .logo {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+</style>
+
+% if courses:
+	<section class="find-courses">
+	    <section class="courses-container">
+	    	<div class="monshaat-page-ar">
+  <div class="logo">
+    <img src="https://www.monshaat.gov.sa/sites/all/themes/smea/images/monshaat_new_logo.svg" alt="monshaat logo" />
+  </div>
+
+  <div class="details">
+    <h1>الهيئة العامة للمنشآت الصغيرة والمتوسطة</h1>
+    <p>
+      تسعى الهيئة العامة للمنشآت الصغيرة والمتوسطة إلى بناء القدرات والمهارات للمنشآت ومنسوبيها، ومساعدة رواد الأعمال
+      على تطوير مهاراتهم وابتكاراتهم، من خلال برامج التمكين المختلفة، سواء التدريبية منها أو البرامج المكثفة الهادفة
+      للنمو "<a href="https://tomoh.sa/ar" target="_blank" rel="noopener noreferrer">طموح</a>". بالإضافة لبناء القدرات في القطاعات والتخصصات المهمة والواعدة مثل <a href="https://emtiyaz.monshaat.gov.sa/" target="_blank" rel="noopener noreferrer">الإمتياز التجاري</a> أو <a href="https://tomoh.sa/ar/about/5" target="_blank" rel="noopener noreferrer">التجارة
+          الإلكترونية</a>. ومن هنا تأتي هذه المبادرة لتوفير البرامج التدريبية المفتوحة لخدمة أكير عدد من منشآتنا ورواد أعمالنا.
+    </p>
+  </div>
+
+</div>
+
+<div class="monshaat-page-en">
+
+    <div class="logo">
+      <img src="https://www.monshaat.gov.sa/sites/all/themes/smea/images/monshaat_new_logo.svg" alt="monshaat logo" />
+    </div>
+  
+    <div class="details">
+      <h1>Small & Medium Enterprises General Authority</h1>
+      <p>
+        The General Authority for Small and Medium Enterprises seeks to build the capabilities and skills of the establishments and its employees, and to help the entrepreneurs to develop their skills and innovations through the various empowerment programs, both training and intensive programs aiming for growth "<a href="https://tomoh.sa/ar" target="_blank" rel="noopener noreferrer">Tomoh</a>". As well as capacity building in important and promising sectors and disciplines such as <a href="https://emtiyaz.monshaat.gov.sa/" target="_blank" rel="noopener noreferrer">commercial excellence</a> or <a href="https://tomoh.sa/ar/about/5" target="_blank" rel="noopener noreferrer">e-commerce</a>. This initiative is aimed at providing open training programs to serve a number of our facilities and entrepreneurs.
+      </p>
+    </div>
+  
+  </div>
+
+		    <div class="courses no-course-discovery" role="region" aria-label="List of Courses">
+		        <ul class="courses-listing">
+		        	% for course in courses:
+			            <li class="courses-listing-item">
+							<article class="course" id="course-v1:KKU+AF101+2019_q1" role="region" aria-label="Calligraphy">
+							  <a href="${reverse('about_course', args=[course.id])}">
+							    <header class="course-image">
+							      <div class="cover-image">
+							        <img src="${course.course_image_url}" alt="${course.display_number_with_default}">
+							        <div class="learn-more" aria-hidden="true">LEARN MORE</div>
+							      </div>
+							    </header>
+							    <div class="course-info" aria-hidden="true">
+							      <h2 class="course-name">
+							        <span class="course-organization">${course.org}</span>
+							        <span class="course-code">${course.number}</span>
+								        % if LANGUAGE_CODE == 'ar':
+								            <span class="course-title">
+								                ${course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default}
+								            </span>
+								        % else:
+								            <span class="course-title">${course.display_name_with_default}</span>
+								        % endif
+							      </h2>
+							      	% if course.start: 
+							        	<div class="course-date localized_datetime" aria-hidden="true" data-format="shortDate">
+							        	${_("Starts")}: ${(course.start).strftime("%b %d,%Y")}</div>
+							        % endif
+							    </div>
+							  </a>
+							</article>
+						</li>
+					% endfor
+				</ul>
+			</div>
+		</section>
+	</section>
+% else:
+	<h1>${_("There is no Munsha'at Category Courses.")}</h1>
+% endif

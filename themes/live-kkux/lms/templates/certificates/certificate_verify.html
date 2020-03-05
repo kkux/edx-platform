@@ -1,0 +1,32 @@
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from courseware.courses import get_course_about_section
+from django.conf import settings
+from edxmako.shortcuts import marketing_link
+from openedx.core.djangolib.markup import HTML
+from openedx.core.lib.courses import course_image_url
+%>
+
+<%inherit file="../main.html" />
+<style type="text/css">
+
+</style>
+<div class="content-wrapper  main-container" id="content">
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container serach-certifiacte">
+        <form action="${('verify_certificates')}" method="post">
+       <input type="text" placeholder="Enter candidate serial number " name="srno">
+       <button type="submit">Submit</button>
+
+
+   </form>
+    </section>
+     % if certificate:
+        <section class="container serach-certifiacte-result">
+            ${certificate} 
+        </section>
+    % endif 
+</main>  
+    </div>

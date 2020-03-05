@@ -1,0 +1,184 @@
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from datetime import datetime
+from pytz import timezone, utc
+from django.utils.translation import ungettext
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+
+<%inherit file="../main.html" />
+<%block name="headextra">
+  ## OG (Open Graph) title and description added below to give social media info to display
+  ## (https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#tags)
+  <meta property="og:title" content="${program.name}" />
+  <meta property="og:description" content="${program.short_description}" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="${static.url('custom_css/program_info.css')}">
+ 
+</%block>
+<style>
+.meter {
+    height: 15px;
+    position: relative;
+    background: transparent;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    width: 50%;
+    top: 35px;
+    left: 55%;
+}
+
+.blocks-right h4 
+{
+  font-size: 15px;
+  margin-top: 15px;
+  float: left;
+}
+.program_progress {
+    color: #bdd402;
+    position: relative;
+    left: 46%;
+}
+.meter > span 
+{
+    display: block;
+    background-color: #bdd402;
+    border-radius: 25px;
+    height: 13px;
+}
+.program_progress_block
+{
+    position: relative;
+    top: -18px;
+}
+
+
+  </style>
+<%block name="js_extra">
+  <!--
+   <script src="${static.url('js/course_info.js')}"></script> 
+  -->
+</%block>
+
+<%block name="pagetitle">${program.name}</%block>
+<%
+    total_courses = len(program.courses.select_related())
+    c_progress = 0
+%>
+<%
+if context.get('LANGUAGE_CODE') == 'ar':
+  program_name = program.name_arabic if program.name_arabic else program.name
+else:
+  program_name = program.name
+%> 
+<main id="main" aria-label="Content" tabindex="-1">
+  <div id="wrapper">
+    <div class="courseware-container">
+      <div class="course_title">
+        <h1>${program_name}</h1>
+      </div>
+      <div class="heading-bar">
+        <ul id="tabSet" class="scroll_tabs_theme_dark">
+        </ul>
+      </div>
+
+      <div class="left-block" id="${program.name}_${program.id}">
+        <div class="blocks">
+          <h6>${program_name}</h6>
+            <div class="listing">
+              <ul>
+                  % for index, course in enumerate(program_courses):
+                  <%
+                    c_progress += course_grades.get(course.id).get('points', 0.0)
+                    if course.start:
+                        started = datetime.now(utc) > course.start
+                    else:
+                        started = False
+                    user_progress = course_grades.get(course.id).get('points', 0.0)
+                    user_progress = int(user_progress) if user_progress ==100.0 else user_progress
+                  %>
+                  <%
+                    if context.get('LANGUAGE_CODE') == 'ar':
+                      course_name = course.display_name_in_arabic if course.display_name_in_arabic else course.display_name_with_default
+                    else:
+                      course_name = course.display_name_with_default
+                  %> 
+                  <li id="${course.id}" class="lighttext">
+                      <div class="type_icon">
+                        <!-- <i class="fa fa-file" aria-hidden="true"></i> -->
+                      </div>
+
+                        % if course_grades.get(course.id)['course_states']['completed']:
+                         <div class="dot-icon"><span class="dot green_dot"></span></div>
+                         <div class="course_progress_status" style="color: #bdd402;">${_("Completed")}</div>
+                        % elif course_grades.get(course.id)['course_states']['in_progress']:
+                          <div class="dot-icon"><span class="dot orange_dot"></span></div>
+                          <div class="course_progress_status" style="color: orange;">${_("In progress.")}</div>
+                        % else:
+                          % if started:
+                            <div class="dot-icon"><span class="dot red_dot"></span></div>
+                            <div class="course_progress_status" style="color: red;">${_('No progress yet.')}</div>
+                          % else:
+                            <div class="dot-icon"><span class="dot grey_dot"></span></div>
+                            <div class="course_progress_status" style="color: grey;">${_('Not started yet.')}</div>
+                          % endif
+                        % endif
+
+                        % if started:
+                          <a href="${reverse('info', args=[unicode(course.id)])}" class="program_course_name">${course_name}</a>
+                        % else:
+                          ${course_name}
+                        % endif
+                  </li>
+                  <hr class="prgramming_listing_hr">
+                  % endfor
+                </ul>
+            </div>
+        </div>
+      </div>
+
+
+      <div class="right-block">
+        <div class="blocks-right">
+          <%
+            if c_progress:
+              c_progress = c_progress / total_courses
+          %>
+          <h4 style="color: #94d3d9">${_('Program Progress')}</h4>
+          <div class="program_progress_block">
+            <div class="program_progress"><h4>${c_progress}%</h4></div>
+            <div class="meter">
+              <span style="width: ${c_progress}%"></span>
+            </div>
+          </div>
+         
+          <div class="course-block">
+            <ul>
+                <li>
+                  <span class="course_data">${_('Starts:')} </span> 
+                  <span class="course_data_value">${program.start}</span>
+                </li>
+                % if program.subject.name:
+                  <li> 
+                    <span class="course_data">${_('Subject:')} </span> 
+                    <span class="course_data_value">${program.subject.name}</span>
+                  </li>
+                % endif
+                <li>  
+                  <span class="course_data"> ${_('Institution:')} </span> 
+                  <span class="course_data_value">${program.institution.name}</span>
+                </li>
+                <li>  
+                  <span class="course_data"> ${_('Number Of Courses:')} </span>
+                  <span class="course_data_value">${len(program.courses.select_related())}</span>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </div>
+</main>
+
+

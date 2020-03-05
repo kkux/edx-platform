@@ -16,7 +16,7 @@ from openedx.core.djangoapps.user_api.accounts.api import update_account_setting
 from openedx.core.djangoapps.user_api.preferences.api import update_user_preferences
 from django.core.validators import ValidationError, validate_email
 from alphabet_detector import AlphabetDetector
-
+from django.views.decorators.csrf import csrf_exempt
 
 EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
@@ -25,7 +25,7 @@ SUBSCRIPTION_MESSAGE = _('Please activate your subscription by clicking subcript
 VALID_EMAIL = _('Please enter valid email address')
 ERROR_MESSAGE = _('Sorry some error occurred.')
 
-
+@csrf_exempt
 def subscribe(request):
     """
     Subscribes user to mailing list

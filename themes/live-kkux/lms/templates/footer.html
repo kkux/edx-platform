@@ -1,0 +1,108 @@
+## mako
+<%page expression_filter="h"/>
+<%!
+    from datetime import datetime
+    from django.core.urlresolvers import reverse
+    from django.utils.translation import ugettext as _
+    from branding.api import get_footer
+%>
+<% footer = get_footer(is_secure=is_secure) %>
+<% year = datetime.now().year %>
+<%namespace name='static' file='static_content.html'/>
+<%block name="css">
+    <link rel="stylesheet" href="${static.url('css/footer.css')}" type="text/css"><!-- font-awesome.min css -->
+    % if LANGUAGE_CODE=='en': 
+      <link rel="stylesheet" href="${static.url('css/en-custom.css')}" type="text/css" /><!-- style css -->
+    % endif
+</%block>
+<section class="footer">
+  <div class="gn-container">
+    <div class="copyright">
+      <div class="copyright-title">جميع الحقوق محفوظة لـ KKUx 2020 ©</div>
+    </div>
+    <div class="footer-content">
+      <div class="footer-links">
+        <div class="f-links-grid">
+          <h3>السياسات</h3>
+          <ul>
+            <li><a href="#">حقوق الطبع والنشر</a></li>
+            <li><a href="#">قواعد النشر</a></li>
+            <li><a href="#">بيان الخصوصية</a></li>
+          </ul>
+        </div>
+        <div class="f-links-grid">
+          <h3>التعلم المفتوح</h3>
+          <ul>
+            <li><a href="#">المقررات المفتوحة</a></li>
+            <li><a href="#">Tazamun</a></li>
+            <li><a href="#">تمكين للتدريب</a></li>
+          </ul>
+        </div>
+        <div class="f-links-grid">
+          <h3>السياسات</h3>
+          <ul>
+            <li><a href="#">حقوق الطبع والنشر</a></li>
+            <li><a href="#">قواعد النشر</a></li>
+            <li><a href="#">بيان الخصوصية</a></li>
+          </ul>
+        </div>
+        <div class="f-links-grid">
+          <h3>لمحة عن المنصة</h3>
+          <ul>
+            <li><a href="#">الرؤية</a></li>
+            <li><a href="#">الرسالة</a></li>
+            <li><a href="#">المدونة</a></li>
+            <li><a href="#">عمادة التعلم الإلكتروني</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-logos">
+        <div class="footer-icons">
+          <ul>
+            <li>
+              <a href="/"><img src="${static.url('images/logo.png')}" alt="logo"/></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img src="${static.url('images/footer_icon.png')}" alt="logo"
+              /></a>
+            </li>
+          </ul>
+        </div>
+        <div class="social-iocns">
+          <ul>
+            <li><a href="">١٦٫٢الف متابعون</a></li>
+            <li>
+              <a href=""
+                >@kkuxedu تابع
+                <img src="${static.url('images/twitter.png')}" alt="twitter"
+              /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<%block name="js_extra">
+<script>
+$( window ).load(function() {
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+});
+</script>
+</%block>
