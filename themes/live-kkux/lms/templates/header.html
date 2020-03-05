@@ -73,7 +73,7 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
                   <a href="https://blog.kkux.org/">${_("Blog")}</a>
                 </li>
                 <li>
-                  <a href="${reverse('conatct')}">${_("Contact")}</a>
+                  <a href="/contact">${_("Contact")}</a>
                 </li>
                 % if request.user.is_staff:
                     <li>

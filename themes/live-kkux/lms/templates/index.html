@@ -334,6 +334,17 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
   <div class="gn-container">
     <div class="about-kkux-slider">
       % for user in testimonials:
+          conn = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,)
+          image=user.profile_image.url.split("/")[-1]
+
+          image_url = conn.generate_presigned_url(
+               'get_object',
+               Params = {
+                      'Bucket': "kkux-storage" ,
+                      'Key': image
+                  },
+           )
+
         <%
           if context.get('LANGUAGE_CODE') == 'ar':
             user_name = user.name
@@ -347,7 +358,7 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
         <div class="item">
           <div class="item-left">
             <div class="author-img">
-              <img src="${user.profile_image.url}" alt="" />
+              <img src="${image_url}" alt="${user_name}" />
             </div>
           </div>
           <div class="item-right">
