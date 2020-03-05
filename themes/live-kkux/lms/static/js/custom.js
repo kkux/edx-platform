@@ -1,4 +1,3 @@
-debugger
 $('.latest-p-slider').slick({
   dots: true,
   arrows: false,
